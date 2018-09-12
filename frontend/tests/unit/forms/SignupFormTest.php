@@ -1,10 +1,11 @@
 <?php
-namespace frontend\tests\unit\models;
+namespace frontend\tests\unit\forms;
 
+use Codeception\Test\Unit;
 use common\fixtures\UserFixture;
-use frontend\models\SignupForm;
+use frontend\forms\SignupForm;
 
-class SignupFormTest extends \Codeception\Test\Unit
+class SignupFormTest extends Unit
 {
     /**
      * @var \frontend\tests\UnitTester

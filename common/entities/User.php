@@ -1,5 +1,5 @@
 <?php
-namespace frontend\models\user;
+namespace common\entities;
 
 use Yii;
 use yii\base\NotSupportedException;
