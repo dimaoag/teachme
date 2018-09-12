@@ -42,23 +42,21 @@ return [
         'errorHandler' => [
             'errorAction' => 'site/error',
         ],
-
-        'urlManager' => [
-            'enablePrettyUrl' => true,
-            'showScriptName' => false,
-            'rules' => [
-            ],
-        ],
-        'as access' => [
-            'class' => 'yii\filters\AccessControl',
-            // 'only' only ...
-            // 'except' everyone without ...
-            'except' => ['site/login', 'site/error'],
-            'rules' => [
-                [
-                    'allow' => true,
-                    'roles' => ['@'], //only registered users
-                ],
+        'backendUrlManager' => require __DIR__ . '/urlManager.php',
+        'frontendUrlManager' => require __DIR__ . '/../../frontend/config/urlManager.php',
+        'urlManager' => function(){
+            return Yii::$app->get('backendUrlManager');
+        },
+    ],
+    'as access' => [
+        'class' => 'yii\filters\AccessControl',
+        // 'only' only ...
+        // 'except' everyone without ...
+        'except' => ['site/login', 'site/error'],
+        'rules' => [
+            [
+                'allow' => true,
+                'roles' => ['@'], //only registered users
             ],
         ],
     ],
