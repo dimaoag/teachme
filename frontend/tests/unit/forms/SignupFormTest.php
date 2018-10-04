@@ -25,7 +25,7 @@ class SignupFormTest extends Unit
 
     public function testCorrectSignup()
     {
-        $model = new SignupForm([
+        $model = new \frontend\forms\SignupForm([
             'username' => 'some_username',
             'email' => 'some_email@example.com',
             'password' => 'some_password',

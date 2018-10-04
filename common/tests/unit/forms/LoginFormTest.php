@@ -3,7 +3,7 @@
 namespace common\tests\unit\forms;
 
 use Yii;
-use common\forms\LoginForm;
+use shop\forms\auth\LoginForm;
 use common\fixtures\UserFixture;
 
 /**
@@ -11,11 +11,8 @@ use common\fixtures\UserFixture;
  */
 class LoginFormTest extends \Codeception\Test\Unit
 {
-    /**
-     * @var \common\tests\UnitTester
-     */
-    protected $tester;
 
+    protected $tester;
 
     /**
      * @return array

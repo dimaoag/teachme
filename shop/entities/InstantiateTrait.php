@@ -1,8 +1,8 @@
 <?php
-namespace common\entities;
+namespace shop\entities;
 
 
-trait InstantiateTrait {
+trait InstantiateTrait{
 
     private static $_prototype;
     public static function instantiate($row){
@@ -14,5 +14,4 @@ trait InstantiateTrait {
         $entity->init();
         return $entity;
     }
-
 }
