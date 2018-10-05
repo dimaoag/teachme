@@ -27,14 +27,14 @@ class UserRepository
         return $this->getUserBy(['password_reset_token'=> $token]);
     }
 
-    public function getUserByConfirmToken(string $token): User
+    public function getUserByConfirmCode(string $code): User
     {
-        return $this->getUserBy(['email_confirm_token'=> $token]);
+        return $this->getUserBy(['password_confirm_code'=> $code]);
     }
 
-    public function findByUsername(string $username): User
+    public function findByPhone(string $phone): User
     {
-        return $this->getUserBy(['username'=> $username]);
+        return $this->getUserBy(['phone'=> $phone]);
     }
 
     private function getUserBy(array $condition): User

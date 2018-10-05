@@ -42,7 +42,7 @@ class User extends ActiveRecord implements IdentityInterface
         $user->setPassword($password);
         $user->created_at = $time = time();
         $user->updated_at = $time;
-        $user->status = self::STATUS_ACTIVE;
+        $user->status = self::STATUS_WAIT;
         $user->designation = self::LEANER;
         $user->generatePasswordConfirmCode();
         return $user;
@@ -58,7 +58,7 @@ class User extends ActiveRecord implements IdentityInterface
         $user->setPassword($password);
         $user->created_at = $time = time();
         $user->updated_at = $time;
-        $user->status = self::STATUS_ACTIVE;
+        $user->status = self::STATUS_WAIT;
         $user->designation = self::TEACHER;
         $user->generatePasswordConfirmCode();
         return $user;
@@ -139,9 +139,9 @@ class User extends ActiveRecord implements IdentityInterface
     }
 
 
-    public static function findByUsername($username)
+    public static function findByPhone($phone)
     {
-        return static::findOne(['username' => $username, 'status' => self::STATUS_ACTIVE]);
+        return static::findOne(['phone' => $phone, 'status' => self::STATUS_ACTIVE]);
     }
 
 
@@ -207,7 +207,7 @@ class User extends ActiveRecord implements IdentityInterface
 
     private function generatePasswordConfirmCode()
     {
-        $this->password_confirm_code = rand(1000,9999);
+        $this->password_confirm_code = rand(100000,999999);
     }
 
     private function removePasswordConfirmCode()

@@ -1,10 +1,15 @@
 <?php
 namespace shop\services\auth;
 
+use shop\forms\auth\LoginForm;
 use shop\forms\auth\SignupForm;
 use shop\entities\User;
 //use yii\mail\MailerInterface;
 use shop\repositories\UserRepository;
+use frontend\components\Debug;
+use Yii;
+use avator\turbosms\Turbosms;
+use yii\helpers\Url;
 
 class SignupService{
 
@@ -21,30 +26,22 @@ class SignupService{
     public function signup(SignupForm $form)
     {
         $user = User::signupLeaner($form->first_name, $form->phone, $form->password, $form->password_confirm);
+        Yii::$app->turbosms->send($user->password_confirm_code, $user->phone);
         $this->users->save($user);
-//        $sent = $this
-//            ->mailer
-//            ->compose(
-//                ['html' => 'auth/signup/emailConfirmToken-html', 'text' => 'auth/signup/emailConfirmToken-text'],
-//                ['user' => $user]
-//            )
-//            ->setTo($form->email)
-//            ->setSubject('Signup confirm for ' . 'My App')
-//            ->send();
-//        if (!$sent){
-//            throw new \RuntimeException('Email sending error.');
-//        }
     }
 
 
-    public function confirm($token)
+
+
+    public function confirm($code)
     {
-        if (empty($token)){
-            throw new \DomainException('Empty confirm token');
+        if (empty($code)){
+            throw new \DomainException('Код не введен');
         }
-        $user = $this->users->getUserByConfirmToken($token);
+        $user = $this->users->getUserByConfirmCode($code);
         $user->confirmSignup();
         $this->users->save($user);
+        return $user;
     }
 
 

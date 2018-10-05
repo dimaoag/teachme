@@ -57,8 +57,6 @@ class SignupForm extends Model
     public function passwordCompare()
     {
         if ($this->password != $this->password_confirm){
-//            Debug::debug($this->password);
-//            Debug::debug($this->password_confirm, 1);
             $this->addError('password_confirm', 'Пароли не совпадают.');
             return false;
         }
