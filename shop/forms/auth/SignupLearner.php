@@ -7,7 +7,7 @@ use frontend\components\Debug;
 /**
  * Signup form
  */
-class SignupForm extends Model
+class SignupLearner extends Model
 {
     public $first_name;
     public $phone;
@@ -28,7 +28,7 @@ class SignupForm extends Model
             ['phone', 'replacePhone'],
             ['phone', 'trim'],
             ['phone', 'required'],
-            ['phone', 'string', 'max' => 13],
+            ['phone', 'string'],
 //            ['email', 'unique', 'targetClass' => '\shop\entities\User', 'message' => 'This email address has already been taken.'],
             ['phone', 'unique', 'targetClass' => '\shop\entities\User', 'message' => 'Этот телефон уже существует в базе.'],
 

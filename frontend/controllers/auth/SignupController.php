@@ -3,7 +3,7 @@ namespace frontend\controllers\auth;
 
 use frontend\components\Debug;
 use shop\forms\auth\ConfirmPasswordForm;
-use shop\forms\auth\SignupForm;
+use shop\forms\auth\SignupLearner;
 use shop\services\auth\SignupService;
 use Yii;
 use yii\base\Module;
@@ -44,10 +44,18 @@ class SignupController extends Controller
 
     public function actionIndex()
     {
-        $form = new SignupForm();
-        if ($form->load(Yii::$app->request->post()) && $form->validate()) {
+        $learnerForm = new SignupLearner();
+        return $this->render('index', [
+            'modelLearner' => $learnerForm,
+        ]);
+    }
+
+    public function actionSignupLearner()
+    {
+        $learnerForm = new SignupLearner();
+        if ($learnerForm->load(Yii::$app->request->post()) && $learnerForm->validate()) {
             try {
-                $this->signupService->signup($form);
+                $this->signupService->signupLearner($learnerForm);
                 Yii::$app->session->setFlash('success', 'Проверте код на телефоне');
                 return $this->redirect('/auth/signup/confirm');
             } catch (\DomainException $e) {
@@ -56,7 +64,7 @@ class SignupController extends Controller
             }
         }
         return $this->render('index', [
-            'model' => $form,
+            'modelLearner' => $learnerForm,
         ]);
     }
 

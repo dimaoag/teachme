@@ -157,6 +157,10 @@ class User extends ActiveRecord implements IdentityInterface
         ]);
     }
 
+    public function sendSms(){
+        return Yii::$app->turbosms->send($this->password_confirm_code, $this->phone);
+    }
+
 
     public static function isPasswordResetTokenValid($token)
     {

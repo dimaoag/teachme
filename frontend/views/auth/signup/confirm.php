@@ -10,20 +10,20 @@ use yii\bootstrap\ActiveForm;
 $this->title = 'Подтверждения телефона';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
-<div class="site-login">
-    <h1><?= Html::encode($this->title) ?></h1>
-
-    <div class="row">
-        <div class="col-lg-5">
-            <?php $form = ActiveForm::begin(['id' => 'confirm-password-form']); ?>
-
-            <?= $form->field($model, 'confirm_code')->textInput(['autofocus' => true]) ?>
-
-            <div class="form-group">
-                <?= Html::submitButton('Подтвердить', ['class' => 'btn btn-primary', 'name' => 'confirm-button']) ?>
-            </div>
-
+<main>
+    <div class="container-login100 bg-login">
+        <div class="wrap-login100 p-l-55 p-r-55 p-t-80 p-b-30">
+            <span class="login100-form-title p-b-25 login-title">
+                   Подтверждения телефона
+            </span>
+            <!--Confirm_phone form start-->
+            <?php $form = ActiveForm::begin(['id' => 'confirm-phone-form', 'options' => ['class' => 'login100-form']]); ?>
+                <div class="form-group">
+                    <?= $form->field($model, 'confirm_code')->input('number',['placeholder' => 'Введите код'])->label('Введите код с SMS'); ?>
+                </div>
+            <?= Html::submitButton('Подтвердить', ['class' => 'btn btn-block login100-form-btn btn-login']); ?>
             <?php ActiveForm::end(); ?>
+            <!--Confirm_phone form end-->
         </div>
     </div>
-</div>
+</main>

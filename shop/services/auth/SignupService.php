@@ -2,7 +2,7 @@
 namespace shop\services\auth;
 
 use shop\forms\auth\LoginForm;
-use shop\forms\auth\SignupForm;
+use shop\forms\auth\SignupLearner;
 use shop\entities\User;
 //use yii\mail\MailerInterface;
 use shop\repositories\UserRepository;
@@ -23,10 +23,10 @@ class SignupService{
     }
 
 
-    public function signup(SignupForm $form)
+    public function signupLearner(SignupLearner $form)
     {
         $user = User::signupLeaner($form->first_name, $form->phone, $form->password, $form->password_confirm);
-        Yii::$app->turbosms->send($user->password_confirm_code, $user->phone);
+        $user->sendSms();
         $this->users->save($user);
     }
 

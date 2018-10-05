@@ -2,6 +2,7 @@
 namespace shop\repositories;
 
 use shop\entities\User;
+use Yii;
 
 class UserRepository
 {
@@ -31,7 +32,6 @@ class UserRepository
     {
         return $this->getUserBy(['password_confirm_code'=> $code]);
     }
-
     public function findByPhone(string $phone): User
     {
         return $this->getUserBy(['phone'=> $phone]);

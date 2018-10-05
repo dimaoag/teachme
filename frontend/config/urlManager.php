@@ -9,9 +9,13 @@ return [
         '<_a:about>' => 'site/<_a>',
         'contact' => 'contact/contact/index',
         'signup' => 'auth/signup/index',
+        'signup-learner' => 'auth/signup/signup-learner',
+        'signup-teacher' => 'auth/signup/signup-teacher',
         'signup/<_a:[\w-]+>' => 'auth/signup/<_a>',
         '<_a:login|logout>' => 'auth/auth/<_a>',
 
+        'course' => 'course/course/index',
+        'course/<_a:[\w-]+>' => 'course/course/<_a>',
 
         '<_c:[\w\-]+>' => '<_c>/index',
         '<_c:[\w\-]+>/<id:\d+>' => '<_c>/view',
