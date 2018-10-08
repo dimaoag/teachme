@@ -9,6 +9,9 @@ use yii\helpers\Html;
 use yii\bootstrap\ActiveForm;
 
 $this->title = 'Изменение пароля';
+$this->title = 'Восстановление пароля';
+$this->params['breadcrumbs'][] = ['label' => 'Вход на сайт', 'url' => '/login'];
+$this->params['breadcrumbs'][] = ['label' => 'Восстановление пароля', 'url' => 'auth/reser/request'];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 
