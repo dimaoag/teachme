@@ -48,10 +48,11 @@ class User extends ActiveRecord implements IdentityInterface
         return $user;
     }
 
-    public static function signupTeacher(string $first_name, string $phone, string $email, string $password):self
+    public static function signupTeacher(string $first_name, string $last_name,string $phone, string $email, string $password):self
     {
         $user = new static();
         $user->first_name = $first_name;
+        $user->last_name = $last_name;
         $user->phone = $phone;
         $user->email = $email;
         $user->generateAuthKey();

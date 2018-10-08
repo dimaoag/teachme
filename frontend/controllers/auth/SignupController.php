@@ -3,7 +3,8 @@ namespace frontend\controllers\auth;
 
 use frontend\components\Debug;
 use shop\forms\auth\ConfirmPasswordForm;
-use shop\forms\auth\SignupLearner;
+use shop\forms\auth\SignupLearnerForm;
+use shop\forms\auth\SignupTeacherForm;
 use shop\services\auth\SignupService;
 use Yii;
 use yii\base\Module;
@@ -44,15 +45,9 @@ class SignupController extends Controller
 
     public function actionIndex()
     {
-        $learnerForm = new SignupLearner();
-        return $this->render('index', [
-            'modelLearner' => $learnerForm,
-        ]);
-    }
+        $learnerForm = new SignupLearnerForm();
+        $teacherForm = new SignupTeacherForm();
 
-    public function actionSignupLearner()
-    {
-        $learnerForm = new SignupLearner();
         if ($learnerForm->load(Yii::$app->request->post()) && $learnerForm->validate()) {
             try {
                 $this->signupService->signupLearner($learnerForm);
@@ -63,8 +58,21 @@ class SignupController extends Controller
                 Yii::$app->session->setFlash('error', $e->getMessage());
             }
         }
+
+        if ($teacherForm->load(Yii::$app->request->post()) && $teacherForm->validate()) {
+            try {
+                $this->signupService->signupTeacher($teacherForm);
+                Yii::$app->session->setFlash('success', 'Проверте код на телефоне');
+                return $this->redirect('/auth/signup/confirm');
+            } catch (\DomainException $e) {
+                Yii::$app->errorHandler->logException($e);
+                Yii::$app->session->setFlash('error', $e->getMessage());
+            }
+        }
+
         return $this->render('index', [
             'modelLearner' => $learnerForm,
+            'modelTeacher' => $teacherForm,
         ]);
     }
 

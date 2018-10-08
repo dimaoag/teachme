@@ -2,12 +2,11 @@
 namespace shop\forms\auth;
 
 use yii\base\Model;
-use frontend\components\Debug;
 
 /**
- * Signup form
+ * SignupLearner form
  */
-class SignupLearner extends Model
+class SignupLearnerForm extends Model
 {
     public $first_name;
     public $phone;
@@ -32,15 +31,13 @@ class SignupLearner extends Model
 //            ['email', 'unique', 'targetClass' => '\shop\entities\User', 'message' => 'This email address has already been taken.'],
             ['phone', 'unique', 'targetClass' => '\shop\entities\User', 'message' => 'Этот телефон уже существует в базе.'],
 
-
             ['password', 'trim'],
             ['password', 'required'],
             ['password', 'string', 'min' => 6],
 
-
             ['password_confirm', 'trim'],
             ['password_confirm', 'required'],
-            ['password_confirm', 'passwordCompare'],
+            ['password_confirm', 'compare', 'compareAttribute'=>'password', 'message'=>"Пароли не совпадают." ],
             ['password_confirm', 'string', 'min' => 6],
         ];
     }
@@ -52,16 +49,6 @@ class SignupLearner extends Model
         $this->phone = str_replace(" ", "", $this->phone);
     }
 
-
-
-    public function passwordCompare()
-    {
-        if ($this->password != $this->password_confirm){
-            $this->addError('password_confirm', 'Пароли не совпадают.');
-            return false;
-        }
-        return true;
-    }
 
 
     public function attributeLabels()
