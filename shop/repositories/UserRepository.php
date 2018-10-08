@@ -13,9 +13,9 @@ class UserRepository
         }
     }
 
-    public function existByPasswordResetToken(string $token): bool
+    public function existByPasswordResetCode(string $code): bool
     {
-        return (bool) User::findByPasswordResetToken($token);
+        return (bool) User::findByPasswordResetCode($code);
     }
 
     public function getUserByEmail(string $email): User
@@ -23,9 +23,14 @@ class UserRepository
         return $this->getUserBy(['email'=> $email]);
     }
 
-    public function getUserByPasswordResetToken(string $token): User
+    public function getUserByPhone(string $phone): User
     {
-        return $this->getUserBy(['password_reset_token'=> $token]);
+        return $this->getUserBy(['phone'=> $phone]);
+    }
+
+    public function getUserByPasswordResetCode(string $code): User
+    {
+        return $this->getUserBy(['password_reset_code'=> $code]);
     }
 
     public function getUserByConfirmCode(string $code): User

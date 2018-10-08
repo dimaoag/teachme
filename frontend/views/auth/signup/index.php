@@ -26,43 +26,43 @@ $this->params['breadcrumbs'][] = $this->title;
                 </div>
                 <!--User form start-->
                 <?php $form = ActiveForm::begin(['id' => 'formLearner', 'action' => ['/signup'], 'options' => ['class' => 'login100-form tab-form active']]); ?>
-                <div class="form-group">
-                    <?= $form->field($modelLearner, 'first_name')->textInput()->label('Имя *'); ?>
-                </div>
-                <div class="form-group">
-                    <?= $form->field($modelLearner, 'phone')->label('Телефон *')->input('text', ['data-mask' => 'callback-catalog-phone']); ?>
-                </div>
-                <div class="form-group">
-                    <?= $form->field($modelLearner, 'password')->passwordInput()->label('Пароль *'); ?>
-                </div>
-                <div class="form-group">
-                    <?= $form->field($modelLearner, 'password_confirm')->passwordInput()->label('Повторить пароль *'); ?>
-                </div>
-                <?= Html::submitButton('Зарегистрироваться', ['class' => 'btn btn-block login100-form-btn btn-login']); ?>
+                    <div class="form-group">
+                        <?= $form->field($modelLearner, 'first_name')->textInput()->label('Имя *'); ?>
+                    </div>
+                    <div class="form-group">
+                        <?= $form->field($modelLearner, 'phone')->label('Телефон *')->input('text', ['data-mask' => 'callback-catalog-phone']); ?>
+                    </div>
+                    <div class="form-group">
+                        <?= $form->field($modelLearner, 'password')->passwordInput()->label('Пароль *'); ?>
+                    </div>
+                    <div class="form-group">
+                        <?= $form->field($modelLearner, 'password_confirm')->passwordInput()->label('Повторить пароль *'); ?>
+                    </div>
+                    <?= Html::submitButton('Зарегистрироваться', ['class' => 'btn btn-block login100-form-btn btn-login']); ?>
                 <?php ActiveForm::end(); ?>
                 <!--User form end-->
 
                 <!--Agent form start-->
                 <?php $form = ActiveForm::begin(['id' => 'formTeacher', 'action' => ['/signup'], 'options' => ['class' => 'login100-form tab-form']]); ?>
-                <div class="form-group">
-                    <?= $form->field($modelTeacher, 'first_name')->textInput()->label('Имя *'); ?>
-                </div>
-                <div class="form-group">
-                    <?= $form->field($modelTeacher, 'last_name')->textInput()->label('Фамилия'); ?>
-                </div>
-                <div class="form-group">
-                    <?= $form->field($modelTeacher, 'phone')->label('Телефон *')->input('text', ['data-mask' => 'callback-catalog-phone']); ?>
-                </div>
-                <div class="form-group">
-                    <?= $form->field($modelTeacher, 'email')->input('email')->label('Email *'); ?>
-                </div>
-                <div class="form-group">
-                    <?= $form->field($modelTeacher, 'password')->passwordInput()->label('Пароль *'); ?>
-                </div>
-                <div class="form-group">
-                    <?= $form->field($modelTeacher, 'password_confirm')->passwordInput()->label('Повторить пароль *'); ?>
-                </div>
-                <?= Html::submitButton('Зарегистрироваться', ['class' => 'btn btn-block login100-form-btn btn-login']); ?>
+                    <div class="form-group">
+                        <?= $form->field($modelTeacher, 'first_name')->textInput()->label('Имя *'); ?>
+                    </div>
+                    <div class="form-group">
+                        <?= $form->field($modelTeacher, 'last_name')->textInput()->label('Фамилия'); ?>
+                    </div>
+                    <div class="form-group">
+                        <?= $form->field($modelTeacher, 'phone')->label('Телефон *')->input('text', ['data-mask' => 'callback-catalog-phone']); ?>
+                    </div>
+                    <div class="form-group">
+                        <?= $form->field($modelTeacher, 'email')->input('email')->label('Email *'); ?>
+                    </div>
+                    <div class="form-group">
+                        <?= $form->field($modelTeacher, 'password')->passwordInput()->label('Пароль *'); ?>
+                    </div>
+                    <div class="form-group">
+                        <?= $form->field($modelTeacher, 'password_confirm')->passwordInput()->label('Повторить пароль *'); ?>
+                    </div>
+                    <?= Html::submitButton('Зарегистрироваться', ['class' => 'btn btn-block login100-form-btn btn-login']); ?>
                 <?php ActiveForm::end(); ?>
                 <!--Agent form end-->
             </div>

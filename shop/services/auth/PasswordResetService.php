@@ -3,61 +3,44 @@ namespace shop\services\auth;
 
 use shop\forms\auth\PasswordResetRequestForm;
 use shop\forms\auth\ResetPasswordForm;
-use yii\mail\MailerInterface;
 use shop\repositories\UserRepository;
 
 class PasswordResetService
 {
-    private $mailer;
     private $users;
 
 
-    public function __construct(UserRepository $users, MailerInterface $mailer)
+    public function __construct(UserRepository $users)
     {
-           $this->mailer = $mailer;
            $this->users = $users;
     }
 
     public function request(PasswordResetRequestForm $form)
     {
-        $user = $this->users->getUserByEmail($form->email);
-
+        $user = $this->users->getUserByPhone($form->phone);
         if (!$user->isActive()){
-            throw new \DomainException('User is not active.');
+            throw new \DomainException('Пользователь не активиный');
         }
 
         $user->requestPasswordReset();
         $this->users->save($user);
-
-        $send = $this
-            ->mailer
-            ->compose(
-                ['html' => 'auth/reset/passwordResetToken-html', 'text' => 'auth/reset/passwordResetToken-text'],
-                ['user' => $user]
-            )
-            ->setTo($form->email)
-            ->setSubject('Password reset for ' . 'My Application')
-            ->send();
-        if (!$send){
-            throw new \RuntimeException('Sending error.');
-        }
     }
 
 
-    public function validateToken($token)
+    public function validateCode($code)
     {
-        if (empty($token) || !is_string($token)) {
+        if (empty($code) || !is_numeric($code)) {
             throw new \DomainException('Password reset token cannot be blank.');
         }
-        if (!$this->users->existByPasswordResetToken($token)) {
-            throw new \DomainException('Wrong password reset token.');
+        if (!$this->users->existByPasswordResetCode($code)) {
+            throw new \DomainException('Неправильный код');
         }
     }
 
 
-    public function reset(string $token, ResetPasswordForm $form)
+    public function reset($code, ResetPasswordForm $form)
     {
-        $user = $this->users->getUserByPasswordResetToken($token);
+        $user = $this->users->getUserByPasswordResetCode($code);
         $user->resetPassword($form->password);
         $this->users->save($user);
     }

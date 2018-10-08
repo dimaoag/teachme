@@ -2,38 +2,45 @@
 
 /* @var $this yii\web\View */
 /* @var $form yii\bootstrap\ActiveForm */
-/* @var $model \common\models\LoginForm */
+/* @var $model LoginForm */
 
+use shop\forms\auth\LoginForm;
 use yii\helpers\Html;
 use yii\bootstrap\ActiveForm;
+use  yii\helpers\Url;
 
-$this->title = 'Login';
+$this->title = 'Вход на сайт';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
-<div class="site-login">
-    <h1><?= Html::encode($this->title) ?></h1>
 
-    <p>Please fill out the following fields to login:</p>
-
-    <div class="row">
-        <div class="col-lg-5">
-            <?php $form = ActiveForm::begin(['id' => 'login-form']); ?>
-
-                <?= $form->field($model, 'username')->textInput(['autofocus' => true]) ?>
-
-                <?= $form->field($model, 'password')->passwordInput() ?>
-
-                <?= $form->field($model, 'rememberMe')->checkbox() ?>
-
-                <div style="color:#999;margin:1em 0">
-                    If you forgot your password you can <?= Html::a('reset it', ['/auth/reset/request']) ?>.
-                </div>
-
-                <div class="form-group">
-                    <?= Html::submitButton('Login', ['class' => 'btn btn-primary', 'name' => 'login-button']) ?>
-                </div>
-
-            <?php ActiveForm::end(); ?>
+<main>
+    <div class="container-login100 bg-login">
+        <div class="wrap-login100 p-l-55 p-r-55 p-t-80 p-b-30">
+            <div class="dws-form">
+                <span class="login100-form-title p-b-15 login-title">
+                       Войти
+                </span>
+                <?php $form = ActiveForm::begin(['id' => 'loginForm', 'options' => ['class' => 'login100-form tab-form active']]); ?>
+                    <div class="form-group">
+                        <?= $form->field($model, 'phone')->label('Телефон')->input('text', ['data-mask' => 'callback-catalog-phone']); ?>
+                    </div>
+                    <div class="form-group">
+                        <?= $form->field($model, 'password')->passwordInput()->label('Пароль *'); ?>
+                    </div>
+                    <div class="form-group">
+                        <?= $form->field($model, 'rememberMe')->checkbox(); ?>
+                    </div>
+                    <?= Html::submitButton('Войти', ['class' => 'btn btn-block login100-form-btn btn-login']); ?>
+                <?php ActiveForm::end(); ?>
+            </div>
+            <div class="m-t-40">
+                <a href="<?= Url::to(['/request'])?>" class="txt2 hov1">
+                    Забыли пароль
+                </a>
+                <a href="<?= Url::to(['/signup'])?>" class="txt2 hov1 float-r">
+                    Регистрация
+                </a>
+            </div>
         </div>
     </div>
-</div>
+</main>

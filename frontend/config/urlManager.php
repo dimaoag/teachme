@@ -9,6 +9,8 @@ return [
         '<_a:about>' => 'site/<_a>',
         'contact' => 'contact/contact/index',
         'signup' => 'auth/signup/index',
+        'request' => 'auth/reset/request',
+        'reset' => 'auth/reset/reset',
         'signup/<_a:[\w-]+>' => 'auth/signup/<_a>',
         '<_a:login|logout>' => 'auth/auth/<_a>',
 

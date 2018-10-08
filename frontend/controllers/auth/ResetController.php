@@ -1,6 +1,7 @@
 <?php
 namespace frontend\controllers\auth;
 
+use shop\forms\auth\ConfirmPasswordForm;
 use shop\forms\auth\PasswordResetRequestForm;
 use shop\forms\auth\ResetPasswordForm;
 use shop\services\auth\PasswordResetService;
@@ -25,8 +26,8 @@ class ResetController extends Controller
         if ($form->load(Yii::$app->request->post()) && $form->validate()) {
             try {
                 $this->passwordResetService->request($form);
-                Yii::$app->session->setFlash('success', 'Check your email for further instructions.');
-                return $this->goHome();
+                Yii::$app->session->setFlash('success', 'Проверте ваш телефон и введите код с смс');
+                return $this->redirect('auth/reset/reset');
             } catch (\RuntimeException $e) {
                 Yii::$app->errorHandler->logException($e);
                 Yii::$app->session->setFlash('error', $e->getMessage());
@@ -38,20 +39,14 @@ class ResetController extends Controller
     }
 
 
-
-
-    public function actionReset($token){
-        try {
-            $this->passwordResetService->validateToken($token);
-        } catch (\DomainException $e) {
-            throw new BadRequestHttpException($e->getMessage());
-        }
+    public function actionReset(){
         $form = new ResetPasswordForm();
         if ($form->load(Yii::$app->request->post()) && $form->validate()) {
             try {
-                $this->passwordResetService->reset($token, $form);
-                Yii::$app->session->setFlash('success', 'New password saved.');
-                return $this->goHome();
+                $this->passwordResetService->validateCode($form->code);
+                $this->passwordResetService->reset($form->code, $form);
+                Yii::$app->session->setFlash('success', 'Пароль успешно изменен');
+                return $this->redirect('/login');
             } catch (\DomainException $e){
                 Yii::$app->errorHandler->logException($e);
                 Yii::$app->session->setFlash('error', $e->getMessage());

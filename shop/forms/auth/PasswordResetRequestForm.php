@@ -10,23 +10,26 @@ use shop\entities\User;
  */
 class PasswordResetRequestForm extends Model
 {
-    public $email;
+    public $phone;
 
-    /**
-     * {@inheritdoc}
-     */
+
     public function rules()
     {
         return [
-            ['email', 'trim'],
-            ['email', 'required'],
-            ['email', 'email'],
-            ['email', 'exist',
+            ['phone', 'trim'],
+            ['phone', 'required'],
+            ['phone', 'replacePhone'],
+            ['phone', 'exist',
                 'targetClass' => User::className(),
                 'filter' => ['status' => User::STATUS_ACTIVE],
-                'message' => 'There is no user with this email address.'
+                'message' => 'По этому номеру телефона пользователь не найден.'
             ],
         ];
+    }
+
+    public function replacePhone()
+    {
+        $this->phone = str_replace(" ", "", $this->phone);
     }
 
 }

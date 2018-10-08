@@ -82,7 +82,7 @@ class SignupController extends Controller
         if ($form->load(Yii::$app->request->post()) && $form->validate()) {
             try {
                 $user = $this->signupService->confirm($form->confirm_code);
-                Yii::$app->user->login($user, 3600);
+                Yii::$app->user->login($user, Yii::$app->params['rememberMeDuration']);
                 return $this->goHome();
             } catch (\DomainException $e) {
                 Yii::$app->errorHandler->logException($e);

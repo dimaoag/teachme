@@ -8,7 +8,9 @@ use yii\base\Model;
  */
 class ResetPasswordForm extends Model
 {
+    public $code;
     public $password;
+    public $password_confirm;
 
     /**
      * {@inheritdoc}
@@ -16,8 +18,18 @@ class ResetPasswordForm extends Model
     public function rules()
     {
         return [
+            ['code', 'trim'],
+            ['code', 'required'],
+            ['code', 'integer'],
+
+            ['password', 'trim'],
             ['password', 'required'],
             ['password', 'string', 'min' => 6],
+
+            ['password_confirm', 'trim'],
+            ['password_confirm', 'required'],
+            ['password_confirm', 'compare', 'compareAttribute'=>'password', 'message'=>"Пароли не совпадают." ],
+            ['password_confirm', 'string', 'min' => 6],
         ];
     }
 

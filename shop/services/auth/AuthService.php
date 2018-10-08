@@ -16,9 +16,9 @@ class AuthService
 
     public function auth(LoginForm $form): User
     {
-        $user = $this->users->findByPhone($form->username);
+        $user = $this->users->findByPhone($form->phone);
         if (!$user || !$user->isActive() || !$user->validatePassword($form->password)){
-            throw new \DomainException('Undefined user or password');
+            throw new \DomainException('Неправильный телефон или пароль');
         }
         return $user;
     }

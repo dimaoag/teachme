@@ -78,19 +78,20 @@ class User extends ActiveRecord implements IdentityInterface
 
     public function requestPasswordReset() :void
     {
-        if (!empty($this->password_reset_token) && self::isPasswordResetTokenValid($this->password_reset_token)){
-            throw new \DomainException('Password resetting is already requested.');
+        if (!empty($this->password_reset_token)){
+            throw new \DomainException('Код восстановления пароля уже сформирован.');
         }
-        $this->password_reset_token = Yii::$app->security->generateRandomString() . '_' . time();
+        $this->password_reset_code = rand(10000000,99999999);
+        Yii::$app->turbosms->send($this->password_reset_code, $this->phone);
     }
 
     public function resetPassword($password) :void
     {
-        if (empty($this->password_reset_token)){
+        if (empty($this->password_reset_code)){
             throw new \DomainException('Password resetting is not requested.');
         }
         $this->setPassword($password);
-        $this->password_reset_token = null;
+        $this->password_reset_code = null;
     }
 
 
@@ -146,14 +147,11 @@ class User extends ActiveRecord implements IdentityInterface
     }
 
 
-    public static function findByPasswordResetToken($token)
+    public static function findByPasswordResetCode($code)
     {
-        if (!static::isPasswordResetTokenValid($token)) {
-            return null;
-        }
 
         return static::findOne([
-            'password_reset_token' => $token,
+            'password_reset_code' => $code,
             'status' => self::STATUS_ACTIVE,
         ]);
     }
@@ -162,17 +160,6 @@ class User extends ActiveRecord implements IdentityInterface
         return Yii::$app->turbosms->send($this->password_confirm_code, $this->phone);
     }
 
-
-    public static function isPasswordResetTokenValid($token)
-    {
-        if (empty($token)) {
-            return false;
-        }
-
-        $timestamp = (int) substr($token, strrpos($token, '_') + 1);
-        $expire = Yii::$app->params['user.passwordResetTokenExpire'];
-        return $timestamp + $expire >= time();
-    }
 
     /**
      * {@inheritdoc}
