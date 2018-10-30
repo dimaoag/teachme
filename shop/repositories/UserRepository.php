@@ -28,6 +28,11 @@ class UserRepository
         return $this->getUserBy(['phone'=> $phone]);
     }
 
+    public function getUserById(string $id): User
+    {
+        return $this->getUserBy(['id'=> $id]);
+    }
+
     public function getUserByPasswordResetCode(string $code): User
     {
         return $this->getUserBy(['password_reset_code'=> $code]);

@@ -6,14 +6,18 @@ use yii\base\Model;
 
 class UserEditForm extends Model
 {
-    public $username;
+    public $first_name;
+    public $last_name;
+    public $phone;
     public $email;
 
     public $_user;
 
     public function __construct(User $user, array $config = [])
     {
-        $this->username = $user->username;
+        $this->first_name = $user->first_name;
+        $this->last_name = $user->last_name;
+        $this->phone = $user->phone;
         $this->email = $user->email;
         $this->_user = $user;
         parent::__construct($config);
@@ -22,9 +26,9 @@ class UserEditForm extends Model
     public function rules()
     {
         return [
-            [['username', 'email'], 'required'],
-            [['username', 'email'], 'string', 'max' => 255],
-            [['username', 'email'], 'unique', 'targetClass' => User::class, 'filter' => ['<>', 'id', $this->_user->id]],
+            [['first_name', 'phone'], 'required'],
+            [['first_name', 'last_name', 'email', 'phone'], 'string', 'max' => 255],
+            [['email', 'phone'], 'unique', 'targetClass' => User::class, 'filter' => ['<>', 'id', $this->_user->id]],
             ['email', 'email'],
         ];
     }
