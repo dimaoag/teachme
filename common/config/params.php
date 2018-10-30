@@ -6,4 +6,5 @@ return [
     'cookieDomain' => '.teachme.com',
     'backendHostInfo' => 'http://admin.teachme.com',
     'frontendHostInfo' => 'http://teachme.com',
+    'rememberMeDuration' => 3600 * 24,
 ];

@@ -28,8 +28,8 @@ class SignupLearnerForm extends Model
             ['phone', 'trim'],
             ['phone', 'required'],
             ['phone', 'string'],
-//            ['email', 'unique', 'targetClass' => '\shop\entities\User', 'message' => 'This email address has already been taken.'],
-            ['phone', 'unique', 'targetClass' => '\shop\entities\User', 'message' => 'Этот телефон уже существует в базе.'],
+//            ['email', 'unique', 'targetClass' => '\shop\entities\user\User', 'message' => 'This email address has already been taken.'],
+            ['phone', 'unique', 'targetClass' => '\shop\entities\user\User', 'message' => 'Этот телефон уже существует в базе.'],
 
             ['password', 'trim'],
             ['password', 'required'],

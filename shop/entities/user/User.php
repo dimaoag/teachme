@@ -1,6 +1,7 @@
 <?php
-namespace shop\entities;
+namespace shop\entities\user;
 
+use shop\entities\InstantiateTrait;
 use Yii;
 use yii\base\NotSupportedException;
 use yii\behaviors\TimestampBehavior;
@@ -65,6 +66,14 @@ class User extends ActiveRecord implements IdentityInterface
         return $user;
     }
 
+    public function edit(string $first_name, string $last_name, string $email, string $phone):void
+    {
+        $this->first_name = $first_name;
+        $this->last_name = $last_name;
+        $this->phone = $phone;
+        $this->email = $email;
+        $this->updated_at = time();
+    }
 
     public function confirmSignup()
     {

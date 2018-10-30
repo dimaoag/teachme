@@ -1,7 +1,7 @@
 <?php
 namespace shop\repositories;
 
-use shop\entities\User;
+use shop\entities\user\User;
 use Yii;
 
 class UserRepository

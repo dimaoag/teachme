@@ -3,7 +3,7 @@ namespace shop\services\auth;
 
 use shop\forms\auth\LoginForm;
 use shop\forms\auth\SignupLearnerForm;
-use shop\entities\User;
+use shop\entities\user\User;
 use shop\forms\auth\SignupTeacherForm;
 use shop\repositories\UserRepository;
 use frontend\components\Debug;

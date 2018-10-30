@@ -1,10 +1,12 @@
 <?php
+
+use shop\forms\auth\LoginForm;
 use yii\helpers\Html;
 use yii\bootstrap\ActiveForm;
 
 /* @var $this yii\web\View */
 /* @var $form yii\bootstrap\ActiveForm */
-/* @var $model \common\forms\LoginForm */
+/* @var LoginForm */
 
 $this->title = 'Sign In';
 
@@ -30,9 +32,9 @@ $fieldOptions2 = [
         <?php $form = ActiveForm::begin(['id' => 'login-form', 'enableClientValidation' => false]); ?>
 
         <?= $form
-            ->field($model, 'username', $fieldOptions1)
+            ->field($model, 'phone', $fieldOptions1)
             ->label(false)
-            ->textInput(['placeholder' => $model->getAttributeLabel('username')]) ?>
+            ->textInput(['placeholder' => $model->getAttributeLabel('phone')]) ?>
 
         <?= $form
             ->field($model, 'password', $fieldOptions2)

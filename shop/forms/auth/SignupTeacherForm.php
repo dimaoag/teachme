@@ -33,12 +33,12 @@ class SignupTeacherForm extends Model
             ['phone', 'trim'],
             ['phone', 'required'],
             ['phone', 'string'],
-            ['phone', 'unique', 'targetClass' => '\shop\entities\User', 'message' => 'Этот телефон уже существует в базе.'],
+            ['phone', 'unique', 'targetClass' => '\shop\entities\user\User', 'message' => 'Этот телефон уже существует в базе.'],
 
             ['email', 'trim'],
             ['email', 'required'],
             ['email', 'email'],
-            ['email', 'unique', 'targetClass' => '\shop\entities\User', 'message' => 'Этот email уже существует в базе.'],
+            ['email', 'unique', 'targetClass' => '\shop\entities\user\User', 'message' => 'Этот email уже существует в базе.'],
 
             ['password', 'trim'],
             ['password', 'required'],
