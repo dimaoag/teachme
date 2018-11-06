@@ -8,7 +8,7 @@ use shop\entities\user\User;
 /* @var $this yii\web\View */
 /* @var $model shop\entities\user\User */
 
-$this->title = $model->id;
+$this->title = $model->first_name .' '. $model->last_name;
 $this->params['breadcrumbs'][] = ['label' => 'Users', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
@@ -16,8 +16,8 @@ $this->params['breadcrumbs'][] = $this->title;
 
 
     <p>
-        <?= Html::a('Update', ['update', 'id' => $model->id], ['class' => 'btn btn-primary']) ?>
-        <?= Html::a('Delete', ['delete', 'id' => $model->id], [
+        <?= Html::a('Изменить', ['update', 'id' => $model->id], ['class' => 'btn btn-primary']) ?>
+        <?= Html::a('Удалить', ['delete', 'id' => $model->id], [
             'class' => 'btn btn-danger',
             'data' => [
                 'confirm' => 'Are you sure you want to delete this item?',
@@ -32,20 +32,37 @@ $this->params['breadcrumbs'][] = $this->title;
                 'model' => $model,
                 'attributes' => [
                     'id',
-                    'first_name',
-                    'last_name',
-                    'phone',
+                    [
+                        'attribute' => 'first_name',
+                        'label' => 'Имя',
+                    ],
+                    [
+                        'attribute' => 'last_name',
+                        'label' => 'Фамилия',
+                    ],
+                    [
+                        'attribute' => 'phone',
+                        'label' => 'Телефон',
+                    ],
                     'email:email',
                     [
-                        'attribute' => 'status',
+                        'attribute' => 'Статус',
                         'filter' => UserHelper::statusList(),
                         'value' => function (User $user) {
                             return UserHelper::statusLabel($user->status);
                         },
                         'format' => 'raw', //отключить фильтрацию через html encode
                     ],
-                    'created_at:datetime',
-                    'updated_at:datetime',
+                    [
+                        'attribute' => 'created_at',
+                        'format' => 'datetime',
+                        'label' => 'Дата создания',
+                    ],
+                    [
+                        'attribute' => 'updated_at',
+                        'format' => 'datetime',
+                        'label' => 'Дата изменения',
+                    ],
                 ],
             ]) ?>
         </div>

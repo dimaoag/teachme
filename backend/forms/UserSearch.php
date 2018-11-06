@@ -64,4 +64,13 @@ class UserSearch extends Model
 
         return $dataProvider;
     }
+
+    public function attributeLabels()
+    {
+        return [
+            'status' => 'Статус',
+        ];
+    }
+
+
 }

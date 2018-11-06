@@ -10,7 +10,7 @@ use kartik\date\DatePicker;
 /* @var $searchModel backend\forms\UserSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = 'Users';
+$this->title = 'Пользователи';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="user-index">
@@ -22,11 +22,21 @@ $this->params['breadcrumbs'][] = $this->title;
                 'filterModel' => $searchModel,
                 'columns' => [
                     'id',
-                    'first_name',
-                    'last_name',
-                    'phone',
+                    [
+                        'attribute' => 'first_name',
+                        'label' => 'Имя',
+                    ],
+                    [
+                        'attribute' => 'last_name',
+                        'label' => 'Фамилия',
+                    ],
+                    [
+                        'attribute' => 'phone',
+                        'label' => 'Телефон',
+                    ],
                     [
                         'attribute' => 'created_at',
+                        'label' => 'Дата создания',
                         'filter' => DatePicker::widget([
                             'model' => $searchModel,
                             'attribute' => 'date_from',
@@ -42,9 +52,13 @@ $this->params['breadcrumbs'][] = $this->title;
                         'format' => 'datetime',
                     ],
                     'email:email',
-                    'designation',
+                    [
+                            'attribute' => 'designation',
+                            'label' => 'Обозначения'
+                    ],
                     [
                         'attribute' => 'status',
+                        'label' => 'Статус',
                         'filter' => UserHelper::statusList(),
                         'value' => function (User $user) {
                             return UserHelper::statusLabel($user->status);

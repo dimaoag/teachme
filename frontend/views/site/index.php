@@ -190,7 +190,7 @@ $this->title = 'Главная';
             <div class="col-md-12 question-wrap">
                 <h1 class="question-title">Хотите выставить свои курсы на Teach Me ?</h1>
                 <div class="question-btn-wrap">
-                    <a href="#" class="button question-btn hvr-grow">Зарегистрироваться</a>
+                    <a href="#" class="button question-btn">Зарегистрироваться</a>
                 </div>
             </div>
         </div>

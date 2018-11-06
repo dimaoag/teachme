@@ -7,10 +7,9 @@ use yii\widgets\ActiveForm;
 /* @var $model \shop\forms\manage\user\UserEditForm*/
 /* @var $user shop\entities\user\User */
 
-$this->title = 'Update User: ' . $user->id;
-$this->params['breadcrumbs'][] = ['label' => 'Users', 'url' => ['index']];
-$this->params['breadcrumbs'][] = ['label' => $user->id, 'url' => ['view', 'id' => $user->id]];
-$this->params['breadcrumbs'][] = 'Update';
+$this->title = 'Изменить пользователя: ' . $user->first_name . " " . $user->last_name;
+$this->params['breadcrumbs'][] = ['label' => 'Пользователи', 'url' => ['index']];
+$this->params['breadcrumbs'][] = ['label' => $user->first_name.' ' .$user->last_name, 'url' => ['view', 'id' => $user->id]];
 ?>
 <div class="user-update">
 
@@ -22,7 +21,7 @@ $this->params['breadcrumbs'][] = 'Update';
     <?= $form->field($model,'email')->textInput(['maxLength' => true]); ?>
 
     <div class="form-group">
-        <?= Html::submitButton('Save', ['class' => 'btn btn-primary']); ?>
+        <?= Html::submitButton('Сохранить', ['class' => 'btn btn-primary']); ?>
     </div>
 
     <?php ActiveForm::end(); ?>

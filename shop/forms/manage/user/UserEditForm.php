@@ -33,4 +33,13 @@ class UserEditForm extends Model
         ];
     }
 
+    public function attributeLabels()
+    {
+        return [
+            'phone' => 'Телефон',
+            'first_name' => 'Имя',
+            'last_name' => 'Фамилия',
+        ];
+    }
+
 }
