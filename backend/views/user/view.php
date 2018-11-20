@@ -9,7 +9,7 @@ use shop\entities\user\User;
 /* @var $model shop\entities\user\User */
 
 $this->title = $model->first_name .' '. $model->last_name;
-$this->params['breadcrumbs'][] = ['label' => 'Users', 'url' => ['index']];
+$this->params['breadcrumbs'][] = ['label' => 'Пользователи', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="user-view">

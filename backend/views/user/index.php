@@ -40,21 +40,29 @@ $this->params['breadcrumbs'][] = $this->title;
                         'filter' => DatePicker::widget([
                             'model' => $searchModel,
                             'attribute' => 'date_from',
+                            'language' => 'ru',
                             'attribute2' => 'date_to',
                             'type' => DatePicker::TYPE_RANGE,
                             'separator' => '-',
                             'pluginOptions' => [
+                                'language' => 'ru',
                                 'todayHighlight' => true,
                                 'autoclose' => true,
                                 'format' => 'yyyy-mm-dd',
                             ],
                         ]),
-                        'format' => 'datetime',
+                        'value' => function (User $user) {
+                            return UserHelper::echoDate($user->created_at);
+                        },
                     ],
                     'email:email',
                     [
                             'attribute' => 'designation',
-                            'label' => 'Обозначения'
+                            'label' => 'Обозначения',
+                            'filter' => UserHelper::designationList(),
+                            'value' => function (User $user) {
+                                return UserHelper::designationValue($user->designation);
+                            },
                     ],
                     [
                         'attribute' => 'status',

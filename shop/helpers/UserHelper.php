@@ -2,6 +2,7 @@
 namespace shop\helpers;
 
 use shop\entities\user\User;
+use Yii;
 use yii\helpers\ArrayHelper;
 use yii\helpers\Html;
 
@@ -9,8 +10,15 @@ class UserHelper
 {
     public static function statusList(): array {
         return [
-            User::STATUS_WAIT => 'Wait',
-            User::STATUS_ACTIVE => 'Active',
+            User::STATUS_WAIT => 'Не подтвержденные',
+            User::STATUS_ACTIVE => 'Активные',
+        ];
+    }
+
+    public static function designationList(): array {
+        return [
+            User::LEANER => 'Пользователь',
+            User::TEACHER => 'Школа',
         ];
     }
 
@@ -33,6 +41,24 @@ class UserHelper
         return Html::tag('span', ArrayHelper::getValue(self::statusList(), $status), [
             'class' => $class,
         ]);
+    }
+
+    public static function designationValue($designation):string {
+        switch ($designation){
+            case User::LEANER:
+                $designationValue = 'Пользователь';
+                break;
+            case User::TEACHER:
+                $designationValue = 'Школа';
+                break;
+        }
+        return $designationValue;
+    }
+
+
+    public static function echoDate($date){
+//        Yii::$app->formatter->locale = 'en-EN';
+        return Yii::$app->formatter->asDatetime($date,'medium');
     }
 
 
