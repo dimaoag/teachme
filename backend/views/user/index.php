@@ -73,7 +73,7 @@ $this->params['breadcrumbs'][] = $this->title;
                         },
                         'format' => 'raw', //отключить фильтрацию через html encode
                     ],
-                    ['class' => 'yii\grid\ActionColumn'],
+                    ['class' => 'yii\grid\ActionColumn','header'=>"Действия"],
                 ],
             ]); ?>
         </div>

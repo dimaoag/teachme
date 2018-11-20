@@ -9,13 +9,13 @@ use yii\grid\GridView;
 /* @var $searchModel backend\forms\shop\CategorySearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = 'Categories';
+$this->title = 'Категории';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="user-index">
 
     <p>
-        <?= Html::a('Create Category', ['create'], ['class' => 'btn btn-success']) ?>
+        <?= Html::a('Создать категорию', ['create'], ['class' => 'btn btn-success']) ?>
     </p>
 
     <div class="box">
@@ -26,6 +26,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 'columns' => [
                     [
                         'attribute' => 'name',
+                        'label' => 'Название',
                         'value' => function (Category $model) {
                             $indent = ($model->depth > 1 ? str_repeat('&nbsp;&nbsp;', $model->depth - 1) . ' ' : '');
                             return $indent . Html::a(Html::encode($model->name), ['view', 'id' => $model->id]);
@@ -33,6 +34,7 @@ $this->params['breadcrumbs'][] = $this->title;
                         'format' => 'raw',
                     ],
                     [
+                        'label' => 'Двигать',
                         'value' => function (Category $model) {
                             return
                                 Html::a('<span class="glyphicon glyphicon-arrow-up"></span>', ['move-up', 'id' => $model->id]) .
@@ -41,9 +43,14 @@ $this->params['breadcrumbs'][] = $this->title;
                         'format' => 'raw',
                         'contentOptions' => ['style' => 'text-align: center'],
                     ],
-                    'slug',
-                    'title',
-                    ['class' => ActionColumn::class],
+                    [
+                        'attribute' => 'slug',
+                        'label' => 'Алиас',
+                    ],
+                    [
+                        'class' => ActionColumn::class,
+                        'header'=>"Действия"
+                    ],
                 ],
             ]); ?>
         </div>

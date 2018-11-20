@@ -12,8 +12,6 @@ use yii\db\ActiveRecord;
  * @property integer $id
  * @property string $name
  * @property string $slug
- * @property string $title
- * @property string $description
  * @property integer $lft
  * @property integer $rgt
  * @property integer $depth
@@ -30,23 +28,19 @@ class Category extends ActiveRecord
 {
     public $meta;
 
-    public static function create($name, $slug, $title, $description, Meta $meta): self
+    public static function create($name, $slug, Meta $meta): self
     {
         $category = new static();
         $category->name = $name;
         $category->slug = $slug;
-        $category->title = $title;
-        $category->description = $description;
         $category->meta = $meta;
         return $category;
     }
 
-    public function edit($name, $slug, $title, $description, Meta $meta): void
+    public function edit($name, $slug, Meta $meta): void
     {
         $this->name = $name;
         $this->slug = $slug;
-        $this->title = $title;
-        $this->description = $description;
         $this->meta = $meta;
     }
 
@@ -57,7 +51,7 @@ class Category extends ActiveRecord
 
     public function getHeadingTile(): string
     {
-        return $this->title ?: $this->name;
+        return $this->name ?: $this->name;
     }
 
     public static function tableName(): string

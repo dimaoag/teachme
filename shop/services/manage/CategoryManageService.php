@@ -22,8 +22,6 @@ class CategoryManageService
         $category = Category::create(
             $form->name,
             $form->slug,
-            $form->title,
-            $form->description,
             new Meta(
                 $form->meta->title,
                 $form->meta->description,
@@ -42,8 +40,6 @@ class CategoryManageService
         $category->edit(
             $form->name,
             $form->slug,
-            $form->title,
-            $form->description,
             new Meta(
                 $form->meta->title,
                 $form->meta->description,
