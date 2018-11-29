@@ -2,22 +2,21 @@
 
 namespace backend\forms\course;
 
-use shop\helpers\CharacteristicHelper;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
-use shop\entities\Shop\Characteristic;
+use shop\entities\shop\Characteristic;
 
 class CharacteristicSearch extends Model
 {
     public $id;
     public $name;
-    public $type;
+    public $sort;
     public $required;
 
     public function rules(): array
     {
         return [
-            [['id', 'type', 'required'], 'integer'],
+            [['id', 'sort', 'required'], 'integer'],
             [['name'], 'safe'],
         ];
     }
@@ -46,7 +45,7 @@ class CharacteristicSearch extends Model
 
         $query->andFilterWhere([
             'id' => $this->id,
-            'type' => $this->type,
+            'sort' => $this->sort,
             'required' => $this->required,
         ]);
 
@@ -56,10 +55,6 @@ class CharacteristicSearch extends Model
         return $dataProvider;
     }
 
-    public function typesList(): array
-    {
-        return CharacteristicHelper::typeList();
-    }
 
     public function requiredList(): array
     {

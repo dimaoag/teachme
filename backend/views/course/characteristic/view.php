@@ -1,24 +1,23 @@
 <?php
 
-use shop\helpers\CharacteristicHelper;
 use yii\helpers\Html;
 use yii\widgets\DetailView;
 
 /* @var $this yii\web\View */
-/* @var $characteristic shop\entities\Shop\Characteristic */
+/* @var $characteristic shop\entities\shop\Characteristic */
 
 $this->title = $characteristic->name;
-$this->params['breadcrumbs'][] = ['label' => 'Characteristics', 'url' => ['index']];
+$this->params['breadcrumbs'][] = ['label' => 'Характеристики', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="user-view">
 
     <p>
-        <?= Html::a('Update', ['update', 'id' => $characteristic->id], ['class' => 'btn btn-primary']) ?>
-        <?= Html::a('Delete', ['delete', 'id' => $characteristic->id], [
+        <?= Html::a('Изменить', ['update', 'id' => $characteristic->id], ['class' => 'btn btn-primary']) ?>
+        <?= Html::a('Удалить', ['delete', 'id' => $characteristic->id], [
             'class' => 'btn btn-danger',
             'data' => [
-                'confirm' => 'Are you sure you want to delete this item?',
+                'confirm' => 'Вы действительно хотите удалить этую запись?',
                 'method' => 'post',
             ],
         ]) ?>
@@ -30,14 +29,20 @@ $this->params['breadcrumbs'][] = $this->title;
                 'model' => $characteristic,
                 'attributes' => [
                     'id',
-                    'name',
                     [
-                        'attribute' => 'type',
-                        'value' => CharacteristicHelper::typeName($characteristic->type),
+                        'attribute' => 'name',
+                        'label' => 'Название',
                     ],
-                    'sort',
-                    'required:boolean',
-                    'default',
+                    [
+                        'attribute' => 'sort',
+                        'label' => 'Сортировка',
+                    ],
+                    [
+                        'attribute' => 'required',
+                        'label' => 'Обязательное',
+                        'format' => 'boolean',
+
+                    ],
                     [
                         'attribute' => 'variants',
                         'value' => implode(PHP_EOL, $characteristic->variants),

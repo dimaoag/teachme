@@ -40,6 +40,7 @@
                         'items' => [
                             ['label' => 'Категории', 'icon' => 'reorder', 'url' => ['/course/category/index'], 'active' => $this->context->id == 'course/category'],
                             ['label' => 'Города', 'icon' => 'location-arrow', 'url' => ['/course/city/index'], 'active' => $this->context->id == 'course/city'],
+                            ['label' => 'Характеристики', 'icon' => 'cubes', 'url' => ['/course/characteristic/index'], 'active' => $this->context->id == 'course/characteristic'],
 //                            ['label' => 'Brands', 'icon' => 'star-o', 'url' => ['/shop/brand/index'], 'active' => $this->context->id == 'shop/brand'],
 //                            ['label' => 'Tags', 'icon' => 'star-o', 'url' => ['/shop/tag/index'], 'active' => $this->context->id == 'shop/tag'],
 //                            ['label' => 'Categories', 'icon' => 'star-o', 'url' => ['/shop/category/index'], 'active' => $this->context->id == 'shop/category'],

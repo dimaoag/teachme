@@ -3,8 +3,8 @@
 /* @var $this yii\web\View */
 /* @var $model shop\forms\manage\Shop\CharacteristicForm */
 
-$this->title = 'Create Characteristic';
-$this->params['breadcrumbs'][] = ['label' => 'Characteristics', 'url' => ['index']];
+$this->title = 'Добавить характеристику';
+$this->params['breadcrumbs'][] = ['label' => 'Характеристики', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="characteristic-create">

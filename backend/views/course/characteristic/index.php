@@ -1,7 +1,6 @@
 <?php
 
-use shop\entities\Shop\Characteristic;
-use shop\helpers\CharacteristicHelper;
+use shop\entities\shop\Characteristic;
 use yii\grid\ActionColumn;
 use yii\helpers\Html;
 use yii\grid\GridView;
@@ -10,13 +9,13 @@ use yii\grid\GridView;
 /* @var $searchModel backend\forms\course\CharacteristicSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = 'Characteristics';
+$this->title = 'Характеристики';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="user-index">
 
     <p>
-        <?= Html::a('Create Characteristic', ['create'], ['class' => 'btn btn-success']) ?>
+        <?= Html::a('Добавить характеристику', ['create'], ['class' => 'btn btn-success']) ?>
     </p>
 
     <div class="box">
@@ -27,22 +26,21 @@ $this->params['breadcrumbs'][] = $this->title;
                 'columns' => [
                     [
                         'attribute' => 'name',
+                        'label' => 'Название',
                         'value' => function (Characteristic $model) {
                             return Html::a(Html::encode($model->name), ['view', 'id' => $model->id]);
                         },
                         'format' => 'raw',
                     ],
                     [
-                        'attribute' => 'type',
-                        'filter' => $searchModel->typesList(),
-                        'value' => function (Characteristic $model) {
-                            return CharacteristicHelper::typeName($model->type);
-                        },
-                    ],
-                    [
                         'attribute' => 'required',
+                        'label' => 'Обазательное',
                         'filter' => $searchModel->requiredList(),
                         'format' => 'boolean',
+                    ],
+                    [
+                        'attribute' => 'sort',
+                        'label' => 'Сортировка',
                     ],
                     ['class' => ActionColumn::class],
                 ],

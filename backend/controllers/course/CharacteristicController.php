@@ -2,21 +2,20 @@
 
 namespace backend\controllers\course;
 
-use shop\forms\manage\shop\CategoryForm;
-use shop\services\manage\CategoryManageService;
+use shop\forms\manage\shop\CharacteristicForm;
+use shop\services\manage\CharacteristicManageService;
 use Yii;
-use shop\entities\shop\Category;
-use backend\forms\course\CategorySearch;
+use shop\entities\shop\Characteristic;
+use backend\forms\course\CharacteristicSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
-use shop\readModels\shop\CategoryReadRepository;
 
-class CategoryController extends Controller
+class CharacteristicController extends Controller
 {
     private $service;
 
-    public function __construct($id, $module, CategoryManageService $service, $config = [])
+    public function __construct($id, $module, CharacteristicManageService $service, $config = [])
     {
         parent::__construct($id, $module, $config);
         $this->service = $service;
@@ -39,7 +38,8 @@ class CategoryController extends Controller
      */
     public function actionIndex()
     {
-        $searchModel = new CategorySearch();
+
+        $searchModel = new CharacteristicSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
         return $this->render('index', [
@@ -55,7 +55,7 @@ class CategoryController extends Controller
     public function actionView($id)
     {
         return $this->render('view', [
-            'category' => $this->findModel($id),
+            'characteristic' => $this->findModel($id),
         ]);
     }
 
@@ -64,11 +64,11 @@ class CategoryController extends Controller
      */
     public function actionCreate()
     {
-        $form = new CategoryForm();
+        $form = new CharacteristicForm();
         if ($form->load(Yii::$app->request->post()) && $form->validate()) {
             try {
-                $category = $this->service->create($form);
-                return $this->redirect(['view', 'id' => $category->id]);
+                $characteristic = $this->service->create($form);
+                return $this->redirect(['view', 'id' => $characteristic->id]);
             } catch (\DomainException $e) {
                 Yii::$app->errorHandler->logException($e);
                 Yii::$app->session->setFlash('error', $e->getMessage());
@@ -85,13 +85,13 @@ class CategoryController extends Controller
      */
     public function actionUpdate($id)
     {
-        $category = $this->findModel($id);
+        $characteristic = $this->findModel($id);
 
-        $form = new CategoryForm($category);
+        $form = new CharacteristicForm($characteristic);
         if ($form->load(Yii::$app->request->post()) && $form->validate()) {
             try {
-                $this->service->edit($category->id, $form);
-                return $this->redirect(['view', 'id' => $category->id]);
+                $this->service->edit($characteristic->id, $form);
+                return $this->redirect(['view', 'id' => $characteristic->id]);
             } catch (\DomainException $e) {
                 Yii::$app->errorHandler->logException($e);
                 Yii::$app->session->setFlash('error', $e->getMessage());
@@ -99,7 +99,7 @@ class CategoryController extends Controller
         }
         return $this->render('update', [
             'model' => $form,
-            'category' => $category,
+            'characteristic' => $characteristic,
         ]);
     }
 
@@ -120,32 +120,12 @@ class CategoryController extends Controller
 
     /**
      * @param integer $id
-     * @return mixed
-     */
-    public function actionMoveUp($id)
-    {
-        $this->service->moveUp($id);
-        return $this->redirect(['index']);
-    }
-
-    /**
-     * @param integer $id
-     * @return mixed
-     */
-    public function actionMoveDown($id)
-    {
-        $this->service->moveDown($id);
-        return $this->redirect(['index']);
-    }
-
-    /**
-     * @param integer $id
-     * @return Category the loaded model
+     * @return Characteristic the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */
-    protected function findModel($id): Category
+    protected function findModel($id): Characteristic
     {
-        if (($model = Category::findOne($id)) !== null) {
+        if (($model = Characteristic::findOne($id)) !== null) {
             return $model;
         }
         throw new NotFoundHttpException('The requested page does not exist.');

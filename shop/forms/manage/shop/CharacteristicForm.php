@@ -2,8 +2,7 @@
 
 namespace shop\forms\manage\shop;
 
-use shop\entities\Shop\Characteristic;
-use shop\helpers\CharacteristicHelper;
+use shop\entities\shop\Characteristic;
 use yii\base\Model;
 
 /**
@@ -12,9 +11,7 @@ use yii\base\Model;
 class CharacteristicForm extends Model
 {
     public $name;
-    public $type;
     public $required;
-    public $default;
     public $textVariants;
     public $sort;
 
@@ -24,9 +21,7 @@ class CharacteristicForm extends Model
     {
         if ($characteristic) {
             $this->name = $characteristic->name;
-            $this->type = $characteristic->type;
             $this->required = $characteristic->required;
-            $this->default = $characteristic->default;
             $this->textVariants = implode(PHP_EOL, $characteristic->variants);
             $this->sort = $characteristic->sort;
             $this->_characteristic = $characteristic;
@@ -39,22 +34,27 @@ class CharacteristicForm extends Model
     public function rules(): array
     {
         return [
-            [['name', 'type', 'sort'], 'required'],
+            [['name', 'sort'], 'required'],
             [['required'], 'boolean'],
-            [['default'], 'string', 'max' => 255],
             [['textVariants'], 'string'],
             [['sort'], 'integer'],
             [['name'], 'unique', 'targetClass' => Characteristic::class, 'filter' => $this->_characteristic ? ['<>', 'id', $this->_characteristic->id] : null]
         ];
     }
 
-    public function typesList(): array
+    public function attributeLabels()
     {
-        return CharacteristicHelper::typeList();
+        return [
+            'name' => 'Название',
+            'required' => 'Обязательное',
+            'textVariants' => 'Варианты',
+            'sort' => 'Сортировка',
+        ];
     }
+
 
     public function getVariants(): array
     {
-        return preg_split('#\s+#i', $this->textVariants);
+        return preg_split('#\n+#i', $this->textVariants);
     }
 }
