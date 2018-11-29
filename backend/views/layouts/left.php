@@ -31,9 +31,23 @@
                 'options' => ['class' => 'sidebar-menu tree', 'data-widget'=> 'tree'],
                 'items' => [
                     ['label' => 'Menu Yii2', 'options' => ['class' => 'header']],
-                    ['label' => 'Пользователи', 'icon' => 'user', 'url' => ['/user'], 'active' => $this->context->id == 'user'],
-                    ['label' => 'Категории', 'icon' => 'file-o', 'url' => ['/shop/category/index'], 'active' => $this->context->id == 'shop/category'],
                     ['label' => 'Login', 'url' => ['site/login'], 'visible' => Yii::$app->user->isGuest],
+                    ['label' => 'Пользователи', 'icon' => 'user', 'url' => ['/user'], 'active' => $this->context->id == 'user'],
+                    [
+                        'label' => 'Курс',
+                        'icon' => 'shopping-bag',
+                        'url' => '#',
+                        'items' => [
+                            ['label' => 'Категории', 'icon' => 'reorder', 'url' => ['/course/category/index'], 'active' => $this->context->id == 'course/category'],
+                            ['label' => 'Города', 'icon' => 'location-arrow', 'url' => ['/course/city/index'], 'active' => $this->context->id == 'course/city'],
+//                            ['label' => 'Brands', 'icon' => 'star-o', 'url' => ['/shop/brand/index'], 'active' => $this->context->id == 'shop/brand'],
+//                            ['label' => 'Tags', 'icon' => 'star-o', 'url' => ['/shop/tag/index'], 'active' => $this->context->id == 'shop/tag'],
+//                            ['label' => 'Categories', 'icon' => 'star-o', 'url' => ['/shop/category/index'], 'active' => $this->context->id == 'shop/category'],
+//                            ['label' => 'Characteristics', 'icon' => 'star-o', 'url' => ['/shop/characteristic/index'], 'active' => $this->context->id == 'shop/characteristic'],
+//                            ['label' => 'Products', 'icon' => 'star-o', 'url' => ['/shop/product/index'], 'active' => $this->context->id == 'shop/product'],
+
+                        ],
+                    ],
                     [
                         'label' => 'Some tools',
                         'icon' => 'share',
