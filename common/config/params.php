@@ -7,4 +7,6 @@ return [
     'backendHostInfo' => 'http://admin.teachme.com',
     'frontendHostInfo' => 'http://teachme.com',
     'rememberMeDuration' => 3600 * 24,
+    'staticHostInfo' => 'http://static.teachme.com',
+    'staticPath' => dirname(__DIR__, 2) . '/static',
 ];
