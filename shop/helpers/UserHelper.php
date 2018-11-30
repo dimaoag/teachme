@@ -17,7 +17,7 @@ class UserHelper
 
     public static function designationList(): array {
         return [
-            User::LEANER => 'Пользователь',
+            User::LEARNER => 'Пользователь',
             User::TEACHER => 'Школа',
         ];
     }
@@ -45,7 +45,7 @@ class UserHelper
 
     public static function designationValue($designation):string {
         switch ($designation){
-            case User::LEANER:
+            case User::LEARNER:
                 $designationValue = 'Пользователь';
                 break;
             case User::TEACHER:
@@ -61,6 +61,14 @@ class UserHelper
         return Yii::$app->formatter->asDatetime($date,'medium');
     }
 
+
+    public static function isAccessAddCourse() :bool
+    {
+        if (Yii::$app->user->isGuest || Yii::$app->user->identity->designation != User::TEACHER){
+            return false;
+        }
+        return true;
+    }
 
 
 }

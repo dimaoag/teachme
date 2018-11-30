@@ -32,7 +32,7 @@ class User extends ActiveRecord implements IdentityInterface
     const STATUS_WAIT = 0;
     const STATUS_ACTIVE = 10;
     const TEACHER = 'teacher';
-    const LEANER = 'leaner';
+    const LEARNER = 'leaner';
 
     public static function signupLeaner(string $first_name, string $phone, string $password):self
     {
@@ -44,7 +44,7 @@ class User extends ActiveRecord implements IdentityInterface
         $user->created_at = $time = time();
         $user->updated_at = $time;
         $user->status = self::STATUS_WAIT;
-        $user->designation = self::LEANER;
+        $user->designation = self::LEARNER;
         $user->generatePasswordConfirmCode();
         return $user;
     }

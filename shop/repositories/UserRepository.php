@@ -46,7 +46,6 @@ class UserRepository
     {
         return $this->getUserBy(['phone'=> $phone]);
     }
-
     private function getUserBy(array $condition): User
     {
         if (!$user = User::find()->andWhere($condition)->limit(1)->one()){

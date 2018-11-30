@@ -11,6 +11,7 @@ use frontend\assets\AppAsset;
 use frontend\assets\FontAwesomeAsset;
 use common\widgets\Alert;
 use yii\helpers\Url;
+use shop\helpers\UserHelper;
 
 AppAsset::register($this);
 FontAwesomeAsset::register($this);
@@ -48,7 +49,9 @@ FontAwesomeAsset::register($this);
                         <ul class="nav navbar-nav">
                             <li><a href="<?=Url::home()?>">Главная</a></li>
                             <li><a href="<?=Url::to(['/course'])?>">Курсы</a></li>
-                            <li><a href="#contact">Добавить курс</a></li>
+                            <?php if (UserHelper::isAccessAddCourse()): ?>
+                                <li><a href="<?=Url::to(['/course/course/create'])?>">Добавить курс</a></li>
+                            <?php endif; ?>
                             <li class="header-favorite-courses"><a href="#">Избраные</a></li>
                         </ul>
                         <ul class="nav navbar-nav navbar-right">
@@ -93,7 +96,9 @@ FontAwesomeAsset::register($this);
                             <ul>
                                 <li><a href="<?=Url::home()?>">Главная</a></li>
                                 <li><a href="<?=Url::to(['/course'])?>">Курсы</a></li>
-                                <li><a href="#">Добавить курс</a></li>
+                                <?php if (UserHelper::isAccessAddCourse()): ?>
+                                    <li><a href="<?=Url::to(['/course/course/create'])?>">Добавить курс</a></li>
+                                <?php endif; ?>
                             </ul>
                         </div>
                         <div class="footer-links">
