@@ -36,6 +36,7 @@ use yii\web\UploadedFile;
  * @property Value[] $values
  * @property Photo[] $photos
  * @property Photo $mainPhoto
+ * @property Gallery[] $gallery
  */
 class Course extends ActiveRecord implements AggregateRoot
 {
@@ -143,6 +144,14 @@ class Course extends ActiveRecord implements AggregateRoot
         $this->updatePhotos($photos);
     }
 
+    public function addGalleryImage(UploadedFile $file): void
+    {
+        $gallery = $this->gallery;
+        $gallery[] = Gallery::create($file);
+        $this->updateGallery($gallery);
+    }
+
+
     public function removePhoto($id): void
     {
         $photos = $this->photos;
@@ -156,9 +165,28 @@ class Course extends ActiveRecord implements AggregateRoot
         throw new \DomainException('Photo is not found.');
     }
 
+    public function removeGalleryImage($id): void
+    {
+        $gallery = $this->gallery;
+        foreach ($gallery as $i => $galleryItem) {
+            if ($galleryItem->isIdEqualTo($id)) {
+                unset($gallery[$i]);
+                $this->updateGallery($gallery);
+                return;
+            }
+        }
+        throw new \DomainException('Photo is not found.');
+    }
+
+
     public function removePhotos(): void
     {
         $this->updatePhotos([]);
+    }
+
+    public function removeGallery(): void
+    {
+        $this->updateGallery([]);
     }
 
 
@@ -169,6 +197,14 @@ class Course extends ActiveRecord implements AggregateRoot
         }
         $this->photos = $photos;
         $this->populateRelation('mainPhoto', reset($photos));
+    }
+
+    private function updateGallery(array $gallery): void
+    {
+        foreach ($gallery as $i => $galleryItem) {
+            $galleryItem->setSort($i);
+        }
+        $this->gallery = $gallery;
     }
 
 
@@ -229,6 +265,11 @@ class Course extends ActiveRecord implements AggregateRoot
         return $this->hasMany(Photo::class, ['course_id' => 'id'])->orderBy('sort');
     }
 
+    public function getGallery(): ActiveQuery
+    {
+        return $this->hasMany(Gallery::class, ['course_id' => 'id'])->orderBy('sort');
+    }
+
     public function getMainPhoto(): ActiveQuery
     {
         return $this->hasOne(Photo::class, ['id' => 'main_photo_id']);
@@ -245,10 +286,9 @@ class Course extends ActiveRecord implements AggregateRoot
     public function behaviors(): array
     {
         return [
-            MetaBehavior::class,
             [
                 'class' => SaveRelationsBehavior::class,
-                'relations' => ['values', 'photos'],
+                'relations' => ['values', 'photos', 'gallery'],
             ],
         ];
     }
@@ -265,6 +305,9 @@ class Course extends ActiveRecord implements AggregateRoot
         if (parent::beforeDelete()) {
             foreach ($this->photos as $photo) {
                 $photo->delete();
+            }
+            foreach ($this->gallery as $gallery_item){
+                $gallery_item->delete();
             }
             return true;
         }

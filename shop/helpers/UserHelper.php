@@ -70,5 +70,13 @@ class UserHelper
         return true;
     }
 
+    public static function isUserTeacher() :bool
+    {
+        if (Yii::$app->user->identity->designation == User::TEACHER){
+            return true;
+        }
+        return false;
+    }
+
 
 }

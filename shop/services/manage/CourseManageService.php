@@ -2,88 +2,151 @@
 
 namespace shop\services\manage;
 
-//use shop\entities\Meta;
-//use shop\entities\shop\Category;
-//use shop\forms\manage\shop\CategoryForm;
-//use shop\repositories\shop\CategoryRepository;
+use shop\entities\shop\course\Course;
+use shop\forms\manage\shop\course\CategoriesForm;
+use shop\forms\manage\shop\course\PhotosForm;
+use shop\forms\manage\shop\course\GalleryForm;
+use shop\forms\manage\shop\course\CourseCreateForm;
+use shop\forms\manage\shop\course\CourseEditForm;
+use shop\repositories\shop\CityRepository;
+use shop\repositories\shop\CategoryRepository;
+use shop\repositories\shop\CourseRepository;
+use shop\services\TransactionManager;
+use Yii;
 
 class CourseManageService
 {
+    private $courses;
+    private $cities;
     private $categories;
+    private $transaction;
 
-    public function __construct(CategoryRepository $categories)
+    public function __construct(
+        CourseRepository $courses,
+        CityRepository $cities,
+        CategoryRepository $categories,
+        TransactionManager $transaction
+    )
     {
+        $this->courses = $courses;
+        $this->cities = $cities;
         $this->categories = $categories;
+        $this->transaction = $transaction;
     }
 
-    public function create(CategoryForm $form): Category
+    public function create(CourseCreateForm $form): Course
     {
-        $parent = $this->categories->get($form->parentId);
-        $category = Category::create(
+        $city = $this->cities->get($form->cityId);
+        $category = $this->categories->get($form->categories->main);
+
+        $course = Course::create(
+            Yii::$app->user->id,
+            $city->id,
+            $category->id,
             $form->name,
-            $form->slug,
-            new Meta(
-                $form->meta->title,
-                $form->meta->description,
-                $form->meta->keywords
-            )
+            $form->price,
+            $form->description
         );
-        $category->appendTo($parent);
-        $this->categories->save($category);
-        return $category;
+
+
+        foreach ($form->values as $value) {
+            $course->setValue($value->id, $value->value);
+        }
+
+        foreach ($form->photos->files as $file) {
+            $course->addPhoto($file);
+        }
+
+        foreach ($form->gallery->files as $galleryImage) {
+            $course->addGalleryImage($galleryImage);
+        }
+
+
+        $this->transaction->wrap(function () use ($course, $form) {
+            $this->courses->save($course);
+        });
+        return $course;
     }
 
-    public function edit($id, CategoryForm $form): void
+    public function edit($id, CourseEditForm $form): void
     {
-        $category = $this->categories->get($id);
-        $this->assertIsNotRoot($category);
-        $category->edit(
+        $course = $this->courses->get($id);
+        $city = $this->cities->get($form->cityId);
+        $category = $this->categories->get($form->categories->main);
+
+        $course->edit(
+            $city->id,
             $form->name,
-            $form->slug,
-            new Meta(
-                $form->meta->title,
-                $form->meta->description,
-                $form->meta->keywords
-            )
+            $form->price,
+            $form->description
         );
-        if ($form->parentId !== $category->parent->id) {
-            $parent = $this->categories->get($form->parentId);
-            $category->appendTo($parent);
-        }
-        $this->categories->save($category);
+
+        $course->changeMainCategory($category->id);
+
+        $this->transaction->wrap(function () use ($course, $form) {
+
+            $this->courses->save($course);
+
+            foreach ($form->values as $value) {
+                $course->setValue($value->id, $value->value);
+            }
+
+            $this->courses->save($course);
+        });
     }
 
-    public function moveUp($id): void
+
+    public function activate($id): void
     {
-        $category = $this->categories->get($id);
-        $this->assertIsNotRoot($category);
-        if ($prev = $category->prev) {
-            $category->insertBefore($prev);
-        }
-        $this->categories->save($category);
+        $course = $this->courses->get($id);
+        $course->activate();
+        $this->courses->save($course);
     }
 
-    public function moveDown($id): void
+    public function draft($id): void
     {
-        $category = $this->categories->get($id);
-        $this->assertIsNotRoot($category);
-        if ($next = $category->next) {
-            $category->insertAfter($next);
-        }
-        $this->categories->save($category);
+        $course = $this->courses->get($id);
+        $course->draft();
+        $this->courses->save($course);
     }
+
+    public function addPhotos($id, PhotosForm $form): void
+    {
+        $course = $this->courses->get($id);
+        foreach ($form->files as $file) {
+            $course->addPhoto($file);
+        }
+        $this->courses->save($course);
+    }
+
+    public function addGallery($id, GalleryForm $form): void
+    {
+        $course = $this->courses->get($id);
+        foreach ($form->files as $galleryItem) {
+            $course->addGalleryImage($galleryItem);
+        }
+        $this->courses->save($course);
+    }
+
+
+    public function removePhoto($id, $photoId): void
+    {
+        $course = $this->courses->get($id);
+        $course->removePhoto($photoId);
+        $this->courses->save($course);
+    }
+
+    public function removeGallery($id, $galleryItemId): void
+    {
+        $course = $this->courses->get($id);
+        $course->removeGalleryImage($galleryItemId);
+        $this->courses->save($course);
+    }
+
 
     public function remove($id): void
     {
-        $category = $this->categories->get($id);
-        $this->assertIsNotRoot($category);
-        $this->categories->remove($category);
-    }
-
-    private function assertIsNotRoot(Category $category): void
-    {
-        if ($category->isRoot()) {
-            throw new \DomainException('Unable to manage the root category.');
-        }
+        $course = $this->courses->get($id);
+        $this->courses->remove($course);
     }
 }

@@ -618,6 +618,8 @@ input[type=text], textarea {
 /*the container must be positioned relative:*/
 .custom-select {
     position: relative;
+    display: flex;
+    flex-direction: column-reverse;
 }
 .custom-select select {
     display: none; /*hide original SELECT element:*/
@@ -2445,6 +2447,19 @@ label.tab.active{
 .active_tab1{
     color: #933ec5;
 }
+.add-course .file-drop-zone-title{
+    font-size: 1rem;
+}
+.file-drop-zone{
+    border: 2px dashed #aaa;
+}
+.btn-purple{
+    background-color: #933ec5;
+    color: white;
+}
+.btn-purple:hover{
+    color: white;
+}
 .add-course h1{
     padding: 25px 0;
 }
@@ -2469,18 +2484,18 @@ label.tab.active{
     display: -ms-flexbox;
     display: flex;
 }
+.add-course-price-field input[type=number]::-webkit-inner-spin-button,
+.add-course-price-field input[type=number]::-webkit-outer-spin-button{
+    -webkit-appearance: none;
+    margin: 0;
+}
 .add-course-price-field p{
     margin-left: 15px;
-    display: -webkit-box;
-    display: -ms-flexbox;
-    display: flex;
-    -webkit-box-orient: vertical;
-    -webkit-box-direction: normal;
-    -ms-flex-direction: column;
-    flex-direction: column;
-    -webkit-box-pack: end;
-    -ms-flex-pack: end;
-    justify-content: flex-end;
+    margin-top: 6px;
+}
+.value-container{
+    padding-right: 0;
+    padding-left: 0;
 }
 .step-1 .bottom-block{
     margin-top: 10%;
@@ -2509,6 +2524,12 @@ label.tab.active{
 .add-course-select{
     padding: 10px 0;
     border-bottom: 1px solid #933ec5;
+}
+.add-course-select .form-group{
+    margin-bottom: 0;
+}
+.add-course-select .form-group .help-block{
+    margin-bottom: 0;
 }
 @media all and (max-width: 500px){
     .add-course .nav-item{
@@ -2611,6 +2632,11 @@ label.tab.active{
 }
 .main-select-city{
     border-radius: 20px;
+    display: flex;
+}
+.step-1 .form-group{
+    margin-right: 0;
+    margin-left: 0;
 }
 .buttonInside{
     position:relative;

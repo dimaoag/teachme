@@ -1,22 +1,20 @@
 <?php
 
-namespace shop\forms\manage\shop\product;
+namespace shop\forms\manage\shop\course;
 
 use shop\entities\shop\Category;
-use shop\entities\shop\product\Product;
+use shop\entities\shop\course\Course;
 use yii\base\Model;
 use yii\helpers\ArrayHelper;
 
 class CategoriesForm extends Model
 {
     public $main;
-    public $others = [];
 
-    public function __construct(Product $product = null, $config = [])
+    public function __construct(Course $course = null, $config = [])
     {
-        if ($product) {
-            $this->main = $product->category_id;
-            $this->others = ArrayHelper::getColumn($product->categoryAssignments, 'category_id');
+        if ($course) {
+            $this->main = $course->category_id;
         }
         parent::__construct($config);
     }
@@ -33,13 +31,7 @@ class CategoriesForm extends Model
         return [
             ['main', 'required'],
             ['main', 'integer'],
-            ['others', 'each', 'rule' => ['integer']],
         ];
     }
 
-    public function beforeValidate(): bool
-    {
-        $this->others = array_filter((array)$this->others);
-        return parent::beforeValidate();
-    }
 }

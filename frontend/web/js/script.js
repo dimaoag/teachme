@@ -176,100 +176,100 @@ $(document).ready(function(){
         // var filter = /^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/;
         var filter_price = /^[0-9.]{1,}$/;
 
-        if($.trim($('.photo_course').val()).length == 0) {
-            error_photo = 'Загрузите пожалуйста фото курса';
-            $('#error_photo').text(error_photo);
-        } else {
-            error_photo = '';
-            $('#error_photo').text(error_photo);
-        }
+        // if($.trim($('.photo_course').val()).length == 0) {
+        //     error_photo = 'Загрузите пожалуйста фото курса';
+        //     $('#error_photo').text(error_photo);
+        // } else {
+        //     error_photo = '';
+        //     $('#error_photo').text(error_photo);
+        // }
+        //
+        // if($.trim($('#name').val()).length == 0) {
+        //     error_name = 'Введите названия курса';
+        //     $('#error_name').text(error_name);
+        // } else {
+        //     error_name = '';
+        //     $('#error_name').text(error_name);
+        // }
+        //
+        // if($('#city').val() == '0') {
+        //     error_city = 'Выберите город';
+        //     $('#error_city').text(error_city);
+        // } else {
+        //     error_city = '';
+        //     $('#error_city').text(error_city);
+        // }
+        //
+        // if($('#category').val() == '0') {
+        //     error_category = 'Выберите категорию';
+        //     $('#error_category').text(error_category);
+        // } else {
+        //     error_category = '';
+        //     $('#error_category').text(error_category);
+        // }
+        //
+        // if($.trim($('#price').val()).length == 0) {
+        //     error_price = 'Введите цену курса';
+        //     $('#error_price').text(error_price);
+        // } else {
+        //     if (!filter_price.test($('#price').val())) {
+        //         error_price = 'Введите коректную цену';
+        //         $('#error_price').text(error_price);
+        //     } else {
+        //         error_price = '';
+        //         $('#error_price').text(error_price);
+        //     }
+        // }
+        //
+        // if($('#type_education').val() == '0') {
+        //     error_type_education = 'Выберите тип курса';
+        //     $('#error_type_education').text(error_type_education);
+        // } else {
+        //     error_type_education = '';
+        //     $('#error_type_education').text(error_type_education);
+        // }
+        //
+        // if($('#form_education').val() == '0') {
+        //     error_form_education = 'Выберите форму курса';
+        //     $('#error_form_education').text(error_form_education);
+        // } else {
+        //     error_form_education = '';
+        //     $('#error_form_education').text(error_form_education);
+        // }
+        //
+        // if($('#quantity_group').val() == '0') {
+        //     error_quantity_group = 'Выберите групу';
+        //     $('#error_quantity_group').text(error_quantity_group);
+        // } else {
+        //     error_quantity_group = '';
+        //     $('#error_quantity_group').text(error_quantity_group);
+        // }
+        //
+        // if($('#level').val() == '0') {
+        //     error_level = 'Выберите уровень подготовки';
+        //     $('#error_level').text(error_level);
+        // } else {
+        //     error_level = '';
+        //     $('#error_level').text(error_level);
+        // }
+        //
+        // if($('#result').val() == '0') {
+        //     error_result = 'Выберите документ';
+        //     $('#error_result').text(error_result);
+        // } else {
+        //     error_result = '';
+        //     $('#error_result').text(error_result);
+        // }
 
-        if($.trim($('#name').val()).length == 0) {
-            error_name = 'Введите названия курса';
-            $('#error_name').text(error_name);
-        } else {
-            error_name = '';
-            $('#error_name').text(error_name);
-        }
 
-        if($('#city').val() == '0') {
-            error_city = 'Выберите город';
-            $('#error_city').text(error_city);
-        } else {
-            error_city = '';
-            $('#error_city').text(error_city);
-        }
-
-        if($('#category').val() == '0') {
-            error_category = 'Выберите категорию';
-            $('#error_category').text(error_category);
-        } else {
-            error_category = '';
-            $('#error_category').text(error_category);
-        }
-
-        if($.trim($('#price').val()).length == 0) {
-            error_price = 'Введите цену курса';
-            $('#error_price').text(error_price);
-        } else {
-            if (!filter_price.test($('#price').val())) {
-                error_price = 'Введите коректную цену';
-                $('#error_price').text(error_price);
-            } else {
-                error_price = '';
-                $('#error_price').text(error_price);
-            }
-        }
-
-        if($('#type_education').val() == '0') {
-            error_type_education = 'Выберите тип курса';
-            $('#error_type_education').text(error_type_education);
-        } else {
-            error_type_education = '';
-            $('#error_type_education').text(error_type_education);
-        }
-
-        if($('#form_education').val() == '0') {
-            error_form_education = 'Выберите форму курса';
-            $('#error_form_education').text(error_form_education);
-        } else {
-            error_form_education = '';
-            $('#error_form_education').text(error_form_education);
-        }
-
-        if($('#quantity_group').val() == '0') {
-            error_quantity_group = 'Выберите групу';
-            $('#error_quantity_group').text(error_quantity_group);
-        } else {
-            error_quantity_group = '';
-            $('#error_quantity_group').text(error_quantity_group);
-        }
-
-        if($('#level').val() == '0') {
-            error_level = 'Выберите уровень подготовки';
-            $('#error_level').text(error_level);
-        } else {
-            error_level = '';
-            $('#error_level').text(error_level);
-        }
-
-        if($('#result').val() == '0') {
-            error_result = 'Выберите документ';
-            $('#error_result').text(error_result);
-        } else {
-            error_result = '';
-            $('#error_result').text(error_result);
-        }
-
-
-        if(error_photo != '' || error_name != '' || error_category != '' || error_city != '' || error_price != ''
-            || error_type_education != '' || error_form_education != '' || error_quantity_group != ''
-            || error_level != '' || error_result != '')
-        {
-            return false;
-        }
-        else
-        {
+        // if(error_photo != '' || error_name != '' || error_category != '' || error_city != '' || error_price != ''
+        //     || error_type_education != '' || error_form_education != '' || error_quantity_group != ''
+        //     || error_level != '' || error_result != '')
+        // {
+        //     return false;
+        // }
+        // else
+        // {
             $('#list_main_info').removeClass('active active_tab1');
             $('#list_main_info').removeAttr('href data-toggle');
             $('#main_info').removeClass('active');
@@ -279,7 +279,7 @@ $(document).ready(function(){
             $('#list_description_info').attr('href', '#description_info');
             $('#list_description_info').attr('data-toggle', 'tab');
             $('#description_info').addClass('active in');
-        }
+        // }
     });
 
     $('#previous_btn_description').click(function(){
@@ -294,22 +294,22 @@ $(document).ready(function(){
         $('#main_info').addClass('active in');
     });
 
-    $('#btn_description').click(function(){
-        var error_description = '';
-
-        if($.trim($('#description').val()).length == 0) {
-            error_description = 'Введите описание о курсе';
-            $('#error_description').text(error_description);
-        } else {
-            error_description = '';
-            $('#error_description').text(error_description);
-        }
-
-        if(error_description != '')
-        {
-            return false;
-        }
-    });
+    // $('#btn_description').click(function(){
+    //     var error_description = '';
+    //
+    //     if($.trim($('#description').val()).length == 0) {
+    //         error_description = 'Введите описание о курсе';
+    //         $('#error_description').text(error_description);
+    //     } else {
+    //         error_description = '';
+    //         $('#error_description').text(error_description);
+    //     }
+    //
+    //     if(error_description != '')
+    //     {
+    //         return false;
+    //     }
+    // });
 
 });
 
