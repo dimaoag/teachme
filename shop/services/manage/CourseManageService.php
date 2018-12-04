@@ -13,6 +13,7 @@ use shop\repositories\shop\CategoryRepository;
 use shop\repositories\shop\CourseRepository;
 use shop\services\TransactionManager;
 use Yii;
+use yii\helpers\VarDumper;
 
 class CourseManageService
 {
@@ -57,7 +58,7 @@ class CourseManageService
             $course->addPhoto($file);
         }
 
-        foreach ($form->gallery->files as $galleryImage) {
+        foreach ($form->gallery->gallery as $galleryImage) {
             $course->addGalleryImage($galleryImage);
         }
 
@@ -84,13 +85,6 @@ class CourseManageService
         $course->changeMainCategory($category->id);
 
         $this->transaction->wrap(function () use ($course, $form) {
-
-            $this->courses->save($course);
-
-            foreach ($form->values as $value) {
-                $course->setValue($value->id, $value->value);
-            }
-
             $this->courses->save($course);
         });
     }
@@ -122,7 +116,7 @@ class CourseManageService
     public function addGallery($id, GalleryForm $form): void
     {
         $course = $this->courses->get($id);
-        foreach ($form->files as $galleryItem) {
+        foreach ($form->gallery as $galleryItem) {
             $course->addGalleryImage($galleryItem);
         }
         $this->courses->save($course);

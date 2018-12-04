@@ -2456,9 +2456,39 @@ label.tab.active{
 .btn-purple{
     background-color: #933ec5;
     color: white;
+    cursor: pointer;
 }
 .btn-purple:hover{
     color: white;
+    cursor: pointer;
+}
+.edit-main-photo-wrap{
+    position: relative;
+}
+.edit-main-photo-wrap img{
+    width: 100%;
+}
+.edit-delete-btn{
+    position: absolute;
+    top: 0;
+    right: 15px;
+}
+.btn-hide-gallery, .btn-hide-gallery:focus, .btn-hide-gallery:active{
+    outline: none!important;
+    background-color: white!important;
+    margin: 15px;
+}
+.edit-gallery-wrap{
+    margin-top: 35px;
+}
+.edit-gallery-wrap .upload-image{
+    margin-right: 15px;
+}
+.file-input-row{
+    padding: 15px;
+}
+.edit-course-photos{
+    padding-right: 15px;
 }
 .add-course h1{
     padding: 25px 0;
@@ -2514,6 +2544,7 @@ label.tab.active{
     /*width: 50%;*/
 }
 .step-2-buttons{
+    margin-top: 10px;
     display: -webkit-box;
     display: -ms-flexbox;
     display: flex;
@@ -2634,9 +2665,16 @@ label.tab.active{
     border-radius: 20px;
     display: flex;
 }
-.step-1 .form-group{
+.add-course .form-group{
     margin-right: 0;
     margin-left: 0;
+}
+.edit-gallery{
+    margin: 10px 0;
+}
+.description-edit textarea{
+    margin-top: 15px;
+    border: 1px solid #ccc!important;
 }
 .buttonInside{
     position:relative;

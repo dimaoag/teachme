@@ -10,7 +10,6 @@ use yii\helpers\ArrayHelper;
 
 /**
  * @property CategoriesForm $categories
- * @property ValueForm[] $values
  */
 class CourseEditForm extends CompositeForm
 {
@@ -28,9 +27,6 @@ class CourseEditForm extends CompositeForm
         $this->description = $course->description;
         $this->price = $course->price;
         $this->categories = new CategoriesForm($course);
-        $this->values = array_map(function (Characteristic $characteristic) use ($course) {
-            return new ValueForm($characteristic, $course->getValue($characteristic->id));
-        }, Characteristic::find()->orderBy('sort')->all());
         $this->_course = $course;
         parent::__construct($config);
     }
@@ -53,6 +49,6 @@ class CourseEditForm extends CompositeForm
 
     protected function internalForms(): array
     {
-        return ['categories', 'values'];
+        return ['categories'];
     }
 }
