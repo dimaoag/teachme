@@ -5,7 +5,7 @@ use shop\entities\user\User;
 use Yii;
 use yii\helpers\ArrayHelper;
 use yii\helpers\Html;
-
+use yii\helpers\Url;
 class UserHelper
 {
     public static function statusList(): array {
@@ -76,6 +76,21 @@ class UserHelper
             return true;
         }
         return false;
+    }
+
+    public static function getCabinetLink(){
+
+        switch (Yii::$app->user->identity->designation){
+            case User::LEARNER:
+                return Url::to(['/cabinet/learner']);
+                break;
+            case User::TEACHER:
+                return Url::to(['/cabinet/teacher']);
+                break;
+
+            default:
+                return Url::to(['/']);
+        }
     }
 
 

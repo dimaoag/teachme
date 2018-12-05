@@ -63,7 +63,7 @@ FontAwesomeAsset::register($this);
                                     <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><i class="fa fa-user"></i><?=Yii::$app->user->identity->first_name;?><span class="caret"></span></a>
                                     <ul class="dropdown-menu">
                                         <li><a href="<?=Url::to(['/logout'])?>">Log out</a></li>
-                                        <li><a href="<?=Url::to(['/cabinet'])?>">Cabinet</a></li>
+                                        <li><a href="<?=UserHelper::getCabinetLink();?>">Cabinet</a></li>
                                     </ul>
                                 </li>
                             <?php endif; ?>
