@@ -2111,6 +2111,11 @@ label.tab.active{
 .youtube-field i{
     color: #f44336;
 }
+.cabinet-course-img img{
+    width: 225px;
+    min-width: auto;
+}
+
 
 /*----tabs-setting----*/
 .tab-setting h2{
@@ -2384,6 +2389,11 @@ label.tab.active{
     .tab-company-icon{
         display: block;
         text-align: center;
+    }
+}
+@media all and (max-width: 615px){
+    .cabinet-course-img img{
+        width: 100%;
     }
 }
 @media all and (max-width: 467px){
