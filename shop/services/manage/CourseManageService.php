@@ -11,24 +11,28 @@ use shop\forms\manage\shop\course\CourseEditForm;
 use shop\repositories\shop\CityRepository;
 use shop\repositories\shop\CategoryRepository;
 use shop\repositories\shop\CourseRepository;
+use shop\repositories\UserRepository;
 use shop\services\TransactionManager;
 use Yii;
 use yii\helpers\VarDumper;
 
 class CourseManageService
 {
+    private $users;
     private $courses;
     private $cities;
     private $categories;
     private $transaction;
 
     public function __construct(
+        UserRepository $users,
         CourseRepository $courses,
         CityRepository $cities,
         CategoryRepository $categories,
         TransactionManager $transaction
     )
     {
+        $this->users = $users;
         $this->courses = $courses;
         $this->cities = $cities;
         $this->categories = $categories;
@@ -134,6 +138,11 @@ class CourseManageService
     {
         $course = $this->courses->get($id);
         $course->removeGalleryImage($galleryItemId);
+        $this->courses->save($course);
+    }
+
+    public function sendOnModeration(Course $course){
+        $course->onModeration();
         $this->courses->save($course);
     }
 

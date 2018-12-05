@@ -29,6 +29,12 @@ class UserManegeService
     }
 
 
+    public function minusPublication($id): void
+    {
+        $user = $this->repository->getUserById($id);
+        $user->deletePublication();
+        $this->repository->save($user);
+    }
 
 
 

@@ -115,6 +115,12 @@ class User extends ActiveRecord implements IdentityInterface
         return $this->status === self::STATUS_WAIT;
     }
 
+    public function deletePublication(){
+        $this->publications -= 1;
+        if ($this->publications < 0){
+            $this->publications = 0;
+        }
+    }
 
     public static function tableName()
     {

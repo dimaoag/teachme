@@ -2,6 +2,7 @@
 namespace shop\helpers;
 
 
+use shop\repositories\shop\CourseRepository;
 use Yii;
 use yii\helpers\ArrayHelper;
 use yii\helpers\Html;
@@ -11,6 +12,12 @@ use shop\entities\shop\course\Course;
 
 class CourseHelper
 {
+    public static function isUserCourse($courseId, $userId){
+        $repository = new CourseRepository();
+        $course = $repository->get($courseId);
+        return $course->user_id = $userId ? true : false;
+    }
+
 
     public static function getStatus($status){
 
@@ -35,7 +42,8 @@ class CourseHelper
 
     public static function getStatusLink($status, $courseId){
 
-        $isDisableClass = (Yii::$app->user->identity->publications > 0) ? "" : 'disabled="disabled" style="pointer-events: none; opacity: 0.5;"';
+
+        $isDisableClass = UserHelper::checkPublications(Yii::$app->user->id) ? "" : 'disabled="disabled" style="pointer-events: none; opacity: 0.5;"';
 
         switch ($status){
             case Course::STATUS_NOT_ACTIVE:
@@ -43,7 +51,7 @@ class CourseHelper
                 break;
 
             case Course::STATUS_ON_MODERATION:
-                $res = '<a href="#" class="add disabled" data-method="post">На модерации</a>';
+                $res = '<a href="#" class="add" disabled="disabled" style="pointer-events: none; opacity: 0.5;">На модерации</a>';
                 break;
 
             case Course::STATUS_ACTIVE:
@@ -66,91 +74,6 @@ class CourseHelper
     }
 
 
-
-//    public static function statusList(): array {
-//        return [
-//            User::STATUS_WAIT => 'Не подтвержденные',
-//            User::STATUS_ACTIVE => 'Активные',
-//        ];
-//    }
-//
-//    public static function designationList(): array {
-//        return [
-//            User::LEARNER => 'Пользователь',
-//            User::TEACHER => 'Школа',
-//        ];
-//    }
-//
-//
-//    public static function statusName($status):string {
-//        return ArrayHelper::getValue(self::statusList(), $status);
-//    }
-//
-//    public static function statusLabel($status):string {
-//        switch ($status){
-//            case User::STATUS_WAIT:
-//                $class = 'label label-default';
-//                break;
-//            case User::STATUS_ACTIVE:
-//                $class = 'label label-success';
-//                break;
-//            default:
-//                $class = 'label label-default';
-//        }
-//        return Html::tag('span', ArrayHelper::getValue(self::statusList(), $status), [
-//            'class' => $class,
-//        ]);
-//    }
-//
-//    public static function designationValue($designation):string {
-//        switch ($designation){
-//            case User::LEARNER:
-//                $designationValue = 'Пользователь';
-//                break;
-//            case User::TEACHER:
-//                $designationValue = 'Школа';
-//                break;
-//        }
-//        return $designationValue;
-//    }
-//
-//
-//    public static function echoDate($date){
-////        Yii::$app->formatter->locale = 'en-EN';
-//        return Yii::$app->formatter->asDatetime($date,'medium');
-//    }
-//
-//
-//    public static function isAccessAddCourse() :bool
-//    {
-//        if (Yii::$app->user->isGuest || Yii::$app->user->identity->designation != User::TEACHER){
-//            return false;
-//        }
-//        return true;
-//    }
-//
-//    public static function isUserTeacher() :bool
-//    {
-//        if (Yii::$app->user->identity->designation == User::TEACHER){
-//            return true;
-//        }
-//        return false;
-//    }
-//
-//    public static function getCabinetLink(){
-//
-//        switch (Yii::$app->user->identity->designation){
-//            case User::LEARNER:
-//                return Url::to(['/cabinet/learner']);
-//                break;
-//            case User::TEACHER:
-//                return Url::to(['/cabinet/teacher']);
-//                break;
-//
-//            default:
-//                return Url::to(['/']);
-//        }
-//    }
 
 
 }

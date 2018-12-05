@@ -2,6 +2,7 @@
 namespace frontend\controllers\course;
 
 
+use shop\helpers\CourseHelper;
 use Yii;
 use yii\filters\AccessControl;
 use yii\filters\VerbFilter;
@@ -14,16 +15,19 @@ use shop\forms\manage\shop\course\CourseEditForm;
 use shop\services\manage\CourseManageService;
 use shop\helpers\UserHelper;
 use yii\web\NotFoundHttpException;
+use shop\services\manage\UserManegeService;
 
 class CourseController extends Controller{
 
 
     private $service;
+    private $userManageService;
 
-    public function __construct($id, $module, CourseManageService $service, $config = [])
+    public function __construct($id, $module, CourseManageService $service, UserManegeService $userManageService, $config = [])
     {
         parent::__construct($id, $module, $config);
         $this->service = $service;
+        $this->userManageService = $userManageService;
     }
 
 
@@ -35,8 +39,9 @@ class CourseController extends Controller{
                 'rules' => [
                     [
                         'allow' => true,
+                        'roles' => ['@'],
                         'matchCallback' => function () {
-                            return (!Yii::$app->user->isGuest && UserHelper::isUserTeacher()) ? true : false ;
+                            return (UserHelper::isUserTeacher()) ? true : false ;
                         },
                     ],
                 ],
@@ -87,7 +92,7 @@ class CourseController extends Controller{
     {
         $course = $this->findModel($id);
 
-        if (Yii::$app->user->id != $course->user_id){
+        if (!CourseHelper::isUserCourse($id, Yii::$app->user->id)){
             return $this->redirect(['/']);
         }
 
@@ -179,7 +184,7 @@ class CourseController extends Controller{
     {
         $course = $this->findModel($id);
 
-        if (Yii::$app->user->id != $course->user_id){
+        if (!CourseHelper::isUserCourse($id, Yii::$app->user->id)){
             return $this->redirect(['/']);
         }
 
@@ -190,6 +195,34 @@ class CourseController extends Controller{
         }
         return $this->redirect(['index']);
     }
+
+
+    public function actionOnModeration($id){
+
+        $course = $this->findModel($id);
+
+        if (!CourseHelper::isUserCourse($id, Yii::$app->user->id)){
+            return $this->redirect(['/']);
+        }
+
+
+        if (!UserHelper::checkPublications(Yii::$app->user->id)){
+            Yii::$app->session->setFlash('error', 'У Вас нету публикаций!');
+            return $this->redirect(Yii::$app->request->referrer ?: ['/']);
+        }
+
+
+        try {
+            $this->service->sendOnModeration($course);
+            $this->userManageService->minusPublication(Yii::$app->user->id);
+        } catch (\DomainException $e) {
+            Yii::$app->session->setFlash('error', $e->getMessage());
+        }
+        return $this->redirect(Yii::$app->request->referrer ?: ['/']);
+    }
+
+
+
 
 
     /**

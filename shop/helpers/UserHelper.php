@@ -2,10 +2,12 @@
 namespace shop\helpers;
 
 use shop\entities\user\User;
+use shop\repositories\UserRepository;
 use Yii;
 use yii\helpers\ArrayHelper;
 use yii\helpers\Html;
 use yii\helpers\Url;
+
 class UserHelper
 {
     public static function statusList(): array {
@@ -92,6 +94,19 @@ class UserHelper
                 return Url::to(['/']);
         }
     }
+
+    public static function checkPublications($id) :bool
+    {
+        $repository = new UserRepository();
+        $user = $repository->getUserById($id);
+        if ($user->publications <= 0)
+        {
+            return false;
+        }
+        return true;
+
+    }
+
 
 
 }
