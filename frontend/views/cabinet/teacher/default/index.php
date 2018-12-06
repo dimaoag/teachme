@@ -52,7 +52,7 @@ use shop\helpers\CourseHelper;
                                                     Статус
                                                 </div>
                                                 <div class="course-status-value">
-                                                    <?= CourseHelper::getStatus($course->status);?>
+                                                    <?= CourseHelper::getStatus($course);?>
                                                 </div>
                                             </div>
                                             <div class="course-control">

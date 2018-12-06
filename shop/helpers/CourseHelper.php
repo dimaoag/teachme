@@ -19,9 +19,9 @@ class CourseHelper
     }
 
 
-    public static function getStatus($status){
+    public static function getStatus(Course $course){
 
-        switch ($status){
+        switch ($course->status){
             case Course::STATUS_NOT_ACTIVE:
                 $res = 'Неактивный';
                 break;
@@ -29,7 +29,9 @@ class CourseHelper
                 $res = 'На модерации';
                 break;
             case Course::STATUS_ACTIVE:
-                $res = 'Активный';
+                $dateStart = Yii::$app->formatter->asDate($course->date_start_sale, 'php:m/d/Y');
+                $dateStop = Yii::$app->formatter->asDate($course->date_stop_sale, 'php:m/d/Y');
+                $res = 'Активный '. $dateStart . ' - ' .$dateStop;
                 break;
             case Course::STATUS_FAIL:
                 $res = 'Отклонено';
@@ -71,6 +73,13 @@ class CourseHelper
                 $res = null;
         }
         return $res;
+    }
+
+
+
+    public static function echoDate($date){
+//        Yii::$app->formatter->locale = 'en-EN';
+        return Yii::$app->formatter->asDatetime($date,'medium');
     }
 
 

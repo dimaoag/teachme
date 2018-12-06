@@ -51,6 +51,14 @@
                         ],
                     ],
                     [
+                        'label' => 'Модерация',
+                        'icon' => 'map',
+                        'url' => '#',
+                        'items' => [
+                            ['label' => 'Курсы на модерации', 'icon' => 'reorder', 'url' => ['/course/moderation/index'], 'active' => $this->context->id == 'course/moderation'],
+                        ],
+                    ],
+                    [
                         'label' => 'Some tools',
                         'icon' => 'share',
                         'url' => '#',

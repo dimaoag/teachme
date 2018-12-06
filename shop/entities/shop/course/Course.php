@@ -10,6 +10,7 @@ use shop\entities\shop\City;
 use shop\entities\shop\Category;
 use shop\entities\shop\course\queries\CourseQuery;
 use shop\entities\user\User;
+use Yii;
 use yii\db\ActiveQuery;
 use yii\db\ActiveRecord;
 use yii\db\Exception;
@@ -21,6 +22,7 @@ use yii\web\UploadedFile;
  * @property integer $category_id
  * @property integer $city_id
  * @property integer $main_photo_id
+ * @property integer $
  * @property integer $created_at
  * @property integer $date_start_sale
  * @property integer $date_stop_sale
@@ -32,6 +34,8 @@ use yii\web\UploadedFile;
  *
  *
  * @property City $city
+ * @property User $user
+ * @property Error $error
  * @property Category $category
  * @property Value[] $values
  * @property Photo[] $photos
@@ -133,6 +137,15 @@ class Course extends ActiveRecord implements AggregateRoot
     {
         return $this->quantity > 0;
     }
+
+    public function setDateActivate(){
+        $dateStart = date('Y-d-m h:i:s');
+        $currentTime = time();
+        $dateStop =  date('Y-d-m h:i:s', strtotime('+30 day', $currentTime));
+        $this->date_start_sale = Yii::$app->formatter->asTimestamp($dateStart);
+        $this->date_stop_sale = Yii::$app->formatter->asTimestamp($dateStop);
+    }
+
 
 
     // Photos
@@ -258,6 +271,11 @@ class Course extends ActiveRecord implements AggregateRoot
     public function getValues(): ActiveQuery
     {
         return $this->hasMany(Value::class, ['course_id' => 'id']);
+    }
+
+    public function getError(): ActiveQuery
+    {
+        return $this->hasOne(Error::class, ['course_id' => 'id']);
     }
 
     public function getPhotos(): ActiveQuery

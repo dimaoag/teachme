@@ -98,6 +98,7 @@ class CourseManageService
     {
         $course = $this->courses->get($id);
         $course->activate();
+        $course->setDateActivate();
         $this->courses->save($course);
     }
 
