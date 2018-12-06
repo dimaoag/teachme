@@ -12,6 +12,7 @@ use yii\widgets\DetailView;
 
 /* @var $this yii\web\View */
 /* @var $course shop\entities\shop\course\Course */
+/* @var $errorForm shop\forms\manage\shop\course\ErrorForm */
 /* @var $modificationsProvider yii\data\ActiveDataProvider */
 
 $this->title = $course->id;
@@ -23,7 +24,7 @@ $this->params['breadcrumbs'][] = $this->title;
     <p>
         <?php if ($course->isOnModeration()): ?>
             <?= Html::a('Активировать', ['activate', 'id' => $course->id], ['class' => 'btn btn-success', 'data-method' => 'post']) ?>
-            <button type="button" class="btn btn-danger" data-toggle="collapse" data-target="#hide_gallery_input">Отклонить</button>
+            <button type="button" class="btn btn-primary" data-toggle="collapse" data-target="#hide_gallery_input">Отклонить</button>
         <?php endif; ?>
     </p>
 
@@ -32,14 +33,15 @@ $this->params['breadcrumbs'][] = $this->title;
             <div class="col-md-7">
                 <div class="box">
                     <div class="box-body">
-                        <p>Collapse</p>
-                        <?= Html::a('Отклонить', ['activate', 'id' => $course->id], [
-                            'class' => 'btn btn-danger',
-                            'data' => [
-                                'confirm' => 'Подтвердить действие?',
-                                'method' => 'post',
-                            ],
-                        ]) ?>
+                        <?php $form = ActiveForm::begin(); ?>
+
+                        <?= $form->field($errorForm, 'message')->textarea(['rows' => 4]); ?>
+
+                        <div class="form-group">
+                            <?= Html::submitButton('Отклонить', ['class' => 'btn btn-danger']) ?>
+                        </div>
+
+                        <?php ActiveForm::end(); ?>
                     </div>
                 </div>
             </div>
@@ -59,7 +61,7 @@ $this->params['breadcrumbs'][] = $this->title;
                             [
                                 'attribute' => 'status',
                                 'label' => 'Статус',
-                                'value' => CourseHelper::getStatus($course->status),
+                                'value' => CourseHelper::getStatus($course),
                             ],
                             [
                                 'attribute' => 'name',

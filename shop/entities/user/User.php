@@ -122,6 +122,10 @@ class User extends ActiveRecord implements IdentityInterface
         }
     }
 
+    public function addPublication(){
+        $this->publications += 1;
+    }
+
     public static function tableName()
     {
         return '{{%users}}';

@@ -36,6 +36,13 @@ class UserManegeService
         $this->repository->save($user);
     }
 
+    public function plusPublication($id): void
+    {
+        $user = $this->repository->getUserById($id);
+        $user->addPublication();
+        $this->repository->save($user);
+    }
+
 
 
 }

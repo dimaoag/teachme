@@ -4,6 +4,8 @@ namespace shop\services\manage;
 
 use shop\entities\shop\course\Course;
 use shop\forms\manage\shop\course\CategoriesForm;
+use shop\entities\shop\course\Error;
+use shop\forms\manage\shop\course\ErrorForm;
 use shop\forms\manage\shop\course\PhotosForm;
 use shop\forms\manage\shop\course\GalleryForm;
 use shop\forms\manage\shop\course\CourseCreateForm;
@@ -11,6 +13,7 @@ use shop\forms\manage\shop\course\CourseEditForm;
 use shop\repositories\shop\CityRepository;
 use shop\repositories\shop\CategoryRepository;
 use shop\repositories\shop\CourseRepository;
+use shop\repositories\shop\ErrorRepository;
 use shop\repositories\UserRepository;
 use shop\services\TransactionManager;
 use Yii;
@@ -21,6 +24,7 @@ class CourseManageService
     private $users;
     private $courses;
     private $cities;
+    private $errors;
     private $categories;
     private $transaction;
 
@@ -28,6 +32,7 @@ class CourseManageService
         UserRepository $users,
         CourseRepository $courses,
         CityRepository $cities,
+        ErrorRepository $errors,
         CategoryRepository $categories,
         TransactionManager $transaction
     )
@@ -35,6 +40,7 @@ class CourseManageService
         $this->users = $users;
         $this->courses = $courses;
         $this->cities = $cities;
+        $this->errors = $errors;
         $this->categories = $categories;
         $this->transaction = $transaction;
     }
@@ -94,6 +100,20 @@ class CourseManageService
     }
 
 
+    public function createError($id, ErrorForm $form){
+
+        $course = $this->courses->get($id);
+        $course->createError($course->id, $form->message);
+        $this->courses->save($course);
+    }
+
+    public function editError($id, ErrorForm $form){
+        $error = $this->errors->getByCourseId($id);
+        $error->edit($form->message);
+        $this->errors->save($error);
+    }
+
+
     public function activate($id): void
     {
         $course = $this->courses->get($id);
@@ -144,6 +164,11 @@ class CourseManageService
 
     public function sendOnModeration(Course $course){
         $course->onModeration();
+        $this->courses->save($course);
+    }
+
+    public function failureCourse(Course $course){
+        $course->failure();
         $this->courses->save($course);
     }
 

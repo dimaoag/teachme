@@ -6,7 +6,9 @@ namespace backend\controllers\course;
 use backend\forms\course\CourseOnModerationSearch;
 use shop\services\manage\CourseManageService;
 use shop\services\manage\UserManegeService;
+use shop\forms\manage\shop\course\ErrorForm;
 use shop\entities\shop\course\Course;
+use shop\entities\shop\course\Error;
 use Yii;
 use yii\helpers\VarDumper;
 use yii\web\Controller;
@@ -56,10 +58,39 @@ class ModerationController extends Controller
     public function actionView($id)
     {
         $course = $this->findModel($id);
+        $error = $this->findErrorModel($course->id);
+
+
+        if (!$error){
+            $errorForm = new ErrorForm();
+        } else {
+            $errorForm = new ErrorForm($course->error);
+
+        }
+
+
+        if ($errorForm->load(Yii::$app->request->post()) && $errorForm->validate()) {
+            try {
+                if (!$error){
+                    $this->courseManageService->createError($course->id, $errorForm);
+                } else {
+                    $this->courseManageService->editError($course->id, $errorForm);
+                }
+
+                $this->userManageService->plusPublication(Yii::$app->user->id);
+                $this->courseManageService->failureCourse($course);
+                return $this->redirect(['index']);
+
+            } catch (\DomainException $e) {
+                Yii::$app->errorHandler->logException($e);
+                Yii::$app->session->setFlash('error', $e->getMessage());
+            }
+        }
 
 
         return $this->render('view', [
             'course' => $course,
+            'errorForm' => $errorForm,
         ]);
     }
 
@@ -81,5 +112,13 @@ class ModerationController extends Controller
             return $model;
         }
         throw new NotFoundHttpException('The requested page does not exist.');
+    }
+
+    protected function findErrorModel($id)
+    {
+        if ($model = Error::find()->andWhere(['course_id' => $id])->limit(1)->one()) {
+            return $model;
+        }
+        return false;
     }
 }

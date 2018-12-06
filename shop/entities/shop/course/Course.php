@@ -147,6 +147,20 @@ class Course extends ActiveRecord implements AggregateRoot
     }
 
 
+    public function createError($id, $message)
+    {
+        $error = Error::create($id, $message);
+        $this->error = $error;
+    }
+
+
+    public function editError(Error $error)
+    {
+        $this->error = $error;
+    }
+
+
+
 
     // Photos
 
@@ -306,7 +320,7 @@ class Course extends ActiveRecord implements AggregateRoot
         return [
             [
                 'class' => SaveRelationsBehavior::class,
-                'relations' => ['values', 'photos', 'gallery'],
+                'relations' => ['values', 'photos', 'gallery', 'error'],
             ],
         ];
     }

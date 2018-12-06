@@ -3,14 +3,11 @@
 namespace shop\entities\shop\course;
 
 use yii\db\ActiveRecord;
-use yii\db\ActiveQuery;
 /**
  * @property integer $id
  * @property integer $course_id
  * @property string $message
  * @property integer $status
- *
- * @property Course $course
  */
 class Error extends ActiveRecord
 {
