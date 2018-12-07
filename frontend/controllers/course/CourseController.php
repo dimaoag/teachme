@@ -16,18 +16,22 @@ use shop\services\manage\CourseManageService;
 use shop\helpers\UserHelper;
 use yii\web\NotFoundHttpException;
 use shop\services\manage\UserManegeService;
+use shop\forms\course\search\SearchForm;
+use shop\readModels\shop\CourseReadRepository;
 
 class CourseController extends Controller{
 
 
     private $service;
     private $userManageService;
+    private $courseReadRepository;
 
-    public function __construct($id, $module, CourseManageService $service, UserManegeService $userManageService, $config = [])
+    public function __construct($id, $module, CourseManageService $service,  UserManegeService $userManageService, CourseReadRepository $courseReadRepository, $config = [])
     {
         parent::__construct($id, $module, $config);
         $this->service = $service;
         $this->userManageService = $userManageService;
+        $this->courseReadRepository = $courseReadRepository;
     }
 
 
@@ -221,8 +225,19 @@ class CourseController extends Controller{
         return $this->redirect(Yii::$app->request->referrer ?: ['/']);
     }
 
+    public function actionSearch()
+    {
+        $form = new SearchForm();
+        $form->load(\Yii::$app->request->queryParams);
+        $form->validate();
 
+        $dataProvider = $this->courseReadRepository->search($form);
 
+        return $this->render('search', [
+            'dataProvider' => $dataProvider,
+            'searchForm' => $form,
+        ]);
+    }
 
 
     /**

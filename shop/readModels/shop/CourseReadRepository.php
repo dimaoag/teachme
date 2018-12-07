@@ -2,12 +2,12 @@
 
 namespace shop\readModels\shop;
 
-//use Elasticsearch\Client;
+use Elasticsearch\Client;
 use shop\entities\shop\City;
 use shop\entities\shop\Category;
 use shop\entities\shop\course\Course;
-//use shop\forms\shop\search\SearchForm;
-//use shop\forms\shop\search\ValueForm;
+use shop\forms\course\search\SearchForm;
+use shop\forms\course\search\ValueForm;
 use yii\data\ActiveDataProvider;
 use yii\data\DataProviderInterface;
 use yii\data\Pagination;
@@ -18,6 +18,14 @@ use yii\helpers\ArrayHelper;
 
 class CourseReadRepository
 {
+
+    private $client;
+
+    public function __construct(Client $client)
+    {
+        $this->client = $client;
+    }
+
 
     public function count(): int
     {
@@ -94,5 +102,86 @@ class CourseReadRepository
             ],
         ]);
     }
+
+
+    public function search(SearchForm $form): DataProviderInterface
+    {
+        $pagination = new Pagination([
+            'pageSizeLimit' => [15, 100],
+            'validatePage' => false,
+        ]);
+
+        $sort = new Sort([
+            'defaultOrder' => ['id' => SORT_DESC],
+            'attributes' => [
+                'id',
+                'name',
+                'price',
+                'rating',
+            ],
+        ]);
+
+        $response = $this->client->search([
+            'index' => 'shop',
+            'type' => 'courses',
+            'body' => [
+                '_source' => ['id'],
+                'from' => $pagination->getOffset(),
+                'size' => $pagination->getLimit(),
+                'sort' => array_map(function ($attribute, $direction) {
+                    return [$attribute => ['order' => $direction === SORT_ASC ? 'asc' : 'desc']];
+                }, array_keys($sort->getOrders()), $sort->getOrders()),
+                'query' => [
+                    'bool' => [
+                        'must' => array_merge(
+                            array_filter([
+//                                !empty($form->category) ? ['range' => ['categories' => ['gte' => 5, 'lte' => 6]]] : false,
+                                !empty($form->to) ? ['range' => ['categories' => ['gte' => $form->from, 'lte' => $form->to]]] : false,
+                                !empty($form->category) ? ['term' => ['category' => $form->category]] : false,
+                                !empty($form->city) ? ['term' => ['brand' => $form->city]] : false,
+                                !empty($form->text) ? ['multi_match' => [
+                                    'query' => $form->text,
+                                    'fields' => [ 'name' ]
+                                ]] : false,
+                            ]),
+                            array_map(function (ValueForm $value) {
+                                return ['nested' => [
+                                    'path' => 'values',
+                                    'query' => [
+                                        'bool' => [
+                                            'must' => array_filter([
+                                                ['match' => ['values.characteristic' => $value->getId()]],
+                                                !empty($value->equal) ? ['match' => ['values.value_string' => $value->equal]] : false,
+                                            ]),
+                                        ],
+                                    ],
+                                ]];
+                            }, array_filter($form->values, function (ValueForm $value) { return $value->isFilled(); }))
+                        )
+                    ],
+                ],
+            ],
+        ]);
+
+        $ids = ArrayHelper::getColumn($response['hits']['hits'], '_source.id');
+
+        if ($ids) {
+            $query = Course::find()
+                ->active()
+                ->with('mainPhoto')
+                ->andWhere(['id' => $ids])
+                ->orderBy(new Expression('FIELD(id,' . implode(',', $ids) . ')'));
+        } else {
+            $query = Course::find()->andWhere(['id' => 0]);
+        }
+
+        return new SimpleActiveDataProvider([
+            'query' => $query,
+            'totalCount' => $response['hits']['total'],
+            'pagination' => $pagination,
+            'sort' => $sort,
+        ]);
+    }
+
     
 }

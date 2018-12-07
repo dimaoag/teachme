@@ -91,10 +91,11 @@ FontAwesomeAsset::register($this);
 
                     </div>
                     <div class="col-sm-5">
-                        <form action="#" class="header-search-field header-search-text">
-                            <input type="text" placeholder="Введите курс, который Вы ищите">
+                        <?= Html::beginForm(['/course/course/search'], 'get', ['class' => 'header-search-field header-search-text']) ?>
+<!--                        <form action="#" class="header-search-field header-search-text">-->
+                            <input type="text" name="text" placeholder="Введите курс, который Вы ищите">
                             <button type="submit"><i class="fa fa-search"></i></button>
-                        </form>
+                        <?= Html::endForm() ?>
                     </div>
                     <div class="col-sm-3 header-search-city">
                         <div class="header-search-field custom-select">
