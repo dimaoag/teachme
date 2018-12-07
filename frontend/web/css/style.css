@@ -755,7 +755,15 @@ input[type=text], textarea {
     background-image: -o-linear-gradient(285deg, #ffc24a 0%, #fe840c 100%);
     background-image: linear-gradient(-195deg, #ffc24a 0%, #fe840c 100%);
 }
-.category-parent > .first-line{
+.root-category{
+    border-radius: 5px!important;
+    color: white!important;
+    background-color: #fe8c14;
+    background-image: -webkit-linear-gradient(285deg, #ffc24a 0%, #fe840c 100%);
+    background-image: -o-linear-gradient(285deg, #ffc24a 0%, #fe840c 100%);
+    background-image: linear-gradient(-195deg, #ffc24a 0%, #fe840c 100%);
+}
+.root-category > a{
     color: white;
     /*padding: 0 10px!important;*/
 }
@@ -769,10 +777,10 @@ input[type=text], textarea {
     .header-search-favorite-courses{
         display: none;
     }
-    .category-parent > .first-line{
+    .root-category > a{
         color: black;
     }
-    .category-parent{
+    .root-category{
         background: none;
     }
 }

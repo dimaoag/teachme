@@ -3,6 +3,8 @@
 /* @var $this \yii\web\View */
 /* @var $content string */
 
+use shop\helpers\CategoryHelper;
+use shop\helpers\CityHelper;
 use yii\helpers\Html;
 use yii\bootstrap\Nav;
 use yii\bootstrap\NavBar;
@@ -79,39 +81,14 @@ FontAwesomeAsset::register($this);
                 <div class="row">
                     <div class="col-sm-3 header-search-category-wrap">
                         <ul id="main-menu" class="sm sm-vertical sm-clean header-search-field header-search-menu">
-                            <li class="category-parent"><a href="#" class="first-line">Категория</a>
+                            <li class="category-parent" style="display: none"><a href="#" class="first-line">Категория</a>
                                 <ul>
-                                    <li><a href="#">Item 2-1</a>
-                                        <ul>
-                                            <li><a href="#">Item 2-2</a></li>
-                                            <li><a href="#">Item 2-3</a></li>
-                                            <li><a href="#">Item 2-3</a></li>
-                                            <li><a href="#">Item 2-3</a></li>
-                                        </ul>
-                                    </li>
-                                    <li><a href="#">Item 2-2</a></li>
-                                    <li><a href="#">Item 2-3</a></li>
-                                    <li><a href="#">Item 2-3</a>
-                                        <ul>
-                                            <li><a href="#">Item 2-2</a></li>
-                                            <li><a href="#">Item 2-3</a>
-                                                <ul>
-                                                    <li><a href="#">Item 2-2</a></li>
-                                                    <li><a href="#">Item 2-3</a></li>
-                                                    <li><a href="#">Item 2-3</a></li>
-                                                    <li><a href="#">Item 2-3</a></li>
-                                                </ul>
-                                            </li>
-                                            <li><a href="#">Item 2-3</a></li>
-                                            <li><a href="#">Item 2-3</a></li>
-                                        </ul>
-                                    </li>
-                                    <li><a href="#">Item 2-3</a></li>
-                                    <li><a href="#">Item 2-3</a></li>
-                                    <li><a href="#">Item 2-3</a></li>
+                                    <?= CategoryHelper::CategoriesList(); ?>
                                 </ul>
                             </li>
                         </ul>
+
+
                     </div>
                     <div class="col-sm-5">
                         <form action="#" class="header-search-field header-search-text">
@@ -121,13 +98,7 @@ FontAwesomeAsset::register($this);
                     </div>
                     <div class="col-sm-3 header-search-city">
                         <div class="header-search-field custom-select">
-                            <select name='category'>
-                                <option value='1'>Винница</option>
-                                <option value='2'>Киев</option>
-                                <option value='3'>Одесса</option>
-                                <option value='4'>Львов</option>
-                                <option value='4'>Днепр</option>
-                            </select>
+                            <?= CityHelper::cityList(); ?>
                         </div>
                     </div>
                     <div class="col-sm-1 header-search-favorite-courses">

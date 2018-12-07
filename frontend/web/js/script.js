@@ -525,3 +525,9 @@ if ($('ul').is('#main-menu')) {
         $('#main-menu').smartmenus();
     });
 }
+
+if ($('li').is('.root-category')) {
+    $('.root-category a').click(function () {
+        return false;
+    });
+}

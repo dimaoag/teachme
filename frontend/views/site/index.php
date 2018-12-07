@@ -1,7 +1,13 @@
 <?php
+
+use shop\helpers\CityHelper;
+
+
+
 /* @var $this yii\web\View */
 $this->title = 'Главная';
 ?>
+
 
 <div class="main-header">
     <div class="container">
@@ -22,13 +28,7 @@ $this->title = 'Главная';
                             </div>
                             <div class="col-sm-3 header-search-city">
                                 <div class="header-search-field custom-select main-select-city">
-                                    <select name='category'>
-                                        <option value='1'>Винница</option>
-                                        <option value='2'>Киев</option>
-                                        <option value='3'>Одесса</option>
-                                        <option value='4'>Львов</option>
-                                        <option value='4'>Днепр</option>
-                                    </select>
+                                    <?= CityHelper::cityList(); ?>
                                 </div>
                             </div>
                             <div class="col-sm-2">
