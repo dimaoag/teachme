@@ -39,6 +39,8 @@ class Value extends ActiveRecord
         return $this->characteristic_id == $id;
     }
 
+
+
     public function getCharacteristic(): ActiveQuery
     {
         return $this->hasOne(Characteristic::class, ['id' => 'characteristic_id']);

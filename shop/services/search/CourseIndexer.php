@@ -6,6 +6,7 @@ use Elasticsearch\Client;
 use shop\entities\shop\course\Course;
 use shop\entities\shop\course\Value;
 use shop\repositories\shop\CategoryRepository;
+use yii\helpers\ArrayHelper;
 
 
 class CourseIndexer
@@ -52,7 +53,6 @@ class CourseIndexer
                             ],
                             'name' => [
                                 'type' => 'text',
-                                'analyzer' => 'russian',
                             ],
                             'price' => [
                                 'type' => 'integer',
@@ -72,6 +72,9 @@ class CourseIndexer
                             'category' => [
                                 'type' => 'integer',
                             ],
+                            'categories' => [
+                                'type' => 'integer',
+                            ],
                             'values' => [
                                 'type' => 'nested',
                                 'properties' => [
@@ -79,8 +82,7 @@ class CourseIndexer
                                         'type' => 'integer',
                                     ],
                                     'value_string' => [
-                                        'type' => 'text',
-                                        'analyzer' => 'standard',
+                                        'type' => 'keyword',
                                     ],
                                     'value_int' => [
                                         'type' => 'integer',
@@ -103,13 +105,16 @@ class CourseIndexer
             'body' => [
                 'id' => $course->id,
                 'name' => $course->name,
-                'description' => strip_tags($course->description),
                 'price' => $course->price,
                 'rating' => $course->rating,
                 'status' => $course->status,
                 'city' => $course->city_id,
                 'user' => $course->user_id,
                 'category' => $course->category->id,
+                'categories' => ArrayHelper::merge(
+                    [$course->category->id],
+                    $course->getCategoryParents()
+                ),
                 'values' => array_map(function (Value $value) {
                     return [
                         'characteristic' => $value->characteristic_id,

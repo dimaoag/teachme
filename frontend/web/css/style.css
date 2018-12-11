@@ -1153,7 +1153,11 @@ span.ui-slider-handle.ui-state-default.ui-corner-all:focus, span.ui-slider-handl
     color: red;
 }
 .search-course-img img{
-    min-width: 225px;
+    width: 225px;
+}
+.header-wrap-search{
+    display: flex;
+    justify-content: space-between;
 }
 .search-course-header{
     display: -webkit-box;

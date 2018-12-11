@@ -87,20 +87,21 @@ FontAwesomeAsset::register($this);
                                 </ul>
                             </li>
                         </ul>
-
-
                     </div>
-                    <div class="col-sm-5">
-                        <?= Html::beginForm(['/course/course/search'], 'get', ['class' => 'header-search-field header-search-text']) ?>
-<!--                        <form action="#" class="header-search-field header-search-text">-->
-                            <input type="text" name="text" placeholder="Введите курс, который Вы ищите">
-                            <button type="submit"><i class="fa fa-search"></i></button>
-                        <?= Html::endForm() ?>
-                    </div>
-                    <div class="col-sm-3 header-search-city">
-                        <div class="header-search-field custom-select">
-                            <?= CityHelper::cityList(); ?>
+                    <div class="col-sm-8 ">
+                        <?= Html::beginForm(['/course/search/search'], 'get', ['class' => '']) ?>
+                        <div class="row header-wrap-search">
+                            <div class="col-sm-6 header-search-field header-search-text">
+                                <input type="text" name="text" placeholder="Введите курс, который Вы ищите">
+                                <button type="submit"><i class="fa fa-search"></i></button>
+                            </div>
+                            <div class="col-sm-6 header-search-city">
+                                <div class="header-search-field custom-select">
+                                    <?= CityHelper::cityList(); ?>
+                                </div>
+                            </div>
                         </div>
+                        <?= Html::endForm() ?>
                     </div>
                     <div class="col-sm-1 header-search-favorite-courses">
                         <div class="header-search-favorite">

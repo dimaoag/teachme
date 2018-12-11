@@ -14,7 +14,7 @@ class CityHelper
         $cities = City::find()->orderBy(['name' => SORT_ASC,])->all();
 
         $res = '<select name="city">'
-                    .'<option value="0">Город...</option>';
+                    .'<option value="">Город...</option>';
 
         foreach ($cities as $city){
             /** @var City $city */
@@ -26,6 +26,8 @@ class CityHelper
         return $res;
 
     }
+
+
 
 
 

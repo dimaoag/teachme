@@ -449,28 +449,42 @@ function closeAllSelect(elmnt) {
 then close all select boxes:*/
 document.addEventListener("click", closeAllSelect);
 
+
 if ($('div').is('#price_my_range')) {
     var keypressSlider = document.getElementById('price_my_range');
     var input0 = document.getElementById('min_price');
     var input1 = document.getElementById('max_price');
     var inputs = [input0, input1];
+    var maxPrice = Number(document.getElementById('max-price').value);
+    var currentMin = Number(input0.value);
+    var currentMax = Number(input1.value);
+
+    if (currentMax == 0){
+        currentMax = maxPrice;
+    }
+
+
 
     noUiSlider.create(keypressSlider, {
-        start: [100, 10000],
+        start: [currentMin, currentMax],
         connect: true,
         // direction: 'rtl',
         // tooltips: [true, wNumb({decimals: 1})],
+        // tooltips: true,
+
         range: {
-            'min': [100],
-            '1%': 200,
-            'max': 10000
-        }
+            'min': [0],
+            'max': [maxPrice],
+        },
+        step: 50,
+
     });
     function setSliderHandle(i, value) {
         var r = [null, null];
-        r[i] = value;
+        r[i] = Number(value);
         keypressSlider.noUiSlider.set(r);
     }
+
 // Listen to keydown events on the input field.
     inputs.forEach(function (input, handle) {
         input.addEventListener('change', function () {
@@ -526,8 +540,4 @@ if ($('ul').is('#main-menu')) {
     });
 }
 
-if ($('li').is('.root-category')) {
-    $('.root-category a').click(function () {
-        return false;
-    });
-}
+

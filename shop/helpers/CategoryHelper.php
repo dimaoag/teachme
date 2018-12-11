@@ -36,7 +36,7 @@ class CategoryHelper
             }
 
             echo "<li class='" . $class. "'>";
-            echo "<a href='/category/".$category->id ."'>" . $category->name ."</a>";
+            echo "<a href='".Url::to(['/course/search/search', 'category' =>$category->id])."'>" . $category->name ."</a>";
             $level=$category->depth;
         }
 

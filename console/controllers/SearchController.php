@@ -42,7 +42,10 @@ class SearchController extends Controller
             /** @var Course $course */
             $this->stdout('Course #' . $course->id . PHP_EOL);
             $this->indexer->index($course);
+//            $this->indexer->remove($course);
         }
+
+
 
         $this->stdout('Done!' . PHP_EOL);
     }

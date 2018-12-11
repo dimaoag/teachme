@@ -1,7 +1,7 @@
 <?php
 
 use shop\helpers\CityHelper;
-
+use yii\helpers\Html;
 
 
 /* @var $this yii\web\View */
@@ -17,14 +17,12 @@ $this->title = 'Главная';
                     <h1 class="main-header-title">платформа для поиска курсов</h1>
                     <h3 class="main-header-description">Более 1000 курсов в 100 направлениях, которые можете отфильтровать по цене, типу или по месту расположения</h3>
                     <div class="row main-header-form-wrap">
-                        <form action="#">
+                        <?= Html::beginForm(['/course/search/search'], 'get'); ?>
                             <div class="col-sm-5 col-sm-offset-1">
-                                <form action="#">
-                                    <div class="buttonInside">
-                                        <input type="text" name="s" placeholder="Введите курс, который Вы ищите" class="main-header-form-field">
-                                        <button id="showPassword"><i class="fa fa-search" aria-hidden="true"></i></button>
-                                    </div>
-                                </form>
+                                <div class="buttonInside">
+                                    <input type="text" name="text" placeholder="Введите курс, который Вы ищите" class="main-header-form-field">
+                                    <button id="showPassword"><i class="fa fa-search" aria-hidden="true"></i></button>
+                                </div>
                             </div>
                             <div class="col-sm-3 header-search-city">
                                 <div class="header-search-field custom-select main-select-city">
@@ -32,9 +30,9 @@ $this->title = 'Главная';
                                 </div>
                             </div>
                             <div class="col-sm-2">
-                                <button class="main-header-form-field main-form-submit hvr-grow">Найти</button>
+                                <button type="submit" class="main-header-form-field main-form-submit hvr-grow">Найти</button>
                             </div>
-                        </form>
+                        <?= Html::endForm() ?>
                     </div>
                 </div>
             </div>

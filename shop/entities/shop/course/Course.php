@@ -2,6 +2,7 @@
 
 namespace shop\entities\shop\course;
 
+use phpDocumentor\Reflection\Types\This;
 use shop\entities\EventTrait;
 use lhs\Yii2SaveRelationsBehavior\SaveRelationsBehavior;
 use shop\entities\AggregateRoot;
@@ -14,6 +15,8 @@ use Yii;
 use yii\db\ActiveQuery;
 use yii\db\ActiveRecord;
 use yii\db\Exception;
+use yii\helpers\ArrayHelper;
+use yii\helpers\VarDumper;
 use yii\web\UploadedFile;
 
 /**
@@ -263,6 +266,18 @@ class Course extends ActiveRecord implements AggregateRoot
         return Value::blank($id);
     }
 
+
+
+    public function getCategoryParents()
+    {
+        $categories = ArrayHelper::getColumn($this->category->parents, 'id');
+        foreach ($categories as $key => $value){
+            if ($value == 1){
+                unset($categories[$key]);
+            }
+        }
+        return $categories;
+    }
 
 
     ##########################

@@ -3,6 +3,7 @@
 namespace shop\readModels\shop;
 
 use Elasticsearch\Client;
+use phpDocumentor\Reflection\Types\Integer;
 use shop\entities\shop\City;
 use shop\entities\shop\Category;
 use shop\entities\shop\course\Course;
@@ -15,6 +16,7 @@ use yii\data\Sort;
 use yii\db\ActiveQuery;
 use yii\db\Expression;
 use yii\helpers\ArrayHelper;
+use yii\helpers\VarDumper;
 
 class CourseReadRepository
 {
@@ -67,6 +69,15 @@ class CourseReadRepository
         $query->andWhere(['c.city_id' => $city->id]);
         return $this->getProvider($query);
     }
+
+    public function getMaxPrice() :string
+    {
+        /**
+         * @var $course Course
+         */
+        $course = Course::find()->active()->orderBy(['price' => SORT_DESC])->one();
+        return $course->price;
+    }
     
 
     public function getFeatured($limit): array
@@ -115,11 +126,13 @@ class CourseReadRepository
             'defaultOrder' => ['id' => SORT_DESC],
             'attributes' => [
                 'id',
-                'name',
                 'price',
                 'rating',
             ],
         ]);
+
+
+
 
         $response = $this->client->search([
             'index' => 'shop',
@@ -136,23 +149,28 @@ class CourseReadRepository
                         'must' => array_merge(
                             array_filter([
 //                                !empty($form->category) ? ['range' => ['categories' => ['gte' => 5, 'lte' => 6]]] : false,
-                                !empty($form->to) ? ['range' => ['categories' => ['gte' => $form->from, 'lte' => $form->to]]] : false,
-                                !empty($form->category) ? ['term' => ['category' => $form->category]] : false,
-                                !empty($form->city) ? ['term' => ['brand' => $form->city]] : false,
-                                !empty($form->text) ? ['multi_match' => [
-                                    'query' => $form->text,
-                                    'fields' => [ 'name' ]
-                                ]] : false,
+                                !empty($form->to) ? ['range' => ['price' => ['gte' => $form->from, 'lte' => $form->to]]] : false,
+                                !empty($form->category) ? ['term' => ['categories' => $form->category]] : false,
+                                !empty($form->city) ? ['term' => ['city' => $form->city]] : false,
+                                !empty($form->text) ? ['match' => ['name' => $form->text]] : false,
                             ]),
                             array_map(function (ValueForm $value) {
+
                                 return ['nested' => [
                                     'path' => 'values',
                                     'query' => [
                                         'bool' => [
-                                            'must' => array_filter([
-                                                ['match' => ['values.characteristic' => $value->getId()]],
-                                                !empty($value->equal) ? ['match' => ['values.value_string' => $value->equal]] : false,
-                                            ]),
+                                            'must' => [
+                                                'bool' => [
+                                                    'should' => array_filter([
+//                                                        ['match' => ['values.characteristic' => $value->getId()]],
+                                                        !empty($value->equal) ? array_map(function ($val){
+//                                                            VarDumper::dump(['match' => ['values.value_string' => $val]], 10, true);
+                                                            return ['match' => ['values.value_string' => $val]];
+                                                        }, $value->equal) : false,
+                                                    ]),
+                                                ],
+                                            ],
                                         ],
                                     ],
                                 ]];
@@ -162,6 +180,8 @@ class CourseReadRepository
                 ],
             ],
         ]);
+
+
 
         $ids = ArrayHelper::getColumn($response['hits']['hits'], '_source.id');
 

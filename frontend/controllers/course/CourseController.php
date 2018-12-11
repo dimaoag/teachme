@@ -53,7 +53,7 @@ class CourseController extends Controller{
             'verbs' => [
                 'class' => VerbFilter::class,
                 'actions' => [
-                    'delete' => ['POST'],
+//                    'delete' => ['POST'],
                     'delete-photo' => ['POST'],
                     'delete-gallery-item' => ['POST'],
                 ],
@@ -201,6 +201,8 @@ class CourseController extends Controller{
     }
 
 
+
+
     public function actionOnModeration($id){
 
         $course = $this->findModel($id);
@@ -223,20 +225,6 @@ class CourseController extends Controller{
             Yii::$app->session->setFlash('error', $e->getMessage());
         }
         return $this->redirect(Yii::$app->request->referrer ?: ['/']);
-    }
-
-    public function actionSearch()
-    {
-        $form = new SearchForm();
-        $form->load(\Yii::$app->request->queryParams);
-        $form->validate();
-
-        $dataProvider = $this->courseReadRepository->search($form);
-
-        return $this->render('search', [
-            'dataProvider' => $dataProvider,
-            'searchForm' => $form,
-        ]);
     }
 
 
