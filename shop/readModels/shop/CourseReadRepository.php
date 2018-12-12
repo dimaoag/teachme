@@ -57,13 +57,12 @@ class CourseReadRepository
     {
         $query = Course::find()->alias('c')->active('c')->with('mainPhoto', 'category');
         $ids = ArrayHelper::merge([$category->id], $category->getDescendants()->select('id')->column());
-        $query->joinWith(['categoryAssignments ca'], false);
-        $query->andWhere(['or', ['c.category_id' => $ids], ['ca.category_id' => $ids]]);
+        $query->andWhere(['or', ['c.category_id' => $ids]]);
         $query->groupBy('c.id');
         return $this->getProvider($query);
     }
 
-    public function getAllByBrand(City $city): DataProviderInterface
+    public function getAllByCity(City $city): DataProviderInterface
     {
         $query = Course::find()->alias('c')->active('c')->with('mainPhoto');
         $query->andWhere(['c.city_id' => $city->id]);

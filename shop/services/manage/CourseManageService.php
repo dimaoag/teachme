@@ -16,6 +16,7 @@ use shop\repositories\shop\CourseRepository;
 use shop\repositories\shop\ErrorRepository;
 use shop\repositories\UserRepository;
 use shop\services\TransactionManager;
+use shop\services\search\CourseIndexer;
 use Yii;
 use yii\helpers\VarDumper;
 
@@ -26,6 +27,7 @@ class CourseManageService
     private $cities;
     private $errors;
     private $categories;
+    private $indexer;
     private $transaction;
 
     public function __construct(
@@ -34,6 +36,7 @@ class CourseManageService
         CityRepository $cities,
         ErrorRepository $errors,
         CategoryRepository $categories,
+        CourseIndexer $indexer,
         TransactionManager $transaction
     )
     {
@@ -42,6 +45,7 @@ class CourseManageService
         $this->cities = $cities;
         $this->errors = $errors;
         $this->categories = $categories;
+        $this->indexer = $indexer;
         $this->transaction = $transaction;
     }
 
@@ -96,6 +100,8 @@ class CourseManageService
 
         $this->transaction->wrap(function () use ($course, $form) {
             $this->courses->save($course);
+            $this->indexer->remove($course);
+            $this->indexer->index($course);
         });
     }
 
@@ -120,6 +126,7 @@ class CourseManageService
         $course->activate();
         $course->setDateActivate();
         $this->courses->save($course);
+        $this->indexer->index($course);
     }
 
     public function draft($id): void

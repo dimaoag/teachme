@@ -43,9 +43,13 @@ class SearchForm extends CompositeForm
         });
     }
 
-    public function brandsList(): array
+    public function citiesList(): array
     {
         return ArrayHelper::map(City::find()->orderBy('name')->asArray()->all(), 'id', 'name');
+    }
+
+    public function getCategoryById($id){
+        return Category::findOne($id);
     }
 
     public function formName(): string

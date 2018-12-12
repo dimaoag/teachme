@@ -2,14 +2,28 @@
 
 /* @var $this yii\web\View */
 /* @var $dataProvider yii\data\DataProviderInterface */
-/* @var \shop\entities\shop\course\Course $course */
+/* @var $course \shop\entities\shop\course\Course */
+/* @var $category \shop\entities\shop\Category*/
 /* @var $searchForm \shop\forms\course\search\SearchForm */
 
 use yii\bootstrap\ActiveForm;
 use yii\helpers\Html;
 
 $this->title = 'Поиск курсов';
-$this->params['breadcrumbs'][] = 'Поиск курсов';
+
+
+if ($searchForm->category){
+    $category = $searchForm->getCategoryById($searchForm->category);
+    foreach ($category->parents as $parent) {
+        if (!$parent->isRoot()) {
+            $this->params['breadcrumbs'][] = ['label' => $parent->name, 'url' => ['/course/search/search', 'category' => $parent->id]];
+        }
+    }
+    $this->params['breadcrumbs'][] = $category->name;
+} else {
+    $this->params['breadcrumbs'][] = 'Поиск курсов';
+}
+
 ?>
 
 <main>
@@ -17,8 +31,16 @@ $this->params['breadcrumbs'][] = 'Поиск курсов';
         <div class="row">
             <div class="col-md-3">
                 <input type="hidden" class="max-price" id="max-price" name="max-price" value="<?= $maxPrice; ?>">
-                <?php $form = ActiveForm::begin(['action' => [''], 'method' => 'get']) ?>
+                <?php $form = ActiveForm::begin(['action' => [''], 'method' => 'get',  'enableClientValidation' => false]) ?>
 
+                <div class="row ">
+                    <div class="col-xs-12 city-filter-field">
+                        <?= $form->field($searchForm, 'city')->dropDownList($searchForm->citiesList(), ['prompt' => 'Выберите город'])->label('Город') ?>
+                    </div>
+                </div>
+                <?php if ($searchForm->category): ?>
+                    <?= $form->field($searchForm, 'category')->hiddenInput()->label(false) ?>
+                <?php endif; ?>
                 <div class="filter-wrap">
 
                     <?php $k = 0; ?>
@@ -41,7 +63,13 @@ $this->params['breadcrumbs'][] = 'Поиск курсов';
                                                 <div class="checkboxes">
                                                     <div class="cntr">
                                                         <label for="cbx<?=$k?>" class="label-cbx">
-                                                            <input id="cbx<?=$k?>" name="v[<?=$i?>][equal][]" <?= isset($searchForm->values[$i]['equal'][$j]) ? ' checked' : '' ?> type="checkbox"  value="<?= Html::encode($variant); ?>" class="invisible">
+                                                            <input id="cbx<?=$k?>" name="v[<?=$i?>][equal][]" <?php if (isset($searchForm->values[$i]['equal'])){
+                                                                foreach ($searchForm->values[$i]['equal'] as $id => $val){
+                                                                    if (rtrim($val) == rtrim($variant)){
+                                                                        echo ' checked';
+                                                                    }
+                                                                }
+                                                            } ?> type="checkbox"  value="<?= Html::encode($variant); ?>" class="invisible">
                                                             <div class="checkbox">
                                                                 <svg width="20px" height="20px" viewBox="0 0 20 20">
                                                                     <path d="M3,1 L17,1 L17,1 C18.1045695,1 19,1.8954305 19,3 L19,17 L19,17 C19,18.1045695 18.1045695,19 17,19 L3,19 L3,19 C1.8954305,19 1,18.1045695 1,17 L1,3 L1,3 C1,1.8954305 1.8954305,1 3,1 Z"></path>
@@ -65,15 +93,6 @@ $this->params['breadcrumbs'][] = 'Поиск курсов';
                     <div class="filter">
                         <h4>Цена</h4>
                         <div class="checkboxes">
-                            <!--<input type="hidden" id="hidden_minimum_price" value="0">-->
-                            <!--<input type="hidden" id="hidden_maximum_price" value="10000">-->
-                            <!--<p id="price_show">1000 - 10000 грн</p>-->
-                            <!--<div id="price_range"></div>-->
-
-                            <!--<p id="amount"></p>-->
-                            <!--<div id="slider-range" class="price-range" style="margin: 25px 0;"></div>-->
-                            <!--<input type="hidden" id="min_price">-->
-                            <!--<input type="hidden" id="max_price">-->
                             <div class="price_my_range" id="price_my_range">
                             </div>
                             <div class="range-inputs">
@@ -87,6 +106,8 @@ $this->params['breadcrumbs'][] = 'Поиск курсов';
                     </div>
                 </div>
                 <button type="submit" class="btn btn-block btn-success">Найти</button>
+                <br>
+                <?= Html::a('Очистить', [''], ['class' => 'btn btn-default btn-block']) ?>
                 <br>
                 <?php ActiveForm::end() ?>
             </div>

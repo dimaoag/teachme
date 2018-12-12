@@ -23,7 +23,7 @@ class CourseRepository
     public function getCoursesByUserId($id)
     {
         if (!$courses = Course::find()->andWhere(['user_id' => $id])->all()) {
-            throw new NotFoundException('Course is not found.');
+            return false;
         }
         return $courses;
     }

@@ -3,6 +3,8 @@ namespace frontend\controllers\course;
 
 
 use shop\helpers\CourseHelper;
+use shop\readModels\shop\CategoryReadRepository;
+use shop\readModels\shop\CityReadRepository;
 use Yii;
 use yii\filters\AccessControl;
 use yii\filters\VerbFilter;
@@ -25,13 +27,23 @@ class CourseController extends Controller{
     private $service;
     private $userManageService;
     private $courseReadRepository;
+    private $categories;
+    private $cities;
 
-    public function __construct($id, $module, CourseManageService $service,  UserManegeService $userManageService, CourseReadRepository $courseReadRepository, $config = [])
+    public function __construct($id, $module,
+        CourseManageService $service,
+        UserManegeService $userManageService,
+        CourseReadRepository $courseReadRepository,
+        CategoryReadRepository $categories,
+        CityReadRepository $cities,
+        $config = [])
     {
         parent::__construct($id, $module, $config);
         $this->service = $service;
         $this->userManageService = $userManageService;
         $this->courseReadRepository = $courseReadRepository;
+        $this->categories = $categories;
+        $this->cities = $cities;
     }
 
 
@@ -40,6 +52,7 @@ class CourseController extends Controller{
         return [
             'access' => [
                 'class' => AccessControl::class,
+                'only' => ['create', 'update', 'delete', 'delete-photo', 'delete-gallery-item', 'on-moderation'],
                 'rules' => [
                     [
                         'allow' => true,
@@ -53,7 +66,7 @@ class CourseController extends Controller{
             'verbs' => [
                 'class' => VerbFilter::class,
                 'actions' => [
-//                    'delete' => ['POST'],
+                    'delete' => ['POST'],
                     'delete-photo' => ['POST'],
                     'delete-gallery-item' => ['POST'],
                 ],
@@ -64,9 +77,46 @@ class CourseController extends Controller{
 
 
 
-    public function actionIndex(){
-        return $this->render('index');
+    public function actionView($id){
+        $course = $this->findModel($id);
+
+
+        return $this->render('view', [
+            'course' => $course,
+        ]);
     }
+
+
+    public function actionCategory($id)
+    {
+        if (!$category = $this->categories->find($id)) {
+            throw new NotFoundHttpException('The requested page does not exist.');
+        }
+
+        $dataProvider = $this->courseReadRepository->getAllByCategory($category);
+
+        return $this->render('category', [
+            'category' => $category,
+            'dataProvider' => $dataProvider,
+        ]);
+    }
+
+
+
+    public function actionCity($id)
+    {
+        if (!$city = $this->cities->find($id)) {
+            throw new NotFoundHttpException('The requested page does not exist.');
+        }
+
+        $dataProvider = $this->courseReadRepository->getAllByCity($city);
+
+        return $this->render('city', [
+            'city' => $city,
+            'dataProvider' => $dataProvider,
+        ]);
+    }
+
 
 
     /**
@@ -106,7 +156,7 @@ class CourseController extends Controller{
             try {
                 $this->service->edit($course->id, $form);
 //                return $this->redirect(['index', 'id' => $course->id]);
-                return $this->redirect(['index']);
+                return $this->redirect(['/cabinet/teacher']);
             } catch (\DomainException $e) {
                 Yii::$app->errorHandler->logException($e);
                 Yii::$app->session->setFlash('error', $e->getMessage());

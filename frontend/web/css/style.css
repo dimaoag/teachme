@@ -1262,6 +1262,9 @@ span.ui-slider-handle.ui-state-default.ui-corner-all:focus, span.ui-slider-handl
     color: #999999;
     white-space: nowrap;
 }
+.master-class:first-letter{
+    text-transform: uppercase;
+}
 .sits{
     white-space: nowrap;
 }
@@ -1483,6 +1486,11 @@ label.tab.active{
     font-size: 1.5rem;
     border-radius: 50%;
 }
+.favorite-course-top a{
+    display: block;
+    width: 100%;
+    height: 100%;
+}
 .favorite-course-top a i{
     color: red;
     position: absolute;
@@ -1597,6 +1605,9 @@ label.tab.active{
     white-space: nowrap;
     padding: 0;
 }
+.course-type-item .row{
+    width: 100%;
+}
 .course-type-name{
     color: #828080;
 }
@@ -1605,6 +1616,36 @@ label.tab.active{
 }
 .course-type-value{
     padding-left: 15%;
+}
+.main-select-city .select-items, .header-search-city .select-items {
+    height: auto;
+    max-height: 250px;
+    overflow-x: hidden;
+}
+.city-filter-field .field-city{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.city-filter-field .field-city label{
+    margin-right: 15px;
+}
+.city-filter-field .form-control:focus{
+    border:  1px solid #ccc;
+    box-shadow: none;
+}
+.btn-city{
+    border: none;
+}
+.cities-list-wrap .open{
+    background-color: white;
+}
+.btn-city:hover, .btn-city:focus, .btn-city:active{
+    background-color: white;
+}
+.cities-list{
+    left: unset;
+    right: 0;
 }
 
 /*---------course-will-know-------------*/

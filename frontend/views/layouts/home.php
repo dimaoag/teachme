@@ -48,7 +48,7 @@ FontAwesomeAsset::register($this);
                     <div id="navbar" class="navbar-collapse collapse">
                         <ul class="nav navbar-nav">
                             <li><a href="<?=Url::home()?>">Главная</a></li>
-                            <li><a href="<?=Url::to(['/course'])?>">Курсы</a></li>
+                            <li><a href="<?=Url::to(['/course/search/search'])?>">Курсы</a></li>
                             <?php if (UserHelper::isAccessAddCourse()): ?>
                                 <li><a href="<?=Url::to(['/course/course/create'])?>">Добавить курс</a></li>
                             <?php endif; ?>
@@ -95,7 +95,7 @@ FontAwesomeAsset::register($this);
                         <div class="footer-nav">
                             <ul>
                                 <li><a href="<?=Url::home()?>">Главная</a></li>
-                                <li><a href="<?=Url::to(['/course'])?>">Курсы</a></li>
+                                <li><a href="<?=Url::to(['/course/search/search'])?>">Курсы</a></li>
                                 <?php if (UserHelper::isAccessAddCourse()): ?>
                                     <li><a href="<?=Url::to(['/course/course/create'])?>">Добавить курс</a></li>
                                 <?php endif; ?>

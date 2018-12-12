@@ -4,10 +4,7 @@
 /* @var $content string */
 
 use shop\helpers\CategoryHelper;
-use shop\helpers\CityHelper;
 use yii\helpers\Html;
-use yii\bootstrap\Nav;
-use yii\bootstrap\NavBar;
 use yii\widgets\Breadcrumbs;
 use frontend\assets\AppAsset;
 use frontend\assets\FontAwesomeAsset;
@@ -50,7 +47,7 @@ FontAwesomeAsset::register($this);
                     <div id="navbar" class="navbar-collapse collapse">
                         <ul class="nav navbar-nav">
                             <li><a href="<?=Url::home()?>">Главная</a></li>
-                            <li><a href="<?=Url::to(['/course'])?>">Курсы</a></li>
+                            <li><a href="<?=Url::to(['/course/search/search'])?>">Курсы</a></li>
                             <?php if (UserHelper::isAccessAddCourse()): ?>
                                 <li><a href="<?=Url::to(['/course/course/create'])?>">Добавить курс</a></li>
                             <?php endif; ?>
@@ -91,15 +88,15 @@ FontAwesomeAsset::register($this);
                     <div class="col-sm-8 ">
                         <?= Html::beginForm(['/course/search/search'], 'get', ['class' => '']) ?>
                         <div class="row header-wrap-search">
-                            <div class="col-sm-6 header-search-field header-search-text">
+                            <div class="col-sm-12 header-search-field header-search-text">
                                 <input type="text" name="text" placeholder="Введите курс, который Вы ищите">
                                 <button type="submit"><i class="fa fa-search"></i></button>
                             </div>
-                            <div class="col-sm-6 header-search-city">
-                                <div class="header-search-field custom-select">
-                                    <?= CityHelper::cityList(); ?>
-                                </div>
-                            </div>
+<!--                            <div class="col-sm-6 header-search-city">-->
+<!--                                <div class="header-search-field custom-select">-->
+<!--                                    --><?php //= CityHelper::cityList(); ?>
+<!--                                </div>-->
+<!--                            </div>-->
                         </div>
                         <?= Html::endForm() ?>
                     </div>
@@ -115,22 +112,6 @@ FontAwesomeAsset::register($this);
         </div>
         <div class="content">
             <div class="container">
-
-
-<!--            <section class="breadcrumbs">-->
-<!--                <div class="container">-->
-<!--                    <div class="row">-->
-<!--                        <div class="col-md-12">-->
-<!--                            <ul class="breadcrumb">-->
-<!--                                <li><a href="#">Home</a></li>-->
-<!--                                <li><a href="#">Pictures</a></li>-->
-<!--                                <li><a href="#">Summer 15</a></li>-->
-<!--                                <li>Italy</li>-->
-<!--                            </ul>-->
-<!--                        </div>-->
-<!--                    </div>-->
-<!--                </div>-->
-<!--            </section>-->
 
                 <?= Breadcrumbs::widget([
                     'links' => isset($this->params['breadcrumbs']) ? $this->params['breadcrumbs'] : [],
@@ -158,7 +139,7 @@ FontAwesomeAsset::register($this);
                         <div class="footer-nav">
                             <ul>
                                 <li><a href="<?=Url::home()?>">Главная</a></li>
-                                <li><a href="<?=Url::to(['/course'])?>">Курсы</a></li>
+                                <li><a href="<?=Url::to(['/course/search/search'])?>">Курсы</a></li>
                                 <?php if (UserHelper::isAccessAddCourse()): ?>
                                     <li><a href="<?=Url::to(['/course/course/create'])?>">Добавить курс</a></li>
                                 <?php endif; ?>
