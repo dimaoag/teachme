@@ -4,11 +4,16 @@
 /* @var $publications string */
 /* @var $course shop\entities\shop\course\Course */
 /* @var $courses[] shop\entities\shop\course\Course */
+/* @var $teacherMainInfoForm \shop\forms\manage\shop\TeacherMainInfoForm */
+/* @var $teacherMainInfo \shop\entities\shop\TeacherMainInfo*/
 
 use shop\entities\shop\course\Course;
 use yii\helpers\Html;
 use yii\helpers\Url;
 use shop\helpers\CourseHelper;
+use kartik\widgets\FileInput;
+use yii\bootstrap\ActiveForm;
+
 ?>
 <main>
     <div class="container">
@@ -620,55 +625,85 @@ use shop\helpers\CourseHelper;
                 <div class="tab-cabinet-container tab-main-info">
                     <h2 class="tab-main-info-title">Добавьте основную информацию по организации</h2>
                     <div class="row">
+                        <?php if (!empty($teacherMainInfo->photo)):?>
+                            <?php foreach ($teacherMainInfo->photo as $photo): ?>
+                                <div class="col-sm-5 col-xs-12 edit-main-photo-wrap">
+                                    <div class="btn-group edit-delete-btn">
+                                        <?= Html::a('<span class="glyphicon glyphicon-remove"></span>', ['delete-firm-photo', 'id' => $teacherMainInfo->id, 'photo_id' => $photo->id], [
+                                            'class' => 'btn btn-default',
+                                            'data-method' => 'post',
+                                            'data-confirm' => 'Вы действилътельно хотите удалить этот елемент?',
+                                        ]); ?>
+                                    </div>
+                                    <?= Html::img($photo->getThumbFileUrl('file', 'thumb')); ?>
+                                </div>
+                            <?php endforeach; ?>
+                        <?php endif; ?>
                         <div class="col-md-10">
-                            <form action="#">
+                            <?php $form = ActiveForm::begin([
+                                'options' => ['enctype'=>'multipart/form-data', 'id' => 'teacher_main_info']
+                            ]); ?>
                                 <div class="add-photo-profile">
                                     <div class="form-group">
                                         <div class="row">
                                             <div class="col-sm-12">
                                                 <h4>Выберите изображения организации</h4>
-                                                <div class="row">
-                                                    <div id="photo_profile_company"></div>
-                                                    <div class="clearfix"></div>
-                                                </div>
+
+                                                <?= $form->field($teacherMainInfoForm->photo, 'files[]')->widget(FileInput::class, [
+                                                    'options' => [
+                                                        'accept' => 'image/*',
+                                                    ],
+                                                    'pluginOptions' => [
+                                                        'browseOnZoneClick' => true,
+                                                        'showBrowse' => true,
+                                                        'showUpload' => false,
+                                                        'overwriteInitial' => true,
+                                                        'browseClass' => 'btn btn-purple',
+                                                        'removeClass' => 'btn btn-default',
+                                                    ],
+                                                ])->label(false); ?>
                                             </div>
                                         </div>
+
                                         <div class="clearfix"></div>
                                     </div>
                                 </div>
                                 <div class="form-group">
                                     <div class="row">
                                         <div class="col-sm-12 main-form-field-item">
-                                            <label for="name">Название организации</label>
-                                            <input type="text" class="form-control" id="name" placeholder="Названия">
+                                            <?= $form->field($teacherMainInfoForm, 'firm_name')->textInput(['maxlength' => true])->label(false); ?>
+<!--                                            <label for="name">Название организации</label>-->
+<!--                                            <input type="text" class="form-control" id="name" placeholder="Названия">-->
                                         </div>
                                     </div>
                                 </div>
                                 <div class="form-group">
                                     <div class="row">
                                         <div class="col-sm-6 main-form-field-item header-search-city">
+                                            <?= $form->field($teacherMainInfoForm, 'city_id')->dropDownList($teacherMainInfoForm->getCitiesList(), ['id' => 'city_id', 'prompt' => 'Выберите город...'])->label(false); ?>
                                             <label for="region">Регион</label>
-                                            <div class="add-course-select">
-                                                <div class="custom-select main-select-city">
-                                                    <select class="form-control" name="region" id="region">
-                                                        <option value="0">Выберите город</option>
-                                                        <option value="1">Киев</option>
-                                                        <option value="2">Винница</option>
-                                                        <option value="3">Одесса</option>
-                                                    </select>
-                                                </div>
-                                            </div>
+<!--                                            <div class="add-course-select">-->
+<!--                                                <div class="custom-select main-select-city">-->
+<!--                                                    <select class="form-control" name="region" id="region">-->
+<!--                                                        <option value="0">Выберите город</option>-->
+<!--                                                        <option value="1">Киев</option>-->
+<!--                                                        <option value="2">Винница</option>-->
+<!--                                                        <option value="3">Одесса</option>-->
+<!--                                                    </select>-->
+<!--                                                </div>-->
+<!--                                            </div>-->
                                         </div>
                                     </div>
                                 </div>
                                 <div class="form-group">
                                     <div class="row">
                                         <div class="col-sm-10 main-form-field-item">
+                                            <?= $form->field($teacherMainInfoForm, 'address')->textInput(['maxlength' => true])->label(false); ?>
                                             <label for="address">Адрес</label>
-                                            <div class="main-info-form-field">
-                                                <i class="fa fa-map-marker" aria-hidden="true"></i>
-                                                <input type="text" class="form-control" id="address" placeholder="Названия">
-                                            </div>
+<!--                                            <div class="main-info-form-field">-->
+<!--                                                <i class="fa fa-map-marker" aria-hidden="true"></i>-->
+<!--                                                <input type="text" class="form-control" id="address" placeholder="Названия">-->
+<!--                                            </div>-->
                                         </div>
                                     </div>
                                 </div>
@@ -676,12 +711,14 @@ use shop\helpers\CourseHelper;
                                     <div class="row">
                                         <div class="col-sm-5 main-form-field-item">
                                             <div class="main-info-form-field main-info-field-phone">
-                                                <i class="fa fa-phone" aria-hidden="true"></i>
-                                                <input type="text" class="form-control" data-mask="callback-catalog-phone" value="979746559" name="phone_1" placeholder="+38 ( ___ ) - ____ - __ - __">
+                                                <?= $form->field($teacherMainInfoForm, 'phone_1')->textInput(['maxlength' => true])->label(false); ?>
+<!--                                                <i class="fa fa-phone" aria-hidden="true"></i>-->
+<!--                                                <input type="text" class="form-control" data-mask="callback-catalog-phone" value="979746559" name="phone_1" placeholder="+38 ( ___ ) - ____ - __ - __">-->
                                             </div>
                                             <div class="main-info-form-field main-info-field-phone">
-                                                <i class="fa fa-phone" aria-hidden="true"></i>
-                                                <input type="text" class="form-control" name="phone_2" data-mask="callback-catalog-phone" placeholder="+38 ( ___ ) - ____ - __ - __">
+                                                <?= $form->field($teacherMainInfoForm, 'phone_2')->textInput(['maxlength' => true])->label(false); ?>
+<!--                                                <i class="fa fa-phone" aria-hidden="true"></i>-->
+<!--                                                <input type="text" class="form-control" name="phone_2" data-mask="callback-catalog-phone" placeholder="+38 ( ___ ) - ____ - __ - __">-->
                                             </div>
                                         </div>
                                     </div>
@@ -692,19 +729,23 @@ use shop\helpers\CourseHelper;
                                             <label>Ссылки на соц сети</label>
                                             <div class="main-info-form-field main-info-field-socs instagram-field">
                                                 <i class="fa fa-instagram"></i>
-                                                <input type="text" class="form-control" name="link_instagram">
+                                                <?= $form->field($teacherMainInfoForm, 'instagram_link')->textInput()->label(false); ?>
+<!--                                                <input type="text" class="form-control" name="link_instagram">-->
                                             </div>
                                             <div class="main-info-form-field main-info-field-socs facebook-field">
                                                 <i class="fa fa-facebook"></i>
-                                                <input type="text" class="form-control" name="link_facebook">
+                                                <?= $form->field($teacherMainInfoForm, 'facebook_link')->textInput()->label(false); ?>
+<!--                                                <input type="text" class="form-control" name="link_facebook">-->
                                             </div>
                                             <div class="main-info-form-field main-info-field-socs vk-field">
                                                 <i class="fa fa-vk"></i>
-                                                <input type="text" class="form-control" name="link_vk">
+                                                <?= $form->field($teacherMainInfoForm, 'vk_link')->textInput()->label(false); ?>
+<!--                                                <input type="text" class="form-control" name="link_vk">-->
                                             </div>
                                             <div class="main-info-form-field main-info-field-socs youtube-field">
                                                 <i class="fa fa-youtube-play"></i>
-                                                <input type="text" class="form-control" name="link_youtube">
+                                                <?= $form->field($teacherMainInfoForm, 'youtube_link')->textInput()->label(false); ?>
+<!--                                                <input type="text" class="form-control" name="link_youtube">-->
                                             </div>
                                         </div>
                                     </div>
@@ -712,7 +753,7 @@ use shop\helpers\CourseHelper;
                                 <div class="col-md-4 float-r">
                                     <button type="submit" class="btn btn-block button-pure">Сохранить данные</button>
                                 </div>
-                            </form>
+                            <?php ActiveForm::end(); ?>
                         </div>
                     </div>
                 </div>

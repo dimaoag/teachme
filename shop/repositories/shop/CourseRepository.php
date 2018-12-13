@@ -28,6 +28,14 @@ class CourseRepository
         return $courses;
     }
 
+    public function getCoursesByFirmId($id)
+    {
+        if (!$courses = Course::find()->andWhere(['firm_id' => $id])->all()) {
+            return false;
+        }
+        return $courses;
+    }
+
     public function existsByCity($id): bool
     {
         return Course::find()->andWhere(['city_id' => $id])->exists();

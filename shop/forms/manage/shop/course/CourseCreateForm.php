@@ -19,6 +19,7 @@ use yii\helpers\ArrayHelper;
 class CourseCreateForm extends CompositeForm
 {
     public $cityId;
+    public $firmId;
     public $name;
     public $description;
     public $price;
@@ -38,9 +39,9 @@ class CourseCreateForm extends CompositeForm
     public function rules(): array
     {
         return [
-            [['cityId', 'name', 'price'], 'required'],
+            [['cityId', 'firmId', 'name', 'price'], 'required'],
             [['name'], 'string', 'max' => 255],
-            [['cityId', 'price'], 'integer'],
+            [['cityId', 'firmId', 'price'], 'integer'],
             ['description', 'string'],
             ['price', 'integer', 'min' => 0],
         ];

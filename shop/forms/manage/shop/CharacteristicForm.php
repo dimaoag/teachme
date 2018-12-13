@@ -17,14 +17,14 @@ class CharacteristicForm extends Model
 
     private $_characteristic;
 
-    public function __construct(Characteristic $characteristic = null, $config = [])
+    public function __construct(Characteristic $teacherMainInfo = null, $config = [])
     {
-        if ($characteristic) {
-            $this->name = $characteristic->name;
-            $this->required = $characteristic->required;
-            $this->textVariants = implode(PHP_EOL, $characteristic->variants);
-            $this->sort = $characteristic->sort;
-            $this->_characteristic = $characteristic;
+        if ($teacherMainInfo) {
+            $this->name = $teacherMainInfo->name;
+            $this->required = $teacherMainInfo->required;
+            $this->textVariants = implode(PHP_EOL, $teacherMainInfo->variants);
+            $this->sort = $teacherMainInfo->sort;
+            $this->_characteristic = $teacherMainInfo;
         } else {
             $this->sort = Characteristic::find()->max('sort') + 1;
         }

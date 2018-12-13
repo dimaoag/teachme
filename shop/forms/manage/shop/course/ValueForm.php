@@ -14,12 +14,12 @@ class ValueForm extends Model
     public $value;
     private $_characteristic;
 
-    public function __construct(Characteristic $characteristic, Value $value = null, $config = [])
+    public function __construct(Characteristic $teacherMainInfo, Value $value = null, $config = [])
     {
         if ($value) {
             $this->value = $value->value;
         }
-        $this->_characteristic = $characteristic;
+        $this->_characteristic = $teacherMainInfo;
         parent::__construct($config);
     }
 

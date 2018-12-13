@@ -1,6 +1,5 @@
 <?php
-
-namespace shop\entities\shop\course;
+namespace shop\entities\shop;
 
 
 use yii\db\ActiveRecord;
@@ -10,12 +9,12 @@ use yiidreamteam\upload\ImageUploadBehavior;
 /**
  * @property integer $id
  * @property string $file
- * @property integer $sort
  *
  * @mixin ImageUploadBehavior
  */
-class Photo extends ActiveRecord
-{
+
+class TeacherMainInfoPhoto  extends  ActiveRecord{
+
     public static function create(UploadedFile $file): self
     {
         $photo = new static();
@@ -23,10 +22,7 @@ class Photo extends ActiveRecord
         return $photo;
     }
 
-    public function setSort($sort): void
-    {
-        $this->sort = $sort;
-    }
+
 
     public function isIdEqualTo($id): bool
     {
@@ -35,7 +31,7 @@ class Photo extends ActiveRecord
 
     public static function tableName(): string
     {
-        return '{{%course_photos}}';
+        return '{{%teacher_main_info_photos}}';
     }
 
     public function behaviors(): array
@@ -45,10 +41,10 @@ class Photo extends ActiveRecord
                 'class' => ImageUploadBehavior::class,
                 'attribute' => 'file',
                 'createThumbsOnRequest' => true,
-                'filePath' => '@staticRoot/origin/courses/[[attribute_course_id]]/[[id]].[[extension]]',
-                'fileUrl' => '@static/origin/courses/[[attribute_course_id]]/[[id]].[[extension]]',
-                'thumbPath' => '@staticRoot/cache/courses/[[attribute_course_id]]/[[profile]]_[[id]].[[extension]]',
-                'thumbUrl' => '@static/cache/courses/[[attribute_course_id]]/[[profile]]_[[id]].[[extension]]',
+                'filePath' => '@staticRoot/origin/teacher_main_info/[[attribute_teacher_main_info_id]]/[[id]].[[extension]]',
+                'fileUrl' => '@static/origin/teacher_main_info/[[attribute_teacher_main_info_id]]/[[id]].[[extension]]',
+                'thumbPath' => '@staticRoot/cache/teacher_main_info/[[attribute_teacher_main_info_id]]/[[profile]]_[[id]].[[extension]]',
+                'thumbUrl' => '@static/cache/teacher_main_info/[[attribute_teacher_main_info_id]]/[[profile]]_[[id]].[[extension]]',
                 'thumbs' => [
                     'admin' => ['width' => 100, 'height' => 70],
                     'thumb' => ['width' => 640, 'height' => 480],
@@ -63,4 +59,7 @@ class Photo extends ActiveRecord
             ],
         ];
     }
+
+
+
 }

@@ -17,9 +17,9 @@ class ValueForm extends Model
 
     private $_characteristic;
 
-    public function __construct(Characteristic $characteristic, $config = [])
+    public function __construct(Characteristic $teacherMainInfo, $config = [])
     {
-        $this->_characteristic = $characteristic;
+        $this->_characteristic = $teacherMainInfo;
         parent::__construct($config);
     }
 

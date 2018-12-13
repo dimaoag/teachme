@@ -24,6 +24,7 @@ use yii\web\UploadedFile;
  * @property integer $user_id
  * @property integer $category_id
  * @property integer $city_id
+ * @property integer $firm_id
  * @property integer $main_photo_id
  * @property integer $
  * @property integer $created_at
@@ -56,11 +57,12 @@ class Course extends ActiveRecord implements AggregateRoot
 
     public $meta;
 
-    public static function create($userId, $cityId, $categoryId, $name, $price, $description): self
+    public static function create($userId, $cityId, $firmId, $categoryId, $name, $price, $description): self
     {
         $course = new static();
         $course->user_id = $userId;
         $course->city_id = $cityId;
+        $course->firm_id = $firmId;
         $course->category_id = $categoryId;
         $course->name = $name;
         $course->price = $price;

@@ -14,6 +14,7 @@ use shop\repositories\shop\CityRepository;
 use shop\repositories\shop\CategoryRepository;
 use shop\repositories\shop\CourseRepository;
 use shop\repositories\shop\ErrorRepository;
+use shop\repositories\shop\TeacherMainInfoRepository;
 use shop\repositories\UserRepository;
 use shop\services\TransactionManager;
 use shop\services\search\CourseIndexer;
@@ -28,6 +29,7 @@ class CourseManageService
     private $errors;
     private $categories;
     private $indexer;
+    private $teachersMainInfo;
     private $transaction;
 
     public function __construct(
@@ -37,6 +39,7 @@ class CourseManageService
         ErrorRepository $errors,
         CategoryRepository $categories,
         CourseIndexer $indexer,
+        TeacherMainInfoRepository $teachersMainInfo,
         TransactionManager $transaction
     )
     {
@@ -46,6 +49,7 @@ class CourseManageService
         $this->errors = $errors;
         $this->categories = $categories;
         $this->indexer = $indexer;
+        $this->teachersMainInfo = $teachersMainInfo;
         $this->transaction = $transaction;
     }
 
@@ -53,11 +57,13 @@ class CourseManageService
     {
         $city = $this->cities->get($form->cityId);
         $category = $this->categories->get($form->categories->main);
+        $teacherMainInfo = $this->teachersMainInfo->get($form->firmId);
 
         $course = Course::create(
             Yii::$app->user->id,
             $city->id,
             $category->id,
+            $teacherMainInfo->id,
             $form->name,
             $form->price,
             $form->description
