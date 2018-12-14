@@ -5,6 +5,7 @@
 /* @var $course shop\entities\shop\course\Course */
 /* @var $courses[] shop\entities\shop\course\Course */
 /* @var $teacherMainInfoForm \shop\forms\manage\shop\TeacherMainInfoForm */
+/* @var $teacherMainInfoPhotoForm \shop\forms\manage\shop\TeacherMainInfoPhotoForm */
 /* @var $teacherMainInfo \shop\entities\shop\TeacherMainInfo*/
 
 use shop\entities\shop\course\Course;
@@ -640,6 +641,30 @@ use yii\bootstrap\ActiveForm;
                             <?php endforeach; ?>
                         <?php endif; ?>
                         <div class="col-md-10">
+                            <?php if (!empty($teacherMainInfo)):?>
+                                <?php $formTeacherMainInfoPhotoForm = ActiveForm::begin([
+                                    'options' => ['enctype'=>'multipart/form-data'],
+                                ]); ?>
+
+                                <?= $formTeacherMainInfoPhotoForm->field($teacherMainInfoPhotoForm, 'files[]')->widget(FileInput::class, [
+                                    'options' => [
+                                        'accept' => 'image/*',
+                                    ],
+                                    'pluginOptions' => [
+                                        'browseOnZoneClick' => true,
+                                        'showBrowse' => true,
+                                        'showUpload' => true,
+                                        'overwriteInitial' => true,
+                                        'browseClass' => 'btn btn-purple',
+                                        'removeClass' => 'btn btn-default',
+                                        'uploadClass' => 'btn btn-success',
+                                    ],
+                                ])->label(false); ?>
+
+
+                                <?php ActiveForm::end(); ?>
+                            <?php endif; ?>
+
                             <?php $form = ActiveForm::begin([
                                 'options' => ['enctype'=>'multipart/form-data', 'id' => 'teacher_main_info']
                             ]); ?>
@@ -648,20 +673,21 @@ use yii\bootstrap\ActiveForm;
                                         <div class="row">
                                             <div class="col-sm-12">
                                                 <h4>Выберите изображения организации</h4>
-
-                                                <?= $form->field($teacherMainInfoForm->photo, 'files[]')->widget(FileInput::class, [
-                                                    'options' => [
-                                                        'accept' => 'image/*',
-                                                    ],
-                                                    'pluginOptions' => [
-                                                        'browseOnZoneClick' => true,
-                                                        'showBrowse' => true,
-                                                        'showUpload' => false,
-                                                        'overwriteInitial' => true,
-                                                        'browseClass' => 'btn btn-purple',
-                                                        'removeClass' => 'btn btn-default',
-                                                    ],
-                                                ])->label(false); ?>
+                                                <?php if (empty($teacherMainInfo)):?>
+                                                    <?= $form->field($teacherMainInfoForm->photo, 'files[]')->widget(FileInput::class, [
+                                                        'options' => [
+                                                            'accept' => 'image/*',
+                                                        ],
+                                                        'pluginOptions' => [
+                                                            'browseOnZoneClick' => true,
+                                                            'showBrowse' => true,
+                                                            'showUpload' => false,
+                                                            'overwriteInitial' => true,
+                                                            'browseClass' => 'btn btn-purple',
+                                                            'removeClass' => 'btn btn-default',
+                                                        ],
+                                                    ])->label(false); ?>
+                                                <?php endif; ?>
                                             </div>
                                         </div>
 

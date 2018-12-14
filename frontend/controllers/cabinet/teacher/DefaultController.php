@@ -19,6 +19,7 @@ use shop\repositories\UserRepository;
 use shop\repositories\shop\CourseRepository;
 use shop\forms\manage\shop\TeacherMainInfoForm;
 use shop\services\manage\TeacherMainInfoManageService;
+use shop\forms\manage\shop\TeacherMainInfoPhotoForm;
 
 class DefaultController extends Controller {
 
@@ -99,11 +100,25 @@ class DefaultController extends Controller {
         }
 
 
+
+        $teacherMainInfoPhotoForm = new TeacherMainInfoPhotoForm();
+        if ($teacherMainInfoPhotoForm->load(Yii::$app->request->post()) && $teacherMainInfoPhotoForm->validate()) {
+            try {
+                $this->teacherMainInfoService->addPhotos($teacherMainInfo->id, $teacherMainInfoPhotoForm);
+                return $this->redirect(Yii::$app->request->referrer ?: ['index']);
+            } catch (\DomainException $e) {
+                Yii::$app->errorHandler->logException($e);
+                Yii::$app->session->setFlash('error', $e->getMessage());
+            }
+        }
+
+
         return $this->render('index', [
             'publications' => $publications,
             'courses' => $courses,
             'teacherMainInfoForm' => $teacherMainInfoForm,
             'teacherMainInfo' => $teacherMainInfo,
+            'teacherMainInfoPhotoForm' => $teacherMainInfoPhotoForm,
         ]);
     }
 

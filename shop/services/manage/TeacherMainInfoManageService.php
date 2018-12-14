@@ -88,6 +88,16 @@ class TeacherMainInfoManageService
     }
 
 
+    public function addPhotos($id, TeacherMainInfoPhotoForm $form): void
+    {
+        $teacherMainInfo = $this->repository->get($id);
+        foreach ($form->files as $file) {
+            $teacherMainInfo->addPhoto($file);
+        }
+        $this->repository->save($teacherMainInfo);
+    }
+
+
     public function removePhoto($id, $photoId): void
     {
         $teacherMainInfo = $this->repository->get($id);

@@ -89,11 +89,11 @@ class TeacherMainInfo  extends  ActiveRecord{
 
         foreach ($photos as $i => $photo) {
             if ($photo->isIdEqualTo($id)) {
-                VarDumper::dump('dfs');
+                unset($photos[$i]);
+                $this->updatePhotos($photos);
                 return;
             }
         }
-        $this->photo = [];
         throw new \DomainException('Photo is not found.');
     }
 
