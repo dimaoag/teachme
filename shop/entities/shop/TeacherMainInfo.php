@@ -4,6 +4,7 @@ namespace shop\entities\shop;
 
 use lhs\Yii2SaveRelationsBehavior\SaveRelationsBehavior;
 use shop\entities\user\User;
+use Yii;
 use yii\db\ActiveQuery;
 use yii\db\ActiveRecord;
 use \Webmozart\Assert\Assert;
@@ -30,6 +31,7 @@ use yiidreamteam\upload\ImageUploadBehavior;
  * @property City $city
  * @property User $user
  * @property TeacherMainInfoPhoto $photo
+ * @mixin ImageUploadBehavior
  */
 
 class TeacherMainInfo  extends  ActiveRecord{
@@ -72,33 +74,15 @@ class TeacherMainInfo  extends  ActiveRecord{
 
     public function addPhoto(UploadedFile $file): void
     {
-        $photos = $this->photo;
-        $photos[] = TeacherMainInfoPhoto::create($file);
-        $this->updatePhotos($photos);
-
+        $this->firm_photo = $file;
     }
 
-    private function updatePhotos(array $photos): void
-    {
-        $this->photo = $photos;
-    }
 
     public function removePhoto($id): void
     {
-        $photos = $this->photo;
-
-        foreach ($photos as $i => $photo) {
-            if ($photo->isIdEqualTo($id)) {
-                unset($photos[$i]);
-                $this->updatePhotos($photos);
-                return;
-            }
-        }
-        throw new \DomainException('Photo is not found.');
+        $this->cleanFiles();
+        Yii::$app->db->createCommand("UPDATE teachers_main_info SET firm_photo = NULL WHERE id = $id")->execute();
     }
-
-
-
 
 
 
@@ -112,39 +96,35 @@ class TeacherMainInfo  extends  ActiveRecord{
         return $this->hasOne(User::class, ['id' => 'user_id']);
     }
 
-    public function getPhoto(): ActiveQuery
-    {
-        return $this->hasMany(TeacherMainInfoPhoto::class, ['teacher_main_info_id' => 'id']);
-    }
 
 
     public function behaviors(): array
     {
         return [
             [
-                'class' => SaveRelationsBehavior::class,
-                'relations' => ['photo'],
+                'class' => ImageUploadBehavior::class,
+                'attribute' => 'firm_photo',
+                'createThumbsOnRequest' => true,
+                'filePath' => '@staticRoot/origin/teacher_main_info/[[attribute_id]]/[[id]].[[extension]]',
+                'fileUrl' => '@static/origin/teacher_main_info/[[attribute_id]]/[[id]].[[extension]]',
+                'thumbPath' => '@staticRoot/cache/teacher_main_info/[[attribute_id]]/[[profile]]_[[id]].[[extension]]',
+                'thumbUrl' => '@static/cache/teacher_main_info/[[attribute_id]]/[[profile]]_[[id]].[[extension]]',
+                'thumbs' => [
+                    'admin' => ['width' => 100, 'height' => 70],
+                    'thumb' => ['width' => 640, 'height' => 480],
+                    'favorite_list' => ['width' => 150, 'height' => 150],
+                    'favorite_widget_list' => ['width' => 57, 'height' => 57],
+                    'search_list' => ['width' => 400, 'height' => 228],
+//                    'catalog_product_main' => ['processor' => function (GD $thumb){
+//                        $thumb->adaptiveResize(750,1000);  // my resize
+//                    }],
+
+                ],
             ],
         ];
     }
 
-    public function transactions()
-    {
-        return [
-            self::SCENARIO_DEFAULT => self::OP_ALL,
-        ];
-    }
 
-    public function beforeDelete(): bool
-    {
-        if (parent::beforeDelete()) {
-            foreach ($this->photo as $item) {
-                $item->delete();
-            }
-            return true;
-        }
-        return false;
-    }
 
 
 

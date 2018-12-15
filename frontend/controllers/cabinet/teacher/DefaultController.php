@@ -129,10 +129,10 @@ class DefaultController extends Controller {
      * @param $photo_id
      * @return mixed
      */
-    public function actionDeleteFirmPhoto($id, $photo_id)
+    public function actionDeleteFirmPhoto($id)
     {
         try {
-            $this->teacherMainInfoService->removePhoto($id, $photo_id);
+            $this->teacherMainInfoService->removePhoto($id);
         } catch (\DomainException $e) {
             Yii::$app->session->setFlash('error', $e->getMessage());
         }
@@ -140,6 +140,15 @@ class DefaultController extends Controller {
     }
 
 
+    public function actionDelete($id)
+    {
+        try {
+            $this->teacherMainInfoService->remove($id);
+        } catch (\DomainException $e) {
+            Yii::$app->session->setFlash('error', $e->getMessage());
+        }
+        return $this->redirect(['index']);
+    }
 
 
 

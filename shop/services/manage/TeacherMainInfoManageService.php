@@ -52,15 +52,11 @@ class TeacherMainInfoManageService
             $form->youtube_link
         );
 
-
-        foreach ($form->photo->files as $file) {
-            $teacherMainInfo->addPhoto($file);
+        if ($form->firm_photo) {
+            $teacherMainInfo->addPhoto($form->firm_photo);
         }
 
-
-        $this->transaction->wrap(function () use ($teacherMainInfo, $form) {
-            $this->repository->save($teacherMainInfo);
-        });
+        $this->repository->save($teacherMainInfo);
         return $teacherMainInfo;
     }
 
@@ -83,6 +79,10 @@ class TeacherMainInfoManageService
             $form->youtube_link
         );
 
+        if ($form->firm_photo) {
+            $teacherMainInfo->addPhoto($form->firm_photo);
+        }
+
         $this->repository->save($teacherMainInfo);
 
     }
@@ -98,11 +98,11 @@ class TeacherMainInfoManageService
     }
 
 
-    public function removePhoto($id, $photoId): void
+    public function removePhoto($id): void
     {
         $teacherMainInfo = $this->repository->get($id);
-        $teacherMainInfo->removePhoto($photoId);
-        $this->repository->save($teacherMainInfo);
+        $teacherMainInfo->removePhoto($id);
+
     }
 
 

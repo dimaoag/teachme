@@ -4,12 +4,14 @@ namespace shop\forms\manage\shop;
 use shop\entities\shop\City;
 use shop\entities\shop\TeacherMainInfo;
 use shop\forms\CompositeForm;
+use yii\base\Model;
 use yii\helpers\ArrayHelper;
+use yii\web\UploadedFile;
 
 
 /* @property TeacherMainInfoPhotoForm $photo */
 
-class TeacherMainInfoForm extends CompositeForm
+class TeacherMainInfoForm extends Model
 {
     public $city_id;
     public $firm_name;
@@ -20,6 +22,7 @@ class TeacherMainInfoForm extends CompositeForm
     public $facebook_link;
     public $vk_link;
     public $youtube_link;
+    public $firm_photo;
 
     private $_teacherMainInfo;
 
@@ -37,7 +40,6 @@ class TeacherMainInfoForm extends CompositeForm
             $this->youtube_link = $teacherMainInfo->youtube_link;
             $this->_teacherMainInfo = $teacherMainInfo;
         }
-        $this->photo = new TeacherMainInfoPhotoForm();
         parent::__construct($config);
     }
 
@@ -48,6 +50,7 @@ class TeacherMainInfoForm extends CompositeForm
             [['firm_name', 'address', 'phone_1', 'phone_2'], 'string', 'max' => 255],
             [['instagram_link', 'facebook_link', 'vk_link', 'youtube_link'], 'string'],
             [['city_id'], 'integer'],
+            [['firm_photo'], 'image'],
         ];
     }
 
@@ -56,6 +59,7 @@ class TeacherMainInfoForm extends CompositeForm
         return [
             'city_id' => 'Город',
             'firm_name' => 'Название организации',
+            'firm_photo' => 'Photo organization',
             'address' => 'Адресс',
             'phone_1' => 'Телефон 1',
             'phone_2' => 'Телефон 2',
@@ -73,10 +77,13 @@ class TeacherMainInfoForm extends CompositeForm
     }
 
 
-
-    protected function internalForms(): array
+    public function beforeValidate(): bool
     {
-        return ['photo'];
+        if (parent::beforeValidate()) {
+            $this->firm_photo = UploadedFile::getInstance($this, 'firm_photo');
+            return true;
+        }
+        return false;
     }
 
 

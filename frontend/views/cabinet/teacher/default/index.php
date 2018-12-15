@@ -626,45 +626,19 @@ use yii\bootstrap\ActiveForm;
                 <div class="tab-cabinet-container tab-main-info">
                     <h2 class="tab-main-info-title">Добавьте основную информацию по организации</h2>
                     <div class="row">
-                        <?php if (!empty($teacherMainInfo->photo)):?>
-                            <?php foreach ($teacherMainInfo->photo as $photo): ?>
-                                <div class="col-sm-5 col-xs-12 edit-main-photo-wrap">
-                                    <div class="btn-group edit-delete-btn">
-                                        <?= Html::a('<span class="glyphicon glyphicon-remove"></span>', ['delete-firm-photo', 'id' => $teacherMainInfo->id, 'photo_id' => $photo->id], [
-                                            'class' => 'btn btn-default',
-                                            'data-method' => 'post',
-                                            'data-confirm' => 'Вы действилътельно хотите удалить этот елемент?',
-                                        ]); ?>
-                                    </div>
-                                    <?= Html::img($photo->getThumbFileUrl('file', 'thumb')); ?>
+                        <?php if (!empty($teacherMainInfo->firm_photo)):?>
+                            <div class="col-sm-5 col-xs-12 edit-main-photo-wrap">
+                                <div class="btn-group edit-delete-btn">
+                                    <?= Html::a('<span class="glyphicon glyphicon-remove"></span>', ['delete-firm-photo', 'id' => $teacherMainInfo->id], [
+                                        'class' => 'btn btn-default',
+                                        'data-method' => 'post',
+                                        'data-confirm' => 'Вы действилътельно хотите удалить этот елемент?',
+                                    ]); ?>
                                 </div>
-                            <?php endforeach; ?>
+                                <?= Html::img($teacherMainInfo->getThumbFileUrl('firm_photo', 'thumb')); ?>
+                            </div>
                         <?php endif; ?>
                         <div class="col-md-10">
-                            <?php if (!empty($teacherMainInfo)):?>
-                                <?php $formTeacherMainInfoPhotoForm = ActiveForm::begin([
-                                    'options' => ['enctype'=>'multipart/form-data'],
-                                ]); ?>
-
-                                <?= $formTeacherMainInfoPhotoForm->field($teacherMainInfoPhotoForm, 'files[]')->widget(FileInput::class, [
-                                    'options' => [
-                                        'accept' => 'image/*',
-                                    ],
-                                    'pluginOptions' => [
-                                        'browseOnZoneClick' => true,
-                                        'showBrowse' => true,
-                                        'showUpload' => true,
-                                        'overwriteInitial' => true,
-                                        'browseClass' => 'btn btn-purple',
-                                        'removeClass' => 'btn btn-default',
-                                        'uploadClass' => 'btn btn-success',
-                                    ],
-                                ])->label(false); ?>
-
-
-                                <?php ActiveForm::end(); ?>
-                            <?php endif; ?>
-
                             <?php $form = ActiveForm::begin([
                                 'options' => ['enctype'=>'multipart/form-data', 'id' => 'teacher_main_info']
                             ]); ?>
@@ -673,8 +647,8 @@ use yii\bootstrap\ActiveForm;
                                         <div class="row">
                                             <div class="col-sm-12">
                                                 <h4>Выберите изображения организации</h4>
-                                                <?php if (empty($teacherMainInfo)):?>
-                                                    <?= $form->field($teacherMainInfoForm->photo, 'files[]')->widget(FileInput::class, [
+
+                                                    <?= $form->field($teacherMainInfoForm, 'firm_photo')->widget(FileInput::class, [
                                                         'options' => [
                                                             'accept' => 'image/*',
                                                         ],
@@ -687,7 +661,7 @@ use yii\bootstrap\ActiveForm;
                                                             'removeClass' => 'btn btn-default',
                                                         ],
                                                     ])->label(false); ?>
-                                                <?php endif; ?>
+
                                             </div>
                                         </div>
 
