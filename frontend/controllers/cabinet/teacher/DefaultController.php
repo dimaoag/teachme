@@ -19,7 +19,6 @@ use shop\repositories\UserRepository;
 use shop\repositories\shop\CourseRepository;
 use shop\forms\manage\shop\TeacherMainInfoForm;
 use shop\services\manage\TeacherMainInfoManageService;
-use shop\forms\manage\shop\TeacherMainInfoPhotoForm;
 
 class DefaultController extends Controller {
 
@@ -122,16 +121,6 @@ class DefaultController extends Controller {
         return $this->redirect(['index']);
     }
 
-
-    public function actionDelete($id)
-    {
-        try {
-            $this->teacherMainInfoService->remove($id);
-        } catch (\DomainException $e) {
-            Yii::$app->session->setFlash('error', $e->getMessage());
-        }
-        return $this->redirect(['index']);
-    }
 
 
 

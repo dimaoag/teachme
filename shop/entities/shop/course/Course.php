@@ -2,7 +2,7 @@
 
 namespace shop\entities\shop\course;
 
-use phpDocumentor\Reflection\Types\This;
+
 use shop\entities\EventTrait;
 use lhs\Yii2SaveRelationsBehavior\SaveRelationsBehavior;
 use shop\entities\AggregateRoot;
@@ -11,6 +11,7 @@ use shop\entities\shop\City;
 use shop\entities\shop\Category;
 use shop\entities\shop\course\queries\CourseQuery;
 use shop\entities\user\User;
+use shop\entities\shop\TeacherMainInfo;
 use Yii;
 use yii\db\ActiveQuery;
 use yii\db\ActiveRecord;
@@ -26,7 +27,6 @@ use yii\web\UploadedFile;
  * @property integer $city_id
  * @property integer $firm_id
  * @property integer $main_photo_id
- * @property integer $
  * @property integer $created_at
  * @property integer $date_start_sale
  * @property integer $date_stop_sale
@@ -45,6 +45,7 @@ use yii\web\UploadedFile;
  * @property Photo[] $photos
  * @property Photo $mainPhoto
  * @property Gallery[] $gallery
+ * @property TeacherMainInfo $firm
  */
 class Course extends ActiveRecord implements AggregateRoot
 {
@@ -292,6 +293,11 @@ class Course extends ActiveRecord implements AggregateRoot
     public function getUser(): ActiveQuery
     {
         return $this->hasOne(User::class, ['id' => 'user_id']);
+    }
+
+    public function getFirm(): ActiveQuery
+    {
+        return $this->hasOne(User::class, ['id' => 'firm_id']);
     }
 
     public function getCategory(): ActiveQuery

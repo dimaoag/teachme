@@ -66,6 +66,9 @@ class CourseIndexer
                             'city' => [
                                 'type' => 'integer',
                             ],
+                            'firm' => [
+                                'type' => 'integer',
+                            ],
                             'user' => [
                                 'type' => 'integer',
                             ],
@@ -109,6 +112,7 @@ class CourseIndexer
                 'rating' => $course->rating,
                 'status' => $course->status,
                 'city' => $course->city_id,
+                'firm' => $course->firm_id,
                 'user' => $course->user_id,
                 'category' => $course->category->id,
                 'categories' => ArrayHelper::merge(

@@ -70,7 +70,11 @@ use yii\bootstrap\ActiveForm;
                                     <div class="search-course">
                                         <div class="search-course-img cabinet-course-img">
                                             <a href="<?= Url::to(['/course/course/view', 'id' => $course->id])?>">
-                                                <img src="<?= Html::encode($course->mainPhoto->getThumbFileUrl('file', 'thumb')); ?>" alt="">
+                                                <?php if (!empty($course->mainPhoto)): ?>
+                                                    <img src="<?= Html::encode($course->mainPhoto->getThumbFileUrl('file', 'thumb')); ?>" alt="<?= Html::encode($course->mainPhoto->getThumbFileUrl('file', 'thumb')); ?>">
+                                                <?php else: ?>
+                                                    <img src="/img/no_image.png" alt="img">
+                                                <?php endif; ?>
                                             </a>
                                         </div>
                                         <div class="search-course-info">

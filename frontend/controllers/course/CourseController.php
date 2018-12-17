@@ -66,7 +66,7 @@ class CourseController extends Controller{
             'verbs' => [
                 'class' => VerbFilter::class,
                 'actions' => [
-                    'delete' => ['POST'],
+//                    'delete' => ['POST'],
                     'delete-photo' => ['POST'],
                     'delete-gallery-item' => ['POST'],
                 ],
@@ -128,7 +128,7 @@ class CourseController extends Controller{
         if ($form->load(Yii::$app->request->post()) && $form->validate()) {
             try {
                 $course = $this->service->create($form);
-                return $this->redirect(Yii::$app->request->referrer ?: ['index']);
+                return $this->redirect(['/cabinet/teacher']);
             } catch (\DomainException $e) {
                 Yii::$app->errorHandler->logException($e);
                 Yii::$app->session->setFlash('error', $e->getMessage());

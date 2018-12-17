@@ -76,7 +76,17 @@ $this->title = 'Создать курс';
                                         </div>
                                         <span id="error_city" class="text-danger"></span>
                                     </div>
-
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-sm-2 control-label" for="firm">Организация</label>
+                                    <div class="col-sm-4 header-search-city">
+                                        <div class="add-course-select">
+                                            <div class="custom-select main-select-city">
+                                                <?= $form->field($model, 'firmId')->dropDownList($model->firmList(), ['id' => 'firm', 'prompt' => 'Выберите организацию...'])->label(false); ?>
+                                            </div>
+                                        </div>
+                                        <span id="error_city" class="text-danger"></span>
+                                    </div>
                                 </div>
                                 <div class="form-group">
                                     <label class="col-sm-2 control-label" for="category">Рубрика</label>

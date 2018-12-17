@@ -49,9 +49,9 @@ class TeacherMainInfoForm extends Model
     public function rules(): array
     {
         return [
-            [['city_id', 'firm_name', 'address', 'phone_1'], 'required'],
-            [['firm_name', 'address', 'phone_1', 'phone_2'], 'string', 'max' => 255],
-            [['instagram_link', 'facebook_link', 'vk_link', 'youtube_link'], 'string'],
+            [['city_id', 'firm_name', 'phone_1'], 'required'],
+            [['firm_name', 'address', 'phone_1', 'phone_2' ,'address'], 'string', 'max' => 255],
+            [['instagram_link', 'facebook_link', 'vk_link', 'youtube_link'], 'url'],
             [['city_id'], 'integer'],
             [['firm_photo'], 'image'],
         ];
@@ -63,7 +63,7 @@ class TeacherMainInfoForm extends Model
             'city_id' => 'Город',
             'firm_name' => 'Название организации',
             'firm_photo' => 'Photo organization',
-            'address' => 'Адресс',
+            'address' => 'Адрес',
             'phone_1' => 'Телефон 1',
             'phone_2' => 'Телефон 2',
             'instagram_link' => 'Instagram',

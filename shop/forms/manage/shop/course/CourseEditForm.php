@@ -3,7 +3,6 @@
 namespace shop\forms\manage\shop\course;
 
 use shop\entities\shop\City;
-use shop\entities\shop\Characteristic;
 use shop\entities\shop\course\Course;
 use shop\forms\CompositeForm;
 use yii\helpers\ArrayHelper;

@@ -4,10 +4,12 @@ namespace shop\forms\manage\shop\course;
 
 use shop\entities\shop\City;
 use shop\entities\shop\Characteristic;
+use shop\entities\shop\TeacherMainInfo;
 use shop\entities\shop\course\Course;
 use shop\entities\user\User;
 
 use shop\forms\CompositeForm;
+use Yii;
 use yii\helpers\ArrayHelper;
 
 /**
@@ -50,6 +52,11 @@ class CourseCreateForm extends CompositeForm
     public function citiesList(): array
     {
         return ArrayHelper::map(City::find()->orderBy('name')->asArray()->all(), 'id', 'name');
+    }
+
+    public function firmList(): array
+    {
+        return ArrayHelper::map(TeacherMainInfo::find()->where(['user_id' => Yii::$app->user->id])->orderBy('firm_name')->asArray()->all(), 'id', 'firm_name');
     }
 
     protected function internalForms(): array

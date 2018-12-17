@@ -62,8 +62,8 @@ class CourseManageService
         $course = Course::create(
             Yii::$app->user->id,
             $city->id,
-            $category->id,
             $teacherMainInfo->id,
+            $category->id,
             $form->name,
             $form->price,
             $form->description
@@ -106,9 +106,12 @@ class CourseManageService
 
         $this->transaction->wrap(function () use ($course, $form) {
             $this->courses->save($course);
-            $this->indexer->remove($course);
-            $this->indexer->index($course);
+            if ($course->status == Course::STATUS_ACTIVE){
+                $this->indexer->remove($course);
+                $this->indexer->index($course);
+            }
         });
+
     }
 
 
