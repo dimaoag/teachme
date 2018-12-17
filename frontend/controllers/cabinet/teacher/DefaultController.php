@@ -58,14 +58,12 @@ class DefaultController extends Controller {
                     ],
                 ],
             ],
-//            'verbs' => [
-//                'class' => VerbFilter::class,
-//                'actions' => [
-//                    'delete' => ['POST'],
-//                    'delete-photo' => ['POST'],
-//                    'delete-gallery-item' => ['POST'],
-//                ],
-//            ],
+            'verbs' => [
+                'class' => VerbFilter::class,
+                'actions' => [
+                    'delete-firm-photo' => ['POST'],
+                ],
+            ],
         ];
     }
 
@@ -100,25 +98,11 @@ class DefaultController extends Controller {
         }
 
 
-
-        $teacherMainInfoPhotoForm = new TeacherMainInfoPhotoForm();
-        if ($teacherMainInfoPhotoForm->load(Yii::$app->request->post()) && $teacherMainInfoPhotoForm->validate()) {
-            try {
-                $this->teacherMainInfoService->addPhotos($teacherMainInfo->id, $teacherMainInfoPhotoForm);
-                return $this->redirect(Yii::$app->request->referrer ?: ['index']);
-            } catch (\DomainException $e) {
-                Yii::$app->errorHandler->logException($e);
-                Yii::$app->session->setFlash('error', $e->getMessage());
-            }
-        }
-
-
         return $this->render('index', [
             'publications' => $publications,
             'courses' => $courses,
             'teacherMainInfoForm' => $teacherMainInfoForm,
             'teacherMainInfo' => $teacherMainInfo,
-            'teacherMainInfoPhotoForm' => $teacherMainInfoPhotoForm,
         ]);
     }
 
@@ -126,7 +110,6 @@ class DefaultController extends Controller {
 
     /**
      * @param integer $id
-     * @param $photo_id
      * @return mixed
      */
     public function actionDeleteFirmPhoto($id)

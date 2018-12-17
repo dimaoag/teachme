@@ -22,6 +22,9 @@ class TeacherMainInfoForm extends Model
     public $facebook_link;
     public $vk_link;
     public $youtube_link;
+    /**
+     * @var  UploadedFile $firm_photo
+     */
     public $firm_photo;
 
     private $_teacherMainInfo;
@@ -85,7 +88,6 @@ class TeacherMainInfoForm extends Model
         }
         return false;
     }
-
 
 
 }

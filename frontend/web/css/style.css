@@ -2062,6 +2062,9 @@ label.tab.active{
     -ms-flex-preferred-size: 225px;
     flex-basis: 225px;
 }
+.edit-firm-photo{
+    margin-top: 35px;
+}
 .course-orders{
     display: -webkit-box;
     display: -ms-flexbox;

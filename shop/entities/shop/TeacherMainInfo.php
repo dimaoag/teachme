@@ -30,7 +30,6 @@ use yiidreamteam\upload\ImageUploadBehavior;
  *
  * @property City $city
  * @property User $user
- * @property TeacherMainInfoPhoto $photo
  * @mixin ImageUploadBehavior
  */
 
@@ -123,8 +122,6 @@ class TeacherMainInfo  extends  ActiveRecord{
             ],
         ];
     }
-
-
 
 
 

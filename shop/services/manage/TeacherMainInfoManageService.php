@@ -4,7 +4,6 @@ namespace shop\services\manage;
 
 use shop\entities\shop\TeacherMainInfo;
 use shop\forms\manage\shop\TeacherMainInfoForm;
-use shop\forms\manage\shop\TeacherMainInfoPhotoForm;
 use shop\repositories\shop\TeacherMainInfoRepository;
 use shop\repositories\shop\CityRepository;
 use shop\repositories\UserRepository;
@@ -87,15 +86,6 @@ class TeacherMainInfoManageService
 
     }
 
-
-    public function addPhotos($id, TeacherMainInfoPhotoForm $form): void
-    {
-        $teacherMainInfo = $this->repository->get($id);
-        foreach ($form->files as $file) {
-            $teacherMainInfo->addPhoto($file);
-        }
-        $this->repository->save($teacherMainInfo);
-    }
 
 
     public function removePhoto($id): void

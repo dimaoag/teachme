@@ -20,12 +20,42 @@ use yii\bootstrap\ActiveForm;
     <div class="container">
         <div class="row cabinet-company">
             <div class="col-md-3 tab-labels">
-                <label class="tab-company active" title="Мои курсы"><span class="tab-company-text">Мои курсы</span><span class="tab-company-icon"><i class="fa fa-graduation-cap" aria-hidden="true"></i></span></label>
-                <label class="tab-company" title="Заявки"><span class="tab-company-text">Заявки</span><span class="tab-company-icon"><i class="fa fa-list" aria-hidden="true"></i></span></label>
-                <label class="tab-company" title="Основная информация"><span class="tab-company-text">Основная информация</span><span class="tab-company-icon"><i class="fa fa-address-card" aria-hidden="true"></i></span></label>
-                <label class="tab-company" title="Услуги и платежи"><span class="tab-company-text">Услуги и платежи</span><span class="tab-company-icon"><i class="fa fa-credit-card" aria-hidden="true"></i></span></label>
-                <label class="tab-company" title="Настройки"><span class="tab-company-text">Настройки</span><span class="tab-company-icon"><i class="fa fa-cogs" aria-hidden="true"></i></span></label>
-                <label class="tab-company" title="Тех поддержка"><span class="tab-company-text">Тех поддержка</span><span class="tab-company-icon"><i class="fa fa-question-circle" aria-hidden="true"></i></span></label>
+                <label class="tab-company active" title="Мои курсы">
+                    <span class="tab-company-text">Мои курсы</span>
+                    <span class="tab-company-icon">
+                        <i class="fa fa-graduation-cap" aria-hidden="true"></i>
+                    </span>
+                </label>
+                <label class="tab-company" title="Заявки">
+                    <span class="tab-company-text">Заявки</span>
+                    <span class="tab-company-icon">
+                        <i class="fa fa-list" aria-hidden="true"></i>
+                    </span>
+                </label>
+                <label class="tab-company" title="Основная информация">
+                    <span class="tab-company-text">Основная информация</span>
+                    <span class="tab-company-icon">
+                        <i class="fa fa-pencil-square-o"></i>
+                    </span>
+                </label>
+                <label class="tab-company" title="Услуги и платежи">
+                    <span class="tab-company-text">Услуги и платежи</span>
+                    <span class="tab-company-icon">
+                        <i class="fa fa-credit-card" aria-hidden="true"></i>
+                    </span>
+                </label>
+                <label class="tab-company" title="Настройки">
+                    <span class="tab-company-text">Настройки</span>
+                    <span class="tab-company-icon">
+                        <i class="fa fa-cogs" aria-hidden="true"></i>
+                    </span>
+                </label>
+                <label class="tab-company" title="Тех поддержка">
+                    <span class="tab-company-text">Тех поддержка</span>
+                    <span class="tab-company-icon">
+                        <i class="fa fa-question-circle" aria-hidden="true"></i>
+                    </span>
+                </label>
             </div>
             <div class="col-md-9">
                 <div class="tab-cabinet-container tab-courses active">
@@ -625,7 +655,7 @@ use yii\bootstrap\ActiveForm;
                 </div>
                 <div class="tab-cabinet-container tab-main-info">
                     <h2 class="tab-main-info-title">Добавьте основную информацию по организации</h2>
-                    <div class="row">
+                    <div class="row edit-firm-photo">
                         <?php if (!empty($teacherMainInfo->firm_photo)):?>
                             <div class="col-sm-5 col-xs-12 edit-main-photo-wrap">
                                 <div class="btn-group edit-delete-btn">
@@ -646,8 +676,8 @@ use yii\bootstrap\ActiveForm;
                                     <div class="form-group">
                                         <div class="row">
                                             <div class="col-sm-12">
-                                                <h4>Выберите изображения организации</h4>
-
+                                                <?php if (empty($teacherMainInfo->firm_photo)):?>
+                                                    <h4>Выберите изображения организации</h4>
                                                     <?= $form->field($teacherMainInfoForm, 'firm_photo')->widget(FileInput::class, [
                                                         'options' => [
                                                             'accept' => 'image/*',
@@ -661,7 +691,7 @@ use yii\bootstrap\ActiveForm;
                                                             'removeClass' => 'btn btn-default',
                                                         ],
                                                     ])->label(false); ?>
-
+                                                <?php endif; ?>
                                             </div>
                                         </div>
 
@@ -671,39 +701,21 @@ use yii\bootstrap\ActiveForm;
                                 <div class="form-group">
                                     <div class="row">
                                         <div class="col-sm-12 main-form-field-item">
-                                            <?= $form->field($teacherMainInfoForm, 'firm_name')->textInput(['maxlength' => true])->label(false); ?>
-<!--                                            <label for="name">Название организации</label>-->
-<!--                                            <input type="text" class="form-control" id="name" placeholder="Названия">-->
+                                            <?= $form->field($teacherMainInfoForm, 'firm_name')->textInput(['maxlength' => true]); ?>
                                         </div>
                                     </div>
                                 </div>
                                 <div class="form-group">
                                     <div class="row">
                                         <div class="col-sm-6 main-form-field-item header-search-city">
-                                            <?= $form->field($teacherMainInfoForm, 'city_id')->dropDownList($teacherMainInfoForm->getCitiesList(), ['id' => 'city_id', 'prompt' => 'Выберите город...'])->label(false); ?>
-                                            <label for="region">Регион</label>
-<!--                                            <div class="add-course-select">-->
-<!--                                                <div class="custom-select main-select-city">-->
-<!--                                                    <select class="form-control" name="region" id="region">-->
-<!--                                                        <option value="0">Выберите город</option>-->
-<!--                                                        <option value="1">Киев</option>-->
-<!--                                                        <option value="2">Винница</option>-->
-<!--                                                        <option value="3">Одесса</option>-->
-<!--                                                    </select>-->
-<!--                                                </div>-->
-<!--                                            </div>-->
+                                            <?= $form->field($teacherMainInfoForm, 'city_id')->dropDownList($teacherMainInfoForm->getCitiesList(), ['id' => 'city_id', 'prompt' => 'Выберите город...']); ?>
                                         </div>
                                     </div>
                                 </div>
                                 <div class="form-group">
                                     <div class="row">
                                         <div class="col-sm-10 main-form-field-item">
-                                            <?= $form->field($teacherMainInfoForm, 'address')->textInput(['maxlength' => true])->label(false); ?>
-                                            <label for="address">Адрес</label>
-<!--                                            <div class="main-info-form-field">-->
-<!--                                                <i class="fa fa-map-marker" aria-hidden="true"></i>-->
-<!--                                                <input type="text" class="form-control" id="address" placeholder="Названия">-->
-<!--                                            </div>-->
+                                            <?= $form->field($teacherMainInfoForm, 'address')->textInput(['maxlength' => true]); ?>
                                         </div>
                                     </div>
                                 </div>
@@ -711,14 +723,10 @@ use yii\bootstrap\ActiveForm;
                                     <div class="row">
                                         <div class="col-sm-5 main-form-field-item">
                                             <div class="main-info-form-field main-info-field-phone">
-                                                <?= $form->field($teacherMainInfoForm, 'phone_1')->textInput(['maxlength' => true])->label(false); ?>
-<!--                                                <i class="fa fa-phone" aria-hidden="true"></i>-->
-<!--                                                <input type="text" class="form-control" data-mask="callback-catalog-phone" value="979746559" name="phone_1" placeholder="+38 ( ___ ) - ____ - __ - __">-->
+                                                <?= $form->field($teacherMainInfoForm, 'phone_1')->textInput(['maxlength' => true, 'data-mask' => 'callback-catalog-phone']); ?>
                                             </div>
                                             <div class="main-info-form-field main-info-field-phone">
-                                                <?= $form->field($teacherMainInfoForm, 'phone_2')->textInput(['maxlength' => true])->label(false); ?>
-<!--                                                <i class="fa fa-phone" aria-hidden="true"></i>-->
-<!--                                                <input type="text" class="form-control" name="phone_2" data-mask="callback-catalog-phone" placeholder="+38 ( ___ ) - ____ - __ - __">-->
+                                                <?= $form->field($teacherMainInfoForm, 'phone_2')->textInput(['maxlength' => true, 'data-mask' => 'callback-catalog-phone']); ?>
                                             </div>
                                         </div>
                                     </div>
@@ -730,22 +738,18 @@ use yii\bootstrap\ActiveForm;
                                             <div class="main-info-form-field main-info-field-socs instagram-field">
                                                 <i class="fa fa-instagram"></i>
                                                 <?= $form->field($teacherMainInfoForm, 'instagram_link')->textInput()->label(false); ?>
-<!--                                                <input type="text" class="form-control" name="link_instagram">-->
                                             </div>
                                             <div class="main-info-form-field main-info-field-socs facebook-field">
                                                 <i class="fa fa-facebook"></i>
                                                 <?= $form->field($teacherMainInfoForm, 'facebook_link')->textInput()->label(false); ?>
-<!--                                                <input type="text" class="form-control" name="link_facebook">-->
                                             </div>
                                             <div class="main-info-form-field main-info-field-socs vk-field">
                                                 <i class="fa fa-vk"></i>
                                                 <?= $form->field($teacherMainInfoForm, 'vk_link')->textInput()->label(false); ?>
-<!--                                                <input type="text" class="form-control" name="link_vk">-->
                                             </div>
                                             <div class="main-info-form-field main-info-field-socs youtube-field">
                                                 <i class="fa fa-youtube-play"></i>
                                                 <?= $form->field($teacherMainInfoForm, 'youtube_link')->textInput()->label(false); ?>
-<!--                                                <input type="text" class="form-control" name="link_youtube">-->
                                             </div>
                                         </div>
                                     </div>
