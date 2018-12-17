@@ -1686,17 +1686,17 @@ label.tab.active{
     outline: none;
 }
 .gallery img{
-    background: #fff;
-    width: 100%;
-    position: relative;
-    opacity: 0.6;
-    padding: 20px 5px;
+    /*background: #fff;*/
+    /*width: 100%;*/
+    /*position: relative;*/
+    /*opacity: 0.6;*/
+    padding: 20px 10px;
 
 }
-.center .slick-center img {
-    opacity: 1;
-    padding: 10px 5px;
-}
+/*.center .slick-center img {*/
+    /*opacity: 1;*/
+    /*padding: 10px 5px;*/
+/*}*/
 .gallery-controll, .related-controll{
     display: -webkit-box;
     display: -ms-flexbox;
@@ -2064,6 +2064,9 @@ label.tab.active{
 }
 .edit-firm-photo{
     margin-top: 35px;
+}
+.left-align-slick > .slick-list > .slick-track {
+    margin-left:0;
 }
 .course-orders{
     display: -webkit-box;

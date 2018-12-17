@@ -13,7 +13,8 @@ foreach ($course->category->parents as $parent) {
 }
 $this->params['breadcrumbs'][] = $course->name;
 
-use yii\helpers\Html; ?>
+use yii\helpers\Html;
+use yii\helpers\Url; ?>
 
 
 <main>
@@ -25,16 +26,16 @@ use yii\helpers\Html; ?>
                         <div class="courser-info-img">
                             <?= Html::img($course->mainPhoto->getThumbFileUrl('file', 'thumb')); ?>
                             <div class="course-info-socs">
-                                <a href="#">
+                                <a href="<?= Html::encode($course->firm->instagram_link) ; ?>">
                                     <i class="fa fa-instagram"></i>
                                 </a>
-                                <a href="#">
+                                <a href="<?= Html::encode($course->firm->facebook_link); ?>">
                                     <i class="fa fa-facebook"></i>
                                 </a>
-                                <a href="#">
+                                <a href="<?= Html::encode($course->firm->vk_link); ?>">
                                     <i class="fa fa-vk"></i>
                                 </a>
-                                <a href="#">
+                                <a href="<?= Html::encode($course->firm->youtube_link); ?>">
                                     <i class="fa fa-youtube-play"></i>
                                 </a>
                             </div>
@@ -45,18 +46,31 @@ use yii\helpers\Html; ?>
                             </div>
                         </div>
                         <div class="course-info-title">
-                            Meri Meri beauty club
+                            <?= Html::encode($course->firm->firm_name); ?>
                         </div>
                         <div class="course-info-location">
-                            <div class="course-info-address">
-                                <p><i class="fa fa-map-marker"></i> г. Винница, ул. Нансена 7А</p>
-                            </div>
-                            <div class="course-info-phone">
-                                <p><i class="fa fa-phone"></i> +380979746559</p>
-                            </div>
-                            <div class="course-info-phone">
-                                <p><i class="fa fa-phone"></i> +380979746559</p>
-                            </div>
+                            <?php if (!empty($course->firm->address)): ?>
+                                <div class="course-info-address">
+                                    <p><i class="fa fa-map-marker"></i>
+                                        <?= Html::encode($course->firm->address); ?>
+                                    </p>
+                                </div>
+                            <?php endif; ?>
+
+                            <?php if (!empty($course->firm->phone_1)): ?>
+                                <div class="course-info-phone">
+                                    <p><i class="fa fa-phone"></i>
+                                        <?= Html::encode($course->firm->phone_1); ?>
+                                    </p>
+                                </div>
+                            <?php endif; ?>
+                            <?php if (!empty($course->firm->phone_2)): ?>
+                                <div class="course-info-phone">
+                                    <p><i class="fa fa-phone"></i>
+                                        <?= Html::encode($course->firm->phone_2); ?>
+                                    </p>
+                                </div>
+                            <?php endif; ?>
                         </div>
                     </div>
                 </div>
@@ -126,383 +140,378 @@ use yii\helpers\Html; ?>
                         <h3>Описание курса</h3>
                         <p><?= Html::encode($course->description); ?></p>
                     </div>
-                    <div class="course-gallery">
-                        <h3>Фотогалерея</h3>
-                        <?php if (!empty($course->gallery)): ?>
-                            <div class="gallery center">
-                                <?php foreach ($course->gallery as $galleryItem): ?>
-                                <div class="clip">
-                                    <a href="<?= $galleryItem->getThumbFileUrl('file', 'thumb'); ?>">
-                                        <?= Html::img($galleryItem->getThumbFileUrl('file', 'thumb')); ?>
-                                    </a>
-                                </div>
-                                <?php endforeach; ?>
-                            </div>
-                        <?php endif; ?>
-                        <div class="gallery-controll">
-                            <div class="gallery-prev"><i class="fa fa-chevron-left" aria-hidden="true"></i></div>
-                            <div class="gallery-next"><i class="fa fa-chevron-right" aria-hidden="true"></i></div>
-                        </div>
-                    </div>
-                    <div class="course-related">
-                        <h3>Похожие курсы</h3>
-                        <div class="course-related-carousel">
-                            <div class="course-related-item">
-                                <div class="course-related-img">
-                                    <a href="#">
-                                        <img src="img/search_course.png" alt="image">
-                                    </a>
-                                </div>
-                                <a href="#">
-                                    <h4 class="course-related-title">Базовый курс маникюра 1</h4>
-                                </a>
-                                <div class="course-related-address">
-                                    <p><i class="fa fa-map-marker"></i> г. Винница, ул. Нансена 7А</p>
-                                </div>
-                                <div class="course-related-stars">
-                                    <div class="rating star-icon value-3 color-ok label-left slow">
-                                        <div class="label-value">3.1</div>
-                                        <div class="star-container">
-                                            <div class="star">
-                                                <i class="star-empty"></i>
-                                                <i class="star-half"></i>
-                                                <i class="star-filled"></i>
-                                            </div>
-                                            <div class="star">
-                                                <i class="star-empty"></i>
-                                                <i class="star-half"></i>
-                                                <i class="star-filled"></i>
-                                            </div>
-                                            <div class="star">
-                                                <i class="star-empty"></i>
-                                                <i class="star-half"></i>
-                                                <i class="star-filled"></i>
-                                            </div>
-                                            <div class="star">
-                                                <i class="star-empty"></i>
-                                                <i class="star-half"></i>
-                                                <i class="star-filled"></i>
-                                            </div>
-                                            <div class="star">
-                                                <i class="star-empty"></i>
-                                                <i class="star-half"></i>
-                                                <i class="star-filled"></i>
-                                            </div>
-                                        </div>
+                    <?php if (!empty($course->gallery)): ?>
+                        <div class="course-gallery">
+                            <h3>Фотогалерея</h3>
+                                <div class="gallery left-align-slick center">
+                                    <?php foreach ($course->gallery as $galleryItem): ?>
+                                    <div class="clip">
+                                        <a href="<?= $galleryItem->getThumbFileUrl('file', 'thumb'); ?>">
+                                            <?= Html::img($galleryItem->getThumbFileUrl('file', 'thumb')); ?>
+                                        </a>
                                     </div>
-                                    <!--<p>(12 отзывов)</p>-->
+                                    <?php endforeach; ?>
                                 </div>
-                                <div class="clearfix"></div>
-                                <div class="course-relate-price">
-                                    2500 грн.
-                                </div>
-                            </div>
-                            <div class="course-related-item">
-                                <div class="course-related-img">
-                                    <a href="#">
-                                        <img src="img/search_course.png" alt="image">
-                                    </a>
-                                </div>
-                                <a href="#">
-                                    <h4 class="course-related-title">Базовый курс маникюра 1</h4>
-                                </a>
-                                <div class="course-related-address">
-                                    <p><i class="fa fa-map-marker"></i> г. Винница, ул. Нансена 7А</p>
-                                </div>
-                                <div class="course-related-stars">
-                                    <div class="rating star-icon value-3 color-ok label-left slow">
-                                        <div class="label-value">3.1</div>
-                                        <div class="star-container">
-                                            <div class="star">
-                                                <i class="star-empty"></i>
-                                                <i class="star-half"></i>
-                                                <i class="star-filled"></i>
-                                            </div>
-                                            <div class="star">
-                                                <i class="star-empty"></i>
-                                                <i class="star-half"></i>
-                                                <i class="star-filled"></i>
-                                            </div>
-                                            <div class="star">
-                                                <i class="star-empty"></i>
-                                                <i class="star-half"></i>
-                                                <i class="star-filled"></i>
-                                            </div>
-                                            <div class="star">
-                                                <i class="star-empty"></i>
-                                                <i class="star-half"></i>
-                                                <i class="star-filled"></i>
-                                            </div>
-                                            <div class="star">
-                                                <i class="star-empty"></i>
-                                                <i class="star-half"></i>
-                                                <i class="star-filled"></i>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <!--<p>(12 отзывов)</p>-->
-                                </div>
-                                <div class="clearfix"></div>
-                                <div class="course-relate-price">
-                                    2500 грн.
-                                </div>
-                            </div>
-                            <div class="course-related-item">
-                                <div class="course-related-img">
-                                    <a href="#">
-                                        <img src="img/search_course.png" alt="image">
-                                    </a>
-                                </div>
-                                <a href="#">
-                                    <h4 class="course-related-title">Базовый курс маникюра 1</h4>
-                                </a>
-                                <div class="course-related-address">
-                                    <p><i class="fa fa-map-marker"></i> г. Винница, ул. Нансена 7А</p>
-                                </div>
-                                <div class="course-related-stars">
-                                    <div class="rating star-icon value-3 color-ok label-left slow">
-                                        <div class="label-value">3.1</div>
-                                        <div class="star-container">
-                                            <div class="star">
-                                                <i class="star-empty"></i>
-                                                <i class="star-half"></i>
-                                                <i class="star-filled"></i>
-                                            </div>
-                                            <div class="star">
-                                                <i class="star-empty"></i>
-                                                <i class="star-half"></i>
-                                                <i class="star-filled"></i>
-                                            </div>
-                                            <div class="star">
-                                                <i class="star-empty"></i>
-                                                <i class="star-half"></i>
-                                                <i class="star-filled"></i>
-                                            </div>
-                                            <div class="star">
-                                                <i class="star-empty"></i>
-                                                <i class="star-half"></i>
-                                                <i class="star-filled"></i>
-                                            </div>
-                                            <div class="star">
-                                                <i class="star-empty"></i>
-                                                <i class="star-half"></i>
-                                                <i class="star-filled"></i>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <!--<p>(12 отзывов)</p>-->
-                                </div>
-                                <div class="clearfix"></div>
-                                <div class="course-relate-price">
-                                    2500 грн.
-                                </div>
-                            </div>
-                            <div class="course-related-item">
-                                <div class="course-related-img">
-                                    <a href="#">
-                                        <img src="img/search_course.png" alt="image">
-                                    </a>
-                                </div>
-                                <a href="#">
-                                    <h4 class="course-related-title">Базовый курс маникюра 1</h4>
-                                </a>
-                                <div class="course-related-address">
-                                    <p><i class="fa fa-map-marker"></i> г. Винница, ул. Нансена 7А</p>
-                                </div>
-                                <div class="course-related-stars">
-                                    <div class="rating star-icon value-3 color-ok label-left slow">
-                                        <div class="label-value">3.1</div>
-                                        <div class="star-container">
-                                            <div class="star">
-                                                <i class="star-empty"></i>
-                                                <i class="star-half"></i>
-                                                <i class="star-filled"></i>
-                                            </div>
-                                            <div class="star">
-                                                <i class="star-empty"></i>
-                                                <i class="star-half"></i>
-                                                <i class="star-filled"></i>
-                                            </div>
-                                            <div class="star">
-                                                <i class="star-empty"></i>
-                                                <i class="star-half"></i>
-                                                <i class="star-filled"></i>
-                                            </div>
-                                            <div class="star">
-                                                <i class="star-empty"></i>
-                                                <i class="star-half"></i>
-                                                <i class="star-filled"></i>
-                                            </div>
-                                            <div class="star">
-                                                <i class="star-empty"></i>
-                                                <i class="star-half"></i>
-                                                <i class="star-filled"></i>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <!--<p>(12 отзывов)</p>-->
-                                </div>
-                                <div class="clearfix"></div>
-                                <div class="course-relate-price">
-                                    2500 грн.
-                                </div>
-                            </div>
-                            <div class="course-related-item">
-                                <div class="course-related-img">
-                                    <a href="#">
-                                        <img src="img/search_course.png" alt="image">
-                                    </a>
-                                </div>
-                                <a href="#">
-                                    <h4 class="course-related-title">Базовый курс маникюра 1</h4>
-                                </a>
-                                <div class="course-related-address">
-                                    <p><i class="fa fa-map-marker"></i> г. Винница, ул. Нансена 7А</p>
-                                </div>
-                                <div class="course-related-stars">
-                                    <div class="rating star-icon value-3 color-ok label-left slow">
-                                        <div class="label-value">3.1</div>
-                                        <div class="star-container">
-                                            <div class="star">
-                                                <i class="star-empty"></i>
-                                                <i class="star-half"></i>
-                                                <i class="star-filled"></i>
-                                            </div>
-                                            <div class="star">
-                                                <i class="star-empty"></i>
-                                                <i class="star-half"></i>
-                                                <i class="star-filled"></i>
-                                            </div>
-                                            <div class="star">
-                                                <i class="star-empty"></i>
-                                                <i class="star-half"></i>
-                                                <i class="star-filled"></i>
-                                            </div>
-                                            <div class="star">
-                                                <i class="star-empty"></i>
-                                                <i class="star-half"></i>
-                                                <i class="star-filled"></i>
-                                            </div>
-                                            <div class="star">
-                                                <i class="star-empty"></i>
-                                                <i class="star-half"></i>
-                                                <i class="star-filled"></i>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <!--<p>(12 отзывов)</p>-->
-                                </div>
-                                <div class="clearfix"></div>
-                                <div class="course-relate-price">
-                                    2500 грн.
-                                </div>
-                            </div>
-                            <div class="course-related-item">
-                                <div class="course-related-img">
-                                    <a href="#">
-                                        <img src="img/search_course.png" alt="image">
-                                    </a>
-                                </div>
-                                <a href="#">
-                                    <h4 class="course-related-title">Базовый курс маникюра 1</h4>
-                                </a>
-                                <div class="course-related-address">
-                                    <p><i class="fa fa-map-marker"></i> г. Винница, ул. Нансена 7А</p>
-                                </div>
-                                <div class="course-related-stars">
-                                    <div class="rating star-icon value-3 color-ok label-left slow">
-                                        <div class="label-value">3.1</div>
-                                        <div class="star-container">
-                                            <div class="star">
-                                                <i class="star-empty"></i>
-                                                <i class="star-half"></i>
-                                                <i class="star-filled"></i>
-                                            </div>
-                                            <div class="star">
-                                                <i class="star-empty"></i>
-                                                <i class="star-half"></i>
-                                                <i class="star-filled"></i>
-                                            </div>
-                                            <div class="star">
-                                                <i class="star-empty"></i>
-                                                <i class="star-half"></i>
-                                                <i class="star-filled"></i>
-                                            </div>
-                                            <div class="star">
-                                                <i class="star-empty"></i>
-                                                <i class="star-half"></i>
-                                                <i class="star-filled"></i>
-                                            </div>
-                                            <div class="star">
-                                                <i class="star-empty"></i>
-                                                <i class="star-half"></i>
-                                                <i class="star-filled"></i>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <!--<p>(12 отзывов)</p>-->
-                                </div>
-                                <div class="clearfix"></div>
-                                <div class="course-relate-price">
-                                    2500 грн.
-                                </div>
-                            </div>
-                            <div class="course-related-item">
-                                <div class="course-related-img">
-                                    <a href="#">
-                                        <img src="img/search_course.png" alt="image">
-                                    </a>
-                                </div>
-                                <a href="#">
-                                    <h4 class="course-related-title">Базовый курс маникюра 1</h4>
-                                </a>
-                                <div class="course-related-address">
-                                    <p><i class="fa fa-map-marker"></i> г. Винница, ул. Нансена 7А</p>
-                                </div>
-                                <div class="course-related-stars">
-                                    <div class="rating star-icon value-3 color-ok label-left slow">
-                                        <div class="label-value">3.1</div>
-                                        <div class="star-container">
-                                            <div class="star">
-                                                <i class="star-empty"></i>
-                                                <i class="star-half"></i>
-                                                <i class="star-filled"></i>
-                                            </div>
-                                            <div class="star">
-                                                <i class="star-empty"></i>
-                                                <i class="star-half"></i>
-                                                <i class="star-filled"></i>
-                                            </div>
-                                            <div class="star">
-                                                <i class="star-empty"></i>
-                                                <i class="star-half"></i>
-                                                <i class="star-filled"></i>
-                                            </div>
-                                            <div class="star">
-                                                <i class="star-empty"></i>
-                                                <i class="star-half"></i>
-                                                <i class="star-filled"></i>
-                                            </div>
-                                            <div class="star">
-                                                <i class="star-empty"></i>
-                                                <i class="star-half"></i>
-                                                <i class="star-filled"></i>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <!--<p>(12 отзывов)</p>-->
-                                </div>
-                                <div class="clearfix"></div>
-                                <div class="course-relate-price">
-                                    2500 грн.
-                                </div>
+                            <div class="gallery-controll">
+                                <div class="gallery-prev"><i class="fa fa-chevron-left" aria-hidden="true"></i></div>
+                                <div class="gallery-next"><i class="fa fa-chevron-right" aria-hidden="true"></i></div>
                             </div>
                         </div>
-                        <div class="related-controll">
-                            <div class="related-prev"><i class="fa fa-chevron-left" aria-hidden="true"></i></div>
-                            <div class="related-next"><i class="fa fa-chevron-right" aria-hidden="true"></i></div>
-                        </div>
-                    </div>
+                    <?php endif; ?>
+<!--                    <div class="course-related">-->
+<!--                        <h3>Похожие курсы</h3>-->
+<!--                        <div class="course-related-carousel">-->
+<!--                            <div class="course-related-item">-->
+<!--                                <div class="course-related-img">-->
+<!--                                    <a href="#">-->
+<!--                                        <img src="img/search_course.png" alt="image">-->
+<!--                                    </a>-->
+<!--                                </div>-->
+<!--                                <a href="#">-->
+<!--                                    <h4 class="course-related-title">Базовый курс маникюра 1</h4>-->
+<!--                                </a>-->
+<!--                                <div class="course-related-address">-->
+<!--                                    <p><i class="fa fa-map-marker"></i> г. Винница, ул. Нансена 7А</p>-->
+<!--                                </div>-->
+<!--                                <div class="course-related-stars">-->
+<!--                                    <div class="rating star-icon value-3 color-ok label-left slow">-->
+<!--                                        <div class="label-value">3.1</div>-->
+<!--                                        <div class="star-container">-->
+<!--                                            <div class="star">-->
+<!--                                                <i class="star-empty"></i>-->
+<!--                                                <i class="star-half"></i>-->
+<!--                                                <i class="star-filled"></i>-->
+<!--                                            </div>-->
+<!--                                            <div class="star">-->
+<!--                                                <i class="star-empty"></i>-->
+<!--                                                <i class="star-half"></i>-->
+<!--                                                <i class="star-filled"></i>-->
+<!--                                            </div>-->
+<!--                                            <div class="star">-->
+<!--                                                <i class="star-empty"></i>-->
+<!--                                                <i class="star-half"></i>-->
+<!--                                                <i class="star-filled"></i>-->
+<!--                                            </div>-->
+<!--                                            <div class="star">-->
+<!--                                                <i class="star-empty"></i>-->
+<!--                                                <i class="star-half"></i>-->
+<!--                                                <i class="star-filled"></i>-->
+<!--                                            </div>-->
+<!--                                            <div class="star">-->
+<!--                                                <i class="star-empty"></i>-->
+<!--                                                <i class="star-half"></i>-->
+<!--                                                <i class="star-filled"></i>-->
+<!--                                            </div>-->
+<!--                                        </div>-->
+<!--                                    </div>-->
+<!--                                </div>-->
+<!--                                <div class="clearfix"></div>-->
+<!--                                <div class="course-relate-price">-->
+<!--                                    2500 грн.-->
+<!--                                </div>-->
+<!--                            </div>-->
+<!--                            <div class="course-related-item">-->
+<!--                                <div class="course-related-img">-->
+<!--                                    <a href="#">-->
+<!--                                        <img src="img/search_course.png" alt="image">-->
+<!--                                    </a>-->
+<!--                                </div>-->
+<!--                                <a href="#">-->
+<!--                                    <h4 class="course-related-title">Базовый курс маникюра 1</h4>-->
+<!--                                </a>-->
+<!--                                <div class="course-related-address">-->
+<!--                                    <p><i class="fa fa-map-marker"></i> г. Винница, ул. Нансена 7А</p>-->
+<!--                                </div>-->
+<!--                                <div class="course-related-stars">-->
+<!--                                    <div class="rating star-icon value-3 color-ok label-left slow">-->
+<!--                                        <div class="label-value">3.1</div>-->
+<!--                                        <div class="star-container">-->
+<!--                                            <div class="star">-->
+<!--                                                <i class="star-empty"></i>-->
+<!--                                                <i class="star-half"></i>-->
+<!--                                                <i class="star-filled"></i>-->
+<!--                                            </div>-->
+<!--                                            <div class="star">-->
+<!--                                                <i class="star-empty"></i>-->
+<!--                                                <i class="star-half"></i>-->
+<!--                                                <i class="star-filled"></i>-->
+<!--                                            </div>-->
+<!--                                            <div class="star">-->
+<!--                                                <i class="star-empty"></i>-->
+<!--                                                <i class="star-half"></i>-->
+<!--                                                <i class="star-filled"></i>-->
+<!--                                            </div>-->
+<!--                                            <div class="star">-->
+<!--                                                <i class="star-empty"></i>-->
+<!--                                                <i class="star-half"></i>-->
+<!--                                                <i class="star-filled"></i>-->
+<!--                                            </div>-->
+<!--                                            <div class="star">-->
+<!--                                                <i class="star-empty"></i>-->
+<!--                                                <i class="star-half"></i>-->
+<!--                                                <i class="star-filled"></i>-->
+<!--                                            </div>-->
+<!--                                        </div>-->
+<!--                                    </div>-->
+<!--                                    -->
+<!--                                </div>-->
+<!--                                <div class="clearfix"></div>-->
+<!--                                <div class="course-relate-price">-->
+<!--                                    2500 грн.-->
+<!--                                </div>-->
+<!--                            </div>-->
+<!--                            <div class="course-related-item">-->
+<!--                                <div class="course-related-img">-->
+<!--                                    <a href="#">-->
+<!--                                        <img src="img/search_course.png" alt="image">-->
+<!--                                    </a>-->
+<!--                                </div>-->
+<!--                                <a href="#">-->
+<!--                                    <h4 class="course-related-title">Базовый курс маникюра 1</h4>-->
+<!--                                </a>-->
+<!--                                <div class="course-related-address">-->
+<!--                                    <p><i class="fa fa-map-marker"></i> г. Винница, ул. Нансена 7А</p>-->
+<!--                                </div>-->
+<!--                                <div class="course-related-stars">-->
+<!--                                    <div class="rating star-icon value-3 color-ok label-left slow">-->
+<!--                                        <div class="label-value">3.1</div>-->
+<!--                                        <div class="star-container">-->
+<!--                                            <div class="star">-->
+<!--                                                <i class="star-empty"></i>-->
+<!--                                                <i class="star-half"></i>-->
+<!--                                                <i class="star-filled"></i>-->
+<!--                                            </div>-->
+<!--                                            <div class="star">-->
+<!--                                                <i class="star-empty"></i>-->
+<!--                                                <i class="star-half"></i>-->
+<!--                                                <i class="star-filled"></i>-->
+<!--                                            </div>-->
+<!--                                            <div class="star">-->
+<!--                                                <i class="star-empty"></i>-->
+<!--                                                <i class="star-half"></i>-->
+<!--                                                <i class="star-filled"></i>-->
+<!--                                            </div>-->
+<!--                                            <div class="star">-->
+<!--                                                <i class="star-empty"></i>-->
+<!--                                                <i class="star-half"></i>-->
+<!--                                                <i class="star-filled"></i>-->
+<!--                                            </div>-->
+<!--                                            <div class="star">-->
+<!--                                                <i class="star-empty"></i>-->
+<!--                                                <i class="star-half"></i>-->
+<!--                                                <i class="star-filled"></i>-->
+<!--                                            </div>-->
+<!--                                        </div>-->
+<!--                                    </div>-->
+<!--                                   -->
+<!--                                </div>-->
+<!--                                <div class="clearfix"></div>-->
+<!--                                <div class="course-relate-price">-->
+<!--                                    2500 грн.-->
+<!--                                </div>-->
+<!--                            </div>-->
+<!--                            <div class="course-related-item">-->
+<!--                                <div class="course-related-img">-->
+<!--                                    <a href="#">-->
+<!--                                        <img src="img/search_course.png" alt="image">-->
+<!--                                    </a>-->
+<!--                                </div>-->
+<!--                                <a href="#">-->
+<!--                                    <h4 class="course-related-title">Базовый курс маникюра 1</h4>-->
+<!--                                </a>-->
+<!--                                <div class="course-related-address">-->
+<!--                                    <p><i class="fa fa-map-marker"></i> г. Винница, ул. Нансена 7А</p>-->
+<!--                                </div>-->
+<!--                                <div class="course-related-stars">-->
+<!--                                    <div class="rating star-icon value-3 color-ok label-left slow">-->
+<!--                                        <div class="label-value">3.1</div>-->
+<!--                                        <div class="star-container">-->
+<!--                                            <div class="star">-->
+<!--                                                <i class="star-empty"></i>-->
+<!--                                                <i class="star-half"></i>-->
+<!--                                                <i class="star-filled"></i>-->
+<!--                                            </div>-->
+<!--                                            <div class="star">-->
+<!--                                                <i class="star-empty"></i>-->
+<!--                                                <i class="star-half"></i>-->
+<!--                                                <i class="star-filled"></i>-->
+<!--                                            </div>-->
+<!--                                            <div class="star">-->
+<!--                                                <i class="star-empty"></i>-->
+<!--                                                <i class="star-half"></i>-->
+<!--                                                <i class="star-filled"></i>-->
+<!--                                            </div>-->
+<!--                                            <div class="star">-->
+<!--                                                <i class="star-empty"></i>-->
+<!--                                                <i class="star-half"></i>-->
+<!--                                                <i class="star-filled"></i>-->
+<!--                                            </div>-->
+<!--                                            <div class="star">-->
+<!--                                                <i class="star-empty"></i>-->
+<!--                                                <i class="star-half"></i>-->
+<!--                                                <i class="star-filled"></i>-->
+<!--                                            </div>-->
+<!--                                        </div>-->
+<!--                                    </div>-->
+<!--                                </div>-->
+<!--                                <div class="clearfix"></div>-->
+<!--                                <div class="course-relate-price">-->
+<!--                                    2500 грн.-->
+<!--                                </div>-->
+<!--                            </div>-->
+<!--                            <div class="course-related-item">-->
+<!--                                <div class="course-related-img">-->
+<!--                                    <a href="#">-->
+<!--                                        <img src="img/search_course.png" alt="image">-->
+<!--                                    </a>-->
+<!--                                </div>-->
+<!--                                <a href="#">-->
+<!--                                    <h4 class="course-related-title">Базовый курс маникюра 1</h4>-->
+<!--                                </a>-->
+<!--                                <div class="course-related-address">-->
+<!--                                    <p><i class="fa fa-map-marker"></i> г. Винница, ул. Нансена 7А</p>-->
+<!--                                </div>-->
+<!--                                <div class="course-related-stars">-->
+<!--                                    <div class="rating star-icon value-3 color-ok label-left slow">-->
+<!--                                        <div class="label-value">3.1</div>-->
+<!--                                        <div class="star-container">-->
+<!--                                            <div class="star">-->
+<!--                                                <i class="star-empty"></i>-->
+<!--                                                <i class="star-half"></i>-->
+<!--                                                <i class="star-filled"></i>-->
+<!--                                            </div>-->
+<!--                                            <div class="star">-->
+<!--                                                <i class="star-empty"></i>-->
+<!--                                                <i class="star-half"></i>-->
+<!--                                                <i class="star-filled"></i>-->
+<!--                                            </div>-->
+<!--                                            <div class="star">-->
+<!--                                                <i class="star-empty"></i>-->
+<!--                                                <i class="star-half"></i>-->
+<!--                                                <i class="star-filled"></i>-->
+<!--                                            </div>-->
+<!--                                            <div class="star">-->
+<!--                                                <i class="star-empty"></i>-->
+<!--                                                <i class="star-half"></i>-->
+<!--                                                <i class="star-filled"></i>-->
+<!--                                            </div>-->
+<!--                                            <div class="star">-->
+<!--                                                <i class="star-empty"></i>-->
+<!--                                                <i class="star-half"></i>-->
+<!--                                                <i class="star-filled"></i>-->
+<!--                                            </div>-->
+<!--                                        </div>-->
+<!--                                    </div>-->
+<!--                                </div>-->
+<!--                                <div class="clearfix"></div>-->
+<!--                                <div class="course-relate-price">-->
+<!--                                    2500 грн.-->
+<!--                                </div>-->
+<!--                            </div>-->
+<!--                            <div class="course-related-item">-->
+<!--                                <div class="course-related-img">-->
+<!--                                    <a href="#">-->
+<!--                                        <img src="img/search_course.png" alt="image">-->
+<!--                                    </a>-->
+<!--                                </div>-->
+<!--                                <a href="#">-->
+<!--                                    <h4 class="course-related-title">Базовый курс маникюра 1</h4>-->
+<!--                                </a>-->
+<!--                                <div class="course-related-address">-->
+<!--                                    <p><i class="fa fa-map-marker"></i> г. Винница, ул. Нансена 7А</p>-->
+<!--                                </div>-->
+<!--                                <div class="course-related-stars">-->
+<!--                                    <div class="rating star-icon value-3 color-ok label-left slow">-->
+<!--                                        <div class="label-value">3.1</div>-->
+<!--                                        <div class="star-container">-->
+<!--                                            <div class="star">-->
+<!--                                                <i class="star-empty"></i>-->
+<!--                                                <i class="star-half"></i>-->
+<!--                                                <i class="star-filled"></i>-->
+<!--                                            </div>-->
+<!--                                            <div class="star">-->
+<!--                                                <i class="star-empty"></i>-->
+<!--                                                <i class="star-half"></i>-->
+<!--                                                <i class="star-filled"></i>-->
+<!--                                            </div>-->
+<!--                                            <div class="star">-->
+<!--                                                <i class="star-empty"></i>-->
+<!--                                                <i class="star-half"></i>-->
+<!--                                                <i class="star-filled"></i>-->
+<!--                                            </div>-->
+<!--                                            <div class="star">-->
+<!--                                                <i class="star-empty"></i>-->
+<!--                                                <i class="star-half"></i>-->
+<!--                                                <i class="star-filled"></i>-->
+<!--                                            </div>-->
+<!--                                            <div class="star">-->
+<!--                                                <i class="star-empty"></i>-->
+<!--                                                <i class="star-half"></i>-->
+<!--                                                <i class="star-filled"></i>-->
+<!--                                            </div>-->
+<!--                                        </div>-->
+<!--                                    </div>-->
+<!--                                </div>-->
+<!--                                <div class="clearfix"></div>-->
+<!--                                <div class="course-relate-price">-->
+<!--                                    2500 грн.-->
+<!--                                </div>-->
+<!--                            </div>-->
+<!--                            <div class="course-related-item">-->
+<!--                                <div class="course-related-img">-->
+<!--                                    <a href="#">-->
+<!--                                        <img src="img/search_course.png" alt="image">-->
+<!--                                    </a>-->
+<!--                                </div>-->
+<!--                                <a href="#">-->
+<!--                                    <h4 class="course-related-title">Базовый курс маникюра 1</h4>-->
+<!--                                </a>-->
+<!--                                <div class="course-related-address">-->
+<!--                                    <p><i class="fa fa-map-marker"></i> г. Винница, ул. Нансена 7А</p>-->
+<!--                                </div>-->
+<!--                                <div class="course-related-stars">-->
+<!--                                    <div class="rating star-icon value-3 color-ok label-left slow">-->
+<!--                                        <div class="label-value">3.1</div>-->
+<!--                                        <div class="star-container">-->
+<!--                                            <div class="star">-->
+<!--                                                <i class="star-empty"></i>-->
+<!--                                                <i class="star-half"></i>-->
+<!--                                                <i class="star-filled"></i>-->
+<!--                                            </div>-->
+<!--                                            <div class="star">-->
+<!--                                                <i class="star-empty"></i>-->
+<!--                                                <i class="star-half"></i>-->
+<!--                                                <i class="star-filled"></i>-->
+<!--                                            </div>-->
+<!--                                            <div class="star">-->
+<!--                                                <i class="star-empty"></i>-->
+<!--                                                <i class="star-half"></i>-->
+<!--                                                <i class="star-filled"></i>-->
+<!--                                            </div>-->
+<!--                                            <div class="star">-->
+<!--                                                <i class="star-empty"></i>-->
+<!--                                                <i class="star-half"></i>-->
+<!--                                                <i class="star-filled"></i>-->
+<!--                                            </div>-->
+<!--                                            <div class="star">-->
+<!--                                                <i class="star-empty"></i>-->
+<!--                                                <i class="star-half"></i>-->
+<!--                                                <i class="star-filled"></i>-->
+<!--                                            </div>-->
+<!--                                        </div>-->
+<!--                                    </div>-->
+<!--                                </div>-->
+<!--                                <div class="clearfix"></div>-->
+<!--                                <div class="course-relate-price">-->
+<!--                                    2500 грн.-->
+<!--                                </div>-->
+<!--                            </div>-->
+<!--                        </div>-->
+<!--                        <div class="related-controll">-->
+<!--                            <div class="related-prev"><i class="fa fa-chevron-left" aria-hidden="true"></i></div>-->
+<!--                            <div class="related-next"><i class="fa fa-chevron-right" aria-hidden="true"></i></div>-->
+<!--                        </div>-->
+<!--                    </div>-->
                     <div class="course-review">
                         <h3>Отзывы</h3>
                         <button class="button create-review hvr-grow" href="#create_review">Оставить отзыв</button>
@@ -637,35 +646,56 @@ use yii\helpers\Html; ?>
                             </p>
                         </div>
                         <div class="courser-info-img">
-                            <?= Html::img($course->mainPhoto->getThumbFileUrl('file', 'thumb')); ?>
+                            <?php if ($course->firm->firm_photo): ?>
+                                <?= Html::img($course->mainPhoto->getThumbFileUrl('file', 'thumb')); ?>
+                            <?php else: ?>
+                                <img src="<?=Url::base()?>/img/no_image.png" alt="img">
+                            <?php endif; ?>
                             <div class="course-info-socs">
-                                <a href="#">
+                                <a href="<?= Html::encode($course->firm->instagram_link); ?>">
                                     <i class="fa fa-instagram"></i>
                                 </a>
-                                <a href="#">
+                                <a href="<?= Html::encode($course->firm->facebook_link); ?>">
                                     <i class="fa fa-facebook"></i>
                                 </a>
-                                <a href="#">
+                                <a href="<?= Html::encode($course->firm->vk_link); ?>">
                                     <i class="fa fa-vk"></i>
                                 </a>
-                                <a href="#">
+                                <a href="<?= Html::encode($course->firm->youtube_link); ?>">
                                     <i class="fa fa-youtube-play"></i>
                                 </a>
                             </div>
                         </div>
                         <div class="course-info-title">
-                            Meri Meri beauty club
+                            <?= Html::encode($course->firm->firm_name); ?>
                         </div>
                         <div class="course-info-location">
-                            <div class="course-info-address">
-                                <p><i class="fa fa-map-marker"></i> г. Винница, ул. Нансена 7А</p>
-                            </div>
-                            <div class="course-info-phone">
-                                <p><i class="fa fa-phone"></i> +380979746559</p>
-                            </div>
-                            <div class="course-info-phone">
-                                <p><i class="fa fa-phone"></i> +380979746559</p>
-                            </div>
+                            <?php if (!empty($course->firm->address)): ?>
+                                <div class="course-info-address">
+                                    <p>
+                                        <i class="fa fa-map-marker"></i>
+                                        <?= Html::encode($course->firm->address); ?>
+                                    </p>
+                                </div>
+                            <?php endif; ?>
+
+                            <?php if (!empty($course->firm->phone_1)): ?>
+                                <div class="course-info-phone">
+                                    <p>
+                                        <i class="fa fa-phone"></i>
+                                        <?= Html::encode($course->firm->phone_1); ?>
+                                    </p>
+                                </div>
+                            <?php endif; ?>
+
+                            <?php if (!empty($course->firm->phone_2)): ?>
+                                <div class="course-info-phone">
+                                    <p>
+                                        <i class="fa fa-phone"></i>
+                                        <?= Html::encode($course->firm->phone_2); ?>
+                                    </p>
+                                </div>
+                            <?php endif; ?>
                             <div class="course-info-footer">
                                 <form action="#">
                                     <p>Получите детальную информацию о курсе и ближайших датах </p>

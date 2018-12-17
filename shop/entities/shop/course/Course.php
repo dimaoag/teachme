@@ -297,7 +297,7 @@ class Course extends ActiveRecord implements AggregateRoot
 
     public function getFirm(): ActiveQuery
     {
-        return $this->hasOne(User::class, ['id' => 'firm_id']);
+        return $this->hasOne(TeacherMainInfo::class, ['id' => 'firm_id']);
     }
 
     public function getCategory(): ActiveQuery
