@@ -79,9 +79,10 @@ class CourseReadRepository
     }
     
 
-    public function getFeatured($limit): array
+    public function getRelated($limit, $category_id, $course_id): array
     {
-        return Course::find()->with('mainPhoto')->orderBy(['id' => SORT_DESC])->limit($limit)->all();
+        $res = Course::find()->where(['category_id' => $category_id])->andWhere(['<>', 'id', $course_id])->active()->with('mainPhoto')->orderBy(['id' => SORT_DESC])->limit($limit)->all();
+        return $res;
     }
 
     public function find($id)
