@@ -2,6 +2,7 @@
 namespace frontend\controllers\course;
 
 
+use shop\forms\course\ReviewForm;
 use shop\helpers\CourseHelper;
 use shop\readModels\shop\CategoryReadRepository;
 use shop\readModels\shop\CityReadRepository;
@@ -73,6 +74,7 @@ class CourseController extends Controller{
 //                    'delete' => ['POST'],
                     'delete-photo' => ['POST'],
                     'delete-gallery-item' => ['POST'],
+                    'delete-review' => ['POST'],
                 ],
             ],
         ];
@@ -84,9 +86,20 @@ class CourseController extends Controller{
     public function actionView($id){
         $course = $this->findModel($id);
 
+        $reviewForm = new ReviewForm();
+        if ($reviewForm->load(Yii::$app->request->post()) && $reviewForm->validate()) {
+            try {
+                $this->service->addReview(Yii::$app->user->id, $course->id, $reviewForm);
+                return $this->redirect(Yii::$app->request->referrer ?: ['index']);
+            } catch (\DomainException $e) {
+                Yii::$app->errorHandler->logException($e);
+                Yii::$app->session->setFlash('error', $e->getMessage());
+            }
+        }
 
         return $this->render('view', [
             'course' => $course,
+            'reviewForm' => $reviewForm,
         ]);
     }
 
@@ -120,6 +133,7 @@ class CourseController extends Controller{
             'dataProvider' => $dataProvider,
         ]);
     }
+
 
     public function actionFirm($id)
     {
@@ -173,7 +187,6 @@ class CourseController extends Controller{
         if ($form->load(Yii::$app->request->post()) && $form->validate()) {
             try {
                 $this->service->edit($course->id, $form);
-//                return $this->redirect(['index', 'id' => $course->id]);
                 return $this->redirect(['/cabinet/teacher']);
             } catch (\DomainException $e) {
                 Yii::$app->errorHandler->logException($e);
@@ -211,8 +224,6 @@ class CourseController extends Controller{
             'galleryForm' => $galleryForm,
         ]);
     }
-
-
 
 
 
@@ -265,7 +276,7 @@ class CourseController extends Controller{
         } catch (\DomainException $e) {
             Yii::$app->session->setFlash('error', $e->getMessage());
         }
-        return $this->redirect(['index']);
+        return $this->redirect(Yii::$app->request->referrer ?: ['/']);
     }
 
 
@@ -289,6 +300,21 @@ class CourseController extends Controller{
         try {
             $this->service->sendOnModeration($course);
             $this->userManageService->minusPublication(Yii::$app->user->id);
+        } catch (\DomainException $e) {
+            Yii::$app->session->setFlash('error', $e->getMessage());
+        }
+        return $this->redirect(Yii::$app->request->referrer ?: ['/']);
+    }
+
+
+
+
+    public function actionDeleteReview($id, $course_id){
+
+        $course = $this->findModel($course_id);
+
+        try {
+            $this->service->removeReview((int)$id, $course->id);
         } catch (\DomainException $e) {
             Yii::$app->session->setFlash('error', $e->getMessage());
         }

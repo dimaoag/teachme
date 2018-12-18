@@ -3,6 +3,7 @@
 namespace shop\services\manage;
 
 use shop\entities\shop\course\Course;
+use shop\entities\shop\course\Review;
 use shop\forms\manage\shop\course\CategoriesForm;
 use shop\entities\shop\course\Error;
 use shop\forms\manage\shop\course\ErrorForm;
@@ -14,12 +15,14 @@ use shop\repositories\shop\CityRepository;
 use shop\repositories\shop\CategoryRepository;
 use shop\repositories\shop\CourseRepository;
 use shop\repositories\shop\ErrorRepository;
+use shop\repositories\shop\ReviewRepository;
 use shop\repositories\shop\TeacherMainInfoRepository;
 use shop\repositories\UserRepository;
 use shop\services\TransactionManager;
 use shop\services\search\CourseIndexer;
 use Yii;
 use yii\helpers\VarDumper;
+use shop\forms\course\ReviewForm;
 
 class CourseManageService
 {
@@ -30,6 +33,7 @@ class CourseManageService
     private $categories;
     private $indexer;
     private $teachersMainInfo;
+    private $reviews;
     private $transaction;
 
     public function __construct(
@@ -40,6 +44,7 @@ class CourseManageService
         CategoryRepository $categories,
         CourseIndexer $indexer,
         TeacherMainInfoRepository $teachersMainInfo,
+        ReviewRepository $reviews,
         TransactionManager $transaction
     )
     {
@@ -50,6 +55,7 @@ class CourseManageService
         $this->categories = $categories;
         $this->indexer = $indexer;
         $this->teachersMainInfo = $teachersMainInfo;
+        $this->reviews = $reviews;
         $this->transaction = $transaction;
     }
 
@@ -194,4 +200,36 @@ class CourseManageService
         $course = $this->courses->get($id);
         $this->courses->remove($course);
     }
+
+
+    public function addReview($userId, $courseId, ReviewForm $form): void
+    {
+        $course = $this->courses->get($courseId);
+        $course->addReview(
+            $userId,
+            $form->vote,
+            $form->text
+        );
+        $this->courses->save($course);
+        if ($course->status == Course::STATUS_ACTIVE){
+            $this->indexer->remove($course);
+            $this->indexer->index($course);
+        }
+    }
+
+
+    public function removeReview($reviewId, $courseId): void
+    {
+        $course = $this->courses->get($courseId);
+        $review = $this->reviews->get($reviewId);
+        $course->removeReview($review->id);
+        $this->courses->save($course);
+        if ($course->status == Course::STATUS_ACTIVE){
+            $this->indexer->remove($course);
+            $this->indexer->index($course);
+        }
+    }
+
+
+
 }

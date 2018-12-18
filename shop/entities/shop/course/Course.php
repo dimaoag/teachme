@@ -46,6 +46,7 @@ use yii\web\UploadedFile;
  * @property Photo $mainPhoto
  * @property Gallery[] $gallery
  * @property TeacherMainInfo $firm
+ * @property Review[] $reviews
  */
 class Course extends ActiveRecord implements AggregateRoot
 {
@@ -269,7 +270,7 @@ class Course extends ActiveRecord implements AggregateRoot
         return Value::blank($id);
     }
 
-
+    //category
 
     public function getCategoryParents()
     {
@@ -281,6 +282,93 @@ class Course extends ActiveRecord implements AggregateRoot
         }
         return $categories;
     }
+
+    // Reviews
+
+    public function addReview($userId, $vote, $text): void
+    {
+        $reviews = $this->reviews;
+        $reviews[] = Review::create($userId, $vote, $text);
+        $this->updateReviews($reviews);
+    }
+
+
+
+    public function editReview($id, $vote, $text): void
+    {
+        $this->doWithReview($id, function (Review $review) use ($vote, $text) {
+            $review->edit($vote, $text);
+        });
+    }
+
+
+
+    public function activateReview($id): void
+    {
+        $this->doWithReview($id, function (Review $review) {
+            $review->activate();
+        });
+    }
+
+
+
+    public function draftReview($id): void
+    {
+        $this->doWithReview($id, function (Review $review) {
+            $review->draft();
+        });
+    }
+
+
+    private function doWithReview($id, callable $callback): void
+    {
+        $reviews = $this->reviews;
+        foreach ($reviews as $review) {
+            if ($review->isIdEqualTo($id)) {
+                $callback($review);
+                $this->updateReviews($reviews);
+                return;
+            }
+        }
+        throw new \DomainException('Review is not found.');
+    }
+
+
+
+    public function removeReview($id): void
+    {
+        $reviews = $this->reviews;
+        foreach ($reviews as $i => $review) {
+            if ($review->isIdEqualTo($id)) {
+                unset($reviews[$i]);
+                $this->updateReviews($reviews);
+                return;
+            }
+        }
+        throw new \DomainException('Review is not found.');
+    }
+
+
+
+    private function updateReviews(array $reviews): void
+    {
+        $amount = 0;
+        $total = 0;
+
+        foreach ($reviews as $review) {
+            /**
+             * @var Review $review
+             */
+            if ($review->isActive()) {
+                $amount++;
+                $total += $review->getRating();
+            }
+        }
+
+        $this->reviews = $reviews;
+        $this->rating = $amount ? $total / $amount : null;
+    }
+
 
 
     ##########################
@@ -330,6 +418,10 @@ class Course extends ActiveRecord implements AggregateRoot
         return $this->hasOne(Photo::class, ['id' => 'main_photo_id']);
     }
 
+    public function getReviews(): ActiveQuery
+    {
+        return $this->hasMany(Review::class, ['course_id' => 'id']);
+    }
 
     ##########################
 
@@ -343,7 +435,7 @@ class Course extends ActiveRecord implements AggregateRoot
         return [
             [
                 'class' => SaveRelationsBehavior::class,
-                'relations' => ['values', 'photos', 'gallery', 'error'],
+                'relations' => ['values', 'photos', 'gallery', 'error', 'reviews'],
             ],
         ];
     }

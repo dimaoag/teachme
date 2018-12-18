@@ -482,6 +482,7 @@ input[type=text], textarea {
 }
 .button:hover,
 .button:focus {
+    outline: none;
     color: white;
     /*border: 2px solid #ff7d05;*/
     /*background-image: none;*/
@@ -1867,6 +1868,9 @@ label.tab.active{
     -ms-flex-align: center;
     align-items: center;
 }
+.delete-review{
+    margin-left: 15px;
+}
 .review-stars-item p{
     font-weight: bold;
 }
@@ -1878,6 +1882,7 @@ label.tab.active{
 }
 .star-rating__wrap{
     display: inline-block;
+    /*display: flex;*/
     font-size: 1rem;
 }
 .star-rating__wrap:after{
@@ -1903,7 +1908,9 @@ label.tab.active{
 {
     content: "\f005";
 }
-
+.course-review{
+    margin-bottom: 35px;
+}
 
 @media all and (max-width: 1200px){
     .course-info-fixed{

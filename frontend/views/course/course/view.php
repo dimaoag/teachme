@@ -1,8 +1,15 @@
 <?php
 
+use yii\bootstrap\ActiveForm;
+use yii\helpers\Html;
+use yii\helpers\Url;
+use frontend\widgets\course\RelatedCoursesWidget;
+use shop\helpers\CourseHelper;
 
 
 /* @var $course shop\entities\shop\course\Course */
+/* @var $reviewForm \shop\forms\course\ReviewForm*/
+/* @var $review \shop\entities\shop\course\Review*/
 
 $this->title = $course->name;
 
@@ -13,9 +20,6 @@ foreach ($course->category->parents as $parent) {
 }
 $this->params['breadcrumbs'][] = $course->name;
 
-use yii\helpers\Html;
-use yii\helpers\Url;
-use frontend\widgets\course\RelatedCoursesWidget;
 ?>
 
 
@@ -170,125 +174,60 @@ use frontend\widgets\course\RelatedCoursesWidget;
                     <div class="course-review">
                         <h3>Отзывы</h3>
                         <button class="button create-review hvr-grow" href="#create_review">Оставить отзыв</button>
-                        <div class="course-reviews-container">
-                            <div class="course-review-item">
-                                <div class="course-review-header">
-                                    <div class="course-review-header-left">
-                                        <h4>John Smith</h4>
-                                        <p>20-10-2018 15:35</p>
-                                    </div>
-                                    <div class="rating star-icon value-3 color-ok label-left slow">
-                                        <div class="label-value">3.1</div>
-                                        <div class="star-container">
-                                            <div class="star">
-                                                <i class="star-empty"></i>
-                                                <i class="star-half"></i>
-                                                <i class="star-filled"></i>
-                                            </div>
-                                            <div class="star">
-                                                <i class="star-empty"></i>
-                                                <i class="star-half"></i>
-                                                <i class="star-filled"></i>
-                                            </div>
-                                            <div class="star">
-                                                <i class="star-empty"></i>
-                                                <i class="star-half"></i>
-                                                <i class="star-filled"></i>
-                                            </div>
-                                            <div class="star">
-                                                <i class="star-empty"></i>
-                                                <i class="star-half"></i>
-                                                <i class="star-filled"></i>
-                                            </div>
-                                            <div class="star">
-                                                <i class="star-empty"></i>
-                                                <i class="star-half"></i>
-                                                <i class="star-filled"></i>
+                        <?php if (!empty($course->reviews)): ?>
+                            <div class="course-reviews-container">
+                                <?php foreach ($course->reviews as $review): ?>
+                                    <div class="course-review-item">
+                                    <div class="course-review-header">
+                                        <div class="course-review-header-left">
+                                            <h4><?= Html::encode($review->user->first_name); ?>  <?= Html::encode($review->user->last_name); ?></h4>
+                                            <p> <?= CourseHelper::echoDate($review->created_at); ?> </p>
+                                            <?php if (!Yii::$app->user->isGuest && $review->isOwner(Yii::$app->user->id)): ?>
+                                                <?= Html::a('<span class="text-danger fa fa-trash"></span>', ['delete-review', 'id' => $review->id, 'course_id' => $course->id], [
+                                                    'class' => 'delete-review',
+                                                    'data-method' => 'post',
+                                                    'data-confirm' => 'Вы действилътельно хотите удалить этот елемент?',
+                                                ]); ?>
+                                            <?php endif; ?>
+                                        </div>
+                                        <div class="rating star-icon value-<?= Html::encode($review->vote); ?> color-ok label-left slow">
+                                            <div class="label-value"><?= Html::encode($review->vote); ?></div>
+                                            <div class="star-container">
+                                                <div class="star">
+                                                    <i class="star-empty"></i>
+                                                    <i class="star-half"></i>
+                                                    <i class="star-filled"></i>
+                                                </div>
+                                                <div class="star">
+                                                    <i class="star-empty"></i>
+                                                    <i class="star-half"></i>
+                                                    <i class="star-filled"></i>
+                                                </div>
+                                                <div class="star">
+                                                    <i class="star-empty"></i>
+                                                    <i class="star-half"></i>
+                                                    <i class="star-filled"></i>
+                                                </div>
+                                                <div class="star">
+                                                    <i class="star-empty"></i>
+                                                    <i class="star-half"></i>
+                                                    <i class="star-filled"></i>
+                                                </div>
+                                                <div class="star">
+                                                    <i class="star-empty"></i>
+                                                    <i class="star-half"></i>
+                                                    <i class="star-filled"></i>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
+                                    <p>
+                                        <?= Html::encode($review->text); ?>
+                                    </p>
                                 </div>
-                                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Adipisci, assumenda blanditiis ducimus ex, hic ipsum libero neque nobis odio officia rem ullam unde! Autem cumque maiores nostrum odio provident voluptates?</p>
+                                <?php endforeach; ?>
                             </div>
-                            <div class="course-review-item">
-                                <div class="course-review-header">
-                                    <div class="course-review-header-left">
-                                        <h4>John Smith</h4>
-                                        <p>20-10-2018 15:35</p>
-                                    </div>
-                                    <div class="rating star-icon value-3 color-ok label-left slow">
-                                        <div class="label-value">3.1</div>
-                                        <div class="star-container">
-                                            <div class="star">
-                                                <i class="star-empty"></i>
-                                                <i class="star-half"></i>
-                                                <i class="star-filled"></i>
-                                            </div>
-                                            <div class="star">
-                                                <i class="star-empty"></i>
-                                                <i class="star-half"></i>
-                                                <i class="star-filled"></i>
-                                            </div>
-                                            <div class="star">
-                                                <i class="star-empty"></i>
-                                                <i class="star-half"></i>
-                                                <i class="star-filled"></i>
-                                            </div>
-                                            <div class="star">
-                                                <i class="star-empty"></i>
-                                                <i class="star-half"></i>
-                                                <i class="star-filled"></i>
-                                            </div>
-                                            <div class="star">
-                                                <i class="star-empty"></i>
-                                                <i class="star-half"></i>
-                                                <i class="star-filled"></i>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Adipisci, assumenda blanditiis ducimus ex, hic ipsum libero neque nobis odio officia rem ullam unde! Autem cumque maiores nostrum odio provident voluptates?</p>
-                            </div>
-                            <div class="course-review-item">
-                                <div class="course-review-header">
-                                    <div class="course-review-header-left">
-                                        <h4>John Smith</h4>
-                                        <p>20-10-2018 15:35</p>
-                                    </div>
-                                    <div class="rating star-icon value-3 color-ok label-left slow">
-                                        <div class="label-value">3.1</div>
-                                        <div class="star-container">
-                                            <div class="star">
-                                                <i class="star-empty"></i>
-                                                <i class="star-half"></i>
-                                                <i class="star-filled"></i>
-                                            </div>
-                                            <div class="star">
-                                                <i class="star-empty"></i>
-                                                <i class="star-half"></i>
-                                                <i class="star-filled"></i>
-                                            </div>
-                                            <div class="star">
-                                                <i class="star-empty"></i>
-                                                <i class="star-half"></i>
-                                                <i class="star-filled"></i>
-                                            </div>
-                                            <div class="star">
-                                                <i class="star-empty"></i>
-                                                <i class="star-half"></i>
-                                                <i class="star-filled"></i>
-                                            </div>
-                                            <div class="star">
-                                                <i class="star-empty"></i>
-                                                <i class="star-half"></i>
-                                                <i class="star-filled"></i>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Adipisci, assumenda blanditiis ducimus ex, hic ipsum libero neque nobis odio officia rem ullam unde! Autem cumque maiores nostrum odio provident voluptates?</p>
-                            </div>
-                        </div>
+                        <?php endif; ?>
                     </div>
                 </div>
             </div>
@@ -389,92 +328,49 @@ use frontend\widgets\course\RelatedCoursesWidget;
             </div>
         </div>
         <div id="phones_md" class="white-popup mfp-hide phones-md">
-            <a href="tel:0979746559">
-                +380979746559
-            </a>
-            <a href="tel:0979746559">
-                +380979746559
-            </a>
+            <?php if (!empty($course->firm->phone_1)): ?>
+                <a href="tel:0979746559">
+                    <?= Html::encode($course->firm->phone_1) ?>
+                </a>
+            <?php endif; ?>
+            <?php if (!empty($course->firm->phone_2)): ?>
+                <a href="tel:0979746559">
+                    <?= Html::encode($course->firm->phone_2) ?>
+                </a>
+            <?php endif; ?>
         </div>
         <div id="create_review" class="white-popup mfp-hide create-review-form">
-            <h2>Оцените курс</h2>
-            <form action="#" role="form" class="review-form">
-                <div class="review-stars">
-                    <div class="review-stars-item">
-                        <p>Место проведения</p>
-                        <div class="star-rating">
-                            <div class="star-rating__wrap">
-                                <input class="star-rating__input" id="star-rating-place-5" type="radio" name="rating_place" value="5">
-                                <label class="star-rating__ico fa fa-star-o fa-lg" for="star-rating-place-5" title="5 out of 5 stars"></label>
-                                <input class="star-rating__input" id="star-rating-place-4" type="radio" name="rating_place" value="4">
-                                <label class="star-rating__ico fa fa-star-o fa-lg" for="star-rating-place-4" title="4 out of 5 stars"></label>
-                                <input class="star-rating__input" id="star-rating-place-3" type="radio" name="rating_place" value="3">
-                                <label class="star-rating__ico fa fa-star-o fa-lg" for="star-rating-place-3" title="3 out of 5 stars"></label>
-                                <input class="star-rating__input" id="star-rating-place-2" type="radio" name="rating_place" value="2">
-                                <label class="star-rating__ico fa fa-star-o fa-lg" for="star-rating-place-2" title="2 out of 5 stars"></label>
-                                <input class="star-rating__input" id="star-rating-place-1" type="radio" name="rating_place" value="1">
-                                <label class="star-rating__ico fa fa-star-o fa-lg" for="star-rating-place-1" title="1 out of 5 stars"></label>
+            <?php if (Yii::$app->user->isGuest): ?>
+                Чтобы оставить отзыв пожалуйста <?= Html::a('ввойдите на сайт', ['/login']) ?>  или <?= Html::a('зарегистрируйтесь', ['/signup']) ?>.
+            <?php else: ?>
+                <h2>Оцените курс</h2>
+                <?php $form = ActiveForm::begin(['id' => 'form-review', 'class' => 'review-form']) ?>
+                    <div class="review-stars">
+                        <div class="review-stars-item">
+                            <p>Оцетка курса</p>
+                            <div class="star-rating">
+                                <div class="star-rating__wrap">
+                                    <input class="star-rating__input" id="vote-5" type="radio" name="ReviewForm[vote]" value="5">
+                                    <label class="star-rating__ico fa fa-star-o fa-lg" for="vote-5" title="5 out of 5 stars"></label>
+                                    <input class="star-rating__input" id="vote-4" type="radio" name="ReviewForm[vote]" value="4">
+                                    <label class="star-rating__ico fa fa-star-o fa-lg" for="vote-4" title="4 out of 5 stars"></label>
+                                    <input class="star-rating__input" id="vote-3" type="radio" name="ReviewForm[vote]" value="3">
+                                    <label class="star-rating__ico fa fa-star-o fa-lg" for="vote-3" title="3 out of 5 stars"></label>
+                                    <input class="star-rating__input" id="vote-2" type="radio" name="ReviewForm[vote]" value="2">
+                                    <label class="star-rating__ico fa fa-star-o fa-lg" for="vote-2" title="2 out of 5 stars"></label>
+                                    <input class="star-rating__input" id="vote-1" type="radio" name="ReviewForm[vote]" value="1">
+                                    <label class="star-rating__ico fa fa-star-o fa-lg" for="vote-1" title="1 out of 5 stars"></label>
+                                </div>
                             </div>
                         </div>
                     </div>
-                    <div class="review-stars-item">
-                        <p>Преподаватель</p>
-                        <div class="star-rating">
-                            <div class="star-rating__wrap">
-                                <input class="star-rating__input" id="star-rating-teacher-5" type="radio" name="rating-teacher" value="5">
-                                <label class="star-rating__ico fa fa-star-o fa-lg" for="star-rating-teacher-5" title="5 out of 5 stars"></label>
-                                <input class="star-rating__input" id="star-rating-teacher-4" type="radio" name="rating-teacher" value="4">
-                                <label class="star-rating__ico fa fa-star-o fa-lg" for="star-rating-teacher-4" title="4 out of 5 stars"></label>
-                                <input class="star-rating__input" id="star-rating-teacher-3" type="radio" name="rating-teacher" value="3">
-                                <label class="star-rating__ico fa fa-star-o fa-lg" for="star-rating-teacher-3" title="3 out of 5 stars"></label>
-                                <input class="star-rating__input" id="star-rating-teacher-2" type="radio" name="rating-teacher" value="2">
-                                <label class="star-rating__ico fa fa-star-o fa-lg" for="star-rating-teacher-2" title="2 out of 5 stars"></label>
-                                <input class="star-rating__input" id="star-rating-teacher-1" type="radio" name="rating-teacher" value="1">
-                                <label class="star-rating__ico fa fa-star-o fa-lg" for="star-rating-teacher-1" title="1 out of 5 stars"></label>
-                            </div>
-                        </div>
+                    <div class="form-group review-textarea">
+                        <?= $form->field($reviewForm, 'text')->textarea(['rows' => 7, 'cols'=> 100, 'placeholder' => 'Введите текст...']) ?>
                     </div>
-                    <div class="review-stars-item">
-                        <p>Практика</p>
-                        <div class="star-rating">
-                            <div class="star-rating__wrap">
-                                <input class="star-rating__input" id="star-rating-practice-5" type="radio" name="rating-practice" value="5">
-                                <label class="star-rating__ico fa fa-star-o fa-lg" for="star-rating-practice-5" title="5 out of 5 stars"></label>
-                                <input class="star-rating__input" id="star-rating-practice-4" type="radio" name="rating-practice" value="4">
-                                <label class="star-rating__ico fa fa-star-o fa-lg" for="star-rating-practice-4" title="4 out of 5 stars"></label>
-                                <input class="star-rating__input" id="star-rating-practice-3" type="radio" name="rating-practice" value="3">
-                                <label class="star-rating__ico fa fa-star-o fa-lg" for="star-rating-practice-3" title="3 out of 5 stars"></label>
-                                <input class="star-rating__input" id="star-rating-practice-2" type="radio" name="rating-practice" value="2">
-                                <label class="star-rating__ico fa fa-star-o fa-lg" for="star-rating-practice-2" title="2 out of 5 stars"></label>
-                                <input class="star-rating__input" id="star-rating-practice-1" type="radio" name="rating-practice" value="1">
-                                <label class="star-rating__ico fa fa-star-o fa-lg" for="star-rating-practice-1" title="1 out of 5 stars"></label>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="review-stars-item">
-                        <p>Цена-качество</p>
-                        <div class="star-rating">
-                            <div class="star-rating__wrap">
-                                <input class="star-rating__input" id="star-rating-price-5" type="radio" name="rating-price" value="5">
-                                <label class="star-rating__ico fa fa-star-o fa-lg" for="star-rating-price-5" title="5 out of 5 stars"></label>
-                                <input class="star-rating__input" id="star-rating-price-4" type="radio" name="rating-price" value="4">
-                                <label class="star-rating__ico fa fa-star-o fa-lg" for="star-rating-price-4" title="4 out of 5 stars"></label>
-                                <input class="star-rating__input" id="star-rating-price-3" type="radio" name="rating-price" value="3">
-                                <label class="star-rating__ico fa fa-star-o fa-lg" for="star-rating-price-3" title="3 out of 5 stars"></label>
-                                <input class="star-rating__input" id="star-rating-price-2" type="radio" name="rating-price" value="2">
-                                <label class="star-rating__ico fa fa-star-o fa-lg" for="star-rating-price-2" title="2 out of 5 stars"></label>
-                                <input class="star-rating__input" id="star-rating-price-1" type="radio" name="rating-price" value="1">
-                                <label class="star-rating__ico fa fa-star-o fa-lg" for="star-rating-price-1" title="1 out of 5 stars"></label>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="form-group review-textarea">
-                    <label for="review">Оставить отзыв</label>
-                    <textarea rows="7" cols="100" class="form-control" id="review"  placeholder="Введите текст"></textarea>
-                </div>
-                <button type="submit" class="btn btn-block button">Отправить</button>
-            </form>
+                    <button type="submit" class="btn btn-block button">Отправить</button>
+                <?php ActiveForm::end() ?>
+            <?php endif; ?>
+
         </div>
     </div>
 </main>
