@@ -4,6 +4,7 @@ namespace shop\readModels\shop;
 
 use Elasticsearch\Client;
 use phpDocumentor\Reflection\Types\Integer;
+use shop\entities\shop\TeacherMainInfo;
 use shop\entities\shop\City;
 use shop\entities\shop\Category;
 use shop\entities\shop\course\Course;
@@ -66,6 +67,13 @@ class CourseReadRepository
     {
         $query = Course::find()->alias('c')->active('c')->with('mainPhoto');
         $query->andWhere(['c.city_id' => $city->id]);
+        return $this->getProvider($query);
+    }
+
+    public function getAllByFirm(TeacherMainInfo $firm) :DataProviderInterface
+    {
+        $query = Course::find()->alias('c')->active('c')->with('mainPhoto');
+        $query->andWhere(['c.firm_id' => $firm->id]);
         return $this->getProvider($query);
     }
 

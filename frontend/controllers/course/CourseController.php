@@ -20,6 +20,7 @@ use yii\web\NotFoundHttpException;
 use shop\services\manage\UserManegeService;
 use shop\forms\course\search\SearchForm;
 use shop\readModels\shop\CourseReadRepository;
+use shop\readModels\shop\TeacherMainInfoReadRepository;
 
 class CourseController extends Controller{
 
@@ -29,6 +30,7 @@ class CourseController extends Controller{
     private $courseReadRepository;
     private $categories;
     private $cities;
+    private $firms;
 
     public function __construct($id, $module,
         CourseManageService $service,
@@ -36,6 +38,7 @@ class CourseController extends Controller{
         CourseReadRepository $courseReadRepository,
         CategoryReadRepository $categories,
         CityReadRepository $cities,
+        TeacherMainInfoReadRepository $firms,
         $config = [])
     {
         parent::__construct($id, $module, $config);
@@ -44,6 +47,7 @@ class CourseController extends Controller{
         $this->courseReadRepository = $courseReadRepository;
         $this->categories = $categories;
         $this->cities = $cities;
+        $this->firms = $firms;
     }
 
 
@@ -113,6 +117,20 @@ class CourseController extends Controller{
 
         return $this->render('city', [
             'city' => $city,
+            'dataProvider' => $dataProvider,
+        ]);
+    }
+
+    public function actionFirm($id)
+    {
+        if (!$firm = $this->firms->find($id)) {
+            throw new NotFoundHttpException('The requested page does not exist.');
+        }
+
+        $dataProvider = $this->courseReadRepository->getAllByFirm($firm);
+
+        return $this->render('firm', [
+            'firm' => $firm,
             'dataProvider' => $dataProvider,
         ]);
     }

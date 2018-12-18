@@ -1528,6 +1528,11 @@ label.tab.active{
 .course-info-title, .course-info-address, .course-info-phone{
     padding: 7px 0;
 }
+.course-info-title a{
+    color: black;
+    text-decoration: underline;
+}
+
 .course-info-location i{
     margin-right: 10px;
     color: #933ec5;
@@ -2653,6 +2658,7 @@ label.tab.active{
 @media all and (max-width: 1199px){
     .company-info-md{
         display: block;
+        margin-bottom: 50px;
     }
     .company-page{
         margin-top: 30px;

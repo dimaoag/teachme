@@ -48,7 +48,7 @@ use frontend\widgets\course\RelatedCoursesWidget;
                             </div>
                         </div>
                         <div class="course-info-title">
-                            <?= Html::encode($course->firm->firm_name); ?>
+                            <?= Html::a(Html::encode($course->firm->firm_name), ['/course/course/firm', 'id' => $course->firm->id]); ?>
                         </div>
                         <div class="course-info-location">
                             <?php if (!empty($course->firm->address)): ?>
@@ -322,7 +322,7 @@ use frontend\widgets\course\RelatedCoursesWidget;
                             </div>
                         </div>
                         <div class="course-info-title">
-                            <?= Html::encode($course->firm->firm_name); ?>
+                            <?= Html::a(Html::encode($course->firm->firm_name), ['/course/course/firm', 'id' => $course->firm->id]); ?>
                         </div>
                         <div class="course-info-location">
                             <?php if (!empty($course->firm->address)): ?>
