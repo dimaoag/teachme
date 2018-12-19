@@ -24,7 +24,7 @@ $(document).ready(function () {
     $(function(){
 
         $(document).ready(function() {
-            $("[data-mask='callback-catalog-phone']").mask("+3 80 9 9  9 9 9  9 9  9 9");
+            $("[data-mask='callback-catalog-phone']").mask("+3 8 0 9 9  9 9 9  9 9  9 9");
         });
     })
 })(jQuery));

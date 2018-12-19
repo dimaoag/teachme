@@ -5,8 +5,9 @@
 /* @var $course shop\entities\shop\course\Course */
 /* @var $courses[] shop\entities\shop\course\Course */
 /* @var $teacherMainInfoForm \shop\forms\manage\shop\TeacherMainInfoForm */
-/* @var $teacherMainInfoPhotoForm \shop\forms\manage\shop\TeacherMainInfoPhotoForm */
 /* @var $teacherMainInfo \shop\entities\shop\TeacherMainInfo*/
+/* @var $profileEditForm \shop\forms\manage\user\ProfileEditForm*/
+/* @var $profileEditPasswordForm \shop\forms\manage\user\ProfileEditPasswordForm*/
 
 use shop\entities\shop\course\Course;
 use yii\helpers\Html;
@@ -674,6 +675,7 @@ use yii\bootstrap\ActiveForm;
                         <?php endif; ?>
                         <div class="col-md-10">
                             <?php $form = ActiveForm::begin([
+                                'action' => Url::to(['teacher-main-info']),
                                 'options' => ['enctype'=>'multipart/form-data', 'id' => 'teacher_main_info']
                             ]); ?>
                                 <div class="add-photo-profile">
@@ -895,69 +897,57 @@ use yii\bootstrap\ActiveForm;
                 <div class="tab-cabinet-container tab-setting">
                     <h2>Личная информация</h2>
                     <div class="row">
-                        <div class="col-md-8">
-                            <form class="form-horizontal form-item">
+                        <div class="col-md-9">
+                            <?php $form = ActiveForm::begin(['action' => Url::to(['edit-profile']), 'id' => 'profileEditForm']); ?>
                                 <div class="form-group">
-                                    <label for="first_name" class="col-sm-3 control-label">Имя</label>
-                                    <div class="col-sm-9">
-                                        <input type="text" class="form-control" name="first_name" id="first_name" placeholder="Имя">
+                                    <label for="first_name" class="col-sm-4 control-label">Имя</label>
+                                    <div class="col-sm-8">
+                                        <?= $form->field($profileEditForm, 'first_name')->textInput(['id' => 'first_name', 'maxlength' => true])->label(false); ?>
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    <label for="last_name" class="col-sm-3 control-label">Фамилия</label>
-                                    <div class="col-sm-9">
-                                        <input type="password" class="form-control" name="last_name" id="last_name" placeholder="Фамилия">
+                                    <label for="last_name" class="col-sm-4 control-label">Фамилия</label>
+                                    <div class="col-sm-8">
+                                        <?= $form->field($profileEditForm, 'last_name')->textInput(['id' => 'last_name', 'maxlength' => true])->label(false); ?>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="phone" class="col-sm-4 control-label">Телефон</label>
+                                    <div class="col-sm-8">
+                                        <?= $form->field($profileEditForm, 'phone')->textInput(['id' => 'phone', 'maxlength' => true, 'data-mask' => 'callback-catalog-phone'])->label(false); ?>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="email" class="col-sm-4 control-label">Email</label>
+                                    <div class="col-sm-8">
+                                        <?= $form->field($profileEditForm, 'email')->textInput(['id' => 'email', 'maxlength' => true])->label(false); ?>
                                     </div>
                                 </div>
                                 <div class="form-group">
                                     <div class="col-sm-offset-6 col-sm-6">
                                         <button type="submit" class="btn btn-block button-pure tab-setting-btn">Изменить данные</button>
+                                        <br>
                                     </div>
                                 </div>
-                            </form>
-                            <form class="form-horizontal form-item">
+                            <?php $form = ActiveForm::end(); ?>
+                            <br>
+                            <?php $form = ActiveForm::begin(['action' => Url::to(['edit-profile-password']), 'id' => 'profileEditPasswordForm']); ?>
                                 <div class="form-group">
-                                    <label for="phone" class="col-sm-3 control-label">Телефон</label>
-                                    <div class="col-sm-9">
-                                        <input type="text" class="form-control" name="phone" id="phone" placeholder="Телефон">
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <div class="col-sm-offset-6 col-sm-6">
-                                        <button type="submit" class="btn btn-block button-pure tab-setting-btn">Изменить телефон</button>
-                                    </div>
-                                </div>
-                            </form>
-                            <form class="form-horizontal form-item">
-                                <div class="form-group">
-                                    <label for="email" class="col-sm-3 control-label">Email</label>
-                                    <div class="col-sm-9">
-                                        <input type="text" class="form-control" name="email" id="email" placeholder="Email">
+                                    <label for="oldPassword" class="col-sm-4 control-label">Старый пароль</label>
+                                    <div class="col-sm-8">
+                                        <?= $form->field($profileEditPasswordForm, 'oldPassword')->passwordInput(['id' => 'oldPassword', 'maxlength' => true])->label(false); ?>
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    <div class="col-sm-offset-6 col-sm-6">
-                                        <button type="submit" class="btn btn-block button-pure tab-setting-btn">Изменить email</button>
-                                    </div>
-                                </div>
-                            </form>
-                            <form class="form-horizontal form-item">
-                                <div class="form-group">
-                                    <label for="old_password" class="col-sm-3 control-label">Старый пароль</label>
-                                    <div class="col-sm-9">
-                                        <input type="password" class="form-control" name="old_password" id="old_password">
+                                    <label for="password1" class="col-sm-4 control-label">Новый пароль</label>
+                                    <div class="col-sm-8">
+                                        <?= $form->field($profileEditPasswordForm, 'password1')->passwordInput(['id' => 'password1', 'maxlength' => true])->label(false); ?>
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    <label for="new_password" class="col-sm-3 control-label">Новый пароль</label>
-                                    <div class="col-sm-9">
-                                        <input type="password" class="form-control" name="new_password" id="new_password">
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <label for="confirm_password" class="col-sm-3 control-label">Подтвердить пароль</label>
-                                    <div class="col-sm-9">
-                                        <input type="password" class="form-control" name="confirm_password" id="confirm_password">
+                                    <label for="password2" class="col-sm-4 control-label">Подтвердить пароль</label>
+                                    <div class="col-sm-8">
+                                        <?= $form->field($profileEditPasswordForm, 'password2')->passwordInput(['id' => 'password2', 'maxlength' => true])->label(false); ?>
                                     </div>
                                 </div>
                                 <div class="form-group">
@@ -965,7 +955,7 @@ use yii\bootstrap\ActiveForm;
                                         <button type="submit" class="btn btn-block button-pure tab-setting-btn">Изменить пароль</button>
                                     </div>
                                 </div>
-                            </form>
+                            <?php $form = ActiveForm::end(); ?>
                         </div>
                     </div>
                 </div>

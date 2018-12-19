@@ -1856,6 +1856,9 @@ label.tab.active{
     font-weight: bold;
     color: #933ec5;
 }
+.alert {
+    margin-top: 15px;
+}
 .review-stars-item{
     padding: 5px 0;
     display: -webkit-box;
