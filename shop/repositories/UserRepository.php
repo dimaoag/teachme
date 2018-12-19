@@ -2,7 +2,6 @@
 namespace shop\repositories;
 
 use shop\entities\user\User;
-use Yii;
 
 class UserRepository
 {

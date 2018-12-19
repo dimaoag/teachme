@@ -84,33 +84,11 @@ class DefaultController extends Controller {
 
         $courses = $this->courses->getCoursesByUserId(Yii::$app->user->id);
 
+
+
         /**
          * @var $teacherMainInfo TeacherMainInfo;
          */
-        $teacherMainInfo = $this->teacherMainInfoRepository->getTeacherMainInfoByUserId(Yii::$app->user->id) ?: null;
-        $teacherMainInfo ? $teacherMainInfoForm = new TeacherMainInfoForm($teacherMainInfo) : $teacherMainInfoForm = new TeacherMainInfoForm();
-
-
-        $user = $this->users->getUserById(Yii::$app->user->id);
-        $profileEditForm = new ProfileEditForm($user);
-        $profileEditPasswordForm = new ProfileEditPasswordForm($user);
-
-
-        return $this->render('index', [
-            'publications' => $publications,
-            'courses' => $courses,
-            'teacherMainInfoForm' => $teacherMainInfoForm,
-            'teacherMainInfo' => $teacherMainInfo,
-            'profileEditForm' => $profileEditForm,
-            'profileEditPasswordForm' => $profileEditPasswordForm,
-        ]);
-    }
-
-
-
-
-    public function actionTeacherMainInfo(){
-
         $teacherMainInfo = $this->teacherMainInfoRepository->getTeacherMainInfoByUserId(Yii::$app->user->id) ?: null;
         $teacherMainInfo ? $teacherMainInfoForm = new TeacherMainInfoForm($teacherMainInfo) : $teacherMainInfoForm = new TeacherMainInfoForm();
 
@@ -126,42 +104,26 @@ class DefaultController extends Controller {
         }
 
 
-        return $this->render('index', [
-            'teacherMainInfoForm' => $teacherMainInfoForm,
-            'teacherMainInfo' => $teacherMainInfo,
-        ]);
-    }
-
-
-
-    public function actionEditProfile(){
 
         $user = $this->users->getUserById(Yii::$app->user->id);
 
+
         $profileEditForm = new ProfileEditForm($user);
-        if ($profileEditForm->load(Yii::$app->request->post()) && $profileEditForm->validate()) {
-            try {
-                $this->profileService->edit($user->id, $profileEditForm);
-                Yii::$app->session->setFlash('success', 'Данные успешно изменены');
-                return $this->redirect(Yii::$app->request->referrer ?: ['index']);
-            } catch (\DomainException $e) {
-                Yii::$app->errorHandler->logException($e);
-                Yii::$app->session->setFlash('error', $e->getMessage());
+        if ($profileEditForm->load(Yii::$app->request->post())) {
+            if ($profileEditForm->validate()){
+                try {
+                    $this->profileService->edit($user->id, $profileEditForm);
+                    Yii::$app->session->setFlash('success', 'Данные успешно изменены');
+                    return $this->redirect(Yii::$app->request->referrer ?: ['index']);
+                } catch (\DomainException $e) {
+                    Yii::$app->errorHandler->logException($e);
+                    Yii::$app->session->setFlash('error', $e->getMessage());
+                }
+            } else {
+                Yii::$app->session->setFlash('error', 'Ошибка. Данные не изменены');
             }
         }
 
-
-        return $this->render('index', [
-            'profileEditForm' => $profileEditForm,
-        ]);
-    }
-
-
-
-
-    public function actionEditProfilePassword(){
-
-        $user = $this->users->getUserById(Yii::$app->user->id);
 
         $profileEditPasswordForm = new ProfileEditPasswordForm($user);
         if ($profileEditPasswordForm->load(Yii::$app->request->post()) && $profileEditPasswordForm->validate()) {
@@ -176,9 +138,15 @@ class DefaultController extends Controller {
         }
 
         return $this->render('index', [
+            'publications' => $publications,
+            'courses' => $courses,
+            'teacherMainInfoForm' => $teacherMainInfoForm,
+            'teacherMainInfo' => $teacherMainInfo,
+            'profileEditForm' => $profileEditForm,
             'profileEditPasswordForm' => $profileEditPasswordForm,
         ]);
     }
+
 
 
     /**

@@ -3,6 +3,7 @@
 namespace shop\forms\manage\user;
 
 use shop\entities\user\User;
+use Yii;
 use yii\base\Model;
 
 class ProfileEditForm  extends Model
@@ -37,7 +38,7 @@ class ProfileEditForm  extends Model
 
             ['email', 'email'],
 
-            [['email', 'first_name', 'last_name'], 'string', 'max' => 255],
+            [['first_name', 'last_name'], 'string', 'max' => 255],
             [['phone', 'email'], 'unique', 'targetClass' => User::class, 'filter' => ['<>', 'id', $this->_user->id]],
         ];
     }
@@ -49,5 +50,13 @@ class ProfileEditForm  extends Model
     }
 
 
+    public function attributeLabels()
+    {
+        return [
+            'first_name' => 'Имя',
+            'last_name' => 'Фамилия',
+            'phone' => 'Телефон',
+        ];
+    }
 
 }

@@ -675,7 +675,6 @@ use yii\bootstrap\ActiveForm;
                         <?php endif; ?>
                         <div class="col-md-10">
                             <?php $form = ActiveForm::begin([
-                                'action' => Url::to(['teacher-main-info']),
                                 'options' => ['enctype'=>'multipart/form-data', 'id' => 'teacher_main_info']
                             ]); ?>
                                 <div class="add-photo-profile">
@@ -898,7 +897,7 @@ use yii\bootstrap\ActiveForm;
                     <h2>Личная информация</h2>
                     <div class="row">
                         <div class="col-md-9">
-                            <?php $form = ActiveForm::begin(['action' => Url::to(['edit-profile']), 'id' => 'profileEditForm']); ?>
+                            <?php $form = ActiveForm::begin(['id' => 'profileEditForm']); ?>
                                 <div class="form-group">
                                     <label for="first_name" class="col-sm-4 control-label">Имя</label>
                                     <div class="col-sm-8">
@@ -931,7 +930,7 @@ use yii\bootstrap\ActiveForm;
                                 </div>
                             <?php $form = ActiveForm::end(); ?>
                             <br>
-                            <?php $form = ActiveForm::begin(['action' => Url::to(['edit-profile-password']), 'id' => 'profileEditPasswordForm']); ?>
+                            <?php $form = ActiveForm::begin(['id' => 'profileEditPasswordForm']); ?>
                                 <div class="form-group">
                                     <label for="oldPassword" class="col-sm-4 control-label">Старый пароль</label>
                                     <div class="col-sm-8">
