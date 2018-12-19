@@ -17,6 +17,7 @@ use shop\repositories\shop\CourseRepository;
 use shop\repositories\shop\ErrorRepository;
 use shop\repositories\shop\ReviewRepository;
 use shop\repositories\shop\TeacherMainInfoRepository;
+use shop\forms\course\order\OrderCreateForm;
 use shop\repositories\UserRepository;
 use shop\services\TransactionManager;
 use shop\services\search\CourseIndexer;
@@ -121,20 +122,6 @@ class CourseManageService
     }
 
 
-    public function createError($id, ErrorForm $form){
-
-        $course = $this->courses->get($id);
-        $course->createError($course->id, $form->message);
-        $this->courses->save($course);
-    }
-
-    public function editError($id, ErrorForm $form){
-        $error = $this->errors->getByCourseId($id);
-        $error->edit($form->message);
-        $this->errors->save($error);
-    }
-
-
     public function activate($id): void
     {
         $course = $this->courses->get($id);
@@ -150,6 +137,43 @@ class CourseManageService
         $course->draft();
         $this->courses->save($course);
     }
+
+    public function sendOnModeration(Course $course){
+        $course->onModeration();
+        $this->courses->save($course);
+    }
+
+    public function failureCourse(Course $course){
+        $course->failure();
+        $this->courses->save($course);
+    }
+
+
+    public function remove($id): void
+    {
+        $course = $this->courses->get($id);
+        $this->courses->remove($course);
+    }
+
+    //errors on moderation
+
+    public function createError($id, ErrorForm $form){
+
+        $course = $this->courses->get($id);
+        $course->createError($course->id, $form->message);
+        $this->courses->save($course);
+    }
+
+    public function editError($id, ErrorForm $form){
+        $error = $this->errors->getByCourseId($id);
+        $error->edit($form->message);
+        $this->errors->save($error);
+    }
+
+
+
+
+    //photos
 
     public function addPhotos($id, PhotosForm $form): void
     {
@@ -184,23 +208,9 @@ class CourseManageService
         $this->courses->save($course);
     }
 
-    public function sendOnModeration(Course $course){
-        $course->onModeration();
-        $this->courses->save($course);
-    }
-
-    public function failureCourse(Course $course){
-        $course->failure();
-        $this->courses->save($course);
-    }
 
 
-    public function remove($id): void
-    {
-        $course = $this->courses->get($id);
-        $this->courses->remove($course);
-    }
-
+    //reviews
 
     public function addReview($userId, $courseId, ReviewForm $form): void
     {
@@ -230,6 +240,19 @@ class CourseManageService
         }
     }
 
+
+    //orders
+
+    public function createOrder(OrderCreateForm $form): void
+    {
+        $course = $this->courses->get($form->course_id);
+        $course->createOrder(
+            $form->username,
+            $form->phone,
+            $form->price
+        );
+        $this->courses->save($course);
+    }
 
 
 }

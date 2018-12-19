@@ -47,6 +47,7 @@ use yii\web\UploadedFile;
  * @property Gallery[] $gallery
  * @property TeacherMainInfo $firm
  * @property Review[] $reviews
+ * @property Order[] $orders
  */
 class Course extends ActiveRecord implements AggregateRoot
 {
@@ -370,6 +371,18 @@ class Course extends ActiveRecord implements AggregateRoot
     }
 
 
+    // Orders
+
+    public function createOrder($username, $phone, $price) :void
+    {
+        $orders = $this->orders;
+        $orders[] = Order::create($username, $phone, 'Новая заявка', $price);
+        $this->orders = $orders;
+    }
+
+
+
+
 
     ##########################
 
@@ -423,6 +436,11 @@ class Course extends ActiveRecord implements AggregateRoot
         return $this->hasMany(Review::class, ['course_id' => 'id']);
     }
 
+    public function getOrders(): ActiveQuery
+    {
+        return $this->hasMany(Order::class, ['course_id' => 'id']);
+    }
+
     ##########################
 
     public static function tableName(): string
@@ -435,7 +453,7 @@ class Course extends ActiveRecord implements AggregateRoot
         return [
             [
                 'class' => SaveRelationsBehavior::class,
-                'relations' => ['values', 'photos', 'gallery', 'error', 'reviews'],
+                'relations' => ['values', 'photos', 'gallery', 'error', 'reviews', 'orders'],
             ],
         ];
     }

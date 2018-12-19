@@ -2,6 +2,7 @@
 namespace frontend\controllers\course;
 
 
+use shop\forms\course\order\OrderCreateForm;
 use shop\forms\course\ReviewForm;
 use shop\helpers\CourseHelper;
 use shop\readModels\shop\CategoryReadRepository;
@@ -97,9 +98,23 @@ class CourseController extends Controller{
             }
         }
 
+
+        $orderCreateForm = new OrderCreateForm();
+
+        if ($orderCreateForm->load(Yii::$app->request->post()) && $orderCreateForm->validate()) {
+            try {
+                $this->service->createOrder($orderCreateForm);
+                return $this->redirect(Yii::$app->request->referrer ?: ['index']);
+            } catch (\DomainException $e) {
+                Yii::$app->errorHandler->logException($e);
+                Yii::$app->session->setFlash('error', $e->getMessage());
+            }
+        }
+
         return $this->render('view', [
             'course' => $course,
             'reviewForm' => $reviewForm,
+            'orderCreateForm' => $orderCreateForm,
         ]);
     }
 

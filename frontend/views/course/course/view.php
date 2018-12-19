@@ -9,6 +9,7 @@ use shop\helpers\CourseHelper;
 
 /* @var $course shop\entities\shop\course\Course */
 /* @var $reviewForm \shop\forms\course\ReviewForm*/
+/* @var $orderCreateForm \shop\forms\course\order\OrderCreateForm*/
 /* @var $review \shop\entities\shop\course\Review*/
 
 $this->title = $course->name;
@@ -291,11 +292,14 @@ $this->params['breadcrumbs'][] = $course->name;
                                 </div>
                             <?php endif; ?>
                             <div class="course-info-footer">
-                                <form action="#">
+                                <?php $form = ActiveForm::begin(['id' => 'orderCreateForm']); ?>
                                     <p>Получите детальную информацию о курсе и ближайших датах </p>
-                                    <input type="text" name="phone" data-mask="callback-catalog-phone" class="course-info-input" placeholder="+380 __-___-__-__" required>
-                                    <button href="#" class="btn btn-block course-info-footer-btn">Узнать подробнее</button>
-                                </form>
+                                    <?= $form->field($orderCreateForm, 'username')->textInput(); ?>
+                                    <?= $form->field($orderCreateForm, 'course_id')->hiddenInput(['value'=> $course->id])->label(false); ?>
+                                    <?= $form->field($orderCreateForm, 'price')->hiddenInput(['value'=> $course->price])->label(false); ?>
+                                    <?= $form->field($orderCreateForm, 'phone')->textInput(); ?>
+                                    <button type="submit" class="btn btn-block course-info-footer-btn">Узнать подробнее</button>
+                                <?php ActiveForm::end(); ?>
                             </div>
                         </div>
                     </div>
