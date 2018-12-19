@@ -80,6 +80,14 @@ class UserHelper
         return false;
     }
 
+    public static function isUserLearner() :bool
+    {
+        if (Yii::$app->user->identity->designation == User::LEARNER){
+            return true;
+        }
+        return false;
+    }
+
     public static function getCabinetLink(){
 
         switch (Yii::$app->user->identity->designation){

@@ -16,6 +16,8 @@ use shop\helpers\CourseHelper;
 use kartik\widgets\FileInput;
 use yii\bootstrap\ActiveForm;
 
+
+$this->title = 'Кабинет пользователя';
 ?>
 <main>
     <div class="container">
