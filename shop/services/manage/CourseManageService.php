@@ -4,6 +4,7 @@ namespace shop\services\manage;
 
 use shop\entities\shop\course\Course;
 use shop\entities\shop\course\Review;
+use shop\forms\course\order\OrderEditForm;
 use shop\forms\manage\shop\course\CategoriesForm;
 use shop\entities\shop\course\Error;
 use shop\forms\manage\shop\course\ErrorForm;
@@ -15,6 +16,7 @@ use shop\repositories\shop\CityRepository;
 use shop\repositories\shop\CategoryRepository;
 use shop\repositories\shop\CourseRepository;
 use shop\repositories\shop\ErrorRepository;
+use shop\repositories\shop\OrderRepository;
 use shop\repositories\shop\ReviewRepository;
 use shop\repositories\shop\TeacherMainInfoRepository;
 use shop\forms\course\order\OrderCreateForm;
@@ -35,6 +37,7 @@ class CourseManageService
     private $indexer;
     private $teachersMainInfo;
     private $reviews;
+    private $orders;
     private $transaction;
 
     public function __construct(
@@ -46,6 +49,7 @@ class CourseManageService
         CourseIndexer $indexer,
         TeacherMainInfoRepository $teachersMainInfo,
         ReviewRepository $reviews,
+        OrderRepository $orders,
         TransactionManager $transaction
     )
     {
@@ -57,6 +61,7 @@ class CourseManageService
         $this->indexer = $indexer;
         $this->teachersMainInfo = $teachersMainInfo;
         $this->reviews = $reviews;
+        $this->orders = $orders;
         $this->transaction = $transaction;
     }
 
@@ -247,11 +252,19 @@ class CourseManageService
     {
         $course = $this->courses->get($form->course_id);
         $course->createOrder(
+            $form->teacher_id,
             $form->username,
             $form->phone,
             $form->price
         );
         $this->courses->save($course);
+    }
+
+    public function editOrder(OrderEditForm $form): void
+    {
+        $order = $this->orders->get($form->order_id);
+        $order->edit($form->title, $form->status);
+        $this->orders->save($order);
     }
 
 

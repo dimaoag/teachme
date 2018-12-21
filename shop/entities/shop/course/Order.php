@@ -9,6 +9,7 @@ use yii\db\ActiveRecord;
 /**
  * @property int $id
  * @property int $course_id
+ * @property int $teacher_id
  * @property string $username
  * @property string $phone
  * @property string $title
@@ -16,6 +17,8 @@ use yii\db\ActiveRecord;
  * @property int $status
  * @property int $created_at
  *
+ * @property User $user
+ * @property Course $course
  */
 class Order extends ActiveRecord
 {
@@ -23,9 +26,10 @@ class Order extends ActiveRecord
     const STATUS_PROCESSING = 1;
     const STATUS_COMPLETED = 2;
 
-    public static function create(string $username, string $phone, string $title, float $price): self
+    public static function create(int $teacherId,string $username, string $phone, string $title, float $price): self
     {
         $order = new static();
+        $order->teacher_id = $teacherId;
         $order->username = $username;
         $order->phone = $phone;
         $order->title = $title;
@@ -35,46 +39,59 @@ class Order extends ActiveRecord
         return $order;
     }
 
-    public function edit($vote, $text): void
+    public function edit($title, $status): void
     {
-        $this->vote = $vote;
-        $this->text = $text;
+        $this->title = $title;
+        $this->status = $status;
     }
 
-    public function activate(): void
+    public function asNew(): void
     {
-        $this->active = true;
+        $this->status = self::STATUS_NEW;
     }
 
-    public function draft(): void
+    public function asProcessing(): void
     {
-        $this->active = true;
+        $this->status = self::STATUS_PROCESSING;
     }
 
-    public function isActive(): bool
+    public function asCompleted(): void
     {
-        return $this->active == true;
+        $this->status = self::STATUS_COMPLETED;
     }
 
-    public function getRating(): int
+
+    public function isNew(): bool
     {
-        return $this->vote;
+        return $this->status == self::STATUS_NEW;
     }
+
+    public function isProcessing(): bool
+    {
+        return $this->status == self::STATUS_PROCESSING;
+    }
+
+    public function isCompleted(): bool
+    {
+        return $this->status == self::STATUS_COMPLETED;
+    }
+
+
 
     public function isIdEqualTo($id): bool
     {
         return $this->id == $id;
     }
 
-    public function isOwner($userId):bool
-    {
-        return $this->user_id == $userId;
-    }
-
 
     public function getUser(): ActiveQuery
     {
-        return $this->hasOne(User::class, ['id' => 'user_id']);
+        return $this->hasOne(User::class, ['id' => 'teacher_id']);
+    }
+
+    public function getCourse(): ActiveQuery
+    {
+        return $this->hasOne(Course::class, ['id' => 'course_id']);
     }
 
 

@@ -29,19 +29,19 @@ class TeacherMainInfoForm extends Model
 
     private $_teacherMainInfo;
 
-    public function __construct(TeacherMainInfo $teacherMainInfo = null, $config = [])
+    public function __construct(TeacherMainInfo $order = null, $config = [])
     {
-        if ($teacherMainInfo) {
-            $this->city_id = $teacherMainInfo->city_id;
-            $this->firm_name = $teacherMainInfo->firm_name;
-            $this->address = $teacherMainInfo->address;
-            $this->phone_1 = $teacherMainInfo->phone_1;
-            $this->phone_2 = $teacherMainInfo->phone_2;
-            $this->instagram_link = $teacherMainInfo->instagram_link;
-            $this->facebook_link = $teacherMainInfo->facebook_link;
-            $this->vk_link = $teacherMainInfo->vk_link;
-            $this->youtube_link = $teacherMainInfo->youtube_link;
-            $this->_teacherMainInfo = $teacherMainInfo;
+        if ($order) {
+            $this->city_id = $order->city_id;
+            $this->firm_name = $order->firm_name;
+            $this->address = $order->address;
+            $this->phone_1 = $order->phone_1;
+            $this->phone_2 = $order->phone_2;
+            $this->instagram_link = $order->instagram_link;
+            $this->facebook_link = $order->facebook_link;
+            $this->vk_link = $order->vk_link;
+            $this->youtube_link = $order->youtube_link;
+            $this->_teacherMainInfo = $order;
         }
         parent::__construct($config);
     }

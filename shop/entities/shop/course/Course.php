@@ -141,10 +141,6 @@ class Course extends ActiveRecord implements AggregateRoot
         return $this->status == self::STATUS_FAIL;
     }
 
-    public function isAvailable(): bool
-    {
-        return $this->quantity > 0;
-    }
 
     public function setDateActivate(){
         $dateStart = date('Y-d-m h:i:s');
@@ -373,12 +369,18 @@ class Course extends ActiveRecord implements AggregateRoot
 
     // Orders
 
-    public function createOrder($username, $phone, $price) :void
+    public function createOrder($teacher_id, $username, $phone, $price) :void
     {
         $orders = $this->orders;
-        $orders[] = Order::create($username, $phone, 'Новая заявка', $price);
+        $orders[] = Order::create($teacher_id, $username, $phone, 'Новая заявка', $price);
         $this->orders = $orders;
     }
+
+    public function editOrder(Order $order, $title, $status) :void
+    {
+        $order->edit($title,$status);
+    }
+
 
 
 

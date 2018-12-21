@@ -2030,6 +2030,11 @@ label.tab.active{
     cursor: pointer;
     padding: 5px 0;
     margin: 10px 0;
+    color: black;
+    font-weight: bold;
+}
+.tab-company:focus, .tab-company:hover{
+    color: black;
 }
 .tab-company.active{
     color: #933ec5;
@@ -2327,6 +2332,16 @@ label.tab.active{
     color: #933ec5;
     font-size: 1.7rem;
 }
+.mfp-wrap{
+    z-index: 10000;
+}
+.mfp-bg{
+    z-index: 10000;
+}
+.order-title-popup{
+    padding: 7px;
+    border: 1px solid black;
+}
 /*----orders-archive----*/
 .orders-archive{
     padding-bottom: 20px;
@@ -2420,7 +2435,8 @@ label.tab.active{
         -ms-flex-wrap: wrap;
         flex-wrap: wrap;
     }
-    .tab-labels label{
+    .tab-company{
+        color: black;
         padding: 5px 5px;
         white-space: nowrap;
     }

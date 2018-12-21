@@ -148,13 +148,14 @@ $( ".feedback-form" ).submit(function( event ) {
 });
 
 /*-----tabs-cabinet-company--------*/
-$(document).ready(function () {
-    $('.cabinet-company').on('click', '.tab-company', function () {
-        $('.cabinet-company').find('.active').removeClass('active');
-        $(this).addClass('active');
-        $('.tab-cabinet-container').eq($(this).index()).addClass(' active');
-    });
-});
+
+// $(document).ready(function () {
+//     $('.cabinet-company').on('click', '.tab-company', function () {
+//         $('.cabinet-company').find('.active').removeClass('active');
+//         $(this).addClass('active');
+//         $('.tab-cabinet-container').eq($(this).index()).addClass(' active');
+//     });
+// });
 
 
 /*-----add-course-form--------*/
@@ -540,3 +541,14 @@ if ($('ul').is('#main-menu')) {
 }
 
 
+// $('.order-submit').on('click', function () {
+//     var url = $(this).data('url');
+//     var parent = $(this).closest('.order-popup-wrap');
+//     var status = parent.find($('.order-status-popup')).val();
+//     var title = parent.find($('.order-title-popup')).val();
+//
+//
+//
+//     console.log(url);
+//     return false;
+// });

@@ -104,6 +104,7 @@ class CourseController extends Controller{
         if ($orderCreateForm->load(Yii::$app->request->post()) && $orderCreateForm->validate()) {
             try {
                 $this->service->createOrder($orderCreateForm);
+                Yii::$app->session->setFlash('success', 'Вы успешно записались на курс');
                 return $this->redirect(Yii::$app->request->referrer ?: ['index']);
             } catch (\DomainException $e) {
                 Yii::$app->errorHandler->logException($e);

@@ -8,6 +8,7 @@ use yii\base\Model;
 
 class OrderCreateForm extends Model
 {
+    public $teacher_id;
     public $username;
     public $phone;
     public $course_id;
@@ -16,12 +17,12 @@ class OrderCreateForm extends Model
     public function rules(): array
     {
         return [
-            [['username', 'phone', 'course_id', 'price'], 'required'],
+            [['teacher_id', 'username', 'phone', 'course_id', 'price'], 'required'],
             [['phone', 'username'], 'trim'],
             [['username'], 'string', 'max' => 255],
             ['phone', 'replacePhone'],
             ['phone', 'string'],
-            ['course_id', 'integer'],
+            [['course_id', 'teacher_id'], 'integer'],
             ['price', 'double'],
         ];
     }
@@ -31,5 +32,15 @@ class OrderCreateForm extends Model
     {
         $this->phone = str_replace(" ", "", $this->phone);
     }
+
+
+    public function attributeLabels()
+    {
+        return [
+            'username' => 'Имя',
+            'phone' => 'Телефон',
+        ];
+    }
+
 
 }

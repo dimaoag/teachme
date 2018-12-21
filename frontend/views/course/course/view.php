@@ -292,12 +292,17 @@ $this->params['breadcrumbs'][] = $course->name;
                                 </div>
                             <?php endif; ?>
                             <div class="course-info-footer">
-                                <?php $form = ActiveForm::begin(['id' => 'orderCreateForm']); ?>
+                                <?php $form = ActiveForm::begin([
+                                    'id' => 'orderCreateForm',
+                                    'enableAjaxValidation'=>false,
+                                    'enableClientValidation'=>false,
+                                ]); ?>
                                     <p>Получите детальную информацию о курсе и ближайших датах </p>
                                     <?= $form->field($orderCreateForm, 'username')->textInput(); ?>
                                     <?= $form->field($orderCreateForm, 'course_id')->hiddenInput(['value'=> $course->id])->label(false); ?>
+                                    <?= $form->field($orderCreateForm, 'teacher_id')->hiddenInput(['value'=> $course->user_id])->label(false); ?>
                                     <?= $form->field($orderCreateForm, 'price')->hiddenInput(['value'=> $course->price])->label(false); ?>
-                                    <?= $form->field($orderCreateForm, 'phone')->textInput(); ?>
+                                    <?= $form->field($orderCreateForm, 'phone')->textInput(['data-mask' => 'callback-catalog-phone', 'placeholder' => '+380 ']); ?>
                                     <button type="submit" class="btn btn-block course-info-footer-btn">Узнать подробнее</button>
                                 <?php ActiveForm::end(); ?>
                             </div>
