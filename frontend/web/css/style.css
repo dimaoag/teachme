@@ -2387,11 +2387,18 @@ label.tab.active{
     margin: 10px 0;
 }
 
-.comment p{
+.comment{
     background-color: #e2e2e2;
-    padding: 10px;
+    padding: 30px 10px 5px 10px;
     border-radius: 10px;
     margin: 10px 5px;
+    position: relative;
+}
+.comment a{
+    position: absolute;
+    right: 10px;
+    top: 5px;
+    color: red;
 }
 .popup-order-form{
     width: 100%;

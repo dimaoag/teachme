@@ -7,6 +7,8 @@
 /* @var $dataProvider yii\data\ActiveDataProvider */
 /* @var $courses[] \shop\entities\shop\course\Course */
 /* @var $course \shop\entities\shop\course\Course */
+/* @var $orderCommentCreateForm \shop\forms\course\order\OrderCommentCreateForm */
+/* @var $comment \shop\entities\shop\course\OrderComment*/
 
 
 use yii\grid\ActionColumn;
@@ -24,47 +26,6 @@ $this->params['active_orders'] = 'active';
 ?>
 
 <div class="tab-cabinet-container tab-orders active">
-    <?= GridView::widget([
-        'dataProvider' => $dataProvider,
-        'filterModel' => $searchModel,
-        'columns' => [
-            [
-                'attribute' => 'title',
-                'label' => 'Название',
-                'value' => function (Order $model) {
-                    return Html::a(Html::encode($model->title),['view', 'id' => $model->id],[
-                        'class' => 'open-order-popup',
-                        'data-mfp-src' => "#order_popup_".$model->id,
-                    ]);
-                },
-                'format' => 'raw',
-            ],
-            [
-                'attribute' => 'course_id',
-                'label' => 'Course',
-                'value' => function (Order $model) {
-                    return Html::encode($model->course->name);
-                },
-                'filter' => $searchModel->courseList(),
-            ],
-            [
-                'attribute' => 'status',
-                'label' => 'Статус',
-                'value' => function (Order $model) {
-                    return OrderHelper::getStatusName($model->status);
-                },
-                'filter' => OrderHelper::selectStatusList(),
-            ],
-            [
-                'attribute' => 'created_at',
-                'label' => 'Дата создания',
-                'value' => function (Order $model) {
-                    return OrderHelper::echoDate($model->created_at);
-                },
-                'filter' => false,
-            ],
-        ],
-    ]); ?>
     <?php if (!empty($courses)): ?>
         <div class="orders-header">
             <select name="status" class="orders-select" id="dynamic_select">
@@ -242,83 +203,89 @@ $this->params['active_orders'] = 'active';
                 <div class="row order-popup-wrap">
                     <div class="col-sm-4">
                         <?php $form = ActiveForm::begin(['action' => Url::to(['edit-order'])]); ?>
-                        <div class="order-info-wrap">
-                            <div class="row popup-order-info">
-                                <div class="col-xs-4">
-                                    <p class="popup-order-name popup-order-status">Статус</p>
-                                </div>
-                                <div class="col-xs-8 header-search-city">
-                                    <?= $form->field($orderEditForms[$order->id], 'course_id')->hiddenInput(['id' => 'course_id'. $order->id, 'value' => $order->course_id])->label(false);  ?>
-                                    <?= $form->field($orderEditForms[$order->id], 'order_id')->hiddenInput(['id' => 'order_id'. $order->id, 'value' => $order->id])->label(false);  ?>
+                            <div class="order-info-wrap">
+                                <div class="row popup-order-info">
+                                    <div class="col-xs-4">
+                                        <p class="popup-order-name popup-order-status">Статус</p>
+                                    </div>
+                                    <div class="col-xs-8 header-search-city">
+                                        <?= $form->field($orderEditForms[$order->id], 'course_id')->hiddenInput(['id' => 'course_id'. $order->id, 'value' => $order->course_id])->label(false);  ?>
+                                        <?= $form->field($orderEditForms[$order->id], 'order_id')->hiddenInput(['id' => 'order_id'. $order->id, 'value' => $order->id])->label(false);  ?>
 
-                                    <?= $form->field($orderEditForms[$order->id], 'status')->dropDownList(OrderHelper::selectStatusList(), ['id' => 'status'. $order->id])->label(false); ?>
+                                        <?= $form->field($orderEditForms[$order->id], 'status')->dropDownList(OrderHelper::selectStatusList(), ['id' => 'status'. $order->id])->label(false); ?>
+                                    </div>
+                                </div>
+                                <div class="row popup-order-info">
+                                    <div class="col-xs-4">
+                                        <p class="popup-order-name">Название</p>
+                                    </div>
+                                    <div class="col-xs-8">
+                                        <?= $form->field($orderEditForms[$order->id], 'title')->textInput(['id' => 'title'. $order->id])->label(false);  ?>
+                                    </div>
+                                </div>
+                                <div class="row popup-order-info">
+                                    <div class="col-xs-4">
+                                        <p class="popup-order-name">Цена</p>
+                                    </div>
+                                    <div class="col-xs-8">
+                                        <p class="popup-order-value"><?= Html::encode($order->price); ?> грн.</p>
+                                    </div>
+                                </div>
+                                <div class="row popup-order-info">
+                                    <div class="col-xs-4">
+                                        <p class="popup-order-name">Имя</p>
+                                    </div>
+                                    <div class="col-xs-8">
+                                        <p class="popup-order-value"><?= Html::encode($order->username); ?></p>
+                                    </div>
+                                </div>
+                                <div class="row popup-order-info">
+                                    <div class="col-xs-4">
+                                        <p class="popup-order-name">Телефон</p>
+                                    </div>
+                                    <div class="col-xs-8">
+                                        <p class="popup-order-value"><?= Html::encode($order->phone); ?></p>
+                                    </div>
+                                </div>
+                                <div class="row popup-order-info">
+                                    <div class="col-xs-4">
+                                        <p class="popup-order-name">Курс</p>
+                                    </div>
+                                    <div class="col-xs-8">
+                                        <p class="popup-order-value"><?= Html::encode($order->course->name); ?></p>
+                                    </div>
                                 </div>
                             </div>
-                            <div class="row popup-order-info">
-                                <div class="col-xs-4">
-                                    <p class="popup-order-name">Название</p>
-                                </div>
-                                <div class="col-xs-8">
-                                    <?= $form->field($orderEditForms[$order->id], 'title')->textInput(['id' => 'title'. $order->id])->label(false);  ?>
+                            <div class="row">
+                                <div class="col-xs-12">
+                                    <button type="submit" class="btn btn-block button-pure order-submit" data-url="<?= Url::to(['/cabinet/teacher/edit-order'], true); ?>">Сохранить</button>
                                 </div>
                             </div>
-                            <div class="row popup-order-info">
-                                <div class="col-xs-4">
-                                    <p class="popup-order-name">Цена</p>
-                                </div>
-                                <div class="col-xs-8">
-                                    <p class="popup-order-value"><?= Html::encode($order->price); ?> грн.</p>
-                                </div>
-                            </div>
-                            <div class="row popup-order-info">
-                                <div class="col-xs-4">
-                                    <p class="popup-order-name">Имя</p>
-                                </div>
-                                <div class="col-xs-8">
-                                    <p class="popup-order-value"><?= Html::encode($order->username); ?></p>
-                                </div>
-                            </div>
-                            <div class="row popup-order-info">
-                                <div class="col-xs-4">
-                                    <p class="popup-order-name">Телефон</p>
-                                </div>
-                                <div class="col-xs-8">
-                                    <p class="popup-order-value"><?= Html::encode($order->phone); ?></p>
-                                </div>
-                            </div>
-                            <div class="row popup-order-info">
-                                <div class="col-xs-4">
-                                    <p class="popup-order-name">Курс</p>
-                                </div>
-                                <div class="col-xs-8">
-                                    <p class="popup-order-value"><?= Html::encode($order->course->name); ?></p>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-xs-12">
-                                <button type="submit" class="btn btn-block button-pure order-submit" data-url="<?= Url::to(['/cabinet/teacher/edit-order'], true); ?>">Сохранить</button>
-                            </div>
-                        </div>
-                        <!--                                        </form>-->
                         <?php ActiveForm::end() ?>
                     </div>
                     <div class="col-sm-8 popup-order-comments">
                         <div class="comment-container">
-                            <div class="comment">
-                                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusamus architecto debitis ea et eveniet hic magnam quam, soluta voluptas voluptatum!</p>
-                            </div>
-                            <div class="comment">
-                                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusamus architecto debitis ea et eveniet hic magnam quam, soluta voluptas voluptatum!</p>
-                            </div>
-                            <div class="comment">
-                                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusamus architecto debitis ea et eveniet hic magnam quam, soluta voluptas voluptatum!</p>
-                            </div>
+                            <?php if (!empty($order->orderComments)): ?>
+                                <?php foreach ($order->orderComments as $comment): ?>
+                                    <div class="comment">
+                                        <?= Html::a('<i class="fa fa-trash" aria-hidden="true"></i>', ['delete-order-comment', 'id' => $comment->id], [
+                                            'data' => [
+                                                'method' => 'post',
+                                            ],
+                                        ]) ?>
+                                        <p><?= Html::encode($comment->text); ?></p>
+                                    </div>
+                                <?php endforeach; ?>
+                            <?php  endif; ?>
                         </div>
-                        <form action="#" class="popup-order-form">
+                        <?php $form = ActiveForm::begin([
+                                'class' => 'popup-order-form',
+                                'id' => 'order-comment-form'.$order->id,
+                        ]); ?>
                             <div class="row">
                                 <div class="col-xs-12">
-                                    <textarea class="form-control" rows="3"></textarea>
+                                    <?= $form->field($orderCommentCreateForm, 'order_id')->hiddenInput(['value' => $order->id, 'data-url' => Url::to([''], true)])->label(false); ?>
+                                    <?= $form->field($orderCommentCreateForm, 'text')->textarea(['rows' => 3])->label(false); ?>
                                 </div>
                             </div>
                             <div class="row">
@@ -326,13 +293,42 @@ $this->params['active_orders'] = 'active';
                                     <button type="submit" class="btn btn-block btn-default popup-comment-btn">Добавить комментарий</button>
                                 </div>
                             </div>
-                        </form>
+                        <?php ActiveForm::end(); ?>
                     </div>
                 </div>
             </div>
+
+            <?php
+            $script = <<< JS
+$('form').on('beforeSubmit', function(){
+       var data = $(this).serialize();
+       var parent = $(this).closest('.popup-order-comments').find($('.comment-container'));
+        $.ajax({
+            url: '/cabinet/teacher/default/orders',
+            type: 'POST',
+            data: data,
+            success: function(res){
+                var comment = res.comment;
+                var content =   '<div class="comment">' +
+                                    '<a href="/cabinet/teacher/default/delete-order-comment?id=' +comment.id +'" data-method="post"><i class="fa fa-trash" aria-hidden="true"></i></a>'+
+                                    '<p>'+ comment.text +'</p>'+
+                                '</div>';
+                parent.append(content);
+            },
+            error: function(){
+                alert('Error!');
+            }
+        });
+        return false;
+    });
+JS;
+            $this->registerJs($script);
+            ?>
         <?php endforeach; ?>
 
     <?php else: ?>
         <p>Список заявок пуст</p>
     <?php endif; ?>
 </div>
+
+

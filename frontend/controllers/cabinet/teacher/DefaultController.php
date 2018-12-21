@@ -27,6 +27,8 @@ use shop\forms\manage\shop\TeacherMainInfoForm;
 use shop\services\manage\TeacherMainInfoManageService;
 use shop\services\user\ProfileService;
 use shop\forms\manage\user\ProfileEditPasswordForm;
+use shop\services\manage\OrderCommentManageService;
+use shop\forms\course\order\OrderCommentCreateForm;
 
 class DefaultController extends Controller {
 
@@ -40,6 +42,7 @@ class DefaultController extends Controller {
     private $teacherMainInfoRepository;
     private $profileService;
     private $courseManageService;
+    private $orderCommentManageService;
 
     public function __construct(string $id, Module $module,
         UserRepository $users,
@@ -49,6 +52,7 @@ class DefaultController extends Controller {
         TeacherMainInfoRepository $teacherMainInfoRepository,
         ProfileService $profileService,
         CourseManageService $courseManageService,
+        OrderCommentManageService $orderCommentManageService,
         array $config = [])
     {
         parent::__construct($id, $module, $config);
@@ -59,6 +63,7 @@ class DefaultController extends Controller {
         $this->teacherMainInfoRepository = $teacherMainInfoRepository;
         $this->profileService = $profileService;
         $this->courseManageService = $courseManageService;
+        $this->orderCommentManageService = $orderCommentManageService;
     }
 
 
@@ -81,6 +86,7 @@ class DefaultController extends Controller {
                 'class' => VerbFilter::class,
                 'actions' => [
                     'delete-firm-photo' => ['POST'],
+                    'delete-order-comment' => ['POST'],
                 ],
             ],
         ];
@@ -106,9 +112,6 @@ class DefaultController extends Controller {
 
     public function actionOrders()
     {
-
-        $searchModel = new OrderSearch();
-        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
         $courses = $this->courses->getCoursesByUserId(Yii::$app->user->id);
 
         $user = $this->users->getUserById(Yii::$app->user->id);
@@ -121,12 +124,26 @@ class DefaultController extends Controller {
             }
         }
 
+        $orderCommentCreateForm = new OrderCommentCreateForm();
+
+        if ($orderCommentCreateForm->load(Yii::$app->request->post()) && $orderCommentCreateForm->validate()) {
+            try {
+                $orderComment = $this->orderCommentManageService->create($orderCommentCreateForm);
+//                return $this->redirect(Yii::$app->request->referrer ?: ['index']);
+                return $this->asJson(['success' => true, 'comment' => $orderComment]);
+            } catch (\DomainException $e) {
+                Yii::$app->errorHandler->logException($e);
+                Yii::$app->session->setFlash('error', $e->getMessage());
+            }
+        }
+
+
+
         return $this->render('orders', [
             'orders' => $orders,
             'orderEditForms' => $orderEditForms,
-            'dataProvider' => $dataProvider,
-            'searchModel' => $searchModel,
             'courses' => $courses,
+            'orderCommentCreateForm' => $orderCommentCreateForm,
         ]);
     }
 
@@ -136,9 +153,6 @@ class DefaultController extends Controller {
 
         $courses = $this->courses->getCoursesByUserId(Yii::$app->user->id);
         $course = $this->courses->get($id);
-
-        $searchModel = new OrderSearch();
-        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
         $user = $this->users->getUserById(Yii::$app->user->id);
         $orders = $this->orders->getOrdersByTeacherIdAndCourseId($user->id, $id);
@@ -150,13 +164,24 @@ class DefaultController extends Controller {
             }
         }
 
+        $orderCommentCreateForm = new OrderCommentCreateForm();
+        if ($orderCommentCreateForm->load(Yii::$app->request->post()) && $orderCommentCreateForm->validate()) {
+            try {
+                $orderComment = $this->orderCommentManageService->create($orderCommentCreateForm);
+                return $this->redirect(Yii::$app->request->referrer ?: ['index']);
+            } catch (\DomainException $e) {
+                Yii::$app->errorHandler->logException($e);
+                Yii::$app->session->setFlash('error', $e->getMessage());
+            }
+        }
+
+
         return $this->render('orders', [
             'orders' => $orders,
             'orderEditForms' => $orderEditForms,
-            'dataProvider' => $dataProvider,
-            'searchModel' => $searchModel,
             'courses' => $courses,
             'course' => $course,
+            'orderCommentCreateForm' => $orderCommentCreateForm,
         ]);
     }
 
@@ -253,6 +278,19 @@ class DefaultController extends Controller {
         }
 
     }
+
+    public function actionDeleteOrderComment($id)
+    {
+        try {
+            $this->orderCommentManageService->remove($id);
+            Yii::$app->session->setFlash('success', 'Комментарий успешно удален');
+        } catch (\DomainException $e) {
+            Yii::$app->errorHandler->logException($e);
+            Yii::$app->session->setFlash('error', $e->getMessage());
+        }
+        return $this->redirect(Yii::$app->request->referrer ?: ['index']);
+    }
+
 
     /**
      * @param integer $id

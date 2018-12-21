@@ -541,18 +541,23 @@ if ($('ul').is('#main-menu')) {
 }
 
 
-// $('.order-submit').on('click', function () {
-//     var url = $(this).data('url');
-//     var parent = $(this).closest('.order-popup-wrap');
-//     var status = parent.find($('.order-status-popup')).val();
-//     var title = parent.find($('.order-title-popup')).val();
+// $('.popup-order-comments').on('click', '.popup-comment-btn',function () {
+//     var parent = $(this).closest('form');
+//     var order_id = parent.find($('.order-comment-order')).val();
+//     var url = parent.find($('.order-comment-order')).data('url');
+//     var text = parent.find($('.order-comment-text')).val();
 //
 //
 //
+//     console.log(parent);
 //     console.log(url);
+//     console.log(text);
+//
 //     return false;
 // });
 
+
+//select link
 $(function(){
     // bind change event to select
     $('#dynamic_select').on('change', function () {

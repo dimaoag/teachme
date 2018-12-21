@@ -19,6 +19,7 @@ use yii\db\ActiveRecord;
  *
  * @property User $user
  * @property Course $course
+ * @property OrderComment[] $orderComments
  */
 class Order extends ActiveRecord
 {
@@ -92,6 +93,11 @@ class Order extends ActiveRecord
     public function getCourse(): ActiveQuery
     {
         return $this->hasOne(Course::class, ['id' => 'course_id']);
+    }
+
+    public function getOrderComments(): ActiveQuery
+    {
+        return $this->hasMany(OrderComment::class, ['order_id' => 'id']);
     }
 
 
