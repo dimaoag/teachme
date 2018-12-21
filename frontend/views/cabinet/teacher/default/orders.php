@@ -3,13 +3,20 @@
 
 /* @var $order \shop\entities\shop\course\Order*/
 /* @var $orderEditForm \shop\forms\course\order\OrderEditForm*/
+/* @var $searchModel \frontend\forms\OrderSearch */
+/* @var $dataProvider yii\data\ActiveDataProvider */
+/* @var $courses[] \shop\entities\shop\course\Course */
+/* @var $course \shop\entities\shop\course\Course */
 
 
+use yii\grid\ActionColumn;
+use yii\grid\GridView;
 use yii\helpers\Html;
 use yii\bootstrap\ActiveForm;
 use shop\helpers\OrderHelper;
 use yii\helpers\Url;
 use shop\entities\shop\course\Order;
+use shop\entities\shop\course\Course;
 
 
 $this->title = 'Заявки';
@@ -17,15 +24,70 @@ $this->params['active_orders'] = 'active';
 ?>
 
 <div class="tab-cabinet-container tab-orders active">
-    <div class="orders-header">
-        <select name="status" class="orders-select">
-            <option value="1" selected>Все курсы</option>
-            <option value="2">Курс 1</option>
-            <option value="3">Курс 2</option>
-            <option value="4">Курс 3</option>
-        </select>
-        <a href="#" class="archive">Перейти к архиву <i class="fa fa-trash" aria-hidden="true"></i></a>
-    </div>
+    <?= GridView::widget([
+        'dataProvider' => $dataProvider,
+        'filterModel' => $searchModel,
+        'columns' => [
+            [
+                'attribute' => 'title',
+                'label' => 'Название',
+                'value' => function (Order $model) {
+                    return Html::a(Html::encode($model->title),['view', 'id' => $model->id],[
+                        'class' => 'open-order-popup',
+                        'data-mfp-src' => "#order_popup_".$model->id,
+                    ]);
+                },
+                'format' => 'raw',
+            ],
+            [
+                'attribute' => 'course_id',
+                'label' => 'Course',
+                'value' => function (Order $model) {
+                    return Html::encode($model->course->name);
+                },
+                'filter' => $searchModel->courseList(),
+            ],
+            [
+                'attribute' => 'status',
+                'label' => 'Статус',
+                'value' => function (Order $model) {
+                    return OrderHelper::getStatusName($model->status);
+                },
+                'filter' => OrderHelper::selectStatusList(),
+            ],
+            [
+                'attribute' => 'created_at',
+                'label' => 'Дата создания',
+                'value' => function (Order $model) {
+                    return OrderHelper::echoDate($model->created_at);
+                },
+                'filter' => false,
+            ],
+        ],
+    ]); ?>
+    <?php if (!empty($courses)): ?>
+        <div class="orders-header">
+            <select name="status" class="orders-select" id="dynamic_select">
+                <option value="<?= Url::to(['orders']) ?>">Все курсы</option>
+                <?php if (isset($course)): ?>
+                    <?php foreach ($courses as $item): ?>
+                        <?php /**@var Course $item */ ?>
+                        <?php if ($item->id == $course->id): ?>
+                            <option value="<?= Url::to(['orders-by-course', 'id' => $item->id]) ?>" selected><?= Html::encode($item->name); ?></option>
+                        <?php else: ?>
+                            <option value="<?= Url::to(['orders-by-course', 'id' => $item->id]) ?>"><?= Html::encode($item->name); ?></option>
+                        <?php endif; ?>
+                    <?php endforeach; ?>
+                <?php else: ?>
+                    <?php foreach ($courses as $item): ?>
+                        <?php /**@var Course $item */ ?>
+                        <option value="<?= Url::to(['orders-by-course', 'id' => $item->id]) ?>"><?= Html::encode($item->name); ?></option>
+                    <?php endforeach; ?>
+                <?php endif; ?>
+            </select>
+            <a href="#" class="archive">Перейти к архиву <i class="fa fa-trash" aria-hidden="true"></i></a>
+        </div>
+    <?php  endif; ?>
     <?php if (!empty($orders)): ?>
         <div class="row">
             <div class="col-md-12 orders-container orders-static">

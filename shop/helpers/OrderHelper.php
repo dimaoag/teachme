@@ -28,6 +28,22 @@ class OrderHelper
 
     }
 
+    public static function getStatusName($status):string {
+        switch ($status){
+            case Order::STATUS_NEW:
+                $name = 'Новая заявка';
+                break;
+            case Order::STATUS_PROCESSING:
+                $name = 'В обработке';
+                break;
+            case Order::STATUS_COMPLETED:
+                $name = 'Завершонная';
+                break;
+            default:
+                $name = '';
+        }
+        return $name;
+    }
 
 
 

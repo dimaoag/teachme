@@ -2,6 +2,7 @@
 namespace frontend\controllers\cabinet\teacher;
 
 
+use frontend\forms\OrderSearch;
 use frontend\forms\UserSearch;
 use shop\entities\shop\course\Course;
 use shop\entities\shop\course\Order;
@@ -105,6 +106,11 @@ class DefaultController extends Controller {
 
     public function actionOrders()
     {
+
+        $searchModel = new OrderSearch();
+        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+        $courses = $this->courses->getCoursesByUserId(Yii::$app->user->id);
+
         $user = $this->users->getUserById(Yii::$app->user->id);
         $orders = $this->orders->getOrdersByTeacherId($user->id);
         $orderEditForms = [];
@@ -118,6 +124,39 @@ class DefaultController extends Controller {
         return $this->render('orders', [
             'orders' => $orders,
             'orderEditForms' => $orderEditForms,
+            'dataProvider' => $dataProvider,
+            'searchModel' => $searchModel,
+            'courses' => $courses,
+        ]);
+    }
+
+
+    public function actionOrdersByCourse($id)
+    {
+
+        $courses = $this->courses->getCoursesByUserId(Yii::$app->user->id);
+        $course = $this->courses->get($id);
+
+        $searchModel = new OrderSearch();
+        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+
+        $user = $this->users->getUserById(Yii::$app->user->id);
+        $orders = $this->orders->getOrdersByTeacherIdAndCourseId($user->id, $id);
+        $orderEditForms = [];
+        if (!empty($orders)){
+            foreach ($orders as $order){
+                /** @var Order $order */
+                $orderEditForms[$order->id] = new OrderEditForm($order);
+            }
+        }
+
+        return $this->render('orders', [
+            'orders' => $orders,
+            'orderEditForms' => $orderEditForms,
+            'dataProvider' => $dataProvider,
+            'searchModel' => $searchModel,
+            'courses' => $courses,
+            'course' => $course,
         ]);
     }
 

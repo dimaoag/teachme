@@ -23,6 +23,14 @@ class OrderRepository
         return $orders;
     }
 
+    public function getOrdersByTeacherIdAndCourseId($id, $course_id)
+    {
+        if (!$orders = Order::find()->andWhere(['teacher_id' => $id, 'course_id' => $course_id])->all()) {
+            return false;
+        }
+        return $orders;
+    }
+
     public function save(Order $order): void
     {
         if (!$order->save()) {
