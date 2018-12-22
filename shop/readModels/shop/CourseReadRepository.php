@@ -211,5 +211,16 @@ class CourseReadRepository
         ]);
     }
 
+
+    public function getWishList($userId): ActiveDataProvider
+    {
+        return new ActiveDataProvider([
+            'query' => Course::find()
+                ->alias('c')->active('c')
+                ->joinWith('wishlistItems w', false, 'INNER JOIN')
+                ->andWhere(['w.user_id' => $userId]),
+            'sort' => false,
+        ]);
+    }
     
 }

@@ -87,8 +87,8 @@ class DefaultController extends Controller {
             'verbs' => [
                 'class' => VerbFilter::class,
                 'actions' => [
-                    'delete-firm-photo' => ['POST'],
-                    'delete-order-comment' => ['POST'],
+//                    'delete-firm-photo' => ['POST'],
+//                    'delete-order-comment' => ['POST'],
                 ],
             ],
         ];

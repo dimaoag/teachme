@@ -45,6 +45,23 @@ class UserRepository
     {
         return $this->getUserBy(['phone'=> $phone]);
     }
+
+
+
+    /**
+     * @param $courseId
+     * @return iterable|User[]
+     */
+    public function getAllByProductInWishList($courseId): iterable
+    {
+        return User::find()
+            ->alias('u')
+            ->joinWith('wishlistItems w', false, 'INNER JOIN')
+            ->andWhere(['w.course_id' => $courseId])
+            ->each();
+    }
+
+
     private function getUserBy(array $condition): User
     {
         if (!$user = User::find()->andWhere($condition)->limit(1)->one()){

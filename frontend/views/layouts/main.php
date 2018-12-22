@@ -51,7 +51,7 @@ FontAwesomeAsset::register($this);
                             <?php if (UserHelper::isAccessAddCourse()): ?>
                                 <li><a href="<?=Url::to(['/course/course/create'])?>">Добавить курс</a></li>
                             <?php endif; ?>
-                            <li class="header-favorite-courses"><a href="#">Избраные</a></li>
+                            <li class="header-favorite-courses"><a href="<?= Url::to(['/cabinet/wishlist/index']) ?>">Избраные</a></li>
                         </ul>
                         <ul class="nav navbar-nav navbar-right">
                             <?php if (Yii::$app->user->isGuest):  ?>
@@ -102,7 +102,7 @@ FontAwesomeAsset::register($this);
                     </div>
                     <div class="col-sm-1 header-search-favorite-courses">
                         <div class="header-search-favorite">
-                            <a href="#">
+                            <a href="<?= Url::to(['/cabinet/wishlist/index']) ?>">
                                 <i class="fa fa-heart"></i>
                             </a>
                         </div>

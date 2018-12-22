@@ -19,6 +19,7 @@ use yii\db\Exception;
 use yii\helpers\ArrayHelper;
 use yii\helpers\VarDumper;
 use yii\web\UploadedFile;
+use shop\entities\user\WishlistItem;
 
 /**
  * @property integer $id
@@ -48,6 +49,7 @@ use yii\web\UploadedFile;
  * @property TeacherMainInfo $firm
  * @property Review[] $reviews
  * @property Order[] $orders
+ * @property WishlistItem[] $wishlistItems
  */
 class Course extends ActiveRecord implements AggregateRoot
 {
@@ -383,6 +385,18 @@ class Course extends ActiveRecord implements AggregateRoot
 
 
 
+    // wishlistItems
+
+    public function checkInWishlistItems($userId)
+    {
+        $items = $this->wishlistItems;
+        foreach ($items as $i => $item) {
+            if ($item->isForUser($userId)) {
+                return true;
+            }
+        }
+        return false;
+    }
 
 
 
@@ -441,6 +455,11 @@ class Course extends ActiveRecord implements AggregateRoot
     public function getOrders(): ActiveQuery
     {
         return $this->hasMany(Order::class, ['course_id' => 'id']);
+    }
+
+    public function getWishlistItems(): ActiveQuery
+    {
+        return $this->hasMany(WishlistItem::class, ['course_id' => 'id']);
     }
 
     ##########################

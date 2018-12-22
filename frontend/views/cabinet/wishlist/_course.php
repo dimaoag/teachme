@@ -17,19 +17,30 @@ $url = Url::to(['/course/course/view', 'id' =>$course->id]);
             <img src="<?= Html::encode($course->mainPhoto->getThumbFileUrl('file', 'thumb')) ?>" alt="">
         </a>
         <div class="favorite-img">
-            <a href="#" class="favorite-toggle hvr-grow">
-                <i class="fa fa-heart-o"></i>
-            </a>
+            <?php if (!$course->checkInWishlistItems(Yii::$app->user->id)): ?>
+                <a href="<?= Url::to(['/cabinet/wishlist/add', 'id' => $course->id]) ?>" data-method="post" class="hvr-grow" title="в избранное">
+                    <i class="fa fa-heart-o"></i>
+                </a>
+            <?php else: ?>
+                <a href="<?= Url::to(['/cabinet/wishlist/delete', 'id' => $course->id]) ?>" data-method="post" class="hvr-grow" title="удалить из избранных">
+                    <i class="fa fa-heart"></i>
+                </a>
+            <?php endif; ?>
         </div>
     </div>
     <div class="search-course-info">
         <div class="search-course-header">
             <h4><a href="<?= Html::encode($url) ?>"><?= Html::encode($course->name) ?></a></h4>
             <div class="favorite">
-                <a href="#" class="favorite-toggle hvr-grow">
-                    <i class="fa fa-heart-o"></i>
-                </a>
-                <p>в избранное</p>
+                <?php if (!$course->checkInWishlistItems(Yii::$app->user->id)): ?>
+                    <a href="<?= Url::to(['/cabinet/wishlist/add', 'id' => $course->id]) ?>" data-method="post" class="hvr-grow" title="в избранное">
+                        <i class="fa fa-heart-o"></i>
+                    </a>
+                <?php else: ?>
+                    <a href="<?= Url::to(['/cabinet/wishlist/delete', 'id' => $course->id]) ?>" data-method="post" class="hvr-grow" title="удалить из избранных">
+                        <i class="fa fa-heart"></i>
+                    </a>
+                <?php endif; ?>
             </div>
         </div>
         <div class="search-course-middle">

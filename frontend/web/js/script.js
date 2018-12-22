@@ -125,15 +125,14 @@ $('.create-review').magnificPopup({
 
 
 /*-----favorite-toggle--------*/
-$('.favorite-toggle').on('click', function () {
-    if ($(this).html().trim() == '<i class="fa fa-heart-o"></i>') {
-        $(this).html('<i class="fa fa-heart"></i>');
-    }
-    else {
-        $(this).html('<i class="fa fa-heart-o"></i>');
-    }
-    return false;
-});
+// $('.favorite-toggle').on('click', function () {
+//     if ($(this).html().trim() == '<i class="fa fa-heart-o"></i>') {
+//         $(this).html('<i class="fa fa-heart"></i>');
+//     }
+//     else {
+//         $(this).html('<i class="fa fa-heart-o"></i>');
+//     }
+// });
 
 
 //feedback-form
@@ -618,3 +617,30 @@ $('.comment-container').on('click', '.delete-comment',function () {
     });
     return false;
 });
+
+
+//add course to wishlist
+$('.favorite-toggle').click(function () {
+    var a = $(this);
+    var url = $(this).attr('href');
+    var id = $(this).data('id');
+    $.ajax({
+        url: url,
+        type: 'POST',
+        data: {id: id},
+        success: function(res){
+            a.attr("href", res.url);
+            if (res.heart){
+                a.html('<i class="fa fa-heart"></i>');
+            } else {
+                a.html('<i class="fa fa-heart-o"></i>');
+            }
+
+        },
+        error: function(){
+            alert('Error!');
+        }
+    });
+    return false;
+});
+

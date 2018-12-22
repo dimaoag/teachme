@@ -47,7 +47,7 @@ use yii\widgets\LinkPager;
 
 <div class="row">
     <?php foreach ($dataProvider->getModels() as $course): ?>
-        <?= $this->render('_course', [
+        <?= $this->render('..//search/_course', [
             'course' => $course
         ]) ?>
     <?php endforeach; ?>

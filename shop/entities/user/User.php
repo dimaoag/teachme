@@ -1,10 +1,12 @@
 <?php
 namespace shop\entities\user;
 
+use lhs\Yii2SaveRelationsBehavior\SaveRelationsBehavior;
 use shop\entities\InstantiateTrait;
 use Yii;
 use yii\base\NotSupportedException;
 use yii\behaviors\TimestampBehavior;
+use yii\db\ActiveQuery;
 use yii\db\ActiveRecord;
 use yii\web\IdentityInterface;
 
@@ -26,6 +28,8 @@ use yii\web\IdentityInterface;
  * @property integer $created_at
  * @property integer $updated_at
  * @property string $password write-only password
+ *
+ * @property WishlistItem[] $wishlistItems
  */
 class User extends ActiveRecord implements IdentityInterface
 {
@@ -92,6 +96,32 @@ class User extends ActiveRecord implements IdentityInterface
     }
 
 
+    public function addToWishList($courseId): void
+    {
+        $items = $this->wishlistItems;
+        foreach ($items as $item) {
+            if ($item->isForCourse($courseId)) {
+                throw new \DomainException('Item is already added.');
+            }
+        }
+        $items[] = WishlistItem::create($courseId);
+        $this->wishlistItems = $items;
+    }
+
+    public function removeFromWishList($courseId): void
+    {
+        $items = $this->wishlistItems;
+        foreach ($items as $i => $item) {
+            if ($item->isForCourse($courseId)) {
+                unset($items[$i]);
+                $this->wishlistItems = $items;
+                return;
+            }
+        }
+        throw new \DomainException('Item is not found.');
+    }
+
+
     public function confirmSignup()
     {
         if (!$this->isWait()){
@@ -148,13 +178,29 @@ class User extends ActiveRecord implements IdentityInterface
     }
 
 
+    public function getWishlistItems(): ActiveQuery
+    {
+        return $this->hasMany(WishlistItem::class, ['user_id' => 'id']);
+    }
+
+
     public function behaviors()
     {
         return [
             TimestampBehavior::className(),
+            [
+                'class' => SaveRelationsBehavior::className(),
+                'relations' => ['wishlistItems'],
+            ],
         ];
     }
 
+    public function transactions()
+    {
+        return [
+            self::SCENARIO_DEFAULT => self::OP_ALL,
+        ];
+    }
 
     public function rules()
     {
