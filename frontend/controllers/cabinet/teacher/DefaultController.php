@@ -18,6 +18,8 @@ use Yii;
 use yii\base\Module;
 use yii\filters\VerbFilter;
 use yii\helpers\ArrayHelper;
+use yii\helpers\BaseUrl;
+use yii\helpers\Url;
 use yii\helpers\VarDumper;
 use yii\web\Controller;
 use yii\filters\AccessControl;
@@ -130,7 +132,7 @@ class DefaultController extends Controller {
             try {
                 $orderComment = $this->orderCommentManageService->create($orderCommentCreateForm);
 //                return $this->redirect(Yii::$app->request->referrer ?: ['index']);
-                return $this->asJson(['success' => true, 'comment' => $orderComment]);
+                return $this->asJson(['success' => true, 'comment' => $orderComment, 'url' => Url::to(['delete-order-comment'], true)]);
             } catch (\DomainException $e) {
                 Yii::$app->errorHandler->logException($e);
                 Yii::$app->session->setFlash('error', $e->getMessage());
@@ -279,14 +281,18 @@ class DefaultController extends Controller {
 
     }
 
-    public function actionDeleteOrderComment($id)
+    public function actionDeleteOrderComment()
     {
-        try {
-            $this->orderCommentManageService->remove($id);
-            Yii::$app->session->setFlash('success', 'Комментарий успешно удален');
-        } catch (\DomainException $e) {
-            Yii::$app->errorHandler->logException($e);
-            Yii::$app->session->setFlash('error', $e->getMessage());
+        if(Yii::$app->request->isAjax){
+            $id = Yii::$app->request->post('id');
+            try {
+                $this->orderCommentManageService->remove($id);
+                return 'success';
+            } catch (\DomainException $e) {
+                Yii::$app->errorHandler->logException($e);
+                Yii::$app->session->setFlash('error', $e->getMessage());
+                return 'error';
+            }
         }
         return $this->redirect(Yii::$app->request->referrer ?: ['index']);
     }

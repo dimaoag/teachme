@@ -556,7 +556,6 @@ if ($('ul').is('#main-menu')) {
 //     return false;
 // });
 
-
 //select link
 $(function(){
     // bind change event to select
@@ -567,4 +566,55 @@ $(function(){
         }
         return false;
     });
+});
+
+
+// add comment
+$('.popup-order-comments').on('click', '.popup-comment-btn',function () {
+    var form = $(this).closest('form');
+        form.on('beforeSubmit', function(e){
+            e.preventDefault();
+            e.stopImmediatePropagation();
+            var data = $(this).serialize();
+            var domain = window.location.hostname;
+            var textarea = $(this).find('textarea');
+            var parent = $(this).closest('.popup-order-comments').find($('.comment-container'));
+            $.ajax({
+                url: '/cabinet/teacher/default/orders',
+                type: 'POST',
+                data: data,
+                success: function(res){
+                    var comment = res.comment;
+                    var content =   '<div class="comment">' +
+                        '<a class="delete-comment" href="'+ res.url +'" data-id="'+ comment.id +'"><i class="fa fa-trash" data-method="post" aria-hidden="true"></i></a>'+
+                        '<p>'+ comment.text +'</p>'+
+                        '</div>';
+                    parent.append(content);
+                    form.trigger("reset");
+                },
+                error: function(){
+                    alert('Error!');
+                }
+            });
+        return false;
+    });
+});
+
+//delete comment
+$('.comment-container').on('click', '.delete-comment',function () {
+    var comment = $(this).closest('.comment');
+    var url = $(this).attr('href');
+    var id = $(this).data('id');
+    $.ajax({
+        url: url,
+        type: 'POST',
+        data: {id: id},
+        success: function(res){
+            comment.remove();
+        },
+        error: function(){
+            alert('Error!');
+        }
+    });
+    return false;
 });

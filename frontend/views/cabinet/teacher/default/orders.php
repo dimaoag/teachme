@@ -268,10 +268,9 @@ $this->params['active_orders'] = 'active';
                             <?php if (!empty($order->orderComments)): ?>
                                 <?php foreach ($order->orderComments as $comment): ?>
                                     <div class="comment">
-                                        <?= Html::a('<i class="fa fa-trash" aria-hidden="true"></i>', ['delete-order-comment', 'id' => $comment->id], [
-                                            'data' => [
-                                                'method' => 'post',
-                                            ],
+                                        <?= Html::a('<i class="fa fa-trash" aria-hidden="true"></i>', Url::to(['delete-order-comment'], true), [
+                                            'class' => 'delete-comment',
+                                            'data-id' => $comment->id,
                                         ]) ?>
                                         <p><?= Html::encode($comment->text); ?></p>
                                     </div>
@@ -298,32 +297,6 @@ $this->params['active_orders'] = 'active';
                 </div>
             </div>
 
-            <?php
-            $script = <<< JS
-$('form').on('beforeSubmit', function(){
-       var data = $(this).serialize();
-       var parent = $(this).closest('.popup-order-comments').find($('.comment-container'));
-        $.ajax({
-            url: '/cabinet/teacher/default/orders',
-            type: 'POST',
-            data: data,
-            success: function(res){
-                var comment = res.comment;
-                var content =   '<div class="comment">' +
-                                    '<a href="/cabinet/teacher/default/delete-order-comment?id=' +comment.id +'" data-method="post"><i class="fa fa-trash" aria-hidden="true"></i></a>'+
-                                    '<p>'+ comment.text +'</p>'+
-                                '</div>';
-                parent.append(content);
-            },
-            error: function(){
-                alert('Error!');
-            }
-        });
-        return false;
-    });
-JS;
-            $this->registerJs($script);
-            ?>
         <?php endforeach; ?>
 
     <?php else: ?>

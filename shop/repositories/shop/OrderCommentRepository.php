@@ -10,7 +10,7 @@ class OrderCommentRepository
     public function get($id): OrderComment
     {
         if (!$orderComment = OrderComment::findOne($id)) {
-            throw new NotFoundException('Review is not found.');
+            throw new NotFoundException('Comment is not found.');
         }
         return $orderComment;
     }
