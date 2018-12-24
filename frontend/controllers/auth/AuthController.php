@@ -29,7 +29,8 @@ class AuthController  extends Controller
             try {
                 $user = $this->authService->auth($form);
                 Yii::$app->user->login($user, $form->rememberMe ? Yii::$app->params['rememberMeDuration'] : 0);
-                return $this->goBack();
+//                return $this->goBack();
+                return $this->redirect(Yii::$app->request->referrer ?: $this->goBack());
             } catch (\DomainException $e) {
                 Yii::$app->errorHandler->logException($e);
                 Yii::$app->session->setFlash('error', $e->getMessage());
@@ -44,7 +45,7 @@ class AuthController  extends Controller
 
     public function actionLogout(){
         Yii::$app->user->logout();
-        return $this->goHome();
+        return $this->redirect(Yii::$app->request->referrer ?: $this->goHome());
     }
 
 }

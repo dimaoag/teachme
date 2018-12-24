@@ -357,7 +357,13 @@ if ($('div').is('#photo_profile_company')) {
 /*-----open-order-popup--------*/
 $('.open-order-popup').magnificPopup({
     type:'inline',
-    midClick: true // Allow opening popup on middle mouse click. Always set it to true if you don't provide alternative source in href.
+    midClick: true
+});
+
+/*-----open-courses-login-popup--------*/
+$('.open-popup-courses-login').magnificPopup({
+    type:'inline',
+    midClick: true
 });
 
 /*-----carousel in orders small-screen--------*/

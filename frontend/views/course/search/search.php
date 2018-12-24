@@ -5,6 +5,7 @@
 /* @var $course \shop\entities\shop\course\Course */
 /* @var $category \shop\entities\shop\Category*/
 /* @var $searchForm \shop\forms\course\search\SearchForm */
+/* @var $loginForm \shop\forms\auth\LoginForm */
 
 use yii\bootstrap\ActiveForm;
 use yii\helpers\Html;
@@ -113,7 +114,8 @@ if ($searchForm->category){
             </div>
             <div class="col-md-9 search-courses-container">
                 <?= $this->render('_list', [
-                    'dataProvider' => $dataProvider
+                    'dataProvider' => $dataProvider,
+                    'loginForm' => $loginForm
                 ]) ?>
             </div>
         </div>

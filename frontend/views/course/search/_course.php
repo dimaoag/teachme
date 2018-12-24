@@ -19,13 +19,19 @@ AppAsset::register($this);
             <img src="<?= Html::encode($course->mainPhoto->getThumbFileUrl('file', 'thumb')) ?>" alt="">
         </a>
         <div class="favorite-img">
-            <?php if (!$course->checkInWishlistItems(Yii::$app->user->id)): ?>
-                <a href="<?= Url::to(['/cabinet/wishlist/add'], true)?>" data-id="<?=$course->id?>" class="favorite-toggle hvr-grow" title="в избранное">
-                    <i class="fa fa-heart-o"></i>
-                </a>
+            <?php if (!Yii::$app->user->isGuest): ?>
+                <?php if (!$course->checkInWishlistItems(Yii::$app->user->id)): ?>
+                    <a href="<?= Url::to(['/cabinet/wishlist/add'], true)?>" data-id="<?=$course->id?>" class="favorite-toggle hvr-grow" title="в избранное">
+                        <i class="fa fa-heart-o"></i>
+                    </a>
+                <?php else: ?>
+                    <a href="<?= Url::to(['/cabinet/wishlist/delete-ajax'], true) ?>" data-id="<?=$course->id?>" class="favorite-toggle hvr-grow" title="удалить из избранных">
+                        <i class="fa fa-heart"></i>
+                    </a>
+                <?php endif; ?>
             <?php else: ?>
-                <a href="<?= Url::to(['/cabinet/wishlist/delete-ajax'], true) ?>" data-id="<?=$course->id?>" class="favorite-toggle hvr-grow" title="удалить из избранных">
-                    <i class="fa fa-heart"></i>
+                <a href="#courses-login" class="open-popup-courses-login hvr-grow" title="в избранное">
+                    <i class="fa fa-heart-o"></i>
                 </a>
             <?php endif; ?>
         </div>
@@ -34,13 +40,19 @@ AppAsset::register($this);
         <div class="search-course-header">
             <h4><a href="<?= Html::encode($url) ?>"><?= Html::encode($course->name) ?></a></h4>
             <div class="favorite">
-                <?php if (!$course->checkInWishlistItems(Yii::$app->user->id)): ?>
-                    <a href="<?= Url::to(['/cabinet/wishlist/add'],true)?>" data-id="<?=$course->id?>" class="favorite-toggle hvr-grow" title="в избранное">
-                        <i class="fa fa-heart-o"></i>
-                    </a>
+                <?php if (!Yii::$app->user->isGuest): ?>
+                    <?php if (!$course->checkInWishlistItems(Yii::$app->user->id)): ?>
+                        <a href="<?= Url::to(['/cabinet/wishlist/add'],true)?>" data-id="<?=$course->id?>" class="favorite-toggle hvr-grow" title="в избранное">
+                            <i class="fa fa-heart-o"></i>
+                        </a>
+                    <?php else: ?>
+                        <a href="<?= Url::to(['/cabinet/wishlist/delete-ajax'], true) ?>" data-id="<?=$course->id?>" class="favorite-toggle hvr-grow" title="удалить из избранных">
+                            <i class="fa fa-heart"></i>
+                        </a>
+                    <?php endif; ?>
                 <?php else: ?>
-                    <a href="<?= Url::to(['/cabinet/wishlist/delete-ajax'], true) ?>" data-id="<?=$course->id?>" class="favorite-toggle hvr-grow" title="удалить из избранных">
-                        <i class="fa fa-heart"></i>
+                    <a href="#courses-login" class="open-popup-courses-login hvr-grow" title="в избранное">
+                        <i class="fa fa-heart-o"></i>
                     </a>
                 <?php endif; ?>
             </div>

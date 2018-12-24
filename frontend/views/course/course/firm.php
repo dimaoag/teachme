@@ -4,8 +4,9 @@
 /* @var $dataProvider yii\data\DataProviderInterface */
 /* @var $firm \shop\entities\shop\TeacherMainInfo */
 /* @var $searchForm \shop\forms\course\search\SearchForm */
+/* @var $loginForm \shop\forms\auth\LoginForm */
 
-use yii\bootstrap\ActiveForm;
+
 use yii\helpers\Html;
 use yii\helpers\Url;
 
@@ -71,7 +72,8 @@ $this->params['breadcrumbs'][] = $this->title;
             </div>
             <div class="col-md-9 search-courses-container">
                 <?= $this->render('_list', [
-                    'dataProvider' => $dataProvider
+                    'dataProvider' => $dataProvider,
+                    'loginForm' => $loginForm
                 ]) ?>
             </div>
             <div class="course-info-fixed">

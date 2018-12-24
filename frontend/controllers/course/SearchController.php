@@ -2,21 +2,8 @@
 namespace frontend\controllers\course;
 
 
-use shop\helpers\CourseHelper;
-use Yii;
-use yii\filters\AccessControl;
-use yii\filters\VerbFilter;
-use shop\forms\manage\shop\course\PhotosForm;
-use shop\forms\manage\shop\course\GalleryForm;
-use shop\entities\shop\course\Course;
-use yii\helpers\VarDumper;
+use shop\forms\auth\LoginForm;
 use yii\web\Controller;
-use shop\forms\manage\shop\course\CourseCreateForm;
-use shop\forms\manage\shop\course\CourseEditForm;
-use shop\services\manage\CourseManageService;
-use shop\helpers\UserHelper;
-use yii\web\NotFoundHttpException;
-use shop\services\manage\UserManegeService;
 use shop\forms\course\search\SearchForm;
 use shop\readModels\shop\CourseReadRepository;
 
@@ -37,6 +24,7 @@ class SearchController extends Controller{
     public function actionSearch()
     {
         $form = new SearchForm();
+        $loginForm = new LoginForm();
         $form->load(\Yii::$app->request->queryParams);
         $form->validate();
 
@@ -47,6 +35,7 @@ class SearchController extends Controller{
             'dataProvider' => $dataProvider,
             'searchForm' => $form,
             'maxPrice' => $maxPrice,
+            'loginForm' => $loginForm,
         ]);
     }
 

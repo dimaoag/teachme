@@ -23,6 +23,7 @@ use shop\services\manage\UserManegeService;
 use shop\forms\course\search\SearchForm;
 use shop\readModels\shop\CourseReadRepository;
 use shop\readModels\shop\TeacherMainInfoReadRepository;
+use shop\forms\auth\LoginForm;
 
 class CourseController extends Controller{
 
@@ -112,10 +113,14 @@ class CourseController extends Controller{
             }
         }
 
+
+        $loginForm = new LoginForm();
+
         return $this->render('view', [
             'course' => $course,
             'reviewForm' => $reviewForm,
             'orderCreateForm' => $orderCreateForm,
+            'loginForm' => $loginForm,
         ]);
     }
 
@@ -153,6 +158,7 @@ class CourseController extends Controller{
 
     public function actionFirm($id)
     {
+        $loginForm = new LoginForm();
         if (!$firm = $this->firms->find($id)) {
             throw new NotFoundHttpException('The requested page does not exist.');
         }
@@ -162,6 +168,7 @@ class CourseController extends Controller{
         return $this->render('firm', [
             'firm' => $firm,
             'dataProvider' => $dataProvider,
+            'loginForm' => $loginForm,
         ]);
     }
 
@@ -275,10 +282,7 @@ class CourseController extends Controller{
     }
 
 
-    /**
-     * @param integer $id
-     * @return mixed
-     */
+
     public function actionDelete($id)
     {
         $course = $this->findModel($id);

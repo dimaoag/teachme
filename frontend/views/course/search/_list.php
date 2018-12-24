@@ -2,10 +2,12 @@
 
 /* @var $this yii\web\View */
 /* @var $dataProvider yii\data\DataProviderInterface */
+/* @var $loginForm \shop\forms\auth\LoginForm */
 
 use yii\helpers\Html;
 use yii\helpers\Url;
 use yii\widgets\LinkPager;
+use yii\bootstrap\ActiveForm;
 
 ?>
 <div class="row">
@@ -60,4 +62,23 @@ use yii\widgets\LinkPager;
         ]) ?>
     </div>
     <div class="col-sm-6 text-right">Найдено <?= $dataProvider->getCount() ?> из <?= $dataProvider->getTotalCount() ?></div>
+</div>
+
+<div id="courses-login" class="white-popup mfp-hide">
+    <h5 class="text-center">Чтобы добавить курс в избраное нужно ввойти на сайт или <a href="<?=Url::to(['/signup'])?>">зарегистрироваться</a></h5>
+    <div class="course-info-footer">
+
+        <?php $form = ActiveForm::begin(['id' => 'loginForm', 'action' => Url::to(['/login']), 'options' => ['class' => 'login100-form tab-form active']]); ?>
+        <div class="form-group">
+            <?= $form->field($loginForm, 'phone')->label('Телефон')->input('text', ['data-mask' => 'callback-catalog-phone']); ?>
+        </div>
+        <div class="form-group">
+            <?= $form->field($loginForm, 'password')->passwordInput()->label('Пароль *'); ?>
+        </div>
+        <div class="form-group">
+            <?= $form->field($loginForm, 'rememberMe')->checkbox(); ?>
+        </div>
+        <?= Html::submitButton('Войти', ['class' => 'btn btn-block login100-form-btn btn-login']); ?>
+        <?php ActiveForm::end(); ?>
+    </div>
 </div>

@@ -6,11 +6,13 @@ use yii\helpers\Url;
 use frontend\widgets\course\RelatedCoursesWidget;
 use shop\helpers\CourseHelper;
 
-
 /* @var $course shop\entities\shop\course\Course */
 /* @var $reviewForm \shop\forms\course\ReviewForm*/
 /* @var $orderCreateForm \shop\forms\course\order\OrderCreateForm*/
 /* @var $review \shop\entities\shop\course\Review*/
+/* @var $loginForm \shop\forms\auth\LoginForm*/
+
+
 
 $this->title = $course->name;
 
@@ -180,7 +182,11 @@ $this->params['breadcrumbs'][] = $course->name;
 
                     <div class="course-review">
                         <h3>Отзывы</h3>
-                        <button class="button create-review hvr-grow" href="#create_review">Оставить отзыв</button>
+                        <?php if (!Yii::$app->user->isGuest): ?>
+                            <button class="button create-review hvr-grow" href="#create_review">Оставить отзыв</button>
+                        <?php else: ?>
+                            <button class="button create-review hvr-grow" href="#courses-login">Оставить отзыв</button>
+                        <?php endif; ?>
                         <?php if (!empty($course->reviews)): ?>
                             <div class="course-reviews-container">
                                 <?php foreach ($course->reviews as $review): ?>
@@ -242,16 +248,24 @@ $this->params['breadcrumbs'][] = $course->name;
                 <div class="col-lg-3">
                     <div class="course-info">
                         <div class="course-info-favorite">
-                            <?php if (!$course->checkInWishlistItems(Yii::$app->user->id)): ?>
-                                <p>
-                                    <a href="<?= Url::to(['/cabinet/wishlist/add'], true)?>" data-id="<?=$course->id?>" class="favorite-toggle hvr-grow" title="в избранное">
-                                        <i class="fa fa-heart-o"></i>
-                                    </a>
-                                </p>
+                            <?php if (!Yii::$app->user->isGuest): ?>
+                                <?php if (!$course->checkInWishlistItems(Yii::$app->user->id)): ?>
+                                    <p>
+                                        <a href="<?= Url::to(['/cabinet/wishlist/add'], true)?>" data-id="<?=$course->id?>" class="favorite-toggle hvr-grow" title="в избранное">
+                                            <i class="fa fa-heart-o"></i>
+                                        </a>
+                                    </p>
+                                <?php else: ?>
+                                    <p>
+                                        <a href="<?= Url::to(['/cabinet/wishlist/delete-ajax'], true) ?>" data-id="<?=$course->id?>" class="favorite-toggle hvr-grow" title="удалить из избранных">
+                                            <i class="fa fa-heart"></i>
+                                        </a>
+                                    </p>
+                                <?php endif; ?>
                             <?php else: ?>
                                 <p>
-                                    <a href="<?= Url::to(['/cabinet/wishlist/delete-ajax'], true) ?>" data-id="<?=$course->id?>" class="favorite-toggle hvr-grow" title="удалить из избранных">
-                                        <i class="fa fa-heart"></i>
+                                    <a href="#courses-login" class="open-popup-courses-login hvr-grow" title="в избранное">
+                                        <i class="fa fa-heart-o"></i>
                                     </a>
                                 </p>
                             <?php endif; ?>
@@ -345,11 +359,19 @@ $this->params['breadcrumbs'][] = $course->name;
         <!--modals-->
         <div id="more_md" class="white-popup mfp-hide">
             <div class="course-info-footer">
-                <form action="#" autocomplete="off">
+                <?php $form = ActiveForm::begin([
+                    'id' => 'orderCreateForm2',
+                    'enableAjaxValidation'=>false,
+                    'enableClientValidation'=>false,
+                ]); ?>
                     <p>Получите детальную информацию о курсе и ближайших датах </p>
-                    <input type="text" name="phone" data-mask="callback-catalog-phone" class="course-info-input" placeholder="+380 __-___-__-__" required>
-                    <button href="#" class="btn btn-block course-info-footer-btn" type="submit">Узнать подробнее</button>
-                </form>
+                    <?= $form->field($orderCreateForm, 'username')->textInput(['id' => 'username_1_md']); ?>
+                    <?= $form->field($orderCreateForm, 'course_id')->hiddenInput(['id' => 'course_id_md', 'value'=> $course->id])->label(false); ?>
+                    <?= $form->field($orderCreateForm, 'teacher_id')->hiddenInput(['id' => 'teacher_id_md', 'value'=> $course->user_id])->label(false); ?>
+                    <?= $form->field($orderCreateForm, 'price')->hiddenInput(['id' => 'price_md', 'value'=> $course->price])->label(false); ?>
+                    <?= $form->field($orderCreateForm, 'phone')->textInput(['id' => 'phone_1_md', 'data-mask' => 'callback-catalog-phone', 'placeholder' => '+380 ']); ?>
+                    <button type="submit" class="btn btn-block course-info-footer-btn">Узнать подробнее</button>
+                <?php ActiveForm::end(); ?>
             </div>
         </div>
         <div id="phones_md" class="white-popup mfp-hide phones-md">
@@ -365,37 +387,49 @@ $this->params['breadcrumbs'][] = $course->name;
             <?php endif; ?>
         </div>
         <div id="create_review" class="white-popup mfp-hide create-review-form">
-            <?php if (Yii::$app->user->isGuest): ?>
-                Чтобы оставить отзыв пожалуйста <?= Html::a('ввойдите на сайт', ['/login']) ?>  или <?= Html::a('зарегистрируйтесь', ['/signup']) ?>.
-            <?php else: ?>
-                <h2>Оцените курс</h2>
-                <?php $form = ActiveForm::begin(['id' => 'form-review', 'class' => 'review-form']) ?>
-                    <div class="review-stars">
-                        <div class="review-stars-item">
-                            <p>Оцетка курса</p>
-                            <div class="star-rating">
-                                <div class="star-rating__wrap">
-                                    <input class="star-rating__input" id="vote-5" type="radio" name="ReviewForm[vote]" value="5">
-                                    <label class="star-rating__ico fa fa-star-o fa-lg" for="vote-5" title="5 out of 5 stars"></label>
-                                    <input class="star-rating__input" id="vote-4" type="radio" name="ReviewForm[vote]" value="4">
-                                    <label class="star-rating__ico fa fa-star-o fa-lg" for="vote-4" title="4 out of 5 stars"></label>
-                                    <input class="star-rating__input" id="vote-3" type="radio" name="ReviewForm[vote]" value="3">
-                                    <label class="star-rating__ico fa fa-star-o fa-lg" for="vote-3" title="3 out of 5 stars"></label>
-                                    <input class="star-rating__input" id="vote-2" type="radio" name="ReviewForm[vote]" value="2">
-                                    <label class="star-rating__ico fa fa-star-o fa-lg" for="vote-2" title="2 out of 5 stars"></label>
-                                    <input class="star-rating__input" id="vote-1" type="radio" name="ReviewForm[vote]" value="1">
-                                    <label class="star-rating__ico fa fa-star-o fa-lg" for="vote-1" title="1 out of 5 stars"></label>
-                                </div>
+            <h2>Оцените курс</h2>
+            <?php $form = ActiveForm::begin(['id' => 'form-review', 'class' => 'review-form']) ?>
+                <div class="review-stars">
+                    <div class="review-stars-item">
+                        <p>Оцетка курса</p>
+                        <div class="star-rating">
+                            <div class="star-rating__wrap">
+                                <input class="star-rating__input" id="vote-5" type="radio" name="ReviewForm[vote]" value="5">
+                                <label class="star-rating__ico fa fa-star-o fa-lg" for="vote-5" title="5 out of 5 stars"></label>
+                                <input class="star-rating__input" id="vote-4" type="radio" name="ReviewForm[vote]" value="4">
+                                <label class="star-rating__ico fa fa-star-o fa-lg" for="vote-4" title="4 out of 5 stars"></label>
+                                <input class="star-rating__input" id="vote-3" type="radio" name="ReviewForm[vote]" value="3">
+                                <label class="star-rating__ico fa fa-star-o fa-lg" for="vote-3" title="3 out of 5 stars"></label>
+                                <input class="star-rating__input" id="vote-2" type="radio" name="ReviewForm[vote]" value="2">
+                                <label class="star-rating__ico fa fa-star-o fa-lg" for="vote-2" title="2 out of 5 stars"></label>
+                                <input class="star-rating__input" id="vote-1" type="radio" name="ReviewForm[vote]" value="1">
+                                <label class="star-rating__ico fa fa-star-o fa-lg" for="vote-1" title="1 out of 5 stars"></label>
                             </div>
                         </div>
                     </div>
-                    <div class="form-group review-textarea">
-                        <?= $form->field($reviewForm, 'text')->textarea(['rows' => 7, 'cols'=> 100, 'placeholder' => 'Введите текст...']) ?>
+                </div>
+                <div class="form-group review-textarea">
+                    <?= $form->field($reviewForm, 'text')->textarea(['rows' => 7, 'cols'=> 100, 'placeholder' => 'Введите текст...']) ?>
+                </div>
+                <button type="submit" class="btn btn-block button">Отправить</button>
+            <?php ActiveForm::end() ?>
+        </div>
+        <div id="courses-login" class="white-popup mfp-hide">
+            <h5 class="text-center">Чтобы добавить курс в избраное нужно ввойти на сайт или <a href="<?=Url::to(['/signup'])?>">зарегистрироваться</a></h5>
+            <div class="course-info-footer">
+                <?php $form = ActiveForm::begin(['id' => 'loginForm', 'action' => Url::to(['/login']), 'options' => ['class' => 'login100-form tab-form active']]); ?>
+                    <div class="form-group">
+                        <?= $form->field($loginForm, 'phone')->label('Телефон')->input('text', ['data-mask' => 'callback-catalog-phone']); ?>
                     </div>
-                    <button type="submit" class="btn btn-block button">Отправить</button>
-                <?php ActiveForm::end() ?>
-            <?php endif; ?>
-
+                    <div class="form-group">
+                        <?= $form->field($loginForm, 'password')->passwordInput()->label('Пароль *'); ?>
+                    </div>
+                    <div class="form-group">
+                        <?= $form->field($loginForm, 'rememberMe')->checkbox(); ?>
+                    </div>
+                    <?= Html::submitButton('Войти', ['class' => 'btn btn-block login100-form-btn btn-login']); ?>
+                <?php ActiveForm::end(); ?>
+            </div>
         </div>
     </div>
 </main>
