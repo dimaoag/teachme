@@ -4,6 +4,7 @@ namespace shop\forms\manage\shop\course;
 
 use shop\entities\shop\City;
 use shop\entities\shop\Characteristic;
+use shop\entities\shop\CourseType;
 use shop\entities\shop\TeacherMainInfo;
 use shop\entities\shop\course\Course;
 use shop\entities\user\User;
@@ -21,6 +22,7 @@ use yii\helpers\ArrayHelper;
 class CourseCreateForm extends CompositeForm
 {
     public $cityId;
+    public $courseTypeId;
     public $firmId;
     public $name;
     public $description;
@@ -41,9 +43,9 @@ class CourseCreateForm extends CompositeForm
     public function rules(): array
     {
         return [
-            [['cityId', 'firmId', 'name', 'price'], 'required'],
+            [['cityId', 'firmId', 'courseTypeId', 'name', 'price'], 'required'],
             [['name'], 'string', 'max' => 255],
-            [['cityId', 'firmId', 'price'], 'integer'],
+            [['cityId', 'firmId', 'courseTypeId', 'price'], 'integer'],
             ['description', 'string'],
             ['price', 'integer', 'min' => 0],
         ];
@@ -52,6 +54,11 @@ class CourseCreateForm extends CompositeForm
     public function citiesList(): array
     {
         return ArrayHelper::map(City::find()->orderBy('name')->asArray()->all(), 'id', 'name');
+    }
+
+    public function courseTypesList(): array
+    {
+        return ArrayHelper::map(CourseType::find()->orderBy('name')->asArray()->all(), 'id', 'name');
     }
 
     public function firmList(): array

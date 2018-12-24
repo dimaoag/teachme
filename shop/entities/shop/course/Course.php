@@ -10,6 +10,7 @@ use shop\entities\behaviors\MetaBehavior;
 use shop\entities\shop\City;
 use shop\entities\shop\Category;
 use shop\entities\shop\course\queries\CourseQuery;
+use shop\entities\shop\CourseType;
 use shop\entities\user\User;
 use shop\entities\shop\TeacherMainInfo;
 use Yii;
@@ -26,6 +27,7 @@ use shop\entities\user\WishlistItem;
  * @property integer $user_id
  * @property integer $category_id
  * @property integer $city_id
+ * @property integer $course_type_id
  * @property integer $firm_id
  * @property integer $main_photo_id
  * @property integer $created_at
@@ -39,6 +41,7 @@ use shop\entities\user\WishlistItem;
  *
  *
  * @property City $city
+ * @property CourseType $courseType
  * @property User $user
  * @property Error $error
  * @property Category $category
@@ -62,11 +65,12 @@ class Course extends ActiveRecord implements AggregateRoot
 
     public $meta;
 
-    public static function create($userId, $cityId, $firmId, $categoryId, $name, $price, $description): self
+    public static function create($userId, $cityId, $courseTypeId, $firmId, $categoryId, $name, $price, $description): self
     {
         $course = new static();
         $course->user_id = $userId;
         $course->city_id = $cityId;
+        $course->course_type_id = $courseTypeId;
         $course->firm_id = $firmId;
         $course->category_id = $categoryId;
         $course->name = $name;
@@ -405,6 +409,11 @@ class Course extends ActiveRecord implements AggregateRoot
     public function getCity(): ActiveQuery
     {
         return $this->hasOne(City::class, ['id' => 'city_id']);
+    }
+
+    public function getCourseType(): ActiveQuery
+    {
+        return $this->hasOne(CourseType::class, ['id' => 'course_type_id']);
     }
 
     public function getUser(): ActiveQuery

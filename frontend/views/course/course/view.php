@@ -132,6 +132,22 @@ $this->params['breadcrumbs'][] = $course->name;
                     </div>
                     <div class="course-type">
                         <div class="row course-type-wrap">
+
+                            <div class="col-xs-6 course-type-item">
+                                <div class="row">
+                                    <div class="col-xs-6">
+                                        <div class="course-type-name">
+                                            <p>Тип курса</p>
+                                        </div>
+                                    </div>
+                                    <div class="col-xs-6">
+                                        <div class="course-type-value">
+                                            <p><?= Html::encode($course->courseType->name); ?></p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
                             <?php foreach ($course->values as $i => $value):  ?>
                             <div class="col-xs-6 course-type-item">
                                 <div class="row">

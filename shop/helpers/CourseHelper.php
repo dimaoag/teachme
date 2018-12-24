@@ -8,6 +8,7 @@ use yii\helpers\ArrayHelper;
 use yii\helpers\Html;
 use yii\helpers\Url;
 use shop\entities\shop\course\Course;
+use shop\entities\shop\CourseType;
 
 
 class CourseHelper
@@ -42,14 +43,14 @@ class CourseHelper
         return $res;
     }
 
-    public static function getStatusLink($status, $courseId){
+    public static function getStatusLink($status, $courseId, $courseTypeName){
 
 
         $isDisableClass = UserHelper::checkPublications(Yii::$app->user->id) ? "" : 'disabled="disabled" style="pointer-events: none; opacity: 0.5;"';
 
         switch ($status){
             case Course::STATUS_NOT_ACTIVE:
-                $res = '<a href="'. Url::to(['/course/course/on-moderation', 'id' => $courseId]) .'" class="add" '. $isDisableClass .' data-method="post">Активировать</a>';
+                $res = '<a href="'. Url::to(['/course/course/on-moderation', 'id' => $courseId, 'course_type_id' => self::getCourseTypeId($courseTypeName)]) .'" class="add" '. $isDisableClass .' data-method="post">Активировать</a>';
                 break;
 
             case Course::STATUS_ON_MODERATION:
@@ -81,6 +82,20 @@ class CourseHelper
 //        Yii::$app->formatter->locale = 'en-EN';
         return Yii::$app->formatter->asDatetime($date,'medium');
     }
+
+
+    private function getCourseTypeId($courseTypeName)
+    {
+        $courseTypes = CourseType::find()->all();
+        foreach ($courseTypes as $courseType){
+            /**@var CourseType $courseType $ */
+            if (trim($courseType->name) == trim($courseTypeName)){
+                return $courseType->id;
+            }
+        }
+        return null;
+    }
+
 
 
 

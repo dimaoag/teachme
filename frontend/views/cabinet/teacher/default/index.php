@@ -57,7 +57,7 @@ $this->params['active_course'] = 'active';
                                     <a href="<?= Url::to(['/course/course/update', 'id' => $course->id])?>" class="edit">Редактировать</a>
                                 </div>
                                 <div class="right">
-                                    <?= CourseHelper::getStatusLink($course->status, $course->id);?>
+                                    <?= CourseHelper::getStatusLink($course->status, $course->id, $course->values[0]['value']);?>
                                 </div>
                             </div>
                         </div>

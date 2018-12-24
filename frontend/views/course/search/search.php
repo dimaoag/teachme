@@ -9,6 +9,7 @@
 
 use yii\bootstrap\ActiveForm;
 use yii\helpers\Html;
+use yii\helpers\VarDumper;
 
 $this->title = 'Поиск курсов';
 
@@ -43,6 +44,42 @@ if ($searchForm->category){
                     <?= $form->field($searchForm, 'category')->hiddenInput()->label(false) ?>
                 <?php endif; ?>
                 <div class="filter-wrap">
+
+                    <div class="filter">
+                            <a href="#filter_course_type" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle filter-header">
+                                <h4>Тип обучения</h4>
+                                <i class="toggle fa fa-plus" style="display: none"></i>
+                                <i class="toggle fa fa-minus"></i>
+                            </a>
+                            <ul class="collapse list-unstyled collapse in" id="filter_course_type">
+                                <?php $c = 0; ?>
+                                <?php foreach ($searchForm->courseTypesList() as $courseTypeKey => $courseTypeValue): ?>
+                                    <li>
+                                        <div class="checkboxes">
+                                            <div class="cntr">
+                                                <label for="cbx_course_type_<?=$c?>" class="label-cbx">
+                                                    <input id="cbx_course_type_<?=$c?>" name="courseType[]" type="checkbox"  value="<?= Html::encode($courseTypeKey); ?>" <?php if (!empty($searchForm->courseType)){
+                                                        foreach ($searchForm->courseType as $key => $value){
+                                                            if (rtrim($value) == rtrim($courseTypeKey)){
+                                                                echo ' checked';
+                                                            }
+                                                        }
+                                                    } ?>  class="invisible">
+                                                    <div class="checkbox">
+                                                        <svg width="20px" height="20px" viewBox="0 0 20 20">
+                                                            <path d="M3,1 L17,1 L17,1 C18.1045695,1 19,1.8954305 19,3 L19,17 L19,17 C19,18.1045695 18.1045695,19 17,19 L3,19 L3,19 C1.8954305,19 1,18.1045695 1,17 L1,3 L1,3 C1,1.8954305 1.8954305,1 3,1 Z"></path>
+                                                            <polyline points="4 11 8 15 16 6"></polyline>
+                                                        </svg>
+                                                    </div>
+                                                    <span><?= Html::encode($courseTypeValue); ?></span>
+                                                </label>
+                                            </div>
+                                        </div>
+                                    </li>
+                                    <?php $c++; ?>
+                                <?php endforeach; ?>
+                            </ul>
+                        </div>
 
                     <?php $k = 0; ?>
                     <?php foreach ($searchForm->values as $i => $value): ?>

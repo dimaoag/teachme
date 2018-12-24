@@ -5,6 +5,7 @@ namespace shop\forms\course\search;
 use shop\entities\shop\City;
 use shop\entities\shop\Category;
 use shop\entities\shop\Characteristic;
+use shop\entities\shop\CourseType;
 use shop\forms\CompositeForm;
 use yii\helpers\ArrayHelper;
 
@@ -16,6 +17,7 @@ class SearchForm extends CompositeForm
     public $text;
     public $category;
     public $city;
+    public $courseType;
     public $from;
     public $to;
 
@@ -31,7 +33,7 @@ class SearchForm extends CompositeForm
     {
         return [
             [['text'], 'string'],
-            [['category', 'city'], 'integer'],
+            [['category', 'city', 'courseType'], 'integer'],
             [['from', 'to'], 'integer'],
         ];
     }
@@ -46,6 +48,11 @@ class SearchForm extends CompositeForm
     public function citiesList(): array
     {
         return ArrayHelper::map(City::find()->orderBy('name')->asArray()->all(), 'id', 'name');
+    }
+
+    public function courseTypesList(): array
+    {
+        return ArrayHelper::map(CourseType::find()->asArray()->all(), 'id', 'name');
     }
 
     public function getCategoryById($id){

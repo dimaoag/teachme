@@ -160,6 +160,13 @@ class CourseReadRepository
                                 !empty($form->to) ? ['range' => ['price' => ['gte' => $form->from, 'lte' => $form->to]]] : false,
                                 !empty($form->category) ? ['term' => ['categories' => $form->category]] : false,
                                 !empty($form->city) ? ['term' => ['city' => $form->city]] : false,
+                                !empty($form->courseType) ? [
+                                    'bool' => [
+                                        'should' => array_map(function ($courseTypeItem){
+                                            return ['match' => ['course_type' => $courseTypeItem]];
+                                        }, $form->courseType),
+                                    ],
+                                ] : false,
                                 !empty($form->text) ? ['match' => ['name' => $form->text]] : false,
                             ]),
                             array_map(function (ValueForm $value) {

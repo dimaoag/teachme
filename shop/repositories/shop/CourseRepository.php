@@ -41,6 +41,11 @@ class CourseRepository
         return Course::find()->andWhere(['city_id' => $id])->exists();
     }
 
+    public function existsByCourseType($id): bool
+    {
+        return Course::find()->andWhere(['course_type_id' => $id])->exists();
+    }
+
     public function existsByMainCategory($id): bool
     {
         return Course::find()->andWhere(['category_id' => $id])->exists();

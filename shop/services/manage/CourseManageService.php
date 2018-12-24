@@ -32,6 +32,7 @@ class CourseManageService
     private $users;
     private $courses;
     private $cities;
+    private $courseTypes;
     private $errors;
     private $categories;
     private $indexer;
@@ -44,6 +45,7 @@ class CourseManageService
         UserRepository $users,
         CourseRepository $courses,
         CityRepository $cities,
+        CityRepository $courseTypes,
         ErrorRepository $errors,
         CategoryRepository $categories,
         CourseIndexer $indexer,
@@ -56,6 +58,7 @@ class CourseManageService
         $this->users = $users;
         $this->courses = $courses;
         $this->cities = $cities;
+        $this->courseTypes = $courseTypes;
         $this->errors = $errors;
         $this->categories = $categories;
         $this->indexer = $indexer;
@@ -68,12 +71,14 @@ class CourseManageService
     public function create(CourseCreateForm $form): Course
     {
         $city = $this->cities->get($form->cityId);
+        $courseType = $this->courseTypes->get($form->courseTypeId);
         $category = $this->categories->get($form->categories->main);
         $teacherMainInfo = $this->teachersMainInfo->get($form->firmId);
 
         $course = Course::create(
             Yii::$app->user->id,
             $city->id,
+            $courseType->id,
             $teacherMainInfo->id,
             $category->id,
             $form->name,
