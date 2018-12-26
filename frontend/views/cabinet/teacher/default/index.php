@@ -1,7 +1,7 @@
 <?php
 /* @var $this yii\web\View */
 
-/* @var $publications string */
+/* @var $publications array */
 /* @var $course shop\entities\shop\course\Course */
 /* @var $courses[] shop\entities\shop\course\Course */
 
@@ -18,8 +18,23 @@ $this->params['active_course'] = 'active';
 <div class="tab-cabinet-container tab-courses active">
     <div class="tab-my-courses">
         <div class="my-courses-header">
-            <p>Количество публиций: <span><?=$publications?></span></p>
-            <a href="<?=Url::to(['/course/create'])?>" class="button hvr-grow">Добавить курс</a>
+            <div class="publications-wrap">
+                <p class="publications-arrow">
+                    Количество публиций:
+                    <?php foreach ($publications as $name => $quantity): ?>
+                        <span> <?=$quantity?> |</span>
+                    <?php endforeach; ?>
+                </p>
+                <div class="publications-content">
+                    <?php foreach ($publications as $name => $quantity): ?>
+                        <div class="publication">
+                            <div class="publication-name"><?=$name?> :</div>
+                            <div class="publication-value"><?=$quantity?> шт.</div>
+                        </div>
+                    <?php endforeach; ?>
+                </div>
+            </div>
+            <a href="<?=Url::to(['/course/create'])?>" class="button add-course-bnt hvr-grow">Добавить курс</a>
         </div>
         <div class="my-courses-wrap">
             <?php if (!empty($courses)): ?>

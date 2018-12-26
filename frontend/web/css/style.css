@@ -2040,13 +2040,8 @@ label.tab.active{
     color: #933ec5;
 }
 .my-courses-header{
-    display: -webkit-box;
-    display: -ms-flexbox;
     display: flex;
-    -webkit-box-pack: end;
-    -ms-flex-pack: end;
-    justify-content: flex-end;
-    -ms-flex-wrap: wrap;
+    justify-content: space-between;
     flex-wrap: wrap;
     margin-bottom: 15px;
 }
@@ -3129,5 +3124,50 @@ label.tab.active{
 }
 .range-inputs input:focus{
     outline: none;
+}
+
+
+.add-course-bnt{
+    height: 42px;
+}
+.publications-arrow{
+    cursor: pointer;
+}
+.publications-wrap{
+    position: relative;
+}
+.publications-content {
+    display: none;
+    position: absolute;
+    top: 50px;
+    left: 0;
+    width: 250px;
+    max-width: 300px;
+    z-index: 2;
+    background-color: white;
+}
+.publication-in-payment{
+    top: 25px;
+}
+.publications-arrow:hover + .publications-content {
+    display: block;
+    cursor: pointer;
+}
+.publication{
+    display: flex;
+    padding: 5px;
+}
+.publication-name{
+    flex-basis: 70%;
+    /*background-color: #0F9E5E;*/
+    color: black;
+}
+.publication-name:first-letter{
+    text-transform: uppercase;
+}
+.publication-value{
+    flex-basis: 30%;
+    /*background-color: #2e8cb8;*/
+    color: black;
 }
 

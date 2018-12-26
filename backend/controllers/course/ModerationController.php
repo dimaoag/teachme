@@ -77,7 +77,7 @@ class ModerationController extends Controller
                     $this->courseManageService->editError($course->id, $errorForm);
                 }
 
-                $this->userManageService->plusPublication(Yii::$app->user->id);
+                $this->userManageService->plusPublication(Yii::$app->user->id, $course->courseType->id);
                 $this->courseManageService->failureCourse($course);
                 return $this->redirect(['index']);
 

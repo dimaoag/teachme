@@ -17,7 +17,7 @@ use yii\web\IdentityInterface;
  * @property string $first_name
  * @property string $last_name
  * @property string $phone
- * @property integer $publications
+
  * @property string $auth_key
  * @property string $password_hash
  * @property integer $password_confirm_code
@@ -30,6 +30,7 @@ use yii\web\IdentityInterface;
  * @property string $password write-only password
  *
  * @property WishlistItem[] $wishlistItems
+ * @property Publication[] $publications
  */
 class User extends ActiveRecord implements IdentityInterface
 {
@@ -161,20 +162,48 @@ class User extends ActiveRecord implements IdentityInterface
         return $this->status === self::STATUS_WAIT;
     }
 
-    public function deletePublication(){
-        $this->publications -= 1;
-        if ($this->publications < 0){
-            $this->publications = 0;
+
+    // Publications
+
+
+    public function deletePublication($courseTypeId){
+
+        $publications = $this->publications;
+        foreach ($publications as $publication) {
+            if ($publication->isForCourseType($courseTypeId)) {
+                $publication->deleteQuantity();
+                $this->publications = $publications;
+                return;
+            }
         }
+        $this->publications = $publications;
     }
 
-    public function addPublication(){
-        $this->publications += 1;
-    }
 
-    public static function tableName()
+
+    public function setPublication($courseTypeId, $quantity): void
     {
-        return '{{%users}}';
+        $publications = $this->publications;
+        foreach ($publications as $publication) {
+            if ($publication->isForCourseType($courseTypeId)) {
+                $publication->changeQuantity($quantity);
+                $this->publications = $publications;
+                return;
+            }
+        }
+        $publications[] = Publication::create($courseTypeId, $quantity);
+        $this->publications = $publications;
+    }
+
+    public function getPublication($courseTypeId): Publication
+    {
+        $publications = $this->publications;
+        foreach ($publications as $publication) {
+            if ($publication->isForCourseType($courseTypeId)) {
+                return $publication;
+            }
+        }
+        return Publication::blank($courseTypeId);
     }
 
 
@@ -183,14 +212,19 @@ class User extends ActiveRecord implements IdentityInterface
         return $this->hasMany(WishlistItem::class, ['user_id' => 'id']);
     }
 
+    public function getPublications(): ActiveQuery
+    {
+        return $this->hasMany(Publication::class, ['user_id' => 'id']);
+    }
+
 
     public function behaviors()
     {
         return [
-            TimestampBehavior::className(),
+            TimestampBehavior::class,
             [
-                'class' => SaveRelationsBehavior::className(),
-                'relations' => ['wishlistItems'],
+                'class' => SaveRelationsBehavior::class,
+                'relations' => ['wishlistItems', 'publications'],
             ],
         ];
     }
@@ -289,9 +323,10 @@ class User extends ActiveRecord implements IdentityInterface
         $this->password_confirm_code = null;
     }
 
-
-
-
+    public static function tableName()
+    {
+        return '{{%users}}';
+    }
 
 
 

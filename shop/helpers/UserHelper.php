@@ -3,6 +3,7 @@ namespace shop\helpers;
 
 use shop\entities\user\User;
 use shop\repositories\UserRepository;
+use shop\entities\user\Publication;
 use Yii;
 use yii\helpers\ArrayHelper;
 use yii\helpers\Html;
@@ -103,15 +104,19 @@ class UserHelper
         }
     }
 
-    public static function checkPublications($id) :bool
+    public static function checkPublications($id, $courseTypeId) :bool
     {
         $repository = new UserRepository();
         $user = $repository->getUserById($id);
-        if ($user->publications <= 0)
-        {
-            return false;
+
+        /** @var Publication $publication */
+        $publication = $user->getPublication($courseTypeId);
+
+
+        if ((!empty($publication)) && $publication->quantity > 0 ) {
+            return true;
         }
-        return true;
+        return false;
 
     }
 

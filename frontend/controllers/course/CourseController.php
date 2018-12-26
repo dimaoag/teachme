@@ -311,15 +311,15 @@ class CourseController extends Controller{
         }
 
 
-        if (!UserHelper::checkPublications(Yii::$app->user->id)){
-            Yii::$app->session->setFlash('error', 'У Вас нету публикаций!');
+        if (!UserHelper::checkPublications(Yii::$app->user->id, $course->courseType->id)){
+            Yii::$app->session->setFlash('error', 'У Вас нету публикаций для категории '.$course->courseType->name);
             return $this->redirect(Yii::$app->request->referrer ?: ['/']);
         }
 
 
         try {
             $this->service->sendOnModeration($course);
-            $this->userManageService->minusPublication(Yii::$app->user->id);
+            $this->userManageService->minusPublication(Yii::$app->user->id, $course->courseType->id);
         } catch (\DomainException $e) {
             Yii::$app->session->setFlash('error', $e->getMessage());
         }

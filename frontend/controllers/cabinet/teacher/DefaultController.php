@@ -6,6 +6,7 @@ use frontend\forms\OrderSearch;
 use frontend\forms\UserSearch;
 use shop\entities\shop\course\Course;
 use shop\entities\shop\course\Order;
+use shop\entities\shop\CourseType;
 use shop\entities\shop\TeacherMainInfo;
 use shop\entities\user\User;
 use shop\forms\course\order\OrderEditForm;
@@ -87,8 +88,8 @@ class DefaultController extends Controller {
             'verbs' => [
                 'class' => VerbFilter::class,
                 'actions' => [
-//                    'delete-firm-photo' => ['POST'],
-//                    'delete-order-comment' => ['POST'],
+                    'delete-firm-photo' => ['POST'],
+                    'delete-order-comment' => ['POST'],
                 ],
             ],
         ];
@@ -98,12 +99,21 @@ class DefaultController extends Controller {
 
     public function actionIndex(){
 
-        $publications = User::find()
-            ->select('publications')
-            ->where(['id' => Yii::$app->user->id])
-            ->one();
-        $publications = ArrayHelper::getValue($publications,'publications');
         $courses = $this->courses->getCoursesByUserId(Yii::$app->user->id);
+        $user = $this->users->getUserById(Yii::$app->user->id);
+        $courseTypes = CourseType::find()->all();
+
+        $publications = [];
+
+        foreach ($courseTypes as $courseType){
+            /** @var CourseType $courseType */
+            $publications[$courseType->name] = ArrayHelper::getValue($user->getPublication($courseType->id), 'quantity') ? ArrayHelper::getValue($user->getPublication($courseType->id), 'quantity') : '0';
+
+        }
+
+
+//        VarDumper::dump($publications, 10, true);
+
 
 
         return $this->render('index', [
@@ -256,6 +266,9 @@ class DefaultController extends Controller {
 
     public function actionPayment()
     {
+
+
+
 
 
         return $this->render('payment', [

@@ -1,6 +1,6 @@
 <?php
 /* @var $this yii\web\View */
-
+/* @var $publications array */
 
 
 $this->title = 'Оплата';
@@ -9,7 +9,6 @@ $this->params['active_payments'] = 'active';
 
 <div class="tab-cabinet-container tab-price active">
     <h2>Услуги для бизнеса</h2>
-    <p class="tab-price-my-quantity">В наличии 3 публикации</p>
     <div class="row">
         <div class="col-md-10">
             <form class="form-price">
@@ -24,6 +23,7 @@ $this->params['active_payments'] = 'active';
                     <p>Количество</p>
                     <div class="custom-select main-select-city price-select">
                         <select name="quantity">
+                            <option value="">0</option>
                             <option value="1" selected>1</option>
                             <option value="2">2</option>
                             <option value="3">3</option>
@@ -54,6 +54,7 @@ $this->params['active_payments'] = 'active';
                     <p>Количество</p>
                     <div class="custom-select main-select-city price-select">
                         <select name="quantity">
+                            <option value="">0</option>
                             <option value="1" selected>1</option>
                             <option value="2">2</option>
                             <option value="3">3</option>
@@ -84,6 +85,7 @@ $this->params['active_payments'] = 'active';
                     <p>Количество</p>
                     <div class="custom-select main-select-city price-select">
                         <select name="quantity">
+                            <option value="">0</option>
                             <option value="1" selected>1</option>
                             <option value="2">2</option>
                             <option value="3">3</option>
@@ -114,6 +116,7 @@ $this->params['active_payments'] = 'active';
                     <p>Количество</p>
                     <div class="custom-select main-select-city price-select">
                         <select name="quantity">
+                            <option value="">0</option>
                             <option value="1" selected>1</option>
                             <option value="2">2</option>
                             <option value="3">3</option>

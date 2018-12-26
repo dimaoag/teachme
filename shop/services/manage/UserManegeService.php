@@ -29,17 +29,20 @@ class UserManegeService
     }
 
 
-    public function minusPublication($id): void
+    public function minusPublication($id, $courseTypeId): void
     {
         $user = $this->repository->getUserById($id);
-        $user->deletePublication();
+        if (!empty($user->getPublication($courseTypeId))){
+            $user->deletePublication($courseTypeId);
+        }
+
         $this->repository->save($user);
     }
 
-    public function plusPublication($id): void
+    public function plusPublication($userId, $courseTypeId ): void
     {
-        $user = $this->repository->getUserById($id);
-        $user->addPublication();
+        $user = $this->repository->getUserById($userId);
+        $user->setPublication($courseTypeId, 1);
         $this->repository->save($user);
     }
 

@@ -2,6 +2,7 @@
 namespace shop\helpers;
 
 
+use shop\readModels\shop\CourseReadRepository;
 use shop\repositories\shop\CourseRepository;
 use Yii;
 use yii\helpers\ArrayHelper;
@@ -43,14 +44,15 @@ class CourseHelper
         return $res;
     }
 
-    public static function getStatusLink($status, $courseId, $courseTypeName){
+    public static function getStatusLink($status, $courseId){
+        $courseRepository = new CourseRepository();
+        $course = $courseRepository->get($courseId);
 
-
-        $isDisableClass = UserHelper::checkPublications(Yii::$app->user->id) ? "" : 'disabled="disabled" style="pointer-events: none; opacity: 0.5;"';
+        $isDisableClass = UserHelper::checkPublications(Yii::$app->user->id, $course->courseType->id) ? "" : 'disabled="disabled" style="pointer-events: none; opacity: 0.5;"';
 
         switch ($status){
             case Course::STATUS_NOT_ACTIVE:
-                $res = '<a href="'. Url::to(['/course/course/on-moderation', 'id' => $courseId, 'course_type_id' => self::getCourseTypeId($courseTypeName)]) .'" class="add" '. $isDisableClass .' data-method="post">Активировать</a>';
+                $res = '<a href="'. Url::to(['/course/course/on-moderation', 'id' => $courseId]) .'" class="add" '. $isDisableClass .' data-method="post">Активировать</a>';
                 break;
 
             case Course::STATUS_ON_MODERATION:
@@ -84,17 +86,6 @@ class CourseHelper
     }
 
 
-    private function getCourseTypeId($courseTypeName)
-    {
-        $courseTypes = CourseType::find()->all();
-        foreach ($courseTypes as $courseType){
-            /**@var CourseType $courseType $ */
-            if (trim($courseType->name) == trim($courseTypeName)){
-                return $courseType->id;
-            }
-        }
-        return null;
-    }
 
 
 
