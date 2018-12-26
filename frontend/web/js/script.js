@@ -650,3 +650,15 @@ $('.favorite-toggle').click(function () {
     return false;
 });
 
+// change price
+$('.select-quantity-publicactions').change(function () {
+    var form = $(this).closest('.form-price');
+    var priceField = form.find($('.payment-price-text'));
+    var old_priceField = form.find($('.payment-old_price-text'));
+    var price = priceField.data('price');
+    var old_price = old_priceField.data('old_price');
+    var qty = $(this).val();
+
+    priceField.html(qty * price);
+    old_priceField.html(qty * old_price);
+});

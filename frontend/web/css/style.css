@@ -2229,6 +2229,9 @@ label.tab.active{
     -ms-flex-wrap: wrap;
     flex-wrap: wrap;
 }
+.form-price .first-block{
+    flex-basis: 25%;
+}
 .top-price{
     border-width: 2px;
     border-color: #933ec5;
@@ -3169,5 +3172,15 @@ label.tab.active{
     flex-basis: 30%;
     /*background-color: #2e8cb8;*/
     color: black;
+}
+.payment-course-name:first-letter{
+    text-transform: uppercase;
+}
+.select-quantity-publicactions{
+    width: 100%;
+}
+.fourth-block{
+    display: flex;
+    align-items: center;
 }
 

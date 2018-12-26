@@ -266,13 +266,15 @@ class DefaultController extends Controller {
 
     public function actionPayment()
     {
-
+        $user = $this->users->getUserById(Yii::$app->user->id);
+        $courseTypes = CourseType::find()->all();
 
 
 
 
         return $this->render('payment', [
-
+            'courseTypes' => $courseTypes,
+            'user' => $user,
         ]);
     }
 
