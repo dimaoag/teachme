@@ -20,6 +20,7 @@ class CourseTypeManageService
         $courseType = CourseType::create(
             $form->name,
             $form->price,
+            $form->old_price,
             $form->sort
         );
         $this->courseTypes->save($courseType);
@@ -32,6 +33,7 @@ class CourseTypeManageService
         $courseType->edit(
             $form->name,
             $form->price,
+            $form->old_price,
             $form->sort
         );
         $this->courseTypes->save($courseType);

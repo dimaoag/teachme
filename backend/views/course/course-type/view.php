@@ -36,6 +36,9 @@ $this->params['breadcrumbs'][] = $this->title;
                         'attribute' => 'price',
                     ],
                     [
+                        'attribute' => 'old_price',
+                    ],
+                    [
                         'attribute' => 'sort',
                     ],
                 ],

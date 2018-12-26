@@ -12,6 +12,7 @@ class CourseTypeForm extends Model
 {
     public $name;
     public $price;
+    public $old_price;
     public $sort;
 
     private $_courseType;
@@ -21,6 +22,7 @@ class CourseTypeForm extends Model
         if ($courseType) {
             $this->name = $courseType->name;
             $this->price = $courseType->price;
+            $this->old_price = $courseType->old_price;
             $this->sort = $courseType->sort;
             $this->_courseType = $courseType;
         } else {
@@ -32,7 +34,7 @@ class CourseTypeForm extends Model
     public function rules(): array
     {
         return [
-            [['name', 'price', 'sort'], 'required'],
+            [['name', 'price', 'old_price','sort'], 'required'],
             [['name'], 'string'],
             [['sort', 'price'], 'integer'],
         ];
@@ -43,6 +45,7 @@ class CourseTypeForm extends Model
         return [
             'name' => 'Название',
             'price' => 'Цена',
+            'old_price' => 'Старая цена',
             'sort' => 'Сортировка',
         ];
     }

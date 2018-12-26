@@ -16,6 +16,7 @@ use yii\widgets\ActiveForm;
         <div class="box-body">
             <?= $form->field($model, 'name')->textInput(['maxlength' => true]) ?>
             <?= $form->field($model, 'price')->textInput(['maxlength' => true]) ?>
+            <?= $form->field($model, 'old_price')->textInput(['maxlength' => true]) ?>
             <?= $form->field($model, 'sort')->textInput(['maxlength' => true]) ?>
         </div>
     </div>
