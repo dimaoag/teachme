@@ -1,23 +1,29 @@
 <?php
 namespace shop\services\auth;
 
-use shop\forms\auth\LoginForm;
+use shop\access\Rbac;
 use shop\forms\auth\SignupLearnerForm;
 use shop\entities\user\User;
 use shop\forms\auth\SignupTeacherForm;
 use shop\repositories\UserRepository;
-use frontend\components\Debug;
-use Yii;
-use avator\turbosms\Turbosms;
-use yii\helpers\Url;
+use shop\services\RoleManager;
+use shop\services\TransactionManager;
 
 class SignupService{
 
     private $users;
+    private $roles;
+    private $transaction;
 
-    public function __construct(UserRepository $users)
+    public function __construct(
+        UserRepository $users,
+        RoleManager $roles,
+        TransactionManager $transaction
+    )
     {
         $this->users = $users;
+        $this->roles = $roles;
+        $this->transaction = $transaction;
     }
 
 
@@ -25,14 +31,20 @@ class SignupService{
     {
         $user = User::signupLeaner($form->first_name, $form->phone, $form->password);
         $user->sendSms();
-        $this->users->save($user);
+        $this->transaction->wrap(function () use ($user) {
+            $this->users->save($user);
+            $this->roles->assign($user->id, Rbac::ROLE_USER);
+        });
     }
 
     public function signupTeacher(SignupTeacherForm $form)
     {
         $user = User::signupTeacher($form->first_name, $form->last_name, $form->phone, $form->email, $form->password);
         $user->sendSms();
-        $this->users->save($user);
+        $this->transaction->wrap(function () use ($user) {
+            $this->users->save($user);
+            $this->roles->assign($user->id, Rbac::ROLE_USER);
+        });
     }
 
 

@@ -75,11 +75,11 @@ return [
         'class' => 'yii\filters\AccessControl',
         // 'only' only ...
         // 'except' everyone without ...
-        'except' => ['site/login', 'site/error'],
+        'except' => ['site/login', 'site/logout', 'site/error'],
         'rules' => [
             [
                 'allow' => true,
-                'roles' => ['@'], //only registered users
+                'roles' => ['admin', 'moderator'], //only registered users
             ],
         ],
     ],

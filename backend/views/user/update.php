@@ -19,6 +19,7 @@ $this->params['breadcrumbs'][] = ['label' => $user->first_name.' ' .$user->last_
     <?= $form->field($model,'last_name')->textInput(['maxLength' => true]); ?>
     <?= $form->field($model,'phone')->textInput(['maxLength' => true]); ?>
     <?= $form->field($model,'email')->textInput(['maxLength' => true]); ?>
+    <?= $form->field($model, 'role')->dropDownList($model->rolesList()) ?>
 
     <div class="form-group">
         <?= Html::submitButton('Сохранить', ['class' => 'btn btn-primary']); ?>

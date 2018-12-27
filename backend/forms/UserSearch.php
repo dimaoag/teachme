@@ -6,6 +6,7 @@ use Yii;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
 use shop\entities\user\User;
+use yii\helpers\ArrayHelper;
 
 /**
  * UserSearch represents the model behind the search form of `shop\entities\user\User`.
@@ -20,7 +21,7 @@ class UserSearch extends Model
     public $last_name;
     public $phone;
     public $designation;
-
+    public $role;
 
 
     public function rules()
@@ -28,16 +29,15 @@ class UserSearch extends Model
         return [
             [['id', 'status'], 'integer'],
             [['designation'], 'string'],
-            [['first_name', 'last_name', 'phone'], 'safe'],
+            [['first_name', 'last_name', 'phone', 'role'], 'safe'],
             [['date_from', 'date_to'], 'date', 'format' => 'php:Y-m-d'],
         ];
     }
 
 
-
     public function search($params)
     {
-        $query = User::find();
+        $query = User::find()->alias('u');
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
@@ -51,9 +51,14 @@ class UserSearch extends Model
         }
 
         $query->andFilterWhere([
-            'id' => $this->id,
-            'status' => $this->status,
+            'u.id' => $this->id,
+            'u.status' => $this->status,
         ]);
+
+        if (!empty($this->role)) {
+            $query->innerJoin('{{%auth_assignments}} a', 'a.user_id = u.id');
+            $query->andWhere(['a.item_name' => $this->role]);
+        }
 
         $query->andFilterWhere(['like', 'first_name', $this->first_name])
             ->andFilterWhere(['like', 'last_name', $this->last_name])
@@ -72,5 +77,10 @@ class UserSearch extends Model
         ];
     }
 
+
+    public function rolesList(): array
+    {
+        return ArrayHelper::map(Yii::$app->authManager->getRoles(), 'name', 'description');
+    }
 
 }

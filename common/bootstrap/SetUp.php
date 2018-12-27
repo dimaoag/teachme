@@ -57,9 +57,9 @@ class SetUp implements BootstrapInterface
         });
 
 
-//        $container->setSingleton(ManagerInterface::class, function () use ($app) {
-//            return $app->authManager;
-//        });
+        $container->setSingleton(ManagerInterface::class, function () use ($app) {
+            return $app->authManager;
+        });
 
 
 

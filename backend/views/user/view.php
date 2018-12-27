@@ -1,5 +1,6 @@
 <?php
 
+use yii\helpers\ArrayHelper;
 use yii\helpers\Html;
 use yii\widgets\DetailView;
 use shop\helpers\UserHelper;
@@ -52,6 +53,11 @@ $this->params['breadcrumbs'][] = $this->title;
                             return UserHelper::statusLabel($user->status);
                         },
                         'format' => 'raw', //отключить фильтрацию через html encode
+                    ],
+                    [
+                        'label' => 'Роль',
+                        'value' => implode(', ', ArrayHelper::getColumn(Yii::$app->authManager->getRolesByUser($model->id), 'description')),
+                        'format' => 'raw',
                     ],
                     [
                         'attribute' => 'created_at',
