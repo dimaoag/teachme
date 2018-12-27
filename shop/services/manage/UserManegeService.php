@@ -2,6 +2,7 @@
 namespace shop\services\manage;
 
 use shop\entities\user\User;
+use shop\forms\manage\user\PaymentForm;
 use shop\repositories\UserRepository;
 use shop\forms\manage\user\UserEditForm;
 
@@ -45,7 +46,6 @@ class UserManegeService
         $user->setPublication($courseTypeId, 1);
         $this->repository->save($user);
     }
-
 
 
 }

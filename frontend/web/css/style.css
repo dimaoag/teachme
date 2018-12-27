@@ -3183,4 +3183,25 @@ label.tab.active{
     display: flex;
     align-items: center;
 }
+.form-price .form-group{
+    display: none;
+}
+.form-checkout{
+    padding: 15px 0;
+}
+.checkout-btn{
+    margin: 10px 0;
+    max-width: 200px;
+}
+.form-checkout-item{
+    display: flex;
+    flex-wrap: wrap;
+    padding: 10px 0;
+}
+.form-checkout-title{
+    flex-basis: 50%;
+}
+.form-checkout-value-course-name:first-letter{
+    text-transform: uppercase;
+}
 

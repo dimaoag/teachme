@@ -653,6 +653,8 @@ $('.favorite-toggle').click(function () {
 // change price
 $('.select-quantity-publicactions').change(function () {
     var form = $(this).closest('.form-price');
+    var sumInput = form.find($('.sum-input'));
+    var quantityInput = form.find($('.quantity-input'));
     var priceField = form.find($('.payment-price-text'));
     var old_priceField = form.find($('.payment-old_price-text'));
     var price = priceField.data('price');
@@ -661,4 +663,6 @@ $('.select-quantity-publicactions').change(function () {
 
     priceField.html(qty * price);
     old_priceField.html(qty * old_price);
+    sumInput.val(qty * price);
+    quantityInput.val(qty);
 });

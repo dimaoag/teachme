@@ -31,6 +31,7 @@ use yii\web\IdentityInterface;
  *
  * @property WishlistItem[] $wishlistItems
  * @property Publication[] $publications
+ * @property Payment[] $payments
  */
 class User extends ActiveRecord implements IdentityInterface
 {
@@ -215,6 +216,11 @@ class User extends ActiveRecord implements IdentityInterface
     public function getPublications(): ActiveQuery
     {
         return $this->hasMany(Publication::class, ['user_id' => 'id']);
+    }
+
+    public function getPayments(): ActiveQuery
+    {
+        return $this->hasMany(Payment::class, ['user_id' => 'id']);
     }
 
 

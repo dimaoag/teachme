@@ -60,7 +60,6 @@ class TeacherMainInfoManageService
     }
 
 
-
     public function edit($id, TeacherMainInfoForm $form): void
     {
         $teacherMainInfo = $this->repository->get($id);

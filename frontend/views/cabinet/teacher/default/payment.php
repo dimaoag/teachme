@@ -1,12 +1,13 @@
 <?php
 /* @var $this yii\web\View */
-
-use yii\helpers\Html;
-
 /* @var $publications array */
 /* @var $courseTypes \shop\entities\shop\CourseType[] */
 /* @var $courseType \shop\entities\shop\CourseType */
+/* @var $paymentForm \shop\forms\manage\user\PaymentForm */
 
+
+use yii\helpers\Html;
+use yii\bootstrap\ActiveForm;
 
 $this->title = 'Оплата';
 $this->params['active_payments'] = 'active';
@@ -18,7 +19,17 @@ $this->params['active_payments'] = 'active';
         <div class="col-md-10">
             <?php if (!empty($courseTypes)): ?>
                 <?php foreach($courseTypes as $courseType): ?>
-                    <form class="form-price">
+<!--                    <form class="form-price">-->
+                    <?php $form = ActiveForm::begin([
+                        'options' => [
+                            'class' => 'form-price'
+                            ],
+                        ]) ?>
+
+                        <?= $form->field($paymentForm, 'courseTypeId')->hiddenInput(['value' => $courseType->id])->label(false); ?>
+                        <?= $form->field($paymentForm, 'price')->hiddenInput(['value' => $courseType->price])->label(false); ?>
+                        <?= $form->field($paymentForm, 'quantity')->hiddenInput(['value' => 1, 'class' => 'quantity-input'])->label(false); ?>
+                        <?= $form->field($paymentForm, 'sum')->hiddenInput(['value' => $courseType->price, 'class' => 'sum-input'])->label(false); ?>
                         <div class="form-price-item first-block">
                             <p class="payment-course-name"><?= Html::encode($courseType->name); ?></p>
                         </div>
@@ -29,7 +40,7 @@ $this->params['active_payments'] = 'active';
                         <div class="form-price-item third-block header-search-city">
                             <p>Количество</p>
                             <div class="price-select">
-                                <select name="quantity" class="select-quantity-publicactions">
+                                <select name="qty" class="select-quantity-publicactions">
                                     <option value="1" selected>1</option>
                                     <option value="2">2</option>
                                     <option value="3">3</option>
@@ -46,7 +57,8 @@ $this->params['active_payments'] = 'active';
                         <div class="form-price-item fourth-block">
                             <button type="submit" class="btn btn-block button-pure">Купить</button>
                         </div>
-                    </form>
+                <?php ActiveForm::end() ?>
+<!--                    </form>-->
                 <?php endforeach; ?>
             <?php endif; ?>
         </div>

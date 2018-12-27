@@ -10,11 +10,15 @@ use shop\entities\shop\CourseType;
 use shop\entities\shop\TeacherMainInfo;
 use shop\entities\user\User;
 use shop\forms\course\order\OrderEditForm;
+use shop\forms\manage\user\PaymentForm;
 use shop\forms\manage\user\ProfileEditForm;
 use shop\helpers\UserHelper;
+use shop\repositories\PaymentRepository;
 use shop\repositories\shop\OrderRepository;
 use shop\repositories\shop\TeacherMainInfoRepository;
 use shop\services\manage\CourseManageService;
+use shop\services\manage\PaymentManageService;
+use shop\services\manage\UserManegeService;
 use Yii;
 use yii\base\Module;
 use yii\filters\VerbFilter;
@@ -46,6 +50,8 @@ class DefaultController extends Controller {
     private $profileService;
     private $courseManageService;
     private $orderCommentManageService;
+    private $paymentManageService;
+    private $paymentRepository;
 
     public function __construct(string $id, Module $module,
         UserRepository $users,
@@ -56,6 +62,8 @@ class DefaultController extends Controller {
         ProfileService $profileService,
         CourseManageService $courseManageService,
         OrderCommentManageService $orderCommentManageService,
+        PaymentManageService $paymentManageService,
+        PaymentRepository $paymentRepository,
         array $config = [])
     {
         parent::__construct($id, $module, $config);
@@ -67,6 +75,8 @@ class DefaultController extends Controller {
         $this->profileService = $profileService;
         $this->courseManageService = $courseManageService;
         $this->orderCommentManageService = $orderCommentManageService;
+        $this->paymentManageService = $paymentManageService;
+        $this->paymentRepository = $paymentRepository;
     }
 
 
@@ -269,12 +279,35 @@ class DefaultController extends Controller {
         $user = $this->users->getUserById(Yii::$app->user->id);
         $courseTypes = CourseType::find()->all();
 
-
-
+        $paymentForm = new PaymentForm();
+        if ($paymentForm->load(Yii::$app->request->post()) && $paymentForm->validate()) {
+            try {
+                $payment = $this->paymentManageService->create($user->id, $paymentForm);
+                return $this->redirect(['checkout', 'id' => $payment->id]);
+            } catch (\DomainException $e) {
+                Yii::$app->errorHandler->logException($e);
+                Yii::$app->session->setFlash('error', $e->getMessage());
+            }
+        }
 
         return $this->render('payment', [
             'courseTypes' => $courseTypes,
             'user' => $user,
+            'paymentForm' => $paymentForm,
+        ]);
+    }
+
+    public function actionCheckout($id)
+    {
+        $payment = $this->paymentRepository->get($id);
+
+        if (Yii::$app->user->id != $payment->user_id){
+            return $this->redirect(Yii::$app->request->referrer ?: ['index']);
+        }
+
+
+        return $this->render('checkout', [
+            'payment' => $payment,
         ]);
     }
 
