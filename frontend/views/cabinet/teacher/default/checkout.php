@@ -3,7 +3,7 @@
 /* @var $this yii\web\View */
 /* @var $payment \shop\entities\user\Payment */
 
-
+use yii\helpers\Url;
 use yii\helpers\Html;
 
 $this->title = 'Оформления заказа';
@@ -14,7 +14,7 @@ $this->title = 'Оформления заказа';
     <div class="row">
         <div class="col-md-5">
             <?php if (!empty($payment)): ?>
-                <form class="form-checkout">
+                <div class="form-checkout">
                     <div class="form-checkout-item">
                         <p class="form-checkout-title">Тип обучения:</p>
                         <p class="form-checkout-value form-checkout-value-course-name"><?= Html::encode($payment->courseType->name); ?></p>
@@ -32,9 +32,10 @@ $this->title = 'Оформления заказа';
                         <p class="form-checkout-value"><?= Html::encode($payment->sum); ?> грн.</p>
                     </div>
                     <div class="form-price-item fourth-block">
-                        <button type="submit" class="btn btn-block button-pure checkout-btn">Оплатить</button>
+                        <button type="submit" class="btn btn-block button-pure checkout-btn send_order" data-url="<?= Url::to(['pay'], true); ?>" data-id="<?=$payment->id ?>">Оплатить</button>
                     </div>
-                </form>
+                </div>
+                <div id="lpay_form"></div>
             <?php endif; ?>
         </div>
     </div>

@@ -666,3 +666,33 @@ $('.select-quantity-publicactions').change(function () {
     sumInput.val(qty * price);
     quantityInput.val(qty);
 });
+
+//payment
+$('.send_order').on('click', function() {
+//order - массив данных из формы: №заказа, услуга/продукт, ФИО и т.д.
+    var id = $(this).data('id');
+    var url = $(this).data('url');
+    console.log(id);
+    console.log(url);
+    $.ajax({
+        url: url,
+        type: 'POST',
+        data: {id: id},
+        success: function(msg) {
+
+            // декодируем нашу форму из JSON
+            // var conv = JSON.parse(msg);
+            if (parseInt( msg.status ) > 0) {
+                // и добавим ее в заранее подготовленный контейнер
+                $('#lpay_form').empty().html( msg.form );
+                // $('#lpay_form form').submit();
+                // пошлем юзера на LiqPay для оплаты
+            }
+        },
+        error: function(){
+            alert('Error!');
+        }
+    });
+
+    // return false;
+});

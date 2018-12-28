@@ -36,7 +36,7 @@ use shop\services\user\ProfileService;
 use shop\forms\manage\user\ProfileEditPasswordForm;
 use shop\services\manage\OrderCommentManageService;
 use shop\forms\course\order\OrderCommentCreateForm;
-
+use shop\payment\LiqPay;
 class DefaultController extends Controller {
 
     public $layout = 'cabinet';
@@ -274,6 +274,8 @@ class DefaultController extends Controller {
         ]);
     }
 
+
+
     public function actionPayment()
     {
         $user = $this->users->getUserById(Yii::$app->user->id);
@@ -305,12 +307,56 @@ class DefaultController extends Controller {
             return $this->redirect(Yii::$app->request->referrer ?: ['index']);
         }
 
-
         return $this->render('checkout', [
             'payment' => $payment,
         ]);
     }
 
+    public function actionPay()
+    {
+        if (Yii::$app->request->isAjax){
+            $id = Yii::$app->request->post('id');
+            $payment = $this->paymentRepository->get($id);
+
+            if (Yii::$app->user->id != $payment->user_id){
+                return $this->redirect(Yii::$app->request->referrer ?: ['index']);
+            }
+
+            $html = $this->paymentManageService->createForm($payment);
+
+            $res_arr = array("status"=>1, 'form'=>$html, 'order_num'=>$payment->id);
+//            echo json_encode( $res_arr ); // вернем нашу сгенерированную форму для отправки покупателя на LiqPay
+            return $this->asJson($res_arr);
+        } else {
+            return $this->redirect(Yii::$app->request->referrer ?: ['index']);
+        }
+    }
+
+
+    public function actionThanks()
+    {
+        return $this->render('thanks', [
+
+        ]);
+    }
+
+    public function actionCheckStatus()
+    {
+        if (isset($_POST['data'])){
+
+            $result= json_decode(base64_decode($_POST['data']));
+            // данные вернуться в base64 формат JSON
+            if ($result->status == 'success'){
+                // обновим статус заказа
+                $this->paymentManageService->statusCompleted($result->order_id);
+                return $this->redirect(['index']);
+            } else {
+                $this->paymentManageService->statusCanceled($result->order_id);
+                return $this->redirect(['index']);
+            }
+        }
+        exit('error');
+    }
 
 
     public function actionEditOrder()
