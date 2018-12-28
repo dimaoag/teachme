@@ -31,8 +31,8 @@ class CourseHelper
                 $res = 'На модерации';
                 break;
             case Course::STATUS_ACTIVE:
-                $dateStart = Yii::$app->formatter->asDate($course->date_start_sale, 'php:m/d/Y');
-                $dateStop = Yii::$app->formatter->asDate($course->date_stop_sale, 'php:m/d/Y');
+                $dateStart = Yii::$app->formatter->asDate($course->date_start_sale, 'php:d/m/Y');
+                $dateStop = Yii::$app->formatter->asDate($course->date_stop_sale, 'php:d/m/Y');
                 $res = 'Активный '. $dateStart . ' - ' .$dateStop;
                 break;
             case Course::STATUS_FAIL:

@@ -149,10 +149,9 @@ class Course extends ActiveRecord implements AggregateRoot
 
 
     public function setDateActivate(){
-        $dateStart = date('Y-d-m h:i:s');
         $currentTime = time();
-        $dateStop =  date('Y-d-m h:i:s', strtotime('+30 day', $currentTime));
-        $this->date_start_sale = Yii::$app->formatter->asTimestamp($dateStart);
+        $dateStop =  date('d-m-Y h:i:s', strtotime('+31 day', $currentTime));
+        $this->date_start_sale = $currentTime;
         $this->date_stop_sale = Yii::$app->formatter->asTimestamp($dateStop);
     }
 

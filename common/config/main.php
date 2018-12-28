@@ -21,6 +21,10 @@ return [
             'assignmentTable' => '{{%auth_assignments}}',
             'ruleTable' => '{{%auth_rules}}',
         ],
+        'formatter'    => [
+            'class'    => 'yii\i18n\Formatter',
+            'defaultTimeZone' => 'Europe/Kiev',
+        ],
         'debug' => [
             'class' => 'shop\debug\Debug',
         ],
