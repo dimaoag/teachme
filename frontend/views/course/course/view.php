@@ -169,7 +169,15 @@ $this->params['breadcrumbs'][] = $course->name;
                     </div>
                     <div class="course-description">
                         <h3>Описание курса</h3>
-                        <p><?= Html::encode($course->description); ?></p>
+                        <div class="course-description-content">
+                            <?= Yii::$app->formatter->asHtml($course->description, [
+                                'Attr.AllowedRel' => array('nofollow'),
+                                'HTML.SafeObject' => true,
+                                'Output.FlashCompat' => true,
+                                'HTML.SafeIframe' => true,
+                                'URI.SafeIframeRegexp'=>'%^(https?:)?//(www\.youtube(?:-nocookie)?\.com/embed/|player\.vimeo\.com/video/)%',
+                            ]) ?>
+                        </div>
                     </div>
                     <?php if (!empty($course->gallery)): ?>
                         <div class="course-gallery">

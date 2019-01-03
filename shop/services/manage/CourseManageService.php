@@ -15,6 +15,7 @@ use shop\forms\manage\shop\course\CourseEditForm;
 use shop\repositories\shop\CityRepository;
 use shop\repositories\shop\CategoryRepository;
 use shop\repositories\shop\CourseRepository;
+use shop\repositories\shop\CourseTypeRepository;
 use shop\repositories\shop\ErrorRepository;
 use shop\repositories\shop\OrderRepository;
 use shop\repositories\shop\ReviewRepository;
@@ -45,7 +46,7 @@ class CourseManageService
         UserRepository $users,
         CourseRepository $courses,
         CityRepository $cities,
-        CityRepository $courseTypes,
+        CourseTypeRepository $courseTypes,
         ErrorRepository $errors,
         CategoryRepository $categories,
         CourseIndexer $indexer,

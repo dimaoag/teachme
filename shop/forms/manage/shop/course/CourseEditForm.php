@@ -37,6 +37,9 @@ class CourseEditForm extends CompositeForm
             [['cityId', 'price'], 'integer'],
             [['name'], 'string', 'max' => 255],
             ['description', 'string'],
+            [['description'], 'filter', 'filter' => function($value){
+                return trim(preg_replace("/\r\n|\r/", "<br />", $value));
+            }],
             ['price', 'integer', 'min' => 0],
         ];
     }

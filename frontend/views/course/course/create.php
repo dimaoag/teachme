@@ -67,7 +67,7 @@ $this->title = 'Создать курс';
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    <label class="col-sm-2 control-label" for="city">Тип курса</label>
+                                    <label class="col-sm-2 control-label" for="courseTypeId">Тип курса</label>
                                     <div class="col-sm-4 header-search-city">
                                         <div class="add-course-select">
                                             <div class="custom-select main-select-city">
@@ -78,22 +78,22 @@ $this->title = 'Создать курс';
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    <label class="col-sm-2 control-label" for="city">Город</label>
+                                    <label class="col-sm-2 control-label" for="cityId">Город</label>
                                     <div class="col-sm-4 header-search-city">
                                         <div class="add-course-select">
                                             <div class="custom-select main-select-city">
-                                                <?= $form->field($model, 'cityId')->dropDownList($model->citiesList(), ['id' => 'city', 'prompt' => 'Выберите город...'])->label(false); ?>
+                                                <?= $form->field($model, 'cityId')->dropDownList($model->citiesList(), ['id' => 'cityId', 'prompt' => 'Выберите город...'])->label(false); ?>
                                             </div>
                                         </div>
                                         <span id="error_city" class="text-danger"></span>
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    <label class="col-sm-2 control-label" for="firm">Организация</label>
+                                    <label class="col-sm-2 control-label" for="firmId">Организация</label>
                                     <div class="col-sm-4 header-search-city">
                                         <div class="add-course-select">
                                             <div class="custom-select main-select-city">
-                                                <?= $form->field($model, 'firmId')->dropDownList($model->firmList(), ['id' => 'firm', 'prompt' => 'Выберите организацию...'])->label(false); ?>
+                                                <?= $form->field($model, 'firmId')->dropDownList($model->firmList(), ['id' => 'firmId', 'prompt' => 'Выберите организацию...'])->label(false); ?>
                                             </div>
                                         </div>
                                         <span id="error_city" class="text-danger"></span>
