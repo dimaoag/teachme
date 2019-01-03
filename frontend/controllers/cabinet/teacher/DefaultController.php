@@ -335,25 +335,9 @@ class DefaultController extends Controller {
 
     public function actionThanks()
     {
-        if (isset($_POST['data'])){
+        return $this->render('thanks', [
 
-            $result= json_decode(base64_decode($_POST['data']));
-            // данные вернуться в base64 формат JSON
-
-            if ($result->status == 'success'){
-                // обновим статус заказа
-                $this->paymentManageService->statusCompleted($result->order_id);
-                return $this->render('thanks', [
-
-                ]);
-            } else {
-                $this->paymentManageService->statusCanceled($result->order_id);
-                return $this->redirect(['index']);
-            }
-        }
-        else {
-            exit('error');
-        }
+        ]);
     }
 
 
@@ -366,9 +350,11 @@ class DefaultController extends Controller {
             if ($result->status == 'sandbox'){
                 // обновим статус заказа
                 $this->paymentManageService->statusCompleted($result->order_id);
+                Yii::$app->session->setFlash('success', 'Заказ успешно оплачен');
                 return $this->redirect(['thanks']);
             } else {
                 $this->paymentManageService->statusCanceled($result->order_id);
+                Yii::$app->session->setFlash('error', 'Оплатить заказ неудалось. Попробуйте еще раз.');
                 return $this->redirect(['index']);
             }
         } else {

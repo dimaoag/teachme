@@ -71,7 +71,7 @@ class PaymentManageService
                  можно было обработать как оплаченый
             */
             'server_url'	=>	Yii::$app->params['pay_server_url'],
-            'language'		=>	'ru', // uk, en
+            'language'		=>	'en', // uk, en
             'sandbox'       =>  '1' // и куда же без песочницы,
             // не на реальных же деньгах тестировать
         ));
