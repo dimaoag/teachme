@@ -335,10 +335,27 @@ class DefaultController extends Controller {
 
     public function actionThanks()
     {
-        return $this->render('thanks', [
+        if (isset($_POST['data'])){
 
-        ]);
+            $result= json_decode(base64_decode($_POST['data']));
+            // данные вернуться в base64 формат JSON
+
+            if ($result->status == 'success'){
+                // обновим статус заказа
+                $this->paymentManageService->statusCompleted($result->order_id);
+                return $this->render('thanks', [
+
+                ]);
+            } else {
+                $this->paymentManageService->statusCanceled($result->order_id);
+                return $this->redirect(['index']);
+            }
+        }
+        else {
+            exit('error');
+        }
     }
+
 
     public function actionCheckStatus()
     {
@@ -346,16 +363,17 @@ class DefaultController extends Controller {
 
             $result= json_decode(base64_decode($_POST['data']));
             // данные вернуться в base64 формат JSON
-            if ($result->status == 'success'){
+            if ($result->status == 'sandbox'){
                 // обновим статус заказа
                 $this->paymentManageService->statusCompleted($result->order_id);
-                return $this->redirect(['index']);
+                return $this->redirect(['thanks']);
             } else {
                 $this->paymentManageService->statusCanceled($result->order_id);
                 return $this->redirect(['index']);
             }
+        } else {
+            exit('error');
         }
-        exit('error');
     }
 
 
