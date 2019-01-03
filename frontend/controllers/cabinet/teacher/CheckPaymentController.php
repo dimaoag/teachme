@@ -22,17 +22,6 @@ class CheckPaymentController extends Controller
 
     }
 
-    public function behaviors(): array
-    {
-        return [
-            'verbs' => [
-                'class' => VerbFilter::class,
-                'actions' => [
-                    'index' => ['POST'],
-                ],
-            ],
-        ];
-    }
 
     public function actionIndex()
     {
@@ -44,11 +33,13 @@ class CheckPaymentController extends Controller
                 // обновим статус заказа
                 $this->paymentManageService->statusCompleted($result->order_id);
                 Yii::$app->session->setFlash('success', 'Заказ успешно оплачен');
-                return $this->redirect(['thanks']);
+                return $this->render('thanks', [
+
+                ]);
             } else {
                 $this->paymentManageService->statusCanceled($result->order_id);
                 Yii::$app->session->setFlash('error', 'Оплатить заказ неудалось. Попробуйте еще раз.');
-                return $this->redirect(['index']);
+                return $this->redirect(['/']);
             }
         }
         return $this->render('thanks', [
