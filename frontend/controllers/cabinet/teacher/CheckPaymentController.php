@@ -4,8 +4,6 @@ namespace frontend\controllers\cabinet\teacher;
 
 
 use Yii;
-use yii\filters\AccessControl;
-use yii\filters\VerbFilter;
 use yii\helpers\Url;
 use yii\web\Controller;
 use shop\services\manage\PaymentManageService;
