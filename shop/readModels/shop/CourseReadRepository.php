@@ -83,6 +83,9 @@ class CourseReadRepository
          * @var $course Course
          */
         $course = Course::find()->active()->orderBy(['price' => SORT_DESC])->one();
+        if (!$course){
+            return 10000;
+        }
         return $course->price;
     }
     
