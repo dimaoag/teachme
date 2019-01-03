@@ -341,26 +341,6 @@ class DefaultController extends Controller {
     }
 
 
-    public function actionCheckStatus()
-    {
-        if (isset($_POST['data'])){
-
-            $result= json_decode(base64_decode($_POST['data']));
-            // данные вернуться в base64 формат JSON
-            if ($result->status == 'sandbox'){
-                // обновим статус заказа
-                $this->paymentManageService->statusCompleted($result->order_id);
-                Yii::$app->session->setFlash('success', 'Заказ успешно оплачен');
-                return $this->redirect(['thanks']);
-            } else {
-                $this->paymentManageService->statusCanceled($result->order_id);
-                Yii::$app->session->setFlash('error', 'Оплатить заказ неудалось. Попробуйте еще раз.');
-                return $this->redirect(['index']);
-            }
-        } else {
-            exit('error');
-        }
-    }
 
 
     public function actionEditOrder()
