@@ -39,3 +39,6 @@ phpunit.phar
 
 # vagrant runtime
 /.vagrant
+frontend/config/.main-local.php.swp
+/static/
+
