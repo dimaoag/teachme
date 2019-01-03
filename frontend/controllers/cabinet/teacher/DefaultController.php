@@ -364,7 +364,7 @@ class DefaultController extends Controller {
             $result= json_decode(base64_decode($_POST['data']));
             // данные вернуться в base64 формат JSON
             if ($result->status == 'sandbox'){
-                // обновим статус заказа asdas
+                // обновим статус заказа
                 $this->paymentManageService->statusCompleted($result->order_id);
                 return $this->redirect(['thanks']);
             } else {
