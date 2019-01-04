@@ -48,7 +48,6 @@ class Payment extends ActiveRecord
         return $this->status == self::CANCELLED;
     }
 
-
     public function statusCompleted(): void
     {
         if ($this->isCompleted()) {

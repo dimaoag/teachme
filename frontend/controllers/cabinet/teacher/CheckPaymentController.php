@@ -46,16 +46,24 @@ class CheckPaymentController extends Controller
                 $payment = $this->paymentManageService->statusCompleted($result->order_id);
                 $this->userManageService->plusPublication($payment);
                 Yii::$app->session->setFlash('success', 'Заказ успешно оплачен');
-                return $this->render('thanks', [
-
-                ]);
+                return $this->redirect(['thanks']);
             } else {
                 $this->paymentManageService->statusCanceled($result->order_id);
                 Yii::$app->session->setFlash('error', 'Оплатить заказ неудалось. Попробуйте еще раз.');
-                return $this->redirect(['/']);
+                return $this->redirect(['failure']);
             }
         }
+
+    }
+
+    public function actionThanks(){
         return $this->render('thanks', [
+
+        ]);
+    }
+
+    public function actionFailure(){
+        return $this->render('failure', [
 
         ]);
     }
