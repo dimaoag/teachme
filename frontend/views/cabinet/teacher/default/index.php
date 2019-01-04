@@ -9,6 +9,7 @@
 use yii\helpers\Html;
 use yii\helpers\Url;
 use shop\helpers\CourseHelper;
+use yii\widgets\LinkPager;
 
 
 $this->title = 'Мои курсы';
@@ -78,6 +79,7 @@ $this->params['active_course'] = 'active';
                         </div>
                     </div>
                 <?php endforeach;  ?>
+                <?= LinkPager::widget(['pagination' => $pages]); ?>
             <?php else: ?>
                 <p class="text-center"> Список курсов пуст</p>
             <?php endif; ?>

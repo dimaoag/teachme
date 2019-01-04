@@ -13,6 +13,7 @@ use shop\forms\course\order\OrderEditForm;
 use shop\forms\manage\user\PaymentForm;
 use shop\forms\manage\user\ProfileEditForm;
 use shop\helpers\UserHelper;
+use shop\readModels\shop\CourseReadRepository;
 use shop\repositories\PaymentRepository;
 use shop\repositories\shop\OrderRepository;
 use shop\repositories\shop\TeacherMainInfoRepository;
@@ -21,6 +22,7 @@ use shop\services\manage\PaymentManageService;
 use shop\services\manage\UserManegeService;
 use Yii;
 use yii\base\Module;
+use yii\data\Pagination;
 use yii\filters\VerbFilter;
 use yii\helpers\ArrayHelper;
 use yii\helpers\BaseUrl;
@@ -52,6 +54,7 @@ class DefaultController extends Controller {
     private $orderCommentManageService;
     private $paymentManageService;
     private $paymentRepository;
+    private $courseReadRepository;
 
     public function __construct(string $id, Module $module,
         UserRepository $users,
@@ -64,6 +67,7 @@ class DefaultController extends Controller {
         OrderCommentManageService $orderCommentManageService,
         PaymentManageService $paymentManageService,
         PaymentRepository $paymentRepository,
+        CourseReadRepository $courseReadRepository,
         array $config = [])
     {
         parent::__construct($id, $module, $config);
@@ -77,6 +81,7 @@ class DefaultController extends Controller {
         $this->orderCommentManageService = $orderCommentManageService;
         $this->paymentManageService = $paymentManageService;
         $this->paymentRepository = $paymentRepository;
+        $this->courseReadRepository = $courseReadRepository;
     }
 
 
@@ -109,7 +114,25 @@ class DefaultController extends Controller {
 
     public function actionIndex(){
 
-        $courses = $this->courses->getCoursesByUserId(Yii::$app->user->id);
+        // with ActiveDataProvider
+//        $dataProvider = new ActiveDataProvider([
+//            'query' => User::find(),
+//            'pagination' => array('pageSize' => 50),
+//        ]);
+//
+//        echo \yii\widgets\LinkPager::widget([
+//            'pagination'=>$dataProvider->pagination,
+//        ]);
+
+
+        $query = Course::find()->where(['user_id' => Yii::$app->user->id]);
+        $countQuery = clone $query;
+        $pages = new Pagination(['totalCount' => $countQuery->count(), 'pageSize'=>20]);
+        $courses = $query->offset($pages->offset)
+            ->limit($pages->limit)
+            ->all();
+
+
         $user = $this->users->getUserById(Yii::$app->user->id);
         $courseTypes = CourseType::find()->all();
 
@@ -122,13 +145,10 @@ class DefaultController extends Controller {
         }
 
 
-//        VarDumper::dump($publications, 10, true);
-
-
-
         return $this->render('index', [
             'publications' => $publications,
             'courses' => $courses,
+            'pages' => $pages,
         ]);
     }
 
