@@ -26,7 +26,7 @@ class CheckPaymentController extends Controller
 
     public function beforeAction($action)
     {
-        if ($action->id == 'index') {
+        if ($action->id == 'index' || $action->id == 'thanks' || $action->id == 'failure') {
             $this->enableCsrfValidation = false;
         }
 
@@ -40,7 +40,7 @@ class CheckPaymentController extends Controller
 
             $result= json_decode(base64_decode($_POST['data']));
             // данные вернуться в base64 формат JSON
-            if ($result->status == 'sandbox'){
+            if ($result->status == 'success'){
                 // обновим статус заказа
                 /** @var  $payment Payment */
                 $payment = $this->paymentManageService->statusCompleted($result->order_id);
