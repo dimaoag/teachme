@@ -266,11 +266,19 @@ class CourseManageService
         $this->courses->save($course);
     }
 
+
     public function editOrder(OrderEditForm $form): void
     {
         $order = $this->orders->get($form->order_id);
         $order->edit($form->title, $form->status);
         $this->orders->save($order);
+    }
+
+
+    public function deleteOrder($id): void
+    {
+        $order = $this->orders->get($id);
+        $this->orders->remove($order);
     }
 
 

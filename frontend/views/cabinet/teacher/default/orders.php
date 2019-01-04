@@ -68,7 +68,10 @@ $this->params['active_orders'] = 'active';
                                 </a>
                                 <div class="order-item-bottom">
                                     <p class="order-item-bottom-price"><?= Html::encode($order->price); ?> грн.</p>
-                                    <a href="#"><i class="fa fa-trash" aria-hidden="true"></i></a>
+                                    <?= Html::a('<i class="fa fa-trash"></i>', ['delete-order', 'id' => $order->id], [
+                                        'data-method' => 'post',
+                                        'data-confirm' => 'Вы действилътельно хотите удалить эту заявку?',
+                                    ]); ?>
                                 </div>
                                 <div class="clearfix"></div>
                             </div>
@@ -91,7 +94,10 @@ $this->params['active_orders'] = 'active';
                                 </a>
                                 <div class="order-item-bottom">
                                     <p class="order-item-bottom-price"><?= Html::encode($order->price); ?> грн.</p>
-                                    <a href="#"><i class="fa fa-trash" aria-hidden="true"></i></a>
+                                    <?= Html::a('<i class="fa fa-trash"></i>', ['delete-order', 'id' => $order->id], [
+                                        'data-method' => 'post',
+                                        'data-confirm' => 'Вы действилътельно хотите удалить эту заявку?',
+                                    ]); ?>
                                 </div>
                                 <div class="clearfix"></div>
                             </div>
@@ -114,7 +120,10 @@ $this->params['active_orders'] = 'active';
                                 </a>
                                 <div class="order-item-bottom">
                                     <p class="order-item-bottom-price"><?= Html::encode($order->price); ?> грн.</p>
-                                    <a href="#"><i class="fa fa-trash" aria-hidden="true"></i></a>
+                                    <?= Html::a('<i class="fa fa-trash"></i>', ['delete-order', 'id' => $order->id], [
+                                        'data-method' => 'post',
+                                        'data-confirm' => 'Вы действилътельно хотите удалить эту заявку?',
+                                    ]); ?>
                                 </div>
                                 <div class="clearfix"></div>
                             </div>
@@ -141,7 +150,10 @@ $this->params['active_orders'] = 'active';
                                     </a>
                                     <div class="order-item-bottom">
                                         <p class="order-item-bottom-price"><?= Html::encode($order->price); ?> грн.</p>
-                                        <a href="#"><i class="fa fa-trash" aria-hidden="true"></i></a>
+                                        <?= Html::a('<i class="fa fa-trash"></i>', ['delete-order', 'id' => $order->id], [
+                                            'data-method' => 'post',
+                                            'data-confirm' => 'Вы действилътельно хотите удалить эту заявку?',
+                                        ]); ?>
                                     </div>
                                     <div class="clearfix"></div>
                                 </div>
@@ -164,7 +176,10 @@ $this->params['active_orders'] = 'active';
                                     </a>
                                     <div class="order-item-bottom">
                                         <p class="order-item-bottom-price"><?= Html::encode($order->price); ?> грн.</p>
-                                        <a href="#"><i class="fa fa-trash" aria-hidden="true"></i></a>
+                                        <?= Html::a('<i class="fa fa-trash"></i>', ['delete-order', 'id' => $order->id], [
+                                            'data-method' => 'post',
+                                            'data-confirm' => 'Вы действилътельно хотите удалить эту заявку?',
+                                        ]); ?>
                                     </div>
                                     <div class="clearfix"></div>
                                 </div>
@@ -187,7 +202,10 @@ $this->params['active_orders'] = 'active';
                                     </a>
                                     <div class="order-item-bottom">
                                         <p class="order-item-bottom-price"><?= Html::encode($order->price); ?> грн.</p>
-                                        <a href="#"><i class="fa fa-trash" aria-hidden="true"></i></a>
+                                        <?= Html::a('<i class="fa fa-trash"></i>', ['delete-order', 'id' => $order->id], [
+                                            'data-method' => 'post',
+                                            'data-confirm' => 'Вы действилътельно хотите удалить эту заявку?',
+                                        ]); ?>
                                     </div>
                                     <div class="clearfix"></div>
                                 </div>

@@ -105,10 +105,13 @@ class DefaultController extends Controller {
                 'actions' => [
                     'delete-firm-photo' => ['POST'],
                     'delete-order-comment' => ['POST'],
+                    'delete-order' => ['POST'],
                 ],
             ],
         ];
     }
+
+
 
 
 
@@ -124,14 +127,12 @@ class DefaultController extends Controller {
 //            'pagination'=>$dataProvider->pagination,
 //        ]);
 
-
         $query = Course::find()->where(['user_id' => Yii::$app->user->id]);
         $countQuery = clone $query;
         $pages = new Pagination(['totalCount' => $countQuery->count(), 'pageSize'=>20]);
         $courses = $query->offset($pages->offset)
             ->limit($pages->limit)
             ->all();
-
 
         $user = $this->users->getUserById(Yii::$app->user->id);
         $courseTypes = CourseType::find()->all();
@@ -144,13 +145,20 @@ class DefaultController extends Controller {
 
         }
 
-
         return $this->render('index', [
             'publications' => $publications,
             'courses' => $courses,
             'pages' => $pages,
         ]);
     }
+
+
+
+
+
+
+
+    // orders
 
     public function actionOrders()
     {
@@ -178,7 +186,6 @@ class DefaultController extends Controller {
                 Yii::$app->session->setFlash('error', $e->getMessage());
             }
         }
-
 
 
         return $this->render('orders', [
@@ -228,6 +235,55 @@ class DefaultController extends Controller {
     }
 
 
+    public function actionEditOrder()
+    {
+        $orderEditForm = new OrderEditForm();
+        if ($orderEditForm->load(Yii::$app->request->post()) && $orderEditForm->validate()) {
+            try {
+                $this->courseManageService->editOrder($orderEditForm);
+                Yii::$app->session->setFlash('success', 'Заявку успешно изменено');
+                return $this->redirect(Yii::$app->request->referrer ?: ['index']);
+            } catch (\DomainException $e) {
+                Yii::$app->errorHandler->logException($e);
+                Yii::$app->session->setFlash('error', $e->getMessage());
+            }
+        }
+
+    }
+
+    public function actionDeleteOrder($id)
+    {
+        try {
+            $this->courseManageService->deleteOrder($id);
+            Yii::$app->session->setFlash('success', 'Заявка успешно удаленна');
+        } catch (\DomainException $e) {
+            Yii::$app->session->setFlash('error', $e->getMessage());
+        }
+        return $this->redirect(Yii::$app->request->referrer ?: ['index']);
+    }
+
+
+    public function actionDeleteOrderComment()
+    {
+        if(Yii::$app->request->isAjax){
+            $id = Yii::$app->request->post('id');
+            try {
+                $this->orderCommentManageService->remove($id);
+                return 'success';
+            } catch (\DomainException $e) {
+                Yii::$app->errorHandler->logException($e);
+                Yii::$app->session->setFlash('error', $e->getMessage());
+                return 'error';
+            }
+        }
+        return $this->redirect(Yii::$app->request->referrer ?: ['index']);
+    }
+
+
+
+
+    // teacherMainInfo
+
     public function actionTeacherMainInfo()
     {
 
@@ -254,9 +310,15 @@ class DefaultController extends Controller {
         ]);
     }
 
+
+
+
+
+
+    // edit profile
+
     public function actionProfile()
     {
-
         $user = $this->users->getUserById(Yii::$app->user->id);
 
         $profileEditForm = new ProfileEditForm($user);
@@ -296,6 +358,12 @@ class DefaultController extends Controller {
 
 
 
+
+
+
+
+    // payment
+
     public function actionPayment()
     {
         $user = $this->users->getUserById(Yii::$app->user->id);
@@ -319,6 +387,8 @@ class DefaultController extends Controller {
         ]);
     }
 
+
+
     public function actionCheckout($id)
     {
         $payment = $this->paymentRepository->get($id);
@@ -331,6 +401,7 @@ class DefaultController extends Controller {
             'payment' => $payment,
         ]);
     }
+
 
     public function actionPay()
     {
@@ -353,53 +424,10 @@ class DefaultController extends Controller {
     }
 
 
-    public function actionThanks()
-    {
-        return $this->render('thanks', [
-
-        ]);
-    }
 
 
+    // photo
 
-
-    public function actionEditOrder()
-    {
-        $orderEditForm = new OrderEditForm();
-        if ($orderEditForm->load(Yii::$app->request->post()) && $orderEditForm->validate()) {
-            try {
-                $this->courseManageService->editOrder($orderEditForm);
-                Yii::$app->session->setFlash('success', 'Заявку успешно изменено');
-                return $this->redirect(Yii::$app->request->referrer ?: ['index']);
-            } catch (\DomainException $e) {
-                Yii::$app->errorHandler->logException($e);
-                Yii::$app->session->setFlash('error', $e->getMessage());
-            }
-        }
-
-    }
-
-    public function actionDeleteOrderComment()
-    {
-        if(Yii::$app->request->isAjax){
-            $id = Yii::$app->request->post('id');
-            try {
-                $this->orderCommentManageService->remove($id);
-                return 'success';
-            } catch (\DomainException $e) {
-                Yii::$app->errorHandler->logException($e);
-                Yii::$app->session->setFlash('error', $e->getMessage());
-                return 'error';
-            }
-        }
-        return $this->redirect(Yii::$app->request->referrer ?: ['index']);
-    }
-
-
-    /**
-     * @param integer $id
-     * @return mixed
-     */
     public function actionDeleteFirmPhoto($id)
     {
         try {
