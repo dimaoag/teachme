@@ -46,7 +46,6 @@ $this->params['active_orders'] = 'active';
                     <?php endforeach; ?>
                 <?php endif; ?>
             </select>
-            <a href="#" class="archive">Перейти к архиву <i class="fa fa-trash" aria-hidden="true"></i></a>
         </div>
     <?php  endif; ?>
     <?php if (!empty($orders)): ?>

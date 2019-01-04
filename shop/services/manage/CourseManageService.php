@@ -163,7 +163,14 @@ class CourseManageService
     public function remove($id): void
     {
         $course = $this->courses->get($id);
+        $this->indexer->remove($course);
         $this->courses->remove($course);
+    }
+
+    public function checkOwn($userId, $courseId): bool
+    {
+        $course = $this->courses->get($courseId);
+        return $course->user_id == $userId;
     }
 
     //errors on moderation

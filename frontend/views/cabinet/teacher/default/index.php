@@ -71,6 +71,10 @@ $this->params['active_course'] = 'active';
                             <div class="course-control">
                                 <div class="left">
                                     <a href="<?= Url::to(['/course/course/update', 'id' => $course->id])?>" class="edit">Редактировать</a>
+                                    <?= Html::a('Удалить', ['delete-course', 'id' => $course->id], [
+                                        'data-method' => 'post',
+                                        'data-confirm' => 'Вы действилътельно хотите удалить этот курс?',
+                                    ]); ?>
                                 </div>
                                 <div class="right">
                                     <?= CourseHelper::getStatusLink($course->status, $course->id, $course->values[0]['value']);?>

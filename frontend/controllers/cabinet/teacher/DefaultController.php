@@ -106,6 +106,7 @@ class DefaultController extends Controller {
                     'delete-firm-photo' => ['POST'],
                     'delete-order-comment' => ['POST'],
                     'delete-order' => ['POST'],
+                    'delete-course' => ['POST'],
                 ],
             ],
         ];
@@ -154,8 +155,20 @@ class DefaultController extends Controller {
 
 
 
+    public function actionDeleteCourse($id)
+    {
+        if (!$this->courseManageService->checkOwn(Yii::$app->user->id, $id)){
+            return $this->redirect(Yii::$app->request->referrer ?: ['index']);
+        }
 
-
+        try {
+            $this->courseManageService->remove($id);
+            Yii::$app->session->setFlash('success', 'Курс успешно удален');
+        } catch (\DomainException $e) {
+            Yii::$app->session->setFlash('error', $e->getMessage());
+        }
+        return $this->redirect(Yii::$app->request->referrer ?: ['index']);
+    }
 
 
     // orders
