@@ -14,6 +14,7 @@ class CheckPaymentController extends Controller
 
     private $paymentManageService;
     private $userManageService;
+    public $enableCsrfValidation = false;
 
     public function __construct($id, $module, PaymentManageService $paymentManageService, UserManegeService $userManageService, $config = [])
     {
@@ -24,14 +25,6 @@ class CheckPaymentController extends Controller
     }
 
 
-    public function beforeAction($action)
-    {
-        if ($action->id == 'index' || $action->id == 'thanks' || $action->id == 'failure') {
-            $this->enableCsrfValidation = false;
-        }
-
-        return parent::beforeAction($action);
-    }
 
 
     public function actionIndex()
@@ -50,10 +43,9 @@ class CheckPaymentController extends Controller
             } else {
                 $this->paymentManageService->statusCanceled($result->order_id);
                 Yii::$app->session->setFlash('error', 'Оплатить заказ неудалось. Попробуйте еще раз.');
-                return $this->redirect(['failure']);
             }
         }
-
+        return $this->redirect(['failure']);
     }
 
     public function actionThanks(){
