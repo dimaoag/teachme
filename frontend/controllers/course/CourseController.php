@@ -88,6 +88,12 @@ class CourseController extends Controller{
     public function actionView($id){
         $course = $this->findModel($id);
 
+        if ($course->status != Course::STATUS_ACTIVE){
+            Yii::$app->session->setFlash('error', 'Курс не активирован');
+            return $this->redirect(Yii::$app->request->referrer ?: ['/']);
+        }
+
+
         $reviewForm = new ReviewForm();
         if ($reviewForm->load(Yii::$app->request->post()) && $reviewForm->validate()) {
             try {

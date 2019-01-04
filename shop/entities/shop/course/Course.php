@@ -156,6 +156,13 @@ class Course extends ActiveRecord implements AggregateRoot
     }
 
 
+    public function countOrders(){
+        return count($this->orders) ?: 0;
+    }
+
+
+    //errors for moderation
+
     public function createError($id, $message)
     {
         $error = Error::create($id, $message);

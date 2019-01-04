@@ -110,17 +110,17 @@ FontAwesomeAsset::register($this);
                 </div>
             </div>
         </div>
-        <div class="content">
-            <div class="container">
 
+            <div class="container">
                 <?= Breadcrumbs::widget([
                     'links' => isset($this->params['breadcrumbs']) ? $this->params['breadcrumbs'] : [],
                 ]) ?>
                 <?= Alert::widget() ?>
             </div>
+            <div class="container content">
                 <?= $content ?>
+            </div>
 
-        </div>
         <footer>
         <div class="container">
             <div class="row">
