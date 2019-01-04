@@ -1,27 +1,33 @@
 <?php
 namespace shop\services\manage;
 
+use shop\entities\user\Payment;
 use shop\entities\user\User;
 use shop\forms\manage\user\PaymentForm;
 use shop\repositories\UserRepository;
 use shop\forms\manage\user\UserEditForm;
 use shop\services\RoleManager;
 use shop\services\TransactionManager;
+use shop\repositories\shop\CourseTypeRepository;
+
 
 class UserManegeService
 {
     private $repository;
     private $roles;
+    private $courseTypeRepository;
     private $transaction;
 
     public function __construct(
         UserRepository $repository,
         RoleManager $roles,
+        CourseTypeRepository $courseTypeRepository,
         TransactionManager $transaction
     )
     {
         $this->repository = $repository;
         $this->roles = $roles;
+        $this->courseTypeRepository = $courseTypeRepository;
         $this->transaction = $transaction;
     }
 
@@ -59,11 +65,14 @@ class UserManegeService
         $this->repository->save($user);
     }
 
-    public function plusPublication($userId, $courseTypeId ): void
+    public function plusPublication(Payment $payment): void
     {
-        $user = $this->repository->getUserById($userId);
-        $user->setPublication($courseTypeId, 1);
-        $this->repository->save($user);
+        $user = $this->repository->getUserById($payment->user_id);
+        $courseType = $this->courseTypeRepository->get($payment->course_type_id);
+        if ($payment->status === Payment::COMPLETED){
+            $user->setPublication($courseType->id, $payment->quantity);
+            $this->repository->save($user);
+        }
     }
 
 
