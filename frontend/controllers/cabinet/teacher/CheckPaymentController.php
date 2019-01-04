@@ -14,6 +14,7 @@ class CheckPaymentController extends Controller
 
     private $paymentManageService;
     private $userManageService;
+    public $enableCsrfValidation = false;
 
     public function __construct($id, $module, PaymentManageService $paymentManageService, UserManegeService $userManageService, $config = [])
     {
@@ -24,14 +25,14 @@ class CheckPaymentController extends Controller
     }
 
 
-    public function beforeAction($action)
-    {
-        if ($action->id == 'index' || $action->id == 'thanks' || $action->id == 'failure') {
-            $this->enableCsrfValidation = false;
-        }
-
-        return parent::beforeAction($action);
-    }
+//    public function beforeAction($action)
+//    {
+//        if ($action->id == 'index' || $action->id == 'thanks' || $action->id == 'failure') {
+//            $this->enableCsrfValidation = false;
+//        }
+//
+//        return parent::beforeAction($action);
+//    }
 
 
     public function actionIndex()
@@ -40,7 +41,7 @@ class CheckPaymentController extends Controller
 
             $result= json_decode(base64_decode($_POST['data']));
             // данные вернуться в base64 формат JSON
-            if ($result->status == 'success'){
+            if ($result->status == 'sandbox'){
                 // обновим статус заказа
                 /** @var  $payment Payment */
                 $payment = $this->paymentManageService->statusCompleted($result->order_id);
