@@ -6,8 +6,9 @@ use shop\forms\auth\LoginForm;
 use yii\web\Controller;
 use shop\forms\course\search\SearchForm;
 use shop\readModels\shop\CourseReadRepository;
+use frontend\controllers\AppController;
 
-class SearchController extends Controller{
+class SearchController extends AppController{
 
 
     private $courseReadRepository;

@@ -12,8 +12,9 @@ use yii\filters\AccessControl;
 use yii\web\Controller;
 use shop\repositories\UserRepository;
 use avator\turbosms\Turbosms;
+use frontend\controllers\AppController;
 
-class SignupController extends Controller
+class SignupController extends AppController
 {
 
     private $signupService;

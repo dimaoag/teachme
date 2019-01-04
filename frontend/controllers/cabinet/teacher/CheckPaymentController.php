@@ -8,8 +8,9 @@ use Yii;
 use yii\web\Controller;
 use shop\services\manage\PaymentManageService;
 use shop\services\manage\UserManegeService;
+use frontend\controllers\AppController;
 
-class CheckPaymentController extends Controller
+class CheckPaymentController extends AppController
 {
 
     private $paymentManageService;

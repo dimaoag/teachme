@@ -9,8 +9,9 @@ use yii\base\Module;
 use yii\web\BadRequestHttpException;
 use yii\web\Controller;
 use Yii;
+use frontend\controllers\AppController;
 
-class ResetController extends Controller
+class ResetController extends AppController
 {
     private $passwordResetService;
 

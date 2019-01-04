@@ -9,8 +9,9 @@ use yii\filters\AccessControl;
 use yii\filters\VerbFilter;
 use yii\helpers\Url;
 use yii\web\Controller;
+use frontend\controllers\AppController;
 
-class WishlistController extends Controller
+class WishlistController extends AppController
 {
 
     private $service;

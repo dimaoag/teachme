@@ -1,10 +1,9 @@
 <?php
 namespace frontend\controllers;
 
-use yii\web\Controller;
 
 
-class SiteController extends Controller{
+class SiteController extends AppController {
 
     public function actions(){
         return [

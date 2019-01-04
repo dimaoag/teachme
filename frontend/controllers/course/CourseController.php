@@ -24,8 +24,9 @@ use shop\forms\course\search\SearchForm;
 use shop\readModels\shop\CourseReadRepository;
 use shop\readModels\shop\TeacherMainInfoReadRepository;
 use shop\forms\auth\LoginForm;
+use frontend\controllers\AppController;
 
-class CourseController extends Controller{
+class CourseController extends AppController{
 
 
     private $service;

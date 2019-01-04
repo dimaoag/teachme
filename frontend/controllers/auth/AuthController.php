@@ -6,10 +6,11 @@ use shop\services\auth\AuthService;
 use yii\base\Module;
 use yii\web\Controller;
 use Yii;
+use frontend\controllers\AppController;
 
 
 
-class AuthController  extends Controller
+class AuthController  extends AppController
 {
     private $authService;
 

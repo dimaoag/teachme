@@ -6,8 +6,9 @@ use shop\services\contact\ContactService;
 use yii\base\Module;
 use yii\web\Controller;
 use Yii;
+use frontend\controllers\AppController;
 
-class ContactController extends Controller
+class ContactController extends AppController
 {
     private $contactService;
 

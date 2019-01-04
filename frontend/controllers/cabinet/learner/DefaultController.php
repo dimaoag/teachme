@@ -9,11 +9,10 @@ use shop\repositories\UserRepository;
 use shop\services\user\ProfileService;
 use Yii;
 use yii\base\Module;
-use yii\filters\VerbFilter;
-use yii\web\Controller;
 use yii\filters\AccessControl;
+use frontend\controllers\AppController;
 
-class DefaultController extends Controller {
+class DefaultController extends AppController {
 
 
     private $users;

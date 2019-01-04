@@ -39,7 +39,9 @@ use shop\forms\manage\user\ProfileEditPasswordForm;
 use shop\services\manage\OrderCommentManageService;
 use shop\forms\course\order\OrderCommentCreateForm;
 use shop\payment\LiqPay;
-class DefaultController extends Controller {
+use frontend\controllers\AppController;
+
+class DefaultController extends AppController {
 
     public $layout = 'cabinet';
 
@@ -152,7 +154,6 @@ class DefaultController extends Controller {
             'pages' => $pages,
         ]);
     }
-
 
 
     public function actionDeleteCourse($id)
