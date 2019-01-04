@@ -48,7 +48,7 @@ class CourseCreateForm extends CompositeForm
             [['cityId', 'firmId', 'courseTypeId', 'price'], 'integer'],
             ['description', 'string'],
             [['description'], 'filter', 'filter' => function($value){
-                return trim(preg_replace("/\r\n|\r/", "<br />", $value));
+                return trim(preg_replace("/\r\n|\r/", "<br>", $value));
             }],
             ['price', 'integer', 'min' => 0],
         ];
