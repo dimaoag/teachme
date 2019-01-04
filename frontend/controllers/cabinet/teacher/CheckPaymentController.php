@@ -40,7 +40,7 @@ class CheckPaymentController extends Controller
 
             $result= json_decode(base64_decode($_POST['data']));
             // данные вернуться в base64 формат JSON
-            if ($result->status == 'success'){
+            if ($result->status == 'sandbox'){
                 // обновим статус заказа
                 /** @var  $payment Payment */
                 $payment = $this->paymentManageService->statusCompleted($result->order_id);

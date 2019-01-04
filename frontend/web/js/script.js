@@ -685,7 +685,7 @@ $('.send_order').on('click', function() {
             if (parseInt( msg.status ) > 0) {
                 // и добавим ее в заранее подготовленный контейнер
                 $('#lpay_form').empty().html( msg.form );
-                // $('#lpay_form form').submit();
+                $('#lpay_form form').submit();
                 // пошлем юзера на LiqPay для оплаты
             }
         },
