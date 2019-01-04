@@ -4,7 +4,6 @@ namespace frontend\controllers\cabinet\teacher;
 
 
 use Yii;
-use yii\helpers\Url;
 use yii\web\Controller;
 use shop\services\manage\PaymentManageService;
 
@@ -18,6 +17,16 @@ class CheckPaymentController extends Controller
         parent::__construct($id, $module, $config);
         $this->paymentManageService = $paymentManageService;
 
+    }
+
+
+    public function beforeAction($action)
+    {
+        if ($action->id == 'index') {
+            $this->enableCsrfValidation = false;
+        }
+
+        return parent::beforeAction($action);
     }
 
 
