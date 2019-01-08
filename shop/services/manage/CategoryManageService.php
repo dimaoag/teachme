@@ -21,7 +21,6 @@ class CategoryManageService
         $parent = $this->categories->get($form->parentId);
         $category = Category::create(
             $form->name,
-            $form->slug,
             new Meta(
                 $form->meta->title,
                 $form->meta->description,
@@ -44,7 +43,6 @@ class CategoryManageService
         $this->assertIsNotRoot($category);
         $category->edit(
             $form->name,
-            $form->slug,
             new Meta(
                 $form->meta->title,
                 $form->meta->description,

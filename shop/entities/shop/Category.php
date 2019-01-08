@@ -10,7 +10,7 @@ use Yii;
 use yii\db\ActiveRecord;
 use yii\web\UploadedFile;
 use yiidreamteam\upload\ImageUploadBehavior;
-
+use yii\helpers\Inflector;
 /**
  * @property integer $id
  * @property string $name
@@ -33,19 +33,18 @@ class Category extends ActiveRecord
 {
     public $meta;
 
-    public static function create($name, $slug, Meta $meta): self
+    public static function create($name, Meta $meta): self
     {
         $category = new static();
         $category->name = $name;
-        $category->slug = $slug;
+        $category->slug = Inflector::slug($name,'_');
         $category->meta = $meta;
         return $category;
     }
 
-    public function edit($name, $slug, Meta $meta): void
+    public function edit($name, Meta $meta): void
     {
         $this->name = $name;
-        $this->slug = $slug;
         $this->meta = $meta;
     }
 

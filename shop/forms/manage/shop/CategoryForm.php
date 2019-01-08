@@ -15,7 +15,6 @@ use yii\web\UploadedFile;
 class CategoryForm extends CompositeForm
 {
     public $name;
-    public $slug;
     public $parentId;
     /**
      * @var  UploadedFile $firm_photo
@@ -28,7 +27,6 @@ class CategoryForm extends CompositeForm
     {
         if ($category) {
             $this->name = $category->name;
-            $this->slug = $category->slug;
             $this->parentId = $category->parent ? $category->parent->id : null;
             $this->meta = new MetaForm($category->meta);
             $this->_category = $category;
@@ -41,11 +39,10 @@ class CategoryForm extends CompositeForm
     public function rules(): array
     {
         return [
-            [['name', 'slug'], 'required'],
+            [['name'], 'required'],
             [['parentId'], 'integer'],
-            [['name', 'slug'], 'string', 'max' => 255],
-            ['slug', SlugValidator::class],
-            [['name', 'slug'], 'unique', 'targetClass' => Category::class, 'filter' => $this->_category ? ['<>', 'id', $this->_category->id] : null],
+            [['name'], 'string', 'max' => 255],
+            [['name'], 'unique', 'targetClass' => Category::class, 'filter' => $this->_category ? ['<>', 'id', $this->_category->id] : null],
             [['cat_photo'], 'image'],
         ];
     }
@@ -67,7 +64,6 @@ class CategoryForm extends CompositeForm
         return [
             'name' => 'Название',
             'cat_photo' => 'Фото',
-            'slug' => 'Алиас',
             'parentId' => 'Родительская категория',
         ];
     }

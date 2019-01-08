@@ -20,7 +20,6 @@ use yii\widgets\ActiveForm;
         <div class="box-body">
             <?= $form->field($model, 'parentId')->dropDownList($model->parentCategoriesList()) ?>
             <?= $form->field($model, 'name')->textInput(['maxlength' => true]) ?>
-            <?= $form->field($model, 'slug')->textInput(['maxlength' => true]) ?>
             <?php if (!empty($category->cat_photo)):?>
                 <div class="col-md-2 col-xs-3" style="text-align: center">
                     <div class="btn-group">
