@@ -37,7 +37,7 @@ class Category extends ActiveRecord
     {
         $category = new static();
         $category->name = $name;
-        $category->slug = Inflector::transliterate($name);
+        $category->slug = Inflector::slug($name, '_');
         $category->meta = $meta;
         return $category;
     }
@@ -45,7 +45,7 @@ class Category extends ActiveRecord
     public function edit($name, Meta $meta): void
     {
         $this->name = $name;
-        $this->slug = Inflector::transliterate($name);
+        $this->slug = Inflector::slug($name, '_');
         $this->meta = $meta;
     }
 
