@@ -18,9 +18,10 @@ $this->title = $course->name;
 
 foreach ($course->category->parents as $parent) {
     if (!$parent->isRoot()) {
-        $this->params['breadcrumbs'][] = ['label' => $parent->name, 'url' => ['/course/course/category', 'id' => $parent->id]];
+        $this->params['breadcrumbs'][] = ['label' => $parent->name, 'url' => ['/course/search/search', 'category' => $parent->id]];
     }
 }
+$this->params['breadcrumbs'][] = ['label' => $course->category->name, 'url' => ['/course/search/search', 'category' => $course->category->id]];
 $this->params['breadcrumbs'][] = $course->name;
 
 ?>
