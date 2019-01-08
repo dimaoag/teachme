@@ -450,7 +450,7 @@ class DefaultController extends AppController {
         } catch (\DomainException $e) {
             Yii::$app->session->setFlash('error', $e->getMessage());
         }
-        return $this->redirect(['index']);
+        return $this->redirect(['teacher-main-info']);
     }
 
 

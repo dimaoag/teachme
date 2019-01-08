@@ -2083,6 +2083,13 @@ label.tab.active{
 .left-align-slick > .slick-list > .slick-track {
     margin-left:0;
 }
+.course-orders-count{
+    display: block;
+    text-align: center;
+}
+.course-orders-count p{
+    color: black;
+}
 .course-orders{
     display: -webkit-box;
     display: -ms-flexbox;

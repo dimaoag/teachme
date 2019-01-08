@@ -56,8 +56,10 @@ $this->params['active_course'] = 'active';
                                     <a href="<?= Url::to(['/course/course/view', 'id' => $course->id])?>"><?= Html::encode($course->name); ?></a>
                                 </h4>
                                 <div class="course-orders">
-                                    <span><?= $course->countOrders(); ?></span>
-                                    <p>заявок</p>
+                                    <a href="<?= Url::to(['orders-by-course', 'id' => $course->id]) ?>" class="course-orders-count">
+                                        <span><?= $course->countOrders(); ?></span>
+                                        <p>заявок</p>
+                                    </a>
                                 </div>
                             </div>
                             <div class="course-status">

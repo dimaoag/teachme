@@ -4,6 +4,7 @@ namespace frontend\controllers\auth;
 use shop\forms\auth\LoginForm;
 use shop\services\auth\AuthService;
 use yii\base\Module;
+use yii\helpers\Url;
 use yii\web\Controller;
 use Yii;
 use frontend\controllers\AppController;
@@ -46,7 +47,7 @@ class AuthController  extends AppController
 
     public function actionLogout(){
         Yii::$app->user->logout();
-        return $this->goHome();
+        return $this->redirect(Url::to(['course/search/search']));
     }
 
 }
