@@ -28,6 +28,11 @@ class CategoryManageService
                 $form->meta->keywords
             )
         );
+
+        if ($form->cat_photo) {
+            $category->addPhoto($form->cat_photo);
+        }
+
         $category->appendTo($parent);
         $this->categories->save($category);
         return $category;
@@ -46,10 +51,16 @@ class CategoryManageService
                 $form->meta->keywords
             )
         );
+
         if ($form->parentId !== $category->parent->id) {
             $parent = $this->categories->get($form->parentId);
             $category->appendTo($parent);
         }
+
+        if ($form->cat_photo) {
+            $category->addPhoto($form->cat_photo);
+        }
+
         $this->categories->save($category);
     }
 
@@ -71,6 +82,13 @@ class CategoryManageService
             $category->insertAfter($next);
         }
         $this->categories->save($category);
+    }
+
+    public function removePhoto($id): void
+    {
+        $category = $this->categories->get($id);
+        $category->removePhoto($id);
+
     }
 
     public function remove($id): void

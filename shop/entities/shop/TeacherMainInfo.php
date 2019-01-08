@@ -2,13 +2,11 @@
 namespace shop\entities\shop;
 
 
-use lhs\Yii2SaveRelationsBehavior\SaveRelationsBehavior;
+
 use shop\entities\user\User;
 use Yii;
 use yii\db\ActiveQuery;
 use yii\db\ActiveRecord;
-use \Webmozart\Assert\Assert;
-use yii\helpers\VarDumper;
 use yii\web\UploadedFile;
 use yiidreamteam\upload\ImageUploadBehavior;
 

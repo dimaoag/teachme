@@ -10,7 +10,7 @@ use backend\forms\course\CategorySearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
-use shop\readModels\shop\CategoryReadRepository;
+use shop\readModels\course\CategoryReadRepository;
 
 class CategoryController extends Controller
 {
@@ -137,6 +137,20 @@ class CategoryController extends Controller
         $this->service->moveDown($id);
         return $this->redirect(['index']);
     }
+
+
+    public function actionDeleteCategoryPhoto($id)
+    {
+        try {
+            $this->service->removePhoto($id);
+            Yii::$app->session->setFlash('success', 'Фото успешно удалено');
+        } catch (\DomainException $e) {
+            Yii::$app->session->setFlash('error', $e->getMessage());
+        }
+        return $this->redirect(Yii::$app->request->referrer ?: ['index']);
+    }
+
+
 
     /**
      * @param integer $id

@@ -1,6 +1,6 @@
 <?php
 
-namespace shop\readModels\shop;
+namespace shop\readModels\course;
 
 use shop\entities\shop\TeacherMainInfo;
 

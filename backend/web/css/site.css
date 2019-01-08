@@ -2,7 +2,9 @@ html,
 body {
     height: 100%;
 }
-
+img{
+    max-width: 100%;
+}
 .wrap {
     min-height: 100%;
     height: auto;
@@ -117,4 +119,12 @@ a.desc:after {
 
 .nav > li > form > button.logout:focus {
     outline: none;
+}
+.thumbnail{
+    position: relative;
+}
+.delete_cat_photo{
+    position: absolute;
+    top: 0;
+    right: 0;
 }

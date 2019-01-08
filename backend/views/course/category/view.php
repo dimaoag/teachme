@@ -56,4 +56,14 @@ $this->params['breadcrumbs'][] = $this->title;
             ]) ?>
         </div>
     </div>
+    <?php if(!empty($category->cat_photo)): ?>
+        <div class="box">
+            <div class="box-header with-border">Photo</div>
+            <div class="box-body">
+                <div class="col-xs-3">
+                    <?= Html::img($category->getThumbFileUrl('cat_photo', 'thumb')); ?>
+                </div>
+            </div>
+        </div>
+    <?php endif; ?>
 </div>

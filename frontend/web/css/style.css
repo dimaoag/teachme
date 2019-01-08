@@ -2936,6 +2936,9 @@ label.tab.active{
     text-align: center;
     font-weight: bold;
 }
+.c-preview__count{
+    margin-top: 10px;
+}
 .c-preview:hover {
     background-position: 100% 100%;
 }

@@ -2,7 +2,7 @@
 
 namespace frontend\widgets\course;
 
-use shop\readModels\shop\CourseReadRepository;
+use shop\readModels\course\CourseReadRepository;
 use yii\base\Widget;
 
 class RelatedCoursesWidget extends Widget

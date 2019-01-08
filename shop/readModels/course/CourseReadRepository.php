@@ -1,6 +1,6 @@
 <?php
 
-namespace shop\readModels\shop;
+namespace shop\readModels\course;
 
 use Elasticsearch\Client;
 use phpDocumentor\Reflection\Types\Integer;
@@ -210,7 +210,7 @@ class CourseReadRepository
                 ->andWhere(['id' => $ids])
                 ->orderBy(new Expression('FIELD(id,' . implode(',', $ids) . ')'));
         } else {
-            $query = Course::find()->andWhere(['id' => 0]);
+            $query = Course::find()->active()->andWhere(['id' => 0]);
         }
 
         return new SimpleActiveDataProvider([

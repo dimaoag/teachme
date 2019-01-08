@@ -3,13 +3,11 @@ namespace shop\forms\manage\shop;
 
 use shop\entities\shop\City;
 use shop\entities\shop\TeacherMainInfo;
-use shop\forms\CompositeForm;
 use yii\base\Model;
 use yii\helpers\ArrayHelper;
 use yii\web\UploadedFile;
 
 
-/* @property TeacherMainInfoPhotoForm $photo */
 
 class TeacherMainInfoForm extends Model
 {
@@ -70,7 +68,7 @@ class TeacherMainInfoForm extends Model
         return [
             'city_id' => 'Город',
             'firm_name' => 'Название организации',
-            'firm_photo' => 'Photo organization',
+            'firm_photo' => 'Фото организации',
             'address' => 'Адрес',
             'phone_1' => 'Телефон 1',
             'phone_2' => 'Телефон 2',

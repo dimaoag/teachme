@@ -3,7 +3,22 @@ namespace frontend\controllers;
 
 
 
+use shop\entities\shop\Category;
+use shop\readModels\course\CategoryReadRepository;
+use shop\repositories\shop\CategoryRepository;
+use yii\helpers\VarDumper;
+
 class SiteController extends AppController {
+
+    private $categories;
+
+    public function __construct($id, $module,
+        CategoryReadRepository $categories,
+        $config = [])
+    {
+        parent::__construct($id, $module, $config);
+        $this->categories = $categories;
+    }
 
     public function actions(){
         return [
@@ -20,7 +35,11 @@ class SiteController extends AppController {
 
     public function actionIndex(){
         $this->layout = 'home';
-        return $this->render('index');
+        $categoryViews = $this->categories->getTreeWithSubsOf();
+
+        return $this->render('index',[
+            'categoryViews' => $categoryViews
+        ]);
     }
 
 

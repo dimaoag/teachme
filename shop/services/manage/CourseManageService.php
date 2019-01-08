@@ -154,6 +154,12 @@ class CourseManageService
         $this->courses->save($course);
     }
 
+    public function disable(Course $course){
+        $course->deactivate();
+        $this->indexer->remove($course);
+        $this->courses->save($course);
+    }
+
     public function failureCourse(Course $course){
         $course->failure();
         $this->courses->save($course);

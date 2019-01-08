@@ -2,9 +2,12 @@
 
 use shop\helpers\CityHelper;
 use yii\helpers\Html;
+use yii\helpers\Url;
 
 
 /* @var $this yii\web\View */
+/* @var $categoryViews \shop\readModels\course\views\CategoryView[] */
+
 $this->title = 'Главная';
 ?>
 
@@ -52,89 +55,21 @@ $this->title = 'Главная';
                 </div>
             </div>
         </div>
-        <div class="row category-container">
-            <div class="col-sm-4 category-item">
-                <a class="c-preview" href="#">
-                    <div class="cat-1 c-preview__img" style="background: #000 url(img/1.png) no-repeat center center;background-size: cover"></div>
-                    <div class="c-preview__title">
-                        <h3 class="c-preview__title">Программирование</h3>
-                        <p class="c-preview__title">132 курса</p>
-                    </div>
-                </a>
+        <?php if (!empty($categoryViews)): ?>
+            <div class="row category-container">
+                <?php foreach ($categoryViews as $categoryView): ?>
+                    <div class="col-sm-4 category-item">
+                    <a class="c-preview" href="<?= Url::to(['/course/search/search', 'category' => $categoryView->category->id]);?>">
+                        <div class="cat-1 c-preview__img" style="background: #000 url(<?= $categoryView->category->getThumbFileUrl('cat_photo', 'thumb') ?: Url::base() . '/img/no_image.png'; ?>) no-repeat center center;background-size: cover"></div>
+                        <div class="c-preview__title">
+                            <h3 class="c-preview__title"><?=Html::encode($categoryView->category->name);?></h3>
+                            <p class="c-preview__count"> курсов (<?=Html::encode($categoryView->count);?>)</p>
+                        </div>
+                    </a>
+                </div>
+                <?php endforeach; ?>
             </div>
-            <div class="col-sm-4 category-item">
-                <a class="c-preview" href="#">
-                    <div class="cat-2 c-preview__img" style="background: #000 url(img/2.png) no-repeat center center; background-size: cover"></div>
-                    <div class="c-preview__title">
-                        <h3 class="c-preview__title">Дизайн</h3>
-                        <p class="c-preview__title">132 курса</p>
-                    </div>
-                </a>
-            </div>
-            <div class="col-sm-4 category-item">
-                <a class="c-preview" href="#">
-                    <div class="cat-3 c-preview__img" style="background: #000 url(img/3.png) no-repeat center center;background-size: cover"></div>
-                    <div class="c-preview__title">
-                        <h3 class="c-preview__title">Иностранные языки</h3>
-                        <p class="c-preview__title">132 курса</p>
-                    </div>
-                </a>
-            </div>
-            <div class="col-sm-4 category-item">
-                <a class="c-preview" href="#">
-                    <div class="cat-4 c-preview__img" style="background: #000 url(img/4.png) no-repeat center center;background-size: cover"></div>
-                    <div class="c-preview__title">
-                        <h3 class="c-preview__title">Автошколы</h3>
-                        <p class="c-preview__title">132 курса</p>
-                    </div>
-                </a>
-            </div>
-            <div class="col-sm-4 category-item">
-                <a class="c-preview" href="#">
-                    <div class="cat-5 c-preview__img" style="background: #000 url(img/5.png) no-repeat center center;background-size: cover"></div>
-                    <div class="c-preview__title">
-                        <h3 class="c-preview__title">Кулинария</h3>
-                        <p class="c-preview__title">132 курса</p>
-                    </div>
-                </a>
-            </div>
-            <div class="col-sm-4 category-item">
-                <a class="c-preview" href="#">
-                    <div class="cat-6 c-preview__img" style="background: #000 url(img/6.png) no-repeat center center;background-size: cover"></div>
-                    <div class="c-preview__title">
-                        <h3 class="c-preview__title">Творчество</h3>
-                        <p class="c-preview__title">132 курса</p>
-                    </div>
-                </a>
-            </div>
-            <div class="col-sm-4 category-item">
-                <a class="c-preview" href="#">
-                    <div class="cat-7 c-preview__img" style="background: #000 url(img/7.png) no-repeat center center;background-size: cover"></div>
-                    <div class="c-preview__title">
-                        <h3 class="c-preview__title">Профессиональные курсы</h3>
-                        <p class="c-preview__title">132 курса</p>
-                    </div>
-                </a>
-            </div>
-            <div class="col-sm-4 category-item">
-                <a class="c-preview" href="#">
-                    <div class="cat-8 c-preview__img" style="background: #000 url(img/8.png) no-repeat center center;background-size: cover"></div>
-                    <div class="c-preview__title">
-                        <h3 class="c-preview__title">Красота и стиль</h3>
-                        <p class="c-preview__title">132 курса</p>
-                    </div>
-                </a>
-            </div>
-            <div class="col-sm-4 category-item">
-                <a class="c-preview" href="#">
-                    <div class="cat-9 c-preview__img" style="background: #000 url(img/9.jpg) no-repeat center center;background-size: cover"></div>
-                    <div class="c-preview__title">
-                        <h3 class="c-preview__title">Здоровье и спорт</h3>
-                        <p class="c-preview__title">132 курса</p>
-                    </div>
-                </a>
-            </div>
-        </div>
+        <?php endif; ?>
     </div>
 </main>
 

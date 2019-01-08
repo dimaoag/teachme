@@ -7,6 +7,7 @@ use shop\forms\CompositeForm;
 use shop\forms\manage\MetaForm;
 use shop\validators\SlugValidator;
 use yii\helpers\ArrayHelper;
+use yii\web\UploadedFile;
 
 /**
  * @property MetaForm $meta;
@@ -16,6 +17,10 @@ class CategoryForm extends CompositeForm
     public $name;
     public $slug;
     public $parentId;
+    /**
+     * @var  UploadedFile $firm_photo
+     */
+    public $cat_photo;
 
     private $_category;
 
@@ -40,7 +45,8 @@ class CategoryForm extends CompositeForm
             [['parentId'], 'integer'],
             [['name', 'slug'], 'string', 'max' => 255],
             ['slug', SlugValidator::class],
-            [['name', 'slug'], 'unique', 'targetClass' => Category::class, 'filter' => $this->_category ? ['<>', 'id', $this->_category->id] : null]
+            [['name', 'slug'], 'unique', 'targetClass' => Category::class, 'filter' => $this->_category ? ['<>', 'id', $this->_category->id] : null],
+            [['cat_photo'], 'image'],
         ];
     }
 
@@ -60,10 +66,22 @@ class CategoryForm extends CompositeForm
     {
         return [
             'name' => 'Название',
+            'cat_photo' => 'Фото',
             'slug' => 'Алиас',
             'parentId' => 'Родительская категория',
         ];
     }
+
+
+    public function beforeValidate(): bool
+    {
+        if (parent::beforeValidate()) {
+            $this->cat_photo = UploadedFile::getInstance($this, 'cat_photo');
+            return true;
+        }
+        return false;
+    }
+
 
 
 

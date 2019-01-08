@@ -13,7 +13,7 @@ use shop\forms\course\order\OrderEditForm;
 use shop\forms\manage\user\PaymentForm;
 use shop\forms\manage\user\ProfileEditForm;
 use shop\helpers\UserHelper;
-use shop\readModels\shop\CourseReadRepository;
+use shop\readModels\course\CourseReadRepository;
 use shop\repositories\PaymentRepository;
 use shop\repositories\shop\OrderRepository;
 use shop\repositories\shop\TeacherMainInfoRepository;

@@ -5,8 +5,8 @@ namespace frontend\controllers\course;
 use shop\forms\course\order\OrderCreateForm;
 use shop\forms\course\ReviewForm;
 use shop\helpers\CourseHelper;
-use shop\readModels\shop\CategoryReadRepository;
-use shop\readModels\shop\CityReadRepository;
+use shop\readModels\course\CategoryReadRepository;
+use shop\readModels\course\CityReadRepository;
 use Yii;
 use yii\filters\AccessControl;
 use yii\filters\VerbFilter;
@@ -21,8 +21,8 @@ use shop\helpers\UserHelper;
 use yii\web\NotFoundHttpException;
 use shop\services\manage\UserManegeService;
 use shop\forms\course\search\SearchForm;
-use shop\readModels\shop\CourseReadRepository;
-use shop\readModels\shop\TeacherMainInfoReadRepository;
+use shop\readModels\course\CourseReadRepository;
+use shop\readModels\course\TeacherMainInfoReadRepository;
 use shop\forms\auth\LoginForm;
 use frontend\controllers\AppController;
 
@@ -292,8 +292,6 @@ class CourseController extends AppController{
 
     public function actionDelete($id)
     {
-        $course = $this->findModel($id);
-
         if (!CourseHelper::isUserCourse($id, Yii::$app->user->id)){
             return $this->redirect(['/']);
         }
@@ -334,6 +332,23 @@ class CourseController extends AppController{
     }
 
 
+
+    public function actionDisable($id){
+
+        $course = $this->findModel($id);
+
+        if (!CourseHelper::isUserCourse($id, Yii::$app->user->id)){
+            return $this->redirect(['/']);
+        }
+
+        try {
+            $this->service->disable($course);
+            Yii::$app->session->setFlash('success', 'Курс деактивировано');
+        } catch (\DomainException $e) {
+            Yii::$app->session->setFlash('error', $e->getMessage());
+        }
+        return $this->redirect(Yii::$app->request->referrer ?: ['/']);
+    }
 
 
     public function actionDeleteReview($id, $course_id){

@@ -2,14 +2,12 @@
 namespace shop\helpers;
 
 
-use shop\readModels\shop\CourseReadRepository;
 use shop\repositories\shop\CourseRepository;
 use Yii;
-use yii\helpers\ArrayHelper;
 use yii\helpers\Html;
 use yii\helpers\Url;
 use shop\entities\shop\course\Course;
-use shop\entities\shop\CourseType;
+
 
 
 class CourseHelper

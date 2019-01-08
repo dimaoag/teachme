@@ -1,6 +1,6 @@
 <?php
 
-namespace shop\readModels\shop\views;
+namespace shop\readModels\course\views;
 
 use shop\entities\shop\Category;
 

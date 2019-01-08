@@ -2,7 +2,7 @@
 
 namespace frontend\controllers\cabinet;
 
-use shop\readModels\shop\CourseReadRepository;
+use shop\readModels\course\CourseReadRepository;
 use shop\services\user\WishlistService;
 use Yii;
 use yii\filters\AccessControl;
