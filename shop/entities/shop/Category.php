@@ -45,6 +45,7 @@ class Category extends ActiveRecord
     public function edit($name, Meta $meta): void
     {
         $this->name = $name;
+        $this->slug = Inflector::slug($name,'_');
         $this->meta = $meta;
     }
 
