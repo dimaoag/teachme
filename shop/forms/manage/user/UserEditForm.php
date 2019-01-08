@@ -33,6 +33,7 @@ class UserEditForm extends Model
     {
         return [
             [['first_name', 'phone', 'role'], 'required'],
+            ['phone', 'replacePhone'],
             [['first_name', 'last_name', 'email', 'phone'], 'string', 'max' => 255],
             [['email', 'phone'], 'unique', 'targetClass' => User::class, 'filter' => ['<>', 'id', $this->_user->id]],
             ['email', 'email'],
@@ -46,6 +47,11 @@ class UserEditForm extends Model
             'first_name' => 'Имя',
             'last_name' => 'Фамилия',
         ];
+    }
+
+    public function replacePhone()
+    {
+        $this->phone = str_replace(" ", "", $this->phone);
     }
 
     public function rolesList(): array

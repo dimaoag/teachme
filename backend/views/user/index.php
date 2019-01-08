@@ -15,7 +15,9 @@ $this->title = 'Пользователи';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="user-index">
-
+    <p>
+        <?= Html::a('Создать пользователя', ['create'], ['class' => 'btn btn-success']) ?>
+    </p>
     <div class="box">
         <div class="box-body">
             <?= GridView::widget([

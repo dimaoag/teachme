@@ -17,7 +17,7 @@ $this->params['breadcrumbs'][] = ['label' => $user->first_name.' ' .$user->last_
 
     <?= $form->field($model,'first_name')->textInput(['maxLength' => true]); ?>
     <?= $form->field($model,'last_name')->textInput(['maxLength' => true]); ?>
-    <?= $form->field($model,'phone')->textInput(['maxLength' => true]); ?>
+    <?= $form->field($model,'phone')->textInput(['maxLength' => true, 'data-mask' => 'callback-catalog-phone']); ?>
     <?= $form->field($model,'email')->textInput(['maxLength' => true]); ?>
     <?= $form->field($model, 'role')->dropDownList($model->rolesList()) ?>
 

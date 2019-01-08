@@ -9,6 +9,7 @@ use shop\forms\manage\user\UserEditForm;
 use shop\services\RoleManager;
 use shop\services\TransactionManager;
 use shop\repositories\shop\CourseTypeRepository;
+use shop\forms\manage\user\UserCreateForm;
 
 
 class UserManegeService
@@ -32,6 +33,22 @@ class UserManegeService
     }
 
 
+    public function create(UserCreateForm $form): User
+    {
+        $user = User::create(
+            $form->first_name,
+            $form->last_name,
+            $form->phone,
+            $form->email,
+            $form->designation,
+            $form->password
+        );
+        $this->transaction->wrap(function () use ($user, $form) {
+            $this->repository->save($user);
+            $this->roles->assign($user->id, $form->role);
+        });
+        return $user;
+    }
 
     public function edit($id, UserEditForm $form): void
     {

@@ -11,7 +11,7 @@ use yii\base\Module;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
-
+use shop\forms\manage\user\UserCreateForm;
 /**
  * UserController implements the CRUD actions for User model.
  */
@@ -49,6 +49,24 @@ class UserController extends Controller
         return $this->render('index', [
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
+        ]);
+    }
+
+
+    public function actionCreate()
+    {
+        $form = new UserCreateForm();
+        if ($form->load(Yii::$app->request->post()) && $form->validate()) {
+            try{
+                $user = $this->userManegeService->create($form);
+                return $this->redirect(['view', 'id' => $user->id]);
+            } catch (\DomainException $e){
+                Yii::$app->errorHandler->logException($e);
+                Yii::$app->session->setFlash('error',$e->getMessage());
+            }
+        }
+        return $this->render('create', [
+            'model' => $form,
         ]);
     }
 
