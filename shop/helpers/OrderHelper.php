@@ -18,6 +18,11 @@ class OrderHelper
         return Yii::$app->formatter->asDate($date,'medium');
     }
 
+    public static function echoDateTime($date){
+//        Yii::$app->formatter->locale = 'en-EN';
+        return Yii::$app->formatter->asDatetime($date,'medium');
+    }
+
 
     public static function selectStatusList(){
         return [
@@ -25,8 +30,36 @@ class OrderHelper
             Order::STATUS_PROCESSING => 'В обработке',
             Order::STATUS_COMPLETED => 'Завершонная'
         ];
-
     }
+
+    public static function statusList(){
+        return [
+            Order::STATUS_NEW => 'Новая заявка',
+            Order::STATUS_PROCESSING => 'В обработке',
+            Order::STATUS_COMPLETED => 'Завершонная'
+        ];
+    }
+
+
+    public static function statusLabel($status):string {
+        switch ($status){
+            case Order::STATUS_NEW:
+                $class = 'label label-default';
+                break;
+            case Order::STATUS_PROCESSING:
+                $class = 'label label-success';
+                break;
+            case Order::STATUS_COMPLETED:
+                $class = 'label label-danger';
+                break;
+            default:
+                $class = 'label label-default';
+        }
+        return Html::tag('span', ArrayHelper::getValue(self::statusList(), $status), [
+            'class' => $class,
+        ]);
+    }
+
 
     public static function getStatusName($status):string {
         switch ($status){

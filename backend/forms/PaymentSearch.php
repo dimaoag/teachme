@@ -22,7 +22,7 @@ class PaymentSearch extends Model
     {
         return [
             [['id', 'status'], 'integer'],
-            [['first_name', 'last_name', 'phone'], 'safe'],
+            [['first_name', 'last_name', 'phone'], 'string'],
         ];
     }
 

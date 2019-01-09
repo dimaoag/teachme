@@ -42,6 +42,7 @@
                             ['label' => 'Все пользователи', 'icon' => 'users', 'url' => ['user/user'], 'active' => $this->context->id == 'user/user'],
                             ['label' => 'Публикации', 'icon' => 'cubes', 'url' => ['user/publication'], 'active' => $this->context->id == 'user/publication'],
                             ['label' => 'Платежи', 'icon' => 'money', 'url' => ['/user/payment'], 'active' => $this->context->id == 'user/payment'],
+                            ['label' => 'Заявки', 'icon' => 'globe', 'url' => ['/user/order'], 'active' => $this->context->id == 'user/order'],
                         ],
                     ],
                     [
