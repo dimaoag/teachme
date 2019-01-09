@@ -1,6 +1,6 @@
 <?php
 
-namespace backend\controllers;
+namespace backend\controllers\user;
 
 use shop\forms\manage\user\UserEditForm;
 use shop\services\manage\UserManegeService;
@@ -8,6 +8,7 @@ use Yii;
 use shop\entities\user\User;
 use backend\forms\UserSearch;
 use yii\base\Module;
+use yii\filters\AccessControl;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
@@ -29,6 +30,15 @@ class UserController extends Controller
     public function behaviors()
     {
         return [
+            'access' => [
+                'class' => AccessControl::class,
+                'rules' => [
+                    [
+                        'allow' => true,
+                        'roles' => ['admin'],
+                    ],
+                ],
+            ],
             'verbs' => [
                 'class' => VerbFilter::class,
                 'actions' => [
@@ -111,7 +121,6 @@ class UserController extends Controller
 
         return $this->redirect(['index']);
     }
-
 
 
     protected function findModel($id)

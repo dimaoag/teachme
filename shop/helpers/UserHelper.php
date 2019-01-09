@@ -8,6 +8,7 @@ use Yii;
 use yii\helpers\ArrayHelper;
 use yii\helpers\Html;
 use yii\helpers\Url;
+use shop\entities\shop\CourseType;
 
 class UserHelper
 {
@@ -120,6 +121,21 @@ class UserHelper
 
     }
 
+
+    public static function getPublications(User $user)
+    {
+        $courseTypes = CourseType::find()->all();
+
+        $output = '';
+        foreach ($courseTypes as $courseType){
+            /** @var  $courseType CourseType */
+            /** @var  $publication Publication */
+            $publication = $user->getPublication($courseType->id);
+            $count = $publication->quantity ?: 0;
+            $output .= Html::a($count, ['change', 'course_type_id' => $courseType->id, 'user_id' => $user->id], ['data' => ['method' => 'post']]) .' - '. Html::encode($courseType->name) . '<br>';
+        }
+        return $output;
+    }
 
 
 }

@@ -32,7 +32,18 @@
                 'items' => [
                     ['label' => 'Menu Yii2', 'options' => ['class' => 'header']],
                     ['label' => 'Login', 'url' => ['site/login'], 'visible' => Yii::$app->user->isGuest],
-                    ['label' => 'Пользователи', 'icon' => 'user', 'url' => ['/user'], 'active' => $this->context->id == 'user'],
+                    [
+                        'label' => 'Пользователи',
+                        'icon' => 'user',
+                        'url' => '#',
+                        'items' => [
+//                            ['label' => 'Все пользователи', 'icon' => 'users', 'url' => ['/user'], 'active' => $this->context->route == 'user/index'],
+//                            ['label' => 'Публикации', 'icon' => 'cubes', 'url' => ['/user/publications'], 'activeOnRoutes'=> ['/user/publications']],
+                            ['label' => 'Все пользователи', 'icon' => 'users', 'url' => ['user/user'], 'active' => $this->context->id == 'user/user'],
+                            ['label' => 'Публикации', 'icon' => 'cubes', 'url' => ['user/publication'], 'active' => $this->context->id == 'user/publication'],
+                            ['label' => 'Платежи', 'icon' => 'money', 'url' => ['/user/payment'], 'active' => $this->context->id == 'user/payment'],
+                        ],
+                    ],
                     [
                         'label' => 'Курс',
                         'icon' => 'shopping-bag',
@@ -42,12 +53,6 @@
                             ['label' => 'Города', 'icon' => 'location-arrow', 'url' => ['/course/city/index'], 'active' => $this->context->id == 'course/city'],
                             ['label' => 'Характеристики', 'icon' => 'cubes', 'url' => ['/course/characteristic/index'], 'active' => $this->context->id == 'course/characteristic'],
                             ['label' => 'Типы курсов', 'icon' => 'ticket', 'url' => ['/course/course-type/index'], 'active' => $this->context->id == 'course/course-type'],
-//                            ['label' => 'Brands', 'icon' => 'star-o', 'url' => ['/shop/brand/index'], 'active' => $this->context->id == 'shop/brand'],
-//                            ['label' => 'Tags', 'icon' => 'star-o', 'url' => ['/shop/tag/index'], 'active' => $this->context->id == 'shop/tag'],
-//                            ['label' => 'Categories', 'icon' => 'star-o', 'url' => ['/shop/category/index'], 'active' => $this->context->id == 'shop/category'],
-//                            ['label' => 'Characteristics', 'icon' => 'star-o', 'url' => ['/shop/characteristic/index'], 'active' => $this->context->id == 'shop/characteristic'],
-//                            ['label' => 'Products', 'icon' => 'star-o', 'url' => ['/shop/product/index'], 'active' => $this->context->id == 'shop/product'],
-
                         ],
                     ],
                     [

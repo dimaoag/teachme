@@ -203,6 +203,21 @@ class User extends ActiveRecord implements IdentityInterface
         $publications = $this->publications;
         foreach ($publications as $publication) {
             if ($publication->isForCourseType($courseTypeId)) {
+                $publication->addQuantity($quantity);
+                $this->publications = $publications;
+                return;
+            }
+        }
+        $publications[] = Publication::create($courseTypeId, $quantity);
+        $this->publications = $publications;
+    }
+
+
+    public function changePublication($courseTypeId, $quantity): void
+    {
+        $publications = $this->publications;
+        foreach ($publications as $publication) {
+            if ($publication->isForCourseType($courseTypeId)) {
                 $publication->changeQuantity($quantity);
                 $this->publications = $publications;
                 return;

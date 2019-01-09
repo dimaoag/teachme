@@ -30,9 +30,14 @@ class Publication extends ActiveRecord
         return $object;
     }
 
-    public function changeQuantity($quantity): void
+    public function addQuantity($quantity): void
     {
         $this->quantity += $quantity;
+    }
+
+    public function changeQuantity($quantity): void
+    {
+        $this->quantity = $quantity;
     }
 
     public function isForCourseType($id): bool

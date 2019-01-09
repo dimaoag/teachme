@@ -4,6 +4,7 @@ namespace shop\services\manage;
 use shop\entities\user\Payment;
 use shop\entities\user\User;
 use shop\forms\manage\user\PaymentForm;
+use shop\forms\manage\user\PublicationChangeForm;
 use shop\repositories\UserRepository;
 use shop\forms\manage\user\UserEditForm;
 use shop\services\RoleManager;
@@ -90,6 +91,16 @@ class UserManegeService
             $user->setPublication($courseType->id, $payment->quantity);
             $this->repository->save($user);
         }
+    }
+
+
+    public function changePublication(PublicationChangeForm $form): void
+    {
+        $user = $this->repository->getUserById($form->userId);
+        $courseType = $this->courseTypeRepository->get($form->courseTypeId);
+        $user->changePublication($courseType->id, $form->quantity);
+        $this->repository->save($user);
+
     }
 
 
