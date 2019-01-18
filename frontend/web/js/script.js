@@ -411,10 +411,9 @@ if ($('div').is('#price_my_range')) {
     var input0 = document.getElementById('min_price');
     var input1 = document.getElementById('max_price');
     var inputs = [input0, input1];
-    var maxPrice = Number(input1.value);
+    var maxPrice = Number(document.getElementById('max_price_of_courses').value);
     var currentMin = Number(input0.value);
     var currentMax = Number(input1.value);
-
     if (currentMax == 0){
         currentMax = maxPrice;
     }
@@ -495,7 +494,7 @@ if ($('div').is('#price_my_range_sm')) {
     var input0 = document.getElementById('min_price_sm');
     var input1 = document.getElementById('max_price_sm');
     var inputs = [input0, input1];
-    var maxPrice = Number(input1.value);
+    var maxPrice = Number(document.getElementById('max_price_of_courses').value);
     var currentMin = Number(input0.value);
     var currentMax = Number(input1.value);
 
@@ -624,7 +623,7 @@ $('.header-bottom-sm-wrap a').click(function () {
 $(document).ready(function() {
     $('.city-select').niceSelect();
     $('.sort-select').niceSelect();
-    $('.main-select-city').niceSelect();
+    $('.main-select-city select').niceSelect();
 });
 
 // add background on hover menu

@@ -3241,12 +3241,12 @@ label.tab.active{
 .custom-select{
     color: black;
 }
-.custom-select .list{
+.main-select-city .list{
     width: 100%;
     max-height: 300px;
     overflow-y: auto;
 }
-.main-select-city{
+.main-select-city .nice-select{
     border-radius: 20px;
     width: 100%;
     margin: 10px 0;
