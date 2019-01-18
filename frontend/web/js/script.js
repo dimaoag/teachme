@@ -624,6 +624,7 @@ $('.header-bottom-sm-wrap a').click(function () {
 $(document).ready(function() {
     $('.city-select').niceSelect();
     $('.sort-select').niceSelect();
+    $('.main-select-city').niceSelect();
 });
 
 // add background on hover menu

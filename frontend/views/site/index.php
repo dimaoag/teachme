@@ -33,7 +33,7 @@ $this->title = 'Главная';
                                 </div>
                             </div>
                             <div class="col-sm-2">
-                                <button type="submit" class="main-header-form-field main-form-submit hvr-grow">Найти</button>
+                                <button type="submit" class="main-header-form-field main-form-submit">Найти</button>
                             </div>
                         <?= Html::endForm() ?>
                     </div>
@@ -123,7 +123,7 @@ $this->title = 'Главная';
             <div class="col-md-12 question-wrap">
                 <h1 class="question-title">Хотите выставить свои курсы на Teach Me ?</h1>
                 <div class="question-btn-wrap">
-                    <a href="#" class="button question-btn">Зарегистрироваться</a>
+                    <a href="<?= Url::to(['/signup']) ?>" class="button question-btn">Зарегистрироваться</a>
                 </div>
             </div>
         </div>
