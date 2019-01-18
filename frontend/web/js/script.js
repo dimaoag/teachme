@@ -1,9 +1,8 @@
-
-/*-----accordion-in-search-page--------*/
-$('.filter-header').on('click', function () {
+/*-----filter-in-search-page--------*/
+$('.filter-header').click(function () {
     $(this).find( ".toggle" ).toggle(1,function() {
-        $(this).find('.fa-plus').show();
-        $(this).find('.fa-minus').hide();
+        $(this).find('.plus').show();
+        $(this).find('.minus').hide();
     });
 });
 
@@ -24,31 +23,26 @@ $(document).ready(function () {
     $(function(){
 
         $(document).ready(function() {
-            $("[data-mask='callback-catalog-phone']").mask("+3 8 0 9 9  9 9 9  9 9  9 9");
+            $("[data-mask='callback-catalog-phone']").mask("+3 80 9 9  9 9 9  9 9  9 9");
         });
     })
 })(jQuery));
 
 
-$('.open-popup-more_md').magnificPopup({
+$('.open-popup-course').magnificPopup({
     type:'inline',
-    midClick: true // Allow opening popup on middle mouse click. Always set it to true if you don't provide alternative source in href.
+    midClick: true
 });
 
-$('.open-popup-phones_md').magnificPopup({
-    type:'inline',
-    midClick: true // Allow opening popup on middle mouse click. Always set it to true if you don't provide alternative source in href.
-});
 
-/*-----gallery-in-company-page--------*/
-$('.center').slick({
+/*-----gallery-course-page--------*/
+$('.gallery-course-container').slick({
     centerMode: true,
     infinite: true,
-    centerPadding: '60px',
     slidesToShow: 3,
     speed: 300,
-    prevArrow: $('.gallery-prev'),
-    nextArrow: $('.gallery-next'),
+    prevArrow: $('.gallery-nav-prev'),
+    nextArrow: $('.gallery-nav-next'),
     variableWidth: false,
     autoplay:true,
     autoplaySpeed: 2000,
@@ -57,7 +51,6 @@ $('.center').slick({
             breakpoint: 768,
             settings: {
                 centerMode: true,
-                centerPadding: '40px',
                 slidesToShow: 1
             }
         }
@@ -65,18 +58,15 @@ $('.center').slick({
 });
 
 /*-----open-images-in-popup--------*/
-$('.clip a').magnificPopup({
-    type: 'image'
-    // other options
+$('.gallery-course-container').magnificPopup({
+    delegate: 'a',
+    type: 'image',
+    gallery: {
+        enabled: true,
+    }
 });
 
 
-$('.accordion-title').on('click', function () {
-    $(this).find( ".toggle" ).toggle(10,function() {
-        $(this).find('.fa-angle-up').show();
-        $(this).find('.fa-angle-down').hide();
-    });
-});
 
 
 /*-----related-courses--------*/
@@ -85,8 +75,7 @@ $('.course-related-carousel').slick({
     slidesToShow: 4,
     slidesToScroll: 1,
     speed: 300,
-    prevArrow: $('.related-prev'),
-    nextArrow: $('.related-next'),
+    arrows:false,
     variableWidth: false,
     autoplay:true,
     autoplaySpeed: 2000,
@@ -94,6 +83,7 @@ $('.course-related-carousel').slick({
         {
             breakpoint: 1200,
             settings: {
+                arrows:false,
                 slidesToShow: 3,
                 slidesToScroll: 1,
                 infinite: true,
@@ -102,6 +92,7 @@ $('.course-related-carousel').slick({
         {
             breakpoint: 992,
             settings: {
+                arrows:false,
                 slidesToShow: 2,
                 slidesToScroll: 1,
                 infinite: true,
@@ -110,6 +101,7 @@ $('.course-related-carousel').slick({
         {
             breakpoint: 500,
             settings: {
+                arrows:false,
                 slidesToShow: 1,
                 slidesToScroll: 1
             }
@@ -120,7 +112,7 @@ $('.course-related-carousel').slick({
 
 $('.create-review').magnificPopup({
     type:'inline',
-    midClick: true // Allow opening popup on middle mouse click. Always set it to true if you don't provide alternative source in href.
+    midClick: true
 });
 
 
@@ -132,6 +124,7 @@ $('.create-review').magnificPopup({
 //     else {
 //         $(this).html('<i class="fa fa-heart-o"></i>');
 //     }
+//     return false;
 // });
 
 
@@ -147,7 +140,6 @@ $( ".feedback-form" ).submit(function( event ) {
 });
 
 /*-----tabs-cabinet-company--------*/
-
 // $(document).ready(function () {
 //     $('.cabinet-company').on('click', '.tab-company', function () {
 //         $('.cabinet-company').find('.active').removeClass('active');
@@ -174,7 +166,7 @@ $(document).ready(function(){
 
         // var filter = /^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/;
         var filter_price = /^[0-9.]{1,}$/;
-
+        //
         // if($.trim($('.photo_course').val()).length == 0) {
         //     error_photo = 'Загрузите пожалуйста фото курса';
         //     $('#error_photo').text(error_photo);
@@ -259,8 +251,8 @@ $(document).ready(function(){
         //     error_result = '';
         //     $('#error_result').text(error_result);
         // }
-
-
+        //
+        //
         // if(error_photo != '' || error_name != '' || error_category != '' || error_city != '' || error_price != ''
         //     || error_type_education != '' || error_form_education != '' || error_quantity_group != ''
         //     || error_level != '' || error_result != '')
@@ -312,52 +304,12 @@ $(document).ready(function(){
 
 });
 
-/*-----add-course-photo-course--------*/
-if ($('div').is('#photo_course')) {
-    $("#photo_course").spartanMultiImagePicker({
-        fieldName:  'photo_course',
-        maxCount : 1,
-        rowHeight : '150px',
-        groupClassName : 'col-sm-4 col-xs-6',
-        dropFileLabel:    'Drop file here',
-    });
-}
 
-/*-----add-course-photo-gallery--------*/
-if ($('div').is('#gallery')) {
-    $("#gallery").spartanMultiImagePicker({
-        fieldName:  'galleryPhotos[]',
-        maxCount : 10,
-        rowHeight : '170px',
-        groupClassName : 'col-sm-3 col-xs-6',
-        dropFileLabel:    'Drop file here',
-    });
-}
-
-/*-----company-add-photo-profile--------*/
-if ($('div').is('#photo_profile_company')) {
-    $("#photo_profile_company").spartanMultiImagePicker({
-        fieldName:  'photo_profile_company',
-        maxCount : 1,
-        rowHeight : '170px',
-        groupClassName : 'col-sm-4 col-xs-7',
-        dropFileLabel:    'Drop file here',
-    });
-}
-
-/*-----carousel in orders small-screen--------*/
-// $('.orders-slider').slick({
-//     dots: true,
-//     infinite: true,
-//     speed: 300,
-//     slidesToShow: 1,
-//     adaptiveHeight: true
-// });
 
 /*-----open-order-popup--------*/
 $('.open-order-popup').magnificPopup({
     type:'inline',
-    midClick: true
+    midClick: true // Allow opening popup on middle mouse click. Always set it to true if you don't provide alternative source in href.
 });
 
 /*-----open-courses-login-popup--------*/
@@ -365,6 +317,7 @@ $('.open-popup-courses-login').magnificPopup({
     type:'inline',
     midClick: true
 });
+
 
 /*-----carousel in orders small-screen--------*/
 if ($('div').is('.owl-carousel')) {
@@ -378,89 +331,87 @@ if ($('div').is('.owl-carousel')) {
 }
 
 
-
-/*----custom-select-----*/
-
-var x, i, j, selElmnt, a, b, c;
-/*look for any elements with the class "custom-select":*/
-x = document.getElementsByClassName("custom-select");
-for (i = 0; i < x.length; i++) {
-    selElmnt = x[i].getElementsByTagName("select")[0];
-    /*for each element, create a new DIV that will act as the selected item:*/
-    a = document.createElement("DIV");
-    a.setAttribute("class", "select-selected");
-    a.innerHTML = selElmnt.options[selElmnt.selectedIndex].innerHTML;
-    x[i].appendChild(a);
-    /*for each element, create a new DIV that will contain the option list:*/
-    b = document.createElement("DIV");
-    b.setAttribute("class", "select-items select-hide");
-    for (j = 1; j < selElmnt.length; j++) {
-        /*for each option in the original select element,
-        create a new DIV that will act as an option item:*/
-        c = document.createElement("DIV");
-        c.innerHTML = selElmnt.options[j].innerHTML;
-        c.addEventListener("click", function(e) {
-            /*when an item is clicked, update the original select box,
-            and the selected item:*/
-            var y, i, k, s, h;
-            s = this.parentNode.parentNode.getElementsByTagName("select")[0];
-            h = this.parentNode.previousSibling;
-            for (i = 0; i < s.length; i++) {
-                if (s.options[i].innerHTML == this.innerHTML) {
-                    s.selectedIndex = i;
-                    h.innerHTML = this.innerHTML;
-                    y = this.parentNode.getElementsByClassName("same-as-selected");
-                    for (k = 0; k < y.length; k++) {
-                        y[k].removeAttribute("class");
-                    }
-                    this.setAttribute("class", "same-as-selected");
-                    break;
-                }
-            }
-            h.click();
-        });
-        b.appendChild(c);
-    }
-    x[i].appendChild(b);
-    a.addEventListener("click", function(e) {
-        /*when the select box is clicked, close any other select boxes,
-        and open/close the current select box:*/
-        e.stopPropagation();
-        closeAllSelect(this);
-        this.nextSibling.classList.toggle("select-hide");
-        this.classList.toggle("select-arrow-active");
-    });
-}
-function closeAllSelect(elmnt) {
-    /*a function that will close all select boxes in the document,
-    except the current select box:*/
-    var x, y, i, arrNo = [];
-    x = document.getElementsByClassName("select-items");
-    y = document.getElementsByClassName("select-selected");
-    for (i = 0; i < y.length; i++) {
-        if (elmnt == y[i]) {
-            arrNo.push(i)
-        } else {
-            y[i].classList.remove("select-arrow-active");
-        }
-    }
-    for (i = 0; i < x.length; i++) {
-        if (arrNo.indexOf(i)) {
-            x[i].classList.add("select-hide");
-        }
-    }
-}
-/*if the user clicks anywhere outside the select box,
-then close all select boxes:*/
-document.addEventListener("click", closeAllSelect);
-
+// /*----custom-select-----*/
+//
+// var x, i, j, selElmnt, a, b, c;
+// /*look for any elements with the class "custom-select":*/
+// x = document.getElementsByClassName("custom-select");
+// for (i = 0; i < x.length; i++) {
+//     selElmnt = x[i].getElementsByTagName("select")[0];
+//     /*for each element, create a new DIV that will act as the selected item:*/
+//     a = document.createElement("DIV");
+//     a.setAttribute("class", "select-selected");
+//     a.innerHTML = selElmnt.options[selElmnt.selectedIndex].innerHTML;
+//     x[i].appendChild(a);
+//     /*for each element, create a new DIV that will contain the option list:*/
+//     b = document.createElement("DIV");
+//     b.setAttribute("class", "select-items select-hide");
+//     for (j = 1; j < selElmnt.length; j++) {
+//         /*for each option in the original select element,
+//         create a new DIV that will act as an option item:*/
+//         c = document.createElement("DIV");
+//         c.innerHTML = selElmnt.options[j].innerHTML;
+//         c.addEventListener("click", function(e) {
+//             /*when an item is clicked, update the original select box,
+//             and the selected item:*/
+//             var y, i, k, s, h;
+//             s = this.parentNode.parentNode.getElementsByTagName("select")[0];
+//             h = this.parentNode.previousSibling;
+//             for (i = 0; i < s.length; i++) {
+//                 if (s.options[i].innerHTML == this.innerHTML) {
+//                     s.selectedIndex = i;
+//                     h.innerHTML = this.innerHTML;
+//                     y = this.parentNode.getElementsByClassName("same-as-selected");
+//                     for (k = 0; k < y.length; k++) {
+//                         y[k].removeAttribute("class");
+//                     }
+//                     this.setAttribute("class", "same-as-selected");
+//                     break;
+//                 }
+//             }
+//             h.click();
+//         });
+//         b.appendChild(c);
+//     }
+//     x[i].appendChild(b);
+//     a.addEventListener("click", function(e) {
+//         /*when the select box is clicked, close any other select boxes,
+//         and open/close the current select box:*/
+//         e.stopPropagation();
+//         closeAllSelect(this);
+//         this.nextSibling.classList.toggle("select-hide");
+//         this.classList.toggle("select-arrow-active");
+//     });
+// }
+// function closeAllSelect(elmnt) {
+//     /*a function that will close all select boxes in the document,
+//     except the current select box:*/
+//     var x, y, i, arrNo = [];
+//     x = document.getElementsByClassName("select-items");
+//     y = document.getElementsByClassName("select-selected");
+//     for (i = 0; i < y.length; i++) {
+//         if (elmnt == y[i]) {
+//             arrNo.push(i)
+//         } else {
+//             y[i].classList.remove("select-arrow-active");
+//         }
+//     }
+//     for (i = 0; i < x.length; i++) {
+//         if (arrNo.indexOf(i)) {
+//             x[i].classList.add("select-hide");
+//         }
+//     }
+// }
+// /*if the user clicks anywhere outside the select box,
+// then close all select boxes:*/
+// document.addEventListener("click", closeAllSelect);
 
 if ($('div').is('#price_my_range')) {
     var keypressSlider = document.getElementById('price_my_range');
     var input0 = document.getElementById('min_price');
     var input1 = document.getElementById('max_price');
     var inputs = [input0, input1];
-    var maxPrice = Number(document.getElementById('max-price').value);
+    var maxPrice = Number(input1.value);
     var currentMin = Number(input0.value);
     var currentMax = Number(input1.value);
 
@@ -539,29 +490,180 @@ if ($('div').is('#price_my_range')) {
     });
 }
 
-if ($('ul').is('#main-menu')) {
-    $(function() {
-        $('#main-menu').smartmenus();
+if ($('div').is('#price_my_range_sm')) {
+    var keypressSlider = document.getElementById('price_my_range_sm');
+    var input0 = document.getElementById('min_price_sm');
+    var input1 = document.getElementById('max_price_sm');
+    var inputs = [input0, input1];
+    var maxPrice = Number(input1.value);
+    var currentMin = Number(input0.value);
+    var currentMax = Number(input1.value);
+
+    if (currentMax == 0){
+        currentMax = maxPrice;
+    }
+
+
+
+    noUiSlider.create(keypressSlider, {
+        start: [currentMin, currentMax],
+        connect: true,
+        // direction: 'rtl',
+        // tooltips: [true, wNumb({decimals: 1})],
+        // tooltips: true,
+
+        range: {
+            'min': [0],
+            'max': [maxPrice],
+        },
+        step: 50,
+
+    });
+    function setSliderHandle(i, value) {
+        var r = [null, null];
+        r[i] = Number(value);
+        keypressSlider.noUiSlider.set(r);
+    }
+
+// Listen to keydown events on the input field.
+    inputs.forEach(function (input, handle) {
+        input.addEventListener('change', function () {
+            setSliderHandle(handle, this.value);
+        });
+        input.addEventListener('keydown', function (e) {
+            var values = keypressSlider.noUiSlider.get();
+            var value = Number(values[handle]);
+            // [[handle0_down, handle0_up], [handle1_down, handle1_up]]
+            var steps = keypressSlider.noUiSlider.steps();
+            // [down, up]
+            var step = steps[handle];
+            var position;
+            // 13 is enter,
+            // 38 is key up,
+            // 40 is key down.
+            switch (e.which) {
+                case 13:
+                    setSliderHandle(handle, this.value);
+                    break;
+                case 38:
+                    // Get step to go increase slider value (up)
+                    position = step[1];
+                    // false = no step is set
+                    if (position === false) {
+                        position = 1;
+                    }
+                    // null = edge of slider
+                    if (position !== null) {
+                        setSliderHandle(handle, value + position);
+                    }
+                    break;
+                case 40:
+                    position = step[0];
+                    if (position === false) {
+                        position = 1;
+                    }
+                    if (position !== null) {
+                        setSliderHandle(handle, value - position);
+                    }
+                    break;
+            }
+        });
+    });
+    keypressSlider.noUiSlider.on('update', function (values, handle) {
+        inputs[handle].value = values[handle];
     });
 }
 
 
-// $('.popup-order-comments').on('click', '.popup-comment-btn',function () {
-//     var parent = $(this).closest('form');
-//     var order_id = parent.find($('.order-comment-order')).val();
-//     var url = parent.find($('.order-comment-order')).data('url');
-//     var text = parent.find($('.order-comment-text')).val();
-//
-//
-//
-//     console.log(parent);
-//     console.log(url);
-//     console.log(text);
-//
-//     return false;
-// });
+// //
+// if ($('ul').is('#main-menu')) {
+//     $(function() {
+//         $('#main-menu').smartmenus();
+//     });
+// }
 
-//select link
+
+
+// init menu in desktop
+$(function(){
+    amazonmenu.init({
+        menuid: 'mysidebarmenu',
+    });
+});
+
+// show arrow menu items
+$(function(){
+    $('.amazonmenu ul li').each(function ( li) {
+        if ($(this).hasClass('hassub')){
+            var svg = $(this).find($('svg')).first().css( "display", "block" );
+        }
+    });
+});
+
+
+// init menu in small screen display
+$(function() {
+    $( '#dl-menu' ).dlmenu();
+});
+
+// show arrow in small screen menu
+$(function(){
+    $('.dl-menuwrapper li > a:not(:only-child) > svg').css( "display", "block" );
+});
+
+
+
+// show search input in small screen
+$('.header-bottom-sm-wrap a').click(function () {
+    $('.header-bottom-search-form-sm').toggleClass(' active-form');
+    $('.header-bottom-search-form-sm .header-search-input').focus();
+    $(this).parent().toggleClass(' active');
+});
+
+// custom nice select
+$(document).ready(function() {
+    $('.city-select').niceSelect();
+    $('.sort-select').niceSelect();
+});
+
+// add background on hover menu
+$('.bottom-lg-menu').hover(function () {
+    $('#bg-hover').css( "display", "block" );
+}, function () {
+    $('#bg-hover').css( "display", "none" );
+});
+
+/*-----open-popup-search-filter--------*/
+var open_popup = $('.open-popup').magnificPopup({
+    type:'inline',
+    midClick: true,
+});
+
+//close popup filter
+$('.header-filter-back-btn').click(function () {
+    $.magnificPopup.close(open_popup);
+});
+
+
+// change color icon in course page in gallery arrow
+$('.gallery-nav').hover(function () {
+    $(this).find($('svg')).css( "fill", "black" );
+}, function () {
+    $(this).find($('svg')).css( "fill", "f6f4f4");
+});
+
+
+// position sticky follow on course desktop
+$(document).ready(function(){
+    $("#course-info-footer").sticky({topSpacing:15});
+});
+
+
+
+
+/*-----------cabinet-----------------*/
+
+//select link in orders page in teacher cabinet
 $(function(){
     // bind change event to select
     $('#dynamic_select').on('change', function () {
@@ -573,37 +675,37 @@ $(function(){
     });
 });
 
-
 // add comment
 $('.popup-order-comments').on('click', '.popup-comment-btn',function () {
     var form = $(this).closest('form');
-        form.on('beforeSubmit', function(e){
-            e.preventDefault();
-            e.stopImmediatePropagation();
-            var data = $(this).serialize();
-            var domain = window.location.hostname;
-            var textarea = $(this).find('textarea');
-            var parent = $(this).closest('.popup-order-comments').find($('.comment-container'));
-            $.ajax({
-                url: '/cabinet/teacher/default/orders',
-                type: 'POST',
-                data: data,
-                success: function(res){
-                    var comment = res.comment;
-                    var content =   '<div class="comment">' +
-                        '<a class="delete-comment" href="'+ res.url +'" data-id="'+ comment.id +'"><i class="fa fa-trash" data-method="post" aria-hidden="true"></i></a>'+
-                        '<p>'+ comment.text +'</p>'+
-                        '</div>';
-                    parent.append(content);
-                    form.trigger("reset");
-                },
-                error: function(){
-                    alert('Error!');
-                }
-            });
+    form.on('beforeSubmit', function(e){
+        e.preventDefault();
+        e.stopImmediatePropagation();
+        var data = $(this).serialize();
+        var domain = window.location.hostname;
+        var textarea = $(this).find('textarea');
+        var parent = $(this).closest('.popup-order-comments').find($('.comment-container'));
+        $.ajax({
+            url: '/cabinet/teacher/default/orders',
+            type: 'POST',
+            data: data,
+            success: function(res){
+                var comment = res.comment;
+                var content =   '<div class="comment">' +
+                    '<a class="delete-comment" href="'+ res.url +'" data-id="'+ comment.id +'"><i class="fa fa-trash" data-method="post" aria-hidden="true"></i></a>'+
+                    '<p>'+ comment.text +'</p>'+
+                    '</div>';
+                parent.append(content);
+                form.trigger("reset");
+            },
+            error: function(){
+                alert('Error!');
+            }
+        });
         return false;
     });
 });
+
 
 //delete comment
 $('.comment-container').on('click', '.delete-comment',function () {
@@ -623,7 +725,6 @@ $('.comment-container').on('click', '.delete-comment',function () {
     });
     return false;
 });
-
 
 //add course to wishlist
 $('.favorite-toggle').click(function () {
@@ -650,6 +751,7 @@ $('.favorite-toggle').click(function () {
     return false;
 });
 
+
 // change price
 $('.select-quantity-publicactions').change(function () {
     var form = $(this).closest('.form-price');
@@ -666,6 +768,7 @@ $('.select-quantity-publicactions').change(function () {
     sumInput.val(qty * price);
     quantityInput.val(qty);
 });
+
 
 //payment
 $('.send_order').on('click', function() {

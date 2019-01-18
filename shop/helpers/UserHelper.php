@@ -82,6 +82,12 @@ class UserHelper
         return false;
     }
 
+    public static function getCountsWishlistItems($userId){
+        $repository = new UserRepository();
+        $user = $repository->getUserById($userId);
+        return $user->getCoutnsWishlistItems();
+    }
+
     public static function isUserLearner() :bool
     {
         if (Yii::$app->user->identity->designation == User::LEARNER){

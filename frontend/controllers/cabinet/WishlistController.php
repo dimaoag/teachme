@@ -8,7 +8,6 @@ use Yii;
 use yii\filters\AccessControl;
 use yii\filters\VerbFilter;
 use yii\helpers\Url;
-use yii\web\Controller;
 use frontend\controllers\AppController;
 
 class WishlistController extends AppController
@@ -29,16 +28,19 @@ class WishlistController extends AppController
     {
         return [
             'access' => [
-                'class' => AccessControl::className(),
+                'class' => AccessControl::class,
                 'rules' => [
                     [
                         'allow' => true,
                         'roles' => ['@'],
                     ],
                 ],
+                'denyCallback' => function ($rule, $action) {
+                    $this->redirect(['/signup']);
+                },
             ],
             'verbs' => [
-                'class' => VerbFilter::className(),
+                'class' => VerbFilter::class,
                 'actions' => [
                     'add' => ['POST'],
                     'delete' => ['POST'],

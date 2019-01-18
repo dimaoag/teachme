@@ -2,6 +2,7 @@
 namespace shop\entities\user;
 
 use lhs\Yii2SaveRelationsBehavior\SaveRelationsBehavior;
+use phpDocumentor\Reflection\Types\This;
 use shop\entities\InstantiateTrait;
 use Yii;
 use yii\base\NotSupportedException;
@@ -236,6 +237,10 @@ class User extends ActiveRecord implements IdentityInterface
             }
         }
         return Publication::blank($courseTypeId);
+    }
+
+    public function getCoutnsWishlistItems(){
+        return count($this->wishlistItems);
     }
 
 

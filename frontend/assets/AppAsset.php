@@ -22,10 +22,11 @@ class AppAsset extends AssetBundle
         'css/owl.theme.default.min.css',
         'css/hover.css',
         'css/nouislider.min.css',
-        'css/sm-core-css.css',
-        'css/sm-clean/sm-clean.css',
         'css/util.css',
         'css/main.css',
+        'css/amazonmenu.css',
+        'css/responsive_multi_level_menu/component.css',
+        'css/nice-select.css',
         'css/style.css',
     ];
     public $js = [
@@ -38,6 +39,10 @@ class AppAsset extends AssetBundle
         'js/owl.carousel.min.js',
         'js/nouislider.min.js',
         'js/jquery.smartmenus.min.js',
+        'js/amazonmenu.js',
+        'js/jquery.dlmenu.js',
+        'js/jquery.nice-select.js',
+        'js/jquery.sticky.js',
         'js/script.js',
     ];
     public $depends = [
