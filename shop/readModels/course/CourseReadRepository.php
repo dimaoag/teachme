@@ -120,6 +120,10 @@ class CourseReadRepository
                         'asc' => ['c.price' => SORT_ASC],
                         'desc' => ['c.price' => SORT_DESC],
                     ],
+                    'rating' => [
+                        'asc' => ['c.rating' => SORT_ASC],
+                        'desc' => ['c.rating' => SORT_DESC],
+                    ],
                 ],
             ],
         ]);
@@ -137,6 +141,7 @@ class CourseReadRepository
             'defaultOrder' => ['id' => SORT_DESC],
             'attributes' => [
                 'id',
+                'name',
                 'price',
                 'rating',
             ],

@@ -10,11 +10,13 @@ use yii\widgets\LinkPager;
 ?>
 
 <div class="row">
-    <?php foreach ($dataProvider->getModels() as $course): ?>
-        <?= $this->render('_course', [
-            'course' => $course
-        ]) ?>
-    <?php endforeach; ?>
+    <div class="col-xs-12 wishlist-wrap">
+        <?php foreach ($dataProvider->getModels() as $course): ?>
+            <?= $this->render('_course', [
+                'course' => $course
+            ]) ?>
+        <?php endforeach; ?>
+    </div>
 </div>
 
 <div class="row">
@@ -23,5 +25,4 @@ use yii\widgets\LinkPager;
             'pagination' => $dataProvider->getPagination(),
         ]) ?>
     </div>
-    <div class="col-sm-6 text-right">Найдено <?= $dataProvider->getCount() ?> из <?= $dataProvider->getTotalCount() ?></div>
 </div>

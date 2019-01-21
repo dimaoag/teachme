@@ -1592,8 +1592,15 @@ span.ui-slider-handle.ui-state-default.ui-corner-all:focus, span.ui-slider-handl
 .favorite-course-disable,
 .favorite-course-disable:focus,
 .favorite-course-disable:active,
-.favorite-course-disable:hover{
+.favorite-course-disable:hover,
+.wishlist-favorite,
+.wishlist-favorite:focus,
+.wishlist-favorite:active,
+.wishlist-favorite:hover{
     color: red;
+}
+.wishlist-hide{
+    display: none;
 }
 
 .search-course-middle .rating{
@@ -2001,6 +2008,9 @@ span.ui-slider-handle.ui-state-default.ui-corner-all:focus, span.ui-slider-handl
     .sm-course-rating-stars{
         display: flex;
         margin-top: -5px;
+    }
+    .wishlist-hide{
+        display: flex;
     }
 }
 

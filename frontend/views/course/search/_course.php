@@ -88,7 +88,7 @@ AppAsset::register($this);
                         <i class="star-filled"></i>
                     </div>
                 </div>
-                <div class="count-comments">(75)</div>
+                <div class="count-comments">(<?= Html::encode($course->getCountsReviews()); ?>)</div>
             </div>
         </div>
         <div class="search-course-footer">

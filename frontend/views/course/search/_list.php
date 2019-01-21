@@ -23,6 +23,7 @@ use yii\widgets\LinkPager;
                     'price' => 'от дешевих к дорогим',
                     '-price' => 'от дорогих к дешевым',
                     'rating' => 'по рейтингу',
+                    '-rating' => 'по рейтингу',
                 ];
             $current = Yii::$app->request->get('sort');
             ?>

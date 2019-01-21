@@ -3,6 +3,7 @@
 namespace shop\entities\shop\course;
 
 
+use phpDocumentor\Reflection\Types\This;
 use shop\entities\EventTrait;
 use lhs\Yii2SaveRelationsBehavior\SaveRelationsBehavior;
 use shop\entities\AggregateRoot;
@@ -378,6 +379,12 @@ class Course extends ActiveRecord implements AggregateRoot
         $this->rating = $amount ? $total / $amount : null;
     }
 
+
+
+    public function getCountsReviews() :int
+    {
+        return $this->reviews ? count($this->reviews) : 0;
+    }
 
     // Orders
 
