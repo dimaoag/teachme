@@ -1927,7 +1927,9 @@ span.ui-slider-handle.ui-state-default.ui-corner-all:focus, span.ui-slider-handl
         object-fit: cover;
     }
     .favorite-img{
-        display: block;
+        display: flex;
+        justify-content: center;
+        align-items: center;
     }
     .buttons-sm{
         display: block;

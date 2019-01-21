@@ -2,12 +2,10 @@
 
 /* @var $this yii\web\View */
 /* @var $dataProvider yii\data\DataProviderInterface */
-/* @var $loginForm \shop\forms\auth\LoginForm */
 
 use yii\helpers\Html;
 use yii\helpers\Url;
 use yii\widgets\LinkPager;
-use yii\bootstrap\ActiveForm;
 
 ?>
 
@@ -18,14 +16,13 @@ use yii\bootstrap\ActiveForm;
     </div>
     <?= Html::a('<span class="button-clear-icon">&Cross;</span><span class="button-clear-text">очистить фильтр</span>', [''], ['class' => 'button-clear']) ?>
     <div class="courses-sort-select">
-        <select class="nice-select right sort-select">
+        <select class="nice-select right sort-select" onchange="location = this.value;">
             <?php
                 $values = [
                     '' => 'Сортировать',
                     'price' => 'от дешевих к дорогим',
                     '-price' => 'от дорогих к дешевым',
-                    '-rating' => 'по рейтингу(сначала високий)',
-                    'rating' => 'по рейтингу(сначала низкий)',
+                    'rating' => 'по рейтингу',
                 ];
             $current = Yii::$app->request->get('sort');
             ?>
@@ -37,11 +34,16 @@ use yii\bootstrap\ActiveForm;
     </div>
 </div>
 <div class="search-courses-container-wrapper">
-    <?php foreach ($dataProvider->getModels() as $course): ?>
-        <?= $this->render('_course', [
-            'course' => $course
-        ]); ?>
-    <?php endforeach; ?>
+    <?php if (!empty($dataProvider->getModels())): ?>
+        <?php foreach ($dataProvider->getModels() as $course): ?>
+            <?= $this->render('_course', [
+                'course' => $course
+            ]); ?>
+        <?php endforeach; ?>
+    <?php else: ?>
+        <p>Ничего не найдено</p>
+    <?php endif; ?>
+
 </div>
 
 <div class="row">

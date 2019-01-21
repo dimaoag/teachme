@@ -93,8 +93,8 @@ AppAsset::register($this);
         </div>
         <div class="search-course-footer">
             <div class="search-course-footer-left">
+                <p class="master-class"><?= Html::encode($course->values[0]->value) ?></p>
                 <p class="master-class"><?= Html::encode($course->courseType->name) ?></p>
-<!--                <p class="master-class">курс</p>-->
                 <p class="search-course-footer-city">(<?= Html::encode($course->city->name) ?>)</p>
             </div>
             <div class="price">
