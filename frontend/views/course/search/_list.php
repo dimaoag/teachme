@@ -19,11 +19,10 @@ use yii\widgets\LinkPager;
         <select class="nice-select right sort-select" onchange="location = this.value;">
             <?php
                 $values = [
-                    '' => 'Сортировать',
+                    '' => 'По умолчанию',
                     'price' => 'от дешевих к дорогим',
                     '-price' => 'от дорогих к дешевым',
                     'rating' => 'по рейтингу',
-                    '-rating' => 'по рейтингу',
                 ];
             $current = Yii::$app->request->get('sort');
             ?>

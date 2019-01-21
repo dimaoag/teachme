@@ -700,7 +700,7 @@ a{
     margin-right: 15px;
 }
 .dropdown{
-    width: calc(100% + 15px);
+    width: 100%;
     position: absolute;
     left: 0px;
     z-index: 2;
@@ -720,9 +720,9 @@ a{
 
 
 @media screen and (max-width: 1199px){
-     .header-top .dropdown{
-         margin-right: 15px;
-     }
+     /*.header-top .dropdown{*/
+         /*margin-right: 15px;*/
+     /*}*/
 }
 
 
@@ -1161,7 +1161,7 @@ a.footer-top-content-item:hover{
 /*------main------*/
 
 .main{
-    min-height: 83vh;
+    min-height: 85vh;
     position: relative;
 }
 .bg-hover{
@@ -2502,7 +2502,9 @@ label.tab.active{
     font-weight: 400;
     text-align: center;
 }
+.course-info-footer-btn:active,
 .course-info-footer-btn{
+    outline: none;
     background-image: linear-gradient(180deg, #9e3ffc 0%, #cb3ffc 100%);
     color: white;
     margin-top: 20px;
