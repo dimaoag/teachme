@@ -448,7 +448,7 @@ a{
 }
 
 .button{
-    padding: 7px 0;
+    padding: 7px 30px;
     text-align: center;
     border: none;
     border-radius: 3px;
@@ -2625,6 +2625,7 @@ label.tab.active{
 }
 
 /*---------cabinet-company-------------*/
+
 .cabinet-company{
     margin: 50px 0;
     min-height: 65vh;
@@ -2634,18 +2635,44 @@ label.tab.active{
     cursor: pointer;
     padding: 5px 0;
     margin: 10px 0;
+    color: black;
+}
+.tab-company:focus,
+.tab-company:hover{
+    color: black;
+    opacity: 0.8;
 }
 .tab-company.active{
     color: #933ec5;
 }
-.my-courses-header{
-    display: -webkit-box;
-    display: -ms-flexbox;
+.publications-wrap{
+    position: relative;
+}
+.publications-arrow{
+    cursor: pointer;
+}
+.publications-content{
+    display: none;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    width: 250px;
+    background-color: white;
+}
+.publications-arrow:hover ~ .publications-content{
+    display: block;
+    z-index: 10000;
+}
+.publication{
     display: flex;
-    -webkit-box-pack: end;
-    -ms-flex-pack: end;
-    justify-content: flex-end;
-    -ms-flex-wrap: wrap;
+    align-items: center;
+}
+.publication .publication-name{
+    flex-basis: 50%;
+}
+.my-courses-header{
+    display: flex;
+    justify-content: space-between;
     flex-wrap: wrap;
     margin-bottom: 15px;
 }
@@ -2666,11 +2693,8 @@ label.tab.active{
     margin-left: 7px;
     color: black;
 }
-.my-courses-header button{
-    white-space: nowrap;
-    border-radius: 5px;
-    border: none;
-}
+
+
 .tab-my-courses .search-course-info{
     width: 100%;
 }
@@ -2681,26 +2705,20 @@ label.tab.active{
     -ms-flex-preferred-size: 225px;
     flex-basis: 225px;
 }
-.course-orders{
-    display: -webkit-box;
-    display: -ms-flexbox;
+.course-orders .course-orders-count{
     display: flex;
-    -webkit-box-orient: vertical;
-    -webkit-box-direction: normal;
-    -ms-flex-direction: column;
     flex-direction: column;
-    -webkit-box-align: center;
-    -ms-flex-align: center;
     align-items: center;
+    color: black;
 }
 .course-orders span{
     color: #933ec5;
+    text-align: center;
 }
 .course-status{
     display: -webkit-box;
     display: -ms-flexbox;
     display: flex;
-    /*justify-content: space-between;*/
     margin-bottom: 15px;
 }
 .course-status-name{
@@ -2716,6 +2734,9 @@ label.tab.active{
     justify-content: space-between;
     -ms-flex-wrap: wrap;
     flex-wrap: wrap;
+}
+.course-control .right{
+    padding: 5px 0;
 }
 .course-control a{
     padding: 10px 0;

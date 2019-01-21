@@ -35,7 +35,7 @@ $this->params['active_course'] = 'active';
                     <?php endforeach; ?>
                 </div>
             </div>
-            <a href="<?=Url::to(['/course/create'])?>" class="button add-course-bnt hvr-grow">Добавить курс</a>
+            <a href="<?=Url::to(['/course/create'])?>" class="button add-course-bnt">Добавить курс</a>
         </div>
         <div class="my-courses-wrap">
             <?php if (!empty($courses)): ?>
