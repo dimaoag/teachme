@@ -485,27 +485,27 @@ if ($('div').is('#price_my_range')) {
         });
     });
     keypressSlider.noUiSlider.on('update', function (values, handle) {
-        inputs[handle].value = values[handle];
+        inputs[handle].value = Math.round(values[handle], 1);
     });
 }
 
 if ($('div').is('#price_my_range_sm')) {
-    var keypressSlider = document.getElementById('price_my_range_sm');
-    var input0 = document.getElementById('min_price_sm');
-    var input1 = document.getElementById('max_price_sm');
-    var inputs = [input0, input1];
+    var keypressSlider_sm = document.getElementById('price_my_range_sm');
+    var input0_sm = document.getElementById('min_price_sm');
+    var input1_sm = document.getElementById('max_price_sm');
+    var inputs_sm = [input0_sm, input1_sm];
     var maxPrice = Number(document.getElementById('max_price_of_courses').value);
-    var currentMin = Number(input0.value);
-    var currentMax = Number(input1.value);
+    var currentMin_sm = Number(input0_sm.value);
+    var currentMax_sm = Number(input1_sm.value);
 
-    if (currentMax == 0){
-        currentMax = maxPrice;
+    if (currentMax_sm == 0){
+        currentMax_sm = maxPrice;
     }
 
 
 
-    noUiSlider.create(keypressSlider, {
-        start: [currentMin, currentMax],
+    noUiSlider.create(keypressSlider_sm, {
+        start: [currentMin_sm, currentMax_sm],
         connect: true,
         // direction: 'rtl',
         // tooltips: [true, wNumb({decimals: 1})],
@@ -521,19 +521,19 @@ if ($('div').is('#price_my_range_sm')) {
     function setSliderHandle(i, value) {
         var r = [null, null];
         r[i] = Number(value);
-        keypressSlider.noUiSlider.set(r);
+        keypressSlider_sm.noUiSlider.set(r);
     }
 
 // Listen to keydown events on the input field.
-    inputs.forEach(function (input, handle) {
+    inputs_sm.forEach(function (input, handle) {
         input.addEventListener('change', function () {
             setSliderHandle(handle, this.value);
         });
         input.addEventListener('keydown', function (e) {
-            var values = keypressSlider.noUiSlider.get();
+            var values = keypressSlider_sm.noUiSlider.get();
             var value = Number(values[handle]);
             // [[handle0_down, handle0_up], [handle1_down, handle1_up]]
-            var steps = keypressSlider.noUiSlider.steps();
+            var steps = keypressSlider_sm.noUiSlider.steps();
             // [down, up]
             var step = steps[handle];
             var position;
@@ -568,10 +568,11 @@ if ($('div').is('#price_my_range_sm')) {
             }
         });
     });
-    keypressSlider.noUiSlider.on('update', function (values, handle) {
-        inputs[handle].value = values[handle];
+    keypressSlider_sm.noUiSlider.on('update', function (values, handle) {
+        inputs_sm[handle].value = Math.round(values[handle], 1);
     });
 }
+
 
 
 // //

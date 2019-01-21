@@ -32,7 +32,7 @@ AppAsset::register($this);
                     </a>
                 <?php endif; ?>
             <?php else: ?>
-                <a href="#courses-login" class="open-popup-courses-login hvr-grow" title="в избранное">
+                <a href="#courses-login" class="open-popup-courses-login favorite-course-disable hvr-grow" title="в избранное">
                     <i class="fa fa-heart-o"></i>
                 </a>
             <?php endif; ?>
@@ -53,14 +53,14 @@ AppAsset::register($this);
                     </a>
                 <?php endif; ?>
             <?php else: ?>
-                <a href="#courses-login" class="open-popup-courses-login favorite-icon-lg hvr-grow" title="в избранное">
+                <a href="#courses-login" class="open-popup-courses-login favorite-course-disable favorite-icon-lg hvr-grow" title="в избранное">
                     <i class="fa fa-heart-o"></i>
                 </a>
             <?php endif; ?>
         </div>
         <div class="search-course-middle">
-            <div class="rating star-icon value-<?= Html::encode(round($course->rating)) ?> color-ok label-left slow">
-                <div class="label-value"><?= Html::encode($course->rating) ?></div>
+            <div class="rating star-icon value-<?= Html::encode(round($course->rating ?: 0)) ?> color-ok label-left slow">
+                <div class="label-value"><?= Html::encode($course->rating ?: 0) ?></div>
                 <div class="star-container">
                     <div class="star">
                         <i class="star-empty"></i>
@@ -99,12 +99,40 @@ AppAsset::register($this);
             </div>
             <div class="price">
                 <div class="sm-course-rating">
-                    <span><?= Html::encode($course->rating) ?></span>
-                    <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="13" height="12" viewBox="0 0 13 12"><defs><path id="268ea" d="M527.651 290.384l1.962 3.776 4.387.606-3.175 2.939.75 4.15-3.924-1.96-3.924 1.96.75-4.15-3.175-2.94 4.387-.605z"/></defs><g><g transform="translate(-521 -290)"><use fill="#efce4a" xlink:href="#268ea"/></g></g></svg>
-                    <svg class="star-hide" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="13" height="12" viewBox="0 0 13 12"><defs><path id="268ea" d="M527.651 290.384l1.962 3.776 4.387.606-3.175 2.939.75 4.15-3.924-1.96-3.924 1.96.75-4.15-3.175-2.94 4.387-.605z"/></defs><g><g transform="translate(-521 -290)"><use fill="#efce4a" xlink:href="#268ea"/></g></g></svg>
-                    <svg class="star-hide" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="13" height="12" viewBox="0 0 13 12"><defs><path id="268ea" d="M527.651 290.384l1.962 3.776 4.387.606-3.175 2.939.75 4.15-3.924-1.96-3.924 1.96.75-4.15-3.175-2.94 4.387-.605z"/></defs><g><g transform="translate(-521 -290)"><use fill="#efce4a" xlink:href="#268ea"/></g></g></svg>
-                    <svg class="star-hide" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="13" height="12" viewBox="0 0 13 12"><defs><path id="268ea" d="M527.651 290.384l1.962 3.776 4.387.606-3.175 2.939.75 4.15-3.924-1.96-3.924 1.96.75-4.15-3.175-2.94 4.387-.605z"/></defs><g><g transform="translate(-521 -290)"><use fill="#efce4a" xlink:href="#268ea"/></g></g></svg>
-                    <svg class="star-hide" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="13" height="12" viewBox="0 0 13 12"><defs><path id="268ea" d="M527.651 290.384l1.962 3.776 4.387.606-3.175 2.939.75 4.15-3.924-1.96-3.924 1.96.75-4.15-3.175-2.94 4.387-.605z"/></defs><g><g transform="translate(-521 -290)"><use fill="#efce4a" xlink:href="#268ea"/></g></g></svg>
+                    <div class="sm-course-rating-one-star">
+                        <span ><?= Html::encode($course->rating ?: 0) ?></span>
+                        <svg  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="13" height="12" viewBox="0 0 13 12"><defs><path id="268ea" d="M527.651 290.384l1.962 3.776 4.387.606-3.175 2.939.75 4.15-3.924-1.96-3.924 1.96.75-4.15-3.175-2.94 4.387-.605z"/></defs><g><g transform="translate(-521 -290)"><use fill="#efce4a" xlink:href="#268ea"/></g></g></svg>
+                    </div>
+                    <div class="rating star-icon value-<?= Html::encode(round($course->rating ?: 0)) ?> color-ok label-left slow sm-course-rating-stars">
+                        <div class="label-value"><?= Html::encode($course->rating ?: 0) ?></div>
+                        <div class="star-container">
+                            <div class="star">
+                                <i class="star-empty"></i>
+                                <i class="star-half"></i>
+                                <i class="star-filled"></i>
+                            </div>
+                            <div class="star">
+                                <i class="star-empty"></i>
+                                <i class="star-half"></i>
+                                <i class="star-filled"></i>
+                            </div>
+                            <div class="star">
+                                <i class="star-empty"></i>
+                                <i class="star-half"></i>
+                                <i class="star-filled"></i>
+                            </div>
+                            <div class="star">
+                                <i class="star-empty"></i>
+                                <i class="star-half"></i>
+                                <i class="star-filled"></i>
+                            </div>
+                            <div class="star">
+                                <i class="star-empty"></i>
+                                <i class="star-half"></i>
+                                <i class="star-filled"></i>
+                            </div>
+                        </div>
+                    </div>
                 </div>
                 <p class="old-price">3500 грн</p>
                 <p class="current-price"><?= Html::encode($course->price) ?> грн</p>
