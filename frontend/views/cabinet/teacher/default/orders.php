@@ -28,7 +28,7 @@ $this->params['active_orders'] = 'active';
 <div class="tab-cabinet-container tab-orders active">
     <?php if (!empty($courses)): ?>
         <div class="orders-header">
-            <select name="status" class="orders-select" id="dynamic_select">
+            <select name="status" class="select-with-scroll orders-select" id="dynamic_select">
                 <option value="<?= Url::to(['orders']) ?>">Все курсы</option>
                 <?php if (isset($course)): ?>
                     <?php foreach ($courses as $item): ?>
@@ -229,7 +229,7 @@ $this->params['active_orders'] = 'active';
                                         <?= $form->field($orderEditForms[$order->id], 'course_id')->hiddenInput(['id' => 'course_id'. $order->id, 'value' => $order->course_id])->label(false);  ?>
                                         <?= $form->field($orderEditForms[$order->id], 'order_id')->hiddenInput(['id' => 'order_id'. $order->id, 'value' => $order->id])->label(false);  ?>
 
-                                        <?= $form->field($orderEditForms[$order->id], 'status')->dropDownList(OrderHelper::selectStatusList(), ['id' => 'status'. $order->id])->label(false); ?>
+                                        <?= $form->field($orderEditForms[$order->id], 'status')->dropDownList(OrderHelper::selectStatusList(), ['id' => 'status'. $order->id, 'class' => 'order_status_list'])->label(false); ?>
                                     </div>
                                 </div>
                                 <div class="row popup-order-info">
@@ -275,7 +275,7 @@ $this->params['active_orders'] = 'active';
                             </div>
                             <div class="row">
                                 <div class="col-xs-12">
-                                    <button type="submit" class="btn btn-block button-pure order-submit" data-url="<?= Url::to(['/cabinet/teacher/edit-order'], true); ?>">Сохранить</button>
+                                    <button type="submit" class="btn-block button order-submit" data-url="<?= Url::to(['/cabinet/teacher/edit-order'], true); ?>">Сохранить</button>
                                 </div>
                             </div>
                         <?php ActiveForm::end() ?>
@@ -300,8 +300,8 @@ $this->params['active_orders'] = 'active';
                         ]); ?>
                             <div class="row">
                                 <div class="col-xs-12">
-                                    <?= $form->field($orderCommentCreateForm, 'order_id')->hiddenInput(['value' => $order->id, 'data-url' => Url::to([''], true)])->label(false); ?>
-                                    <?= $form->field($orderCommentCreateForm, 'text')->textarea(['rows' => 3])->label(false); ?>
+                                    <?= $form->field($orderCommentCreateForm, 'order_id')->hiddenInput(['id' => 'orderCommentCreateForm_order_id' .$order->id,'value' => $order->id, 'data-url' => Url::to([''], true)])->label(false); ?>
+                                    <?= $form->field($orderCommentCreateForm, 'text')->textarea(['id' => 'orderCommentCreateForm_text' .$order->id, 'rows' => 3])->label(false); ?>
                                 </div>
                             </div>
                             <div class="row">

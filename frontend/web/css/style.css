@@ -2864,7 +2864,6 @@ label.tab.active{
     padding: 10px 0;
 }
 .orders-select{
-    width: 200px;
     background-color: white;
     border: 1px solid #933ec5;
     border-radius: 5px;
@@ -2986,6 +2985,16 @@ label.tab.active{
     margin: 10px 0;
 }
 
+.comment{
+    position: relative;
+}
+.comment a{
+    color: red;
+    position: absolute;
+    top: 10px;
+    right: 10px;
+
+}
 .comment p{
     background-color: #e2e2e2;
     padding: 10px;
@@ -3303,6 +3312,11 @@ label.tab.active{
     border: none;
     border-radius: 20px;
     outline:none;
+}
+.select-with-scroll .list{
+    color: black;
+    max-height: 300px;
+    overflow-y: auto;
 }
 .custom-select{
     color: black;
