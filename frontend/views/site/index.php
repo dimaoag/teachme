@@ -117,15 +117,17 @@ $this->title = 'Главная';
     </div>
 </div>
 
-<div class="question">
-    <div class="container">
-        <div class="row">
-            <div class="col-md-12 question-wrap">
-                <h1 class="question-title">Хотите выставить свои курсы на Teach Me ?</h1>
-                <div class="question-btn-wrap">
-                    <a href="<?= Url::to(['/signup']) ?>" class="button question-btn">Зарегистрироваться</a>
+<?php if (Yii::$app->user->isGuest): ?>
+    <div class="question">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12 question-wrap">
+                    <h1 class="question-title">Хотите выставить свои курсы на Teach Me ?</h1>
+                    <div class="question-btn-wrap">
+                        <a href="<?= Url::to(['/signup']) ?>" class="button question-btn">Зарегистрироваться</a>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
-</div>
+<?php endif; ?>

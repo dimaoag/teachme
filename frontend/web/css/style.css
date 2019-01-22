@@ -447,7 +447,8 @@ a{
     border-radius: 10px;
 }
 
-.button{
+.button,
+.button-pure{
     padding: 7px 30px;
     text-align: center;
     border: none;
@@ -456,11 +457,17 @@ a{
     color: white;
     transition: 0.3s;
 }
-.button:hover{
+.button:hover,
+.button-pure:hover,
+.button-pure:focus,
+.button-pure:active{
     color: white;
     transition: 0.3s;
     opacity: 0.8;
+    outline: none!important;
 }
+
+
 /*------header--------*/
 .header-icon-svg{
     fill: white;
@@ -697,7 +704,7 @@ a{
 }
 .navbar-right .dropdown:last-child .header-auth-links-profile{
     padding-right: 0;
-    margin-right: 15px;
+    /*margin-right: 15px;*/
 }
 .dropdown{
     width: 100%;
@@ -2626,6 +2633,9 @@ label.tab.active{
 
 /*---------cabinet-company-------------*/
 
+
+/*----tabs-my-courses----*/
+
 .cabinet-company{
     margin: 50px 0;
     min-height: 65vh;
@@ -2694,7 +2704,6 @@ label.tab.active{
     color: black;
 }
 
-
 .tab-my-courses .search-course-info{
     width: 100%;
 }
@@ -2725,6 +2734,7 @@ label.tab.active{
     color: #999999;
     margin-right: 20px;
 }
+
 .course-control {
     display: -webkit-box;
     display: -ms-flexbox;
@@ -2758,9 +2768,27 @@ label.tab.active{
 .tab-company-icon{
     display: none;
 }
-/*.left, .right{*/
-    /*margin-top: 10px;*/
-/*}*/
+
+/*----tabs-main-info----*/
+
+
+.edit-main-photo-wrap{
+    position: relative;
+}
+.edit-delete-btn{
+    position: absolute;
+    top: 0;
+    left: 15px;
+}
+.tab-main-info-title{
+    padding: 15px 0 25px 0;
+}
+.teacher_main_info_city_select{
+    float: unset;
+}
+.teacher_main_info_city_select .list{
+    width: 100%;
+}
 .add-photo-profile{
     margin-top: 20px;
 }
@@ -2798,14 +2826,15 @@ label.tab.active{
 .facebook-field i{
     color: #475993;
 }
-.vk-field i{
-    color: #44678d;
+.telegram-field i{
+    color: #0088cc;
 }
 .youtube-field i{
     color: #f44336;
 }
 
 /*----tabs-setting----*/
+
 .tab-setting h2{
     padding-bottom:  30px;
     padding-top: 10px;
@@ -2821,6 +2850,7 @@ label.tab.active{
     padding-bottom: 50px;
 }
 /*----tabs-price----*/
+
 .tab-price h2{
     padding-bottom: 15px;
 }
@@ -2854,6 +2884,7 @@ label.tab.active{
     top: 7px;
 }
 /*----tabs-orders----*/
+
 .tab-orders .orders-header{
     display: -webkit-box;
     display: -ms-flexbox;
@@ -2941,6 +2972,7 @@ label.tab.active{
     font-size: 1.7rem;
 }
 /*----orders-archive----*/
+
 .orders-archive{
     padding-bottom: 20px;
     min-height: 75vh;
@@ -2953,6 +2985,7 @@ label.tab.active{
 }
 
 /*----order-popup----*/
+
 .order_popup{
     max-width: 1250px;
 }
@@ -3047,9 +3080,6 @@ label.tab.active{
         padding: 5px 5px;
         white-space: nowrap;
     }
-    .tab-main-info-title{
-        padding: 15px 0;
-    }
     .tab-setting h2{
         padding:  30px 0;
     }
@@ -3124,6 +3154,7 @@ label.tab.active{
 }
 
 /*---------add-course-------------*/
+
 .add-course .panel{
     border: none;
     padding-top: 10px;

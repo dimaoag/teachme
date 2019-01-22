@@ -71,7 +71,7 @@ $this->params['active_teacher_main_info'] = 'active';
             <div class="form-group">
                 <div class="row">
                     <div class="col-sm-6 main-form-field-item header-search-city">
-                        <?= $form->field($teacherMainInfoForm, 'city_id')->dropDownList($teacherMainInfoForm->getCitiesList(), ['id' => 'city_id', 'prompt' => 'Выберите город...']); ?>
+                        <?= $form->field($teacherMainInfoForm, 'city_id')->dropDownList($teacherMainInfoForm->getCitiesList(), ['id' => 'city_id', 'prompt' => 'Выберите город...', 'class' => 'select-with-scroll teacher_main_info_city_select']); ?>
                     </div>
                 </div>
             </div>
@@ -106,8 +106,8 @@ $this->params['active_teacher_main_info'] = 'active';
                             <i class="fa fa-facebook"></i>
                             <?= $form->field($teacherMainInfoForm, 'facebook_link')->textInput()->label(false); ?>
                         </div>
-                        <div class="main-info-form-field main-info-field-socs vk-field">
-                            <i class="fa fa-vk"></i>
+                        <div class="main-info-form-field main-info-field-socs telegram-field">
+                            <i class="fa fa-paper-plane"></i>
                             <?= $form->field($teacherMainInfoForm, 'vk_link')->textInput()->label(false); ?>
                         </div>
                         <div class="main-info-form-field main-info-field-socs youtube-field">
@@ -117,8 +117,8 @@ $this->params['active_teacher_main_info'] = 'active';
                     </div>
                 </div>
             </div>
-            <div class="col-md-4 float-r">
-                <button type="submit" class="btn btn-block button-pure">Сохранить данные</button>
+            <div class="float-r">
+                <button type="submit" class="btn button-pure">Сохранить данные</button>
             </div>
             <?php ActiveForm::end(); ?>
         </div>

@@ -19,10 +19,30 @@ use yii\widgets\Breadcrumbs;
         <div class="container header-container">
             <div class="navbar-header">
                 <a class="navbar-brand logo" href="<?=Url::home()?>">
-                    <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="107" height="21" viewBox="0 0 107 21"><defs><path id="1jfoa" d="M473.18 11.361l-.756 2.82s3.005-.402 5.402.24c2.397.643 4.8 2.493 4.8 2.493l.766-2.858s-2.214-2.056-4.776-2.742c-2.56-.687-5.437.047-5.437.047z"/><path id="1jfob" d="M485.816 13.968a.444.444 0 1 1 .23-.859.444.444 0 0 1-.23.86zm.6-1.516l-.072.267-.455-.44c.23-.077.618-.165.527.173zm.009 1.739l1.16-.274-.863-.833.071-.267s.674-1.372-1.153-1.05c-.094.024-.15.057-.18.097l-5.7-5.507-10.147 2.678 2.918 2.4.131-.49s3.207-.819 6.064-.053c2.856.765 5.324 3.057 5.324 3.057l-.23.855 2.099-.494-1.069 3.989-.61-.164-.38 1.418.962-.344.75.803.38-1.418-.66-.177 1.133-4.226z"/></defs><g><g transform="translate(-381 -6)"><g><g><text fill="#fff" style="line-height:81.05730438232422px;font-kerning:normal" dominant-baseline="text-before-edge" font-family="'Intro','Intro'" font-size="18.7"  font-weight="400" letter-spacing=".75" transform="translate(381 13)"><tspan fill="#9e3ffc">teach </tspan><tspan>me</tspan></text></g></g><g><g><g><use fill="#9e3ffc" xlink:href="#1jfoa"/></g><g><use fill="#9e3ffc" xlink:href="#1jfob"/></g></g></g></g></g></svg>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="107.951" height="28" viewBox="0 0 107.951 28">
+                        <g id="logo" transform="translate(-373 -3)">
+                            <text id="teach_me" data-name="teach me" transform="translate(373 8)" fill="#9e3ffc" font-size="18.702" font-family="Intro" letter-spacing="0.04em"><tspan x="0" y="18">teach </tspan><tspan y="18" fill="#0a0a0a">me</tspan></text>
+                            <g id="black-graduation-cap-tool-of-university-student-for-head" transform="matrix(0.966, 0.259, -0.259, 0.966, 464.505, -2.757)">
+                                <g id="Group_1" data-name="Group 1" transform="translate(0 5.96)">
+                                    <path id="Path_1" data-name="Path 1" d="M6.952,16.146v2.919A16.285,16.285,0,0,1,12.233,17.9a16.291,16.291,0,0,1,5.281,1.166v-2.96a13.211,13.211,0,0,0-5.322-1.412A12.332,12.332,0,0,0,6.952,16.146Z" transform="translate(-2.905 -9.609)" fill="#9e3ffc"/>
+                                    <path id="Path_2" data-name="Path 2" d="M17.573,11.8l1.05-.565-1.05-.582V10.38s.3-1.5-1.385-.715a.309.309,0,0,0-.15.14L9.107,5.96,0,11.172l3.439,1.562v-.507a13.772,13.772,0,0,1,5.843-1.62,14.724,14.724,0,0,1,5.934,1.575v.885l1.9-1.02v4.129h-.632v1.468l.841-.581.933.581V16.176h-.683V11.8Zm-.459-1.677V10.4l-.554-.307C16.763,9.96,17.115,9.774,17.115,10.125Zm-.187,1.619a.444.444,0,1,1,.444-.444A.444.444,0,0,1,16.927,11.744Z" transform="translate(0 -5.96)" fill="#9e3ffc"/>
+                                </g>
+                            </g>
+                        </g>
+                    </svg>
                 </a>
                 <a class="navbar-brand logo-small" href="<?=Url::home()?>">
-                    <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="35" height="23" viewBox="0 0 35 23"><defs><path id="jmk8a" d="M36.18 12.361l-.756 2.82s3.005-.402 5.402.24c2.397.643 4.8 2.493 4.8 2.493l.766-2.858S44.178 13 41.616 12.314c-2.56-.687-5.437.047-5.437.047z"/><path id="jmk8b" d="M48.816 14.968a.444.444 0 1 1 .23-.859.444.444 0 0 1-.23.86zm.6-1.516l-.072.267-.455-.44c.23-.077.618-.165.527.173zm.009 1.739l1.16-.274-.863-.833.071-.267s.674-1.372-1.153-1.05c-.094.024-.15.057-.18.097l-5.7-5.507-10.147 2.678 2.918 2.4.131-.49s3.207-.819 6.064-.053c2.856.765 5.324 3.057 5.324 3.057l-.23.855 2.099-.494L47.85 19.3l-.61-.164-.38 1.418.962-.344.75.803.38-1.418-.66-.177 1.133-4.226z"/></defs><g><g transform="translate(-16 -7)"><g><g><text fill="#fff" style="line-height:81.05730438232422px;font-kerning:normal" dominant-baseline="text-before-edge" font-family="'Intro','Intro'" font-size="18.7"  font-weight="400" letter-spacing=".75" transform="translate(16 16)"><tspan fill="#9e3ffc">t</tspan><tspan>m</tspan></text></g></g><g><g><g><use fill="#9e3ffc" xlink:href="#jmk8a"/></g><g><use fill="#9e3ffc" xlink:href="#jmk8b"/></g></g></g></g></g></svg>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="35.951" height="30" viewBox="0 0 35.951 30">
+                        <g id="logo-small" transform="translate(-371 -4)">
+                            <text id="tm" transform="translate(371 29)" fill="#9e3ffc" font-size="18.702" font-family="Intro" letter-spacing="0.04em"><tspan x="0" y="0">t</tspan><tspan y="0" fill="#0a0a0a">m</tspan></text>
+                            <g id="black-graduation-cap-tool-of-university-student-for-head" transform="matrix(0.966, 0.259, -0.259, 0.966, 462.505, -2.757)">
+                                <g id="Group_1" data-name="Group 1" transform="translate(-69.288 25.561)">
+                                    <path id="Path_1" data-name="Path 1" d="M6.952,16.146v2.919A16.285,16.285,0,0,1,12.233,17.9a16.291,16.291,0,0,1,5.281,1.166v-2.96a13.211,13.211,0,0,0-5.322-1.412A12.332,12.332,0,0,0,6.952,16.146Z" transform="translate(-2.905 -9.609)" fill="#9e3ffc"/>
+                                    <path id="Path_2" data-name="Path 2" d="M17.573,11.8l1.05-.565-1.05-.582V10.38s.3-1.5-1.385-.715a.309.309,0,0,0-.15.14L9.107,5.96,0,11.172l3.439,1.562v-.507a13.772,13.772,0,0,1,5.843-1.62,14.724,14.724,0,0,1,5.934,1.575v.885l1.9-1.02v4.129h-.632v1.468l.841-.581.933.581V16.176h-.683V11.8Zm-.459-1.677V10.4l-.554-.307C16.763,9.96,17.115,9.774,17.115,10.125Zm-.187,1.619a.444.444,0,1,1,.444-.444A.444.444,0,0,1,16.927,11.744Z" transform="translate(0 -5.96)" fill="#9e3ffc"/>
+                                </g>
+                            </g>
+                        </g>
+                    </svg>
                 </a>
             </div>
             <div id="navbar" class="navbar-collapse collapse">
