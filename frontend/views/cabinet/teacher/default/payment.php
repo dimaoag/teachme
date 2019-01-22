@@ -16,20 +16,20 @@ $this->params['active_payments'] = 'active';
 <div class="tab-cabinet-container tab-price active">
     <h2>Услуги для бизнеса</h2>
     <div class="row">
-        <div class="col-md-10">
+        <div class="col-md-10 payments">
             <?php if (!empty($courseTypes)): ?>
                 <?php foreach($courseTypes as $courseType): ?>
-<!--                    <form class="form-price">-->
                     <?php $form = ActiveForm::begin([
                         'options' => [
                             'class' => 'form-price'
                             ],
                         ]) ?>
-
-                        <?= $form->field($paymentForm, 'courseTypeId')->hiddenInput(['value' => $courseType->id])->label(false); ?>
-                        <?= $form->field($paymentForm, 'price')->hiddenInput(['value' => $courseType->price])->label(false); ?>
-                        <?= $form->field($paymentForm, 'quantity')->hiddenInput(['value' => 1, 'class' => 'quantity-input'])->label(false); ?>
-                        <?= $form->field($paymentForm, 'sum')->hiddenInput(['value' => $courseType->price, 'class' => 'sum-input'])->label(false); ?>
+                        <div class="hidden-inputs">
+                            <?= $form->field($paymentForm, 'courseTypeId')->hiddenInput(['value' => $courseType->id])->label(false); ?>
+                            <?= $form->field($paymentForm, 'price')->hiddenInput(['value' => $courseType->price])->label(false); ?>
+                            <?= $form->field($paymentForm, 'quantity')->hiddenInput(['value' => 1, 'class' => 'quantity-input'])->label(false); ?>
+                            <?= $form->field($paymentForm, 'sum')->hiddenInput(['value' => $courseType->price, 'class' => 'sum-input'])->label(false); ?>
+                        </div>
                         <div class="form-price-item first-block">
                             <p class="payment-course-name"><?= Html::encode($courseType->name); ?></p>
                         </div>
@@ -58,7 +58,6 @@ $this->params['active_payments'] = 'active';
                             <button type="submit" class="btn btn-block button-pure">Купить</button>
                         </div>
                 <?php ActiveForm::end() ?>
-<!--                    </form>-->
                 <?php endforeach; ?>
             <?php endif; ?>
         </div>

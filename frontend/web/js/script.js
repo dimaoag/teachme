@@ -628,6 +628,7 @@ $(document).ready(function() {
     $('.orders-select').niceSelect();
     $('.order_status_list').niceSelect();
     $('.teacher_main_info_city_select').niceSelect();
+    $('.select-quantity-publicactions').niceSelect();
 });
 
 // add background on hover menu

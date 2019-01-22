@@ -2812,7 +2812,7 @@ label.tab.active{
     -ms-flex-align: center;
     align-items: center;
     font-size: 1.5rem;
-    color: #933ec5;
+    color: #9e3ffc;
 }
 .main-info-field-phone, .main-info-field-socs{
     padding: 5px 0;
@@ -2851,11 +2851,14 @@ label.tab.active{
 }
 /*----tabs-price----*/
 
+.hidden-inputs{
+    display: none;
+}
 .tab-price h2{
     padding-bottom: 15px;
 }
 .tab-price-my-quantity{
-    color: #933ec5;
+    color: #9e3ffc;
     padding: 15px 0;
 }
 .form-price{
@@ -2872,6 +2875,30 @@ label.tab.active{
     justify-content: space-between;
     -ms-flex-wrap: wrap;
     flex-wrap: wrap;
+}
+@media all and (max-width: 575px){
+    .form-price{
+        -webkit-box-orient: vertical;
+        -webkit-box-direction: normal;
+        -ms-flex-direction: column;
+        flex-direction: column;
+        text-align: center;
+    }
+    .form-price-item{
+        padding: 10px 0;
+    }
+}
+.form-price .form-price-item{
+    flex-basis: 25%;
+}
+.select-quantity-publicactions{
+    height: 30px;
+    line-height: 30px;
+}
+.third-block{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 .top-price{
     border-width: 2px;
@@ -2968,7 +2995,7 @@ label.tab.active{
     outline: none;
 }
 .owl-nav button span{
-    color: #933ec5;
+    color: #9e3ffc;
     font-size: 1.7rem;
 }
 /*----orders-archive----*/
@@ -3058,8 +3085,9 @@ label.tab.active{
     }
     .tab-company.active{
         color: white;
-        background-color: #933ec5;
+        background-color: #9e3ffc;
         border-radius: 5px;
+        padding: 5px 10px;
     }
     .tab-labels{
         z-index: 5;
@@ -3128,16 +3156,6 @@ label.tab.active{
         -webkit-box-direction: reverse;
         -ms-flex-direction: column-reverse;
         flex-direction: column-reverse;
-    }
-    .form-price{
-        -webkit-box-orient: vertical;
-        -webkit-box-direction: normal;
-        -ms-flex-direction: column;
-        flex-direction: column;
-        text-align: center;
-    }
-    .form-price-item{
-        padding: 10px 0;
     }
 }
 @media all and (max-width: 373px){
