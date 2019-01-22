@@ -73,4 +73,16 @@ class CourseCreateForm extends CompositeForm
     {
         return ['photos', 'categories', 'values', 'gallery'];
     }
+
+    public function attributeLabels()
+    {
+        return [
+            'cityId' => 'Город',
+            'firmId' => 'Организация',
+            'courseTypeId' => 'Тип курса',
+            'name' => 'Название курса',
+            'price' => 'Цена',
+            'description' => 'Описание',
+        ];
+    }
 }

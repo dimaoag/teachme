@@ -3263,7 +3263,7 @@ label.tab.active{
     outline: none!important;
 }
 .edit_course_textarea{
-    border: 1px solid #9e3ffc;;
+    border: 1px solid #9e3ffc;
     width: 100%;
     padding: 15px;
     border-radius: 3px;
@@ -3723,4 +3723,12 @@ label.tab.active{
 }
 .input-group .form-control{
     z-index: 1;
+}
+.link-create-firm{
+    margin-top: 12px;
+    color: #9e3ffc;
+    display: block;
+}
+.link-create-firm:hover{
+    color: #9e3ffc;
 }

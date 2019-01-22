@@ -1,6 +1,7 @@
 <?php
 namespace shop\helpers;
 
+use shop\entities\shop\TeacherMainInfo;
 use shop\entities\user\User;
 use shop\repositories\UserRepository;
 use shop\entities\user\Publication;
@@ -143,5 +144,11 @@ class UserHelper
         return $output;
     }
 
+
+
+    public static function getUserFirm($userId)
+    {
+        return $firm = TeacherMainInfo::find()->where(['user_id' => $userId])->one();
+    }
 
 }

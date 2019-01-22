@@ -1,6 +1,7 @@
 <?php
 
 
+use shop\helpers\UserHelper;
 use yii\helpers\Url;
 
 use kartik\widgets\FileInput;
@@ -93,7 +94,16 @@ $this->title = 'Создать курс';
                                     <div class="col-sm-4 header-search-city">
                                         <div class="add-course-select">
                                             <div class="custom-select main-select-city">
-                                                <?= $form->field($model, 'firmId')->dropDownList($model->firmList(), ['id' => 'firmId', 'prompt' => 'Выберите организацию...'])->label(false); ?>
+                                                <?php if (!Yii::$app->user->isGuest): ?>
+                                                    <?php if ($firm = UserHelper::getUserFirm(Yii::$app->user->id)): ?>
+                                                        <?php /** @var $firm \shop\entities\shop\TeacherMainInfo */ ?>
+                                                        <?= $form->field($model, 'firmId')->dropDownList($model->firmList(), ['id' => 'firmId', 'prompt' => 'Выберите организацию...', 'value' => $firm->id])->label(false); ?>
+                                                    <?php else: ?>
+                                                        <?= Html::a('Создать организацию',[Url::to(['/cabinet/teacher/default/teacher-main-info'])], ['class' => 'link-create-firm']); ?>
+
+                                                    <?php endif; ?>
+                                                <?php endif; ?>
+
                                             </div>
                                         </div>
                                         <span id="error_city" class="text-danger"></span>
