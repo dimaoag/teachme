@@ -736,6 +736,9 @@ $('.favorite-toggle').click(function () {
     var a = $(this);
     var url = $(this).attr('href');
     var id = $(this).data('id');
+    var favorite_courses_count = $('.header-bottom-icon .active-icon span');
+    var counts = parseInt(favorite_courses_count.html());
+
     $.ajax({
         url: url,
         type: 'POST',
@@ -744,8 +747,10 @@ $('.favorite-toggle').click(function () {
             a.attr("href", res.url);
             if (res.heart){
                 a.html('<i class="fa fa-heart"></i>');
+                favorite_courses_count.html(counts+1);
             } else {
                 a.html('<i class="fa fa-heart-o"></i>');
+                favorite_courses_count.html(counts-1);
             }
 
         },
