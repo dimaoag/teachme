@@ -33,7 +33,7 @@ $this->title = 'Создать курс';
                         Описания и галерея
                     </li>
                 </ul>
-                <div class="tab-content">
+                <div class="tab-content create-course">
                     <div class="tab-pane active step-1" id="main_info">
                         <div class="panel panel-default form-horizontal">
                             <div class="upload-image">

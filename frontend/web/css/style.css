@@ -3173,6 +3173,13 @@ label.tab.active{
 
 /*---------add-course-------------*/
 
+.create-course .nice-select{
+    border-radius: 0!important;
+}
+
+.create-course .has-success .form-control{
+    box-shadow: none;
+}
 .add-course .panel{
     border: none;
     padding-top: 10px;
@@ -3258,10 +3265,6 @@ label.tab.active{
     -webkit-box-pack: justify;
     -ms-flex-pack: justify;
     justify-content: space-between;
-}
-.add-course-select{
-    padding: 10px 0;
-    border-bottom: 1px solid #933ec5;
 }
 @media all and (max-width: 500px){
     .add-course .nav-item{
