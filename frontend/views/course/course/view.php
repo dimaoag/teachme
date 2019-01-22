@@ -223,15 +223,7 @@ $this->params['breadcrumbs'][] = $course->name;
                             <?php foreach ($course->reviews as $review): ?>
                                 <div class="course-review-item">
                                 <div class="course-review-header">
-                                    <h4 class="review-username"><?= Html::encode($review->user->first_name); ?>  <?= Html::encode($review->user->last_name); ?>
-                                        <?php if (!Yii::$app->user->isGuest && $review->isOwner(Yii::$app->user->id)): ?>
-                                            <?= Html::a('<span class="text-danger fa fa-trash"></span>', ['delete-review', 'id' => $review->id, 'course_id' => $course->id], [
-                                                'class' => 'delete-review',
-                                                'data-method' => 'post',
-                                                'data-confirm' => 'Вы действилътельно хотите удалить этот елемент?',
-                                            ]); ?>
-                                        <?php endif; ?>
-                                    </h4>
+                                    <h4 class="review-username"><?= Html::encode($review->user->first_name); ?>  <?= Html::encode($review->user->last_name); ?></h4>
                                     <div class="rating star-icon value-<?= Html::encode($review->vote); ?> color-ok label-left slow">
                                         <div class="label-value"><?= Html::encode($review->vote); ?></div>
                                         <div class="star-container">
@@ -262,29 +254,38 @@ $this->params['breadcrumbs'][] = $course->name;
                                             </div>
                                         </div>
                                     </div>
-                                    <p class="review-date"><?= CourseHelper::echoDate($review->created_at); ?></p>
+                                    <p class="review-date">
+                                        <?= CourseHelper::echoDate($review->created_at); ?>
+                                        <?php if (!Yii::$app->user->isGuest && $review->isOwner(Yii::$app->user->id)): ?>
+                                            <?= Html::a('<span class="text-danger fa fa-trash"></span>', ['delete-review', 'id' => $review->id, 'course_id' => $course->id], [
+                                                'class' => 'delete-review',
+                                                'data-method' => 'post',
+                                                'data-confirm' => 'Вы действилътельно хотите удалить этот елемент?',
+                                            ]); ?>
+                                        <?php endif; ?>
+                                    </p>
                                 </div>
                                 <p class="review-text"><?= Html::encode($review->text); ?></p>
-                                <div class="review-actions">
-                                    <div class="action action-answer-wrap">
-                                        <button class="review-action-bnt action-answer">
-                                            <span class="action-text action-text-answer">Ответить</span>
-                                            <svg class="review-action-icon" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="12" height="12" viewBox="0 0 12 12"><defs><path id="bp5ta" d="M566.618 2350h-9.438c-.65 0-1.18.53-1.18 1.18v10.618l2.36-2.36h8.258c.649 0 1.18-.53 1.18-1.18v-7.078c0-.65-.531-1.18-1.18-1.18z"/></defs><g><g transform="translate(-556 -2350)"><use xlink:href="#bp5ta"/></g></g></svg>
-                                        </button>
-                                    </div>
-                                    <div class="action action-like-wrap">
-                                        <button class="review-action-bnt action-like">
-                                            <svg class="review-action-icon" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="14" height="12" viewBox="0 0 14 12"><defs><path id="pxnaa" d="M1120.496 2214.882v-7.13h-2.376v7.13zm2.377 0h5.347c.475 0 .89-.297 1.069-.713l1.782-4.218a.859.859 0 0 0 .119-.416v-1.189c0-.653-.535-1.187-1.188-1.187h-3.743l.594-2.733v-.178c0-.238-.119-.476-.238-.654l-.653-.594-3.921 3.921a1.173 1.173 0 0 0-.357.832v5.94c0 .654.535 1.189 1.189 1.189z"/></defs><g><g transform="translate(-1118 -2203)"><use xlink:href="#pxnaa"/></g></g></svg>
-                                        </button>
-                                        <span class="action-text like-count">15</span>
-                                    </div>
-                                    <div class="action action-unlike-wrap">
-                                        <button class="review-action-bnt action-unlike">
-                                            <svg class="review-action-icon" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="13" height="12" viewBox="0 0 13 12"><defs><path id="v1o7a" d="M1202.594 2351v7.13h2.376V2351zm-2.377 0h-5.347c-.475 0-.89.297-1.069.713l-1.782 4.218a.859.859 0 0 0-.12.416v1.188c0 .654.536 1.188 1.19 1.188h3.742l-.594 2.733v.178c0 .238.119.475.237.654l.654.594 3.921-3.921c.238-.238.356-.535.356-.832v-5.94c0-.654-.534-1.189-1.188-1.189z"/></defs><g><g transform="translate(-1192 -2351)"><use xlink:href="#v1o7a"/></g></g></svg>
-                                        </button>
-                                        <span class="action-text unlike-count">7</span>
-                                    </div>
-                                </div>
+<!--                                <div class="review-actions">-->
+<!--                                    <div class="action action-answer-wrap">-->
+<!--                                        <button class="review-action-bnt action-answer">-->
+<!--                                            <span class="action-text action-text-answer">Ответить</span>-->
+<!--                                            <svg class="review-action-icon" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="12" height="12" viewBox="0 0 12 12"><defs><path id="bp5ta" d="M566.618 2350h-9.438c-.65 0-1.18.53-1.18 1.18v10.618l2.36-2.36h8.258c.649 0 1.18-.53 1.18-1.18v-7.078c0-.65-.531-1.18-1.18-1.18z"/></defs><g><g transform="translate(-556 -2350)"><use xlink:href="#bp5ta"/></g></g></svg>-->
+<!--                                        </button>-->
+<!--                                    </div>-->
+<!--                                    <div class="action action-like-wrap">-->
+<!--                                        <button class="review-action-bnt action-like">-->
+<!--                                            <svg class="review-action-icon" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="14" height="12" viewBox="0 0 14 12"><defs><path id="pxnaa" d="M1120.496 2214.882v-7.13h-2.376v7.13zm2.377 0h5.347c.475 0 .89-.297 1.069-.713l1.782-4.218a.859.859 0 0 0 .119-.416v-1.189c0-.653-.535-1.187-1.188-1.187h-3.743l.594-2.733v-.178c0-.238-.119-.476-.238-.654l-.653-.594-3.921 3.921a1.173 1.173 0 0 0-.357.832v5.94c0 .654.535 1.189 1.189 1.189z"/></defs><g><g transform="translate(-1118 -2203)"><use xlink:href="#pxnaa"/></g></g></svg>-->
+<!--                                        </button>-->
+<!--                                        <span class="action-text like-count">15</span>-->
+<!--                                    </div>-->
+<!--                                    <div class="action action-unlike-wrap">-->
+<!--                                        <button class="review-action-bnt action-unlike">-->
+<!--                                            <svg class="review-action-icon" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="13" height="12" viewBox="0 0 13 12"><defs><path id="v1o7a" d="M1202.594 2351v7.13h2.376V2351zm-2.377 0h-5.347c-.475 0-.89.297-1.069.713l-1.782 4.218a.859.859 0 0 0-.12.416v1.188c0 .654.536 1.188 1.19 1.188h3.742l-.594 2.733v.178c0 .238.119.475.237.654l.654.594 3.921-3.921c.238-.238.356-.535.356-.832v-5.94c0-.654-.534-1.189-1.188-1.189z"/></defs><g><g transform="translate(-1192 -2351)"><use xlink:href="#v1o7a"/></g></g></svg>-->
+<!--                                        </button>-->
+<!--                                        <span class="action-text unlike-count">7</span>-->
+<!--                                    </div>-->
+<!--                                </div>-->
                             </div>
                             <?php endforeach; ?>
                         </div>

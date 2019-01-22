@@ -25,7 +25,7 @@ $this->title = 'Update course: ' . $course->name;
                     Редактирование курса
                 </li>
             </ul>
-            <div class="tab-content">
+            <div class="tab-content edit-course-wrap">
                 <div class="tab-pane active step-1" id="main_info">
                     <div class="panel panel-default form-horizontal">
                         <div class="upload-image edit-course-photos">
@@ -77,7 +77,7 @@ $this->title = 'Update course: ' . $course->name;
                                 <div class="upload-image">
                                     <div class="row">
                                         <div class="col-xs-12">
-                                            <label class="control-label">Фотогалерея курса</label>
+                                            <label class="control-label edit-label">Фотогалерея курса</label>
                                         </div>
 
                                         <?php if (!empty($course->gallery)):?>
@@ -176,8 +176,8 @@ $this->title = 'Update course: ' . $course->name;
                                 </div>
                                 <div class="form-group description-edit">
                                     <div class="col-sm-12">
-                                        <label class="control-label" for="description">Описание курса</label>
-                                        <?= $form->field($model, 'description')->textarea(['rows' => 15, 'id' => 'description'])->label(false); ?>
+                                        <label class="control-label edit-label" for="description">Описание курса</label>
+                                        <?= $form->field($model, 'description')->textarea(['rows' => 15, 'id' => 'description', 'class' => 'edit_course_textarea'])->label(false); ?>
                                         <span id="error_description" class="text-danger"></span>
                                     </div>
                                 </div>

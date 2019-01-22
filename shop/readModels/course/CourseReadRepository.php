@@ -126,6 +126,9 @@ class CourseReadRepository
                     ],
                 ],
             ],
+            'pagination' => [
+                'pageSize' => 25,
+            ],
         ]);
     }
 

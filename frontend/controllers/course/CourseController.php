@@ -148,20 +148,6 @@ class CourseController extends AppController{
 
 
 
-    public function actionCity($id)
-    {
-        if (!$city = $this->cities->find($id)) {
-            throw new NotFoundHttpException('The requested page does not exist.');
-        }
-
-        $dataProvider = $this->courseReadRepository->getAllByCity($city);
-
-        return $this->render('city', [
-            'city' => $city,
-            'dataProvider' => $dataProvider,
-        ]);
-    }
-
 
     public function actionFirm($id)
     {

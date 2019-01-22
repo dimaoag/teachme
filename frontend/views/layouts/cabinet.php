@@ -21,19 +21,19 @@ $activeProfile = isset($this->params['active_profile']) ? $this->params['active_
                 <a href="<?= Url::to(['index']); ?>" class="tab-company <?= $activeCourse; ?>" title="Мои курсы">
                     <span class="tab-company-text">Мои курсы</span>
                     <span class="tab-company-icon">
-                        <i class="fa fa-graduation-cap" aria-hidden="true"></i>
+                        <i class="fa fa-home" aria-hidden="true"></i>
                     </span>
                 </a>
                 <a href="<?= Url::to(['orders']); ?>" class="tab-company <?= $activeOrders; ?>" title="Заявки">
                     <span class="tab-company-text">Заявки</span>
                     <span class="tab-company-icon">
-                        <i class="fa fa-list" aria-hidden="true"></i>
+                        <i class="fa fa-bullseye" aria-hidden="true"></i>
                     </span>
                 </a>
                 <a href="<?= Url::to(['teacher-main-info']); ?>" class="tab-company <?= $activeTeacherMainInfo; ?>" title="Основная информация">
                     <span class="tab-company-text">Основная информация</span>
                     <span class="tab-company-icon">
-                        <i class="fa fa-pencil-square-o"></i>
+                        <i class="fa fa-server"></i>
                     </span>
                 </a>
                 <a href="<?= Url::to(['payment']); ?>" class="tab-company <?= $activePayments; ?>" title="Услуги и платежи">
@@ -45,7 +45,7 @@ $activeProfile = isset($this->params['active_profile']) ? $this->params['active_
                 <a href="<?= Url::to(['profile']); ?>" class="tab-company <?= $activeProfile; ?>" title="Настройки">
                     <span class="tab-company-text">Настройки</span>
                     <span class="tab-company-icon">
-                        <i class="fa fa-cogs" aria-hidden="true"></i>
+                        <i class="fa fa-cog" aria-hidden="true"></i>
                     </span>
                 </a>
             </div>

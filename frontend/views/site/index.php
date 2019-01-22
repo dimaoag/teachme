@@ -18,7 +18,7 @@ $this->title = 'Главная';
             <div class="col-md-12">
                 <div class="main-header-wrap">
                     <h1 class="main-header-title">платформа для поиска курсов</h1>
-                    <h3 class="main-header-description">Более 1000 курсов в 100 направлениях, которые можете отфильтровать по цене, типу или по месту расположения</h3>
+                    <h3 class="main-header-description">Которые можете отфильтровать по цене, типу или по месту расположения</h3>
                     <div class="row main-header-form-wrap">
                         <?= Html::beginForm(['/course/search/search'], 'get'); ?>
                             <div class="col-sm-5 col-sm-offset-1">
@@ -117,17 +117,16 @@ $this->title = 'Главная';
     </div>
 </div>
 
-<?php if (Yii::$app->user->isGuest): ?>
-    <div class="question">
-        <div class="container">
-            <div class="row">
-                <div class="col-md-12 question-wrap">
-                    <h1 class="question-title">Хотите выставить свои курсы на Teach Me ?</h1>
-                    <div class="question-btn-wrap">
-                        <a href="<?= Url::to(['/signup']) ?>" class="button question-btn">Зарегистрироваться</a>
-                    </div>
+
+<div class="question">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12 question-wrap">
+                <h1 class="question-title">Хотите выставить свои курсы на Teach Me ?</h1>
+                <div class="question-btn-wrap">
+                    <a href="<?= Yii::$app->user->isGuest ? Url::to(['/signup']) : "#" ?>" class="button question-btn">Зарегистрироваться</a>
                 </div>
             </div>
         </div>
     </div>
-<?php endif; ?>
+</div>

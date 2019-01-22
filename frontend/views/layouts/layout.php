@@ -37,7 +37,7 @@ $loginForm = isset($this->params['loginForm']) ? $this->params['loginForm'] : nu
 
 
     <div id="courses-login" class="white-popup mfp-hide">
-        <h5 class="text-center">Чтобы добавить курс в избраное нужно ввойти на сайт или <a href="<?=Url::to(['/signup'])?>">зарегистрироваться</a></h5>
+        <h5 class="text-center login-popup-text">Чтобы добавить курс в избраное нужно ввойти на сайт или <a href="<?=Url::to(['/signup'])?>">зарегистрироваться</a></h5>
         <div class="course-info-footer">
             <?php $form = ActiveForm::begin(['id' => 'loginForm', 'action' => Url::to(['/login']), 'options' => ['class' => 'login100-form tab-form active']]); ?>
             <div class="form-group">

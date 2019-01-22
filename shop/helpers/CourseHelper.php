@@ -80,7 +80,7 @@ class CourseHelper
 
     public static function echoDate($date){
 //        Yii::$app->formatter->locale = 'en-EN';
-        return Yii::$app->formatter->asDatetime($date,'medium');
+        return Yii::$app->formatter->asDate($date,'medium');
     }
 
 
