@@ -28,8 +28,8 @@ use shop\helpers\UserHelper;
                 <div id="navbar" class="navbar-collapse collapse">
                     <ul class="nav navbar-nav navbar-left">
                         <li><a href="<?=Url::home()?>">Главная</a></li>
-                        <li><a href="<?=Url::to(['/course/search/search'])?>">Курсы</a></li>
-                        <li><a href="<?=Url::to(['/course/search/search'])?>">Мастер-класы</a></li>
+                        <li><a href="<?=Url::to(['/course/search/search', 'courseType[]' => '1'])?>">Курсы</a></li>
+                        <li><a href="<?=Url::to(['/course/search/search', 'courseType[]' => '2'])?>">Мастер-класы</a></li>
                     </ul>
                     <ul class="nav navbar-nav navbar-right">
                         <?php if (!Yii::$app->user->isGuest):  ?>
