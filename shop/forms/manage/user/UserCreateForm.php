@@ -23,7 +23,7 @@ class UserCreateForm extends Model
             ['phone', 'replacePhone'],
             [['first_name', 'last_name', 'email', 'phone'], 'string', 'max' => 255],
             [['password'], 'string', 'max' => 255, 'min' => 6],
-            [['phone', 'email'], 'unique', 'targetClass' => User::class],
+            [['phone'], 'unique', 'targetClass' => User::class],
             ['email', 'email'],
         ];
     }
