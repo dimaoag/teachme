@@ -124,7 +124,7 @@ $this->title = 'Главная';
             <div class="col-md-12 question-wrap">
                 <h1 class="question-title">Хотите выставить свои курсы на Teach Me ?</h1>
                 <div class="question-btn-wrap">
-                    <a href="<?= Yii::$app->user->isGuest ? Url::to(['/signup']) : "#" ?>" class="button question-btn">Зарегистрироваться</a>
+                    <a href="<?= Yii::$app->user->isGuest ? Url::to(['/signup']) : "#" ?>" class="question-btn">Зарегистрироваться</a>
                 </div>
             </div>
         </div>

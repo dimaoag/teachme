@@ -3660,6 +3660,7 @@ label.tab.active{
     justify-content: center;
 }
 .question-btn{
+    border-radius: 3px;
     color: white;
     padding: 10px 30px;
     background-image: linear-gradient(-21deg, rgba(255, 135, 6, 0.93) 0%, rgba(255, 192, 0, 0.93) 100%);
