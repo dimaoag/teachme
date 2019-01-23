@@ -18,6 +18,7 @@ class CourseEditForm extends CompositeForm
     public $name;
     public $description;
     public $price;
+    public $old_price;
 
     private $_course;
 
@@ -29,6 +30,7 @@ class CourseEditForm extends CompositeForm
         $this->name = $course->name;
         $this->description = preg_replace("/<([a-z]*)\b[^>]*>/","\r\n", $course->description);
         $this->price = $course->price;
+        $this->old_price = $course->old_price;
         $this->categories = new CategoriesForm($course);
         $this->_course = $course;
         parent::__construct($config);
@@ -38,7 +40,7 @@ class CourseEditForm extends CompositeForm
     {
         return [
             [['cityId', 'name', 'price'], 'required'],
-            [['cityId', 'price'], 'integer'],
+            [['cityId', 'price', 'old_price'], 'integer'],
             [['name'], 'string', 'max' => 255],
             ['description', 'string'],
             [['description'], 'filter', 'filter' => function($value){

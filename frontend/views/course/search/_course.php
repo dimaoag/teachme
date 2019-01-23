@@ -134,7 +134,9 @@ AppAsset::register($this);
                         </div>
                     </div>
                 </div>
-                <p class="old-price">3500 грн</p>
+                <?php if ($course->old_price): ?>
+                    <p class="old-price"><?= Html::encode($course->old_price) ?> грн</p>
+                <?php endif; ?>
                 <p class="current-price"><?= Html::encode($course->price) ?> грн</p>
             </div>
         </div>

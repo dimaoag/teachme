@@ -36,6 +36,7 @@ use shop\entities\user\WishlistItem;
  * @property integer $date_stop_sale
  * @property string $name
  * @property integer $price
+ * @property integer $old_price
  * @property string $description
  * @property integer $rating
  * @property integer $status
@@ -66,7 +67,7 @@ class Course extends ActiveRecord implements AggregateRoot
 
     public $meta;
 
-    public static function create($userId, $cityId, $courseTypeId, $firmId, $categoryId, $name, $price, $description): self
+    public static function create($userId, $cityId, $courseTypeId, $firmId, $categoryId, $name, $price, $oldPrice, $description): self
     {
         $course = new static();
         $course->user_id = $userId;
@@ -76,6 +77,7 @@ class Course extends ActiveRecord implements AggregateRoot
         $course->category_id = $categoryId;
         $course->name = $name;
         $course->price = $price;
+        $course->old_price = $oldPrice;
         $course->description = $description;
         $course->status = self::STATUS_NOT_ACTIVE;
         $course->created_at = time();
@@ -83,11 +85,12 @@ class Course extends ActiveRecord implements AggregateRoot
     }
 
 
-    public function edit($cityId, $name, $price, $description): void
+    public function edit($cityId, $name, $price, $oldPrice, $description): void
     {
         $this->city_id = $cityId;
         $this->name = $name;
         $this->price = $price;
+        $this->old_price = $oldPrice;
         $this->description = $description;
     }
 

@@ -159,6 +159,16 @@ $this->title = 'Редактирование курса: ' . $course->name;
                                         <span id="error_price" class="text-danger"></span>
                                     </div>
                                 </div>
+                                <div class="form-group">
+                                    <label class="col-sm-2 control-label" for="old_price">Старая цена</label>
+                                    <div class="col-sm-3">
+                                        <div class="add-course-price-field">
+                                            <?= $form->field($model, 'old_price')->input('number')->label(false); ?>
+                                            <p class="form-currency">грн.</p>
+                                        </div>
+                                        <span id="error_price" class="text-danger"></span>
+                                    </div>
+                                </div>
                                 <div class="form-group description-edit">
                                     <div class="col-sm-12">
                                         <label class="control-label edit-label" for="description">Описание курса</label>

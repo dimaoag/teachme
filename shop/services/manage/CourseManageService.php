@@ -84,6 +84,7 @@ class CourseManageService
             $category->id,
             $form->name,
             $form->price,
+            $form->old_price,
             $form->description
         );
 
@@ -117,6 +118,7 @@ class CourseManageService
             $city->id,
             $form->name,
             $form->price,
+            $form->old_price,
             $form->description
         );
 

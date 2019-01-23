@@ -83,6 +83,13 @@ class UserManegeService
         $this->repository->save($user);
     }
 
+    public function returnOnePublication($userId, $courseTypeId)
+    {
+        $user = $this->repository->getUserById($userId);
+        $user->setPublication($courseTypeId, 1);
+        $this->repository->save($user);
+    }
+
     public function plusPublication(Payment $payment): void
     {
         $user = $this->repository->getUserById($payment->user_id);

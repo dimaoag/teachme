@@ -25,6 +25,7 @@ class CourseCreateForm extends CompositeForm
     public $name;
     public $description;
     public $price;
+    public $old_price;
 
     public function __construct($config = [])
     {
@@ -43,7 +44,7 @@ class CourseCreateForm extends CompositeForm
         return [
             [['cityId', 'firmId', 'courseTypeId', 'name', 'price'], 'required'],
             [['name'], 'string', 'max' => 255],
-            [['cityId', 'firmId', 'courseTypeId', 'price'], 'integer'],
+            [['cityId', 'firmId', 'courseTypeId', 'price', 'old_price'], 'integer'],
             ['description', 'string'],
             [['description'], 'filter', 'filter' => function($value){
                 return trim(preg_replace("/\r\n|\r/", "<br>", $value));
@@ -80,6 +81,7 @@ class CourseCreateForm extends CompositeForm
             'courseTypeId' => 'Тип курса',
             'name' => 'Название курса',
             'price' => 'Цена',
+            'old_price' => 'Старая цена',
             'description' => 'Описание',
         ];
     }
