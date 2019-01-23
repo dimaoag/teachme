@@ -3738,3 +3738,25 @@ label.tab.active{
 .link-create-firm:hover{
     color: #9e3ffc;
 }
+
+.thanks-icon{
+    color: #9e3ffc;
+    margin-top: 50px;
+    margin-bottom: 20px;
+}
+.form-checkout{
+    margin: 25px 0;
+}
+.form-checkout .fourth-block{
+    margin-top: 15px;
+}
+.form-checkout-item{
+    display: flex;
+    padding: 10px 0;
+}
+.form-checkout-item .form-checkout-title{
+    flex-basis: 50%;
+}
+.form-checkout-wrap form{
+    display: none;
+}

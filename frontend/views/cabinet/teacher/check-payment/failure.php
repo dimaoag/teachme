@@ -3,9 +3,16 @@
 /* @var $this yii\web\View */
 
 
-$this->title = 'Спасибо за оплату';
+$this->title = 'Ошибка оплаты';
 ?>
 
-<div class="tab-cabinet-container tab-thanks active">
-    <h2>Ошибка оплаты. Попробуйте позже</h2>
+
+<div class="container">
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="tab-cabinet-container tab-thanks active text-center text-danger">
+                <h2>Ошибка оплаты. Попробуйте позже</h2>
+            </div>
+        </div>
+    </div>
 </div>

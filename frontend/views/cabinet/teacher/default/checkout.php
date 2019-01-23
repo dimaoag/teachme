@@ -12,7 +12,7 @@ $this->title = 'Оформления заказа';
 <div class="tab-cabinet-container tab-checkout active">
     <h2>Оформление заказа на публикации</h2>
     <div class="row">
-        <div class="col-md-5">
+        <div class="col-md-5 form-checkout-wrap">
             <?php if (!empty($payment)): ?>
                 <div class="form-checkout">
                     <div class="form-checkout-item">
