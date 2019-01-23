@@ -13,6 +13,7 @@ use yii\filters\VerbFilter;
 use shop\forms\manage\shop\course\PhotosForm;
 use shop\forms\manage\shop\course\GalleryForm;
 use shop\entities\shop\course\Course;
+use yii\helpers\VarDumper;
 use yii\web\Controller;
 use shop\forms\manage\shop\course\CourseCreateForm;
 use shop\forms\manage\shop\course\CourseEditForm;
@@ -210,34 +211,32 @@ class CourseController extends AppController{
             }
         }
 
-        $photosForm = new PhotosForm();
-        if ($photosForm->load(Yii::$app->request->post()) && $photosForm->validate()) {
-            try {
-                $this->service->addPhotos($course->id, $photosForm);
-                return $this->redirect(['update', 'id' => $course->id]);
-            } catch (\DomainException $e) {
-                Yii::$app->errorHandler->logException($e);
-                Yii::$app->session->setFlash('error', $e->getMessage());
-            }
-        }
+//        $photosForm = new PhotosForm();
+//        if ($photosForm->load(Yii::$app->request->post()) && $photosForm->validate()) {
+//            try {
+//                $this->service->addPhotos($course->id, $photosForm);
+//                return $this->redirect(['update', 'id' => $course->id]);
+//            } catch (\DomainException $e) {
+//                Yii::$app->errorHandler->logException($e);
+//                Yii::$app->session->setFlash('error', $e->getMessage());
+//            }
+//        }
 
-        $galleryForm = new GalleryForm();
-
-        if ($galleryForm->load(Yii::$app->request->post()) && $galleryForm->validate()) {
-            try {
-                $this->service->addGallery($course->id, $galleryForm);
-                return $this->redirect(['update', 'id' => $course->id]);
-            } catch (\DomainException $e) {
-                Yii::$app->errorHandler->logException($e);
-                Yii::$app->session->setFlash('error', $e->getMessage());
-            }
-        }
+//        $galleryForm = new GalleryForm();
+//
+//        if ($galleryForm->load(Yii::$app->request->post()) && $galleryForm->validate()) {
+//            try {
+//                $this->service->addGallery($course->id, $galleryForm);
+//                return $this->redirect(['update', 'id' => $course->id]);
+//            } catch (\DomainException $e) {
+//                Yii::$app->errorHandler->logException($e);
+//                Yii::$app->session->setFlash('error', $e->getMessage());
+//            }
+//        }
 
         return $this->render('update', [
             'model' => $form,
             'course' => $course,
-            'photosForm' => $photosForm,
-            'galleryForm' => $galleryForm,
         ]);
     }
 

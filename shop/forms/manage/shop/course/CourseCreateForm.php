@@ -6,8 +6,6 @@ use shop\entities\shop\City;
 use shop\entities\shop\Characteristic;
 use shop\entities\shop\CourseType;
 use shop\entities\shop\TeacherMainInfo;
-use shop\entities\shop\course\Course;
-use shop\entities\user\User;
 
 use shop\forms\CompositeForm;
 use Yii;

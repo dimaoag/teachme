@@ -8,10 +8,9 @@ use kartik\widgets\FileInput;
 /* @var $this yii\web\View */
 /* @var $course shop\entities\shop\course\Course */
 /* @var $model shop\forms\manage\shop\course\CourseEditForm */
-/* @var $photosForm shop\forms\manage\shop\course\PhotosForm */
-/* @var $galleryForm shop\forms\manage\shop\course\GalleryForm */
 
-$this->title = 'Update course: ' . $course->name;
+
+$this->title = 'Редактирование курса: ' . $course->name;
 //$this->params['breadcrumbs'][] = ['label' => 'Products', 'url' => ['index']];
 //$this->params['breadcrumbs'][] = ['label' => $course->name, 'url' => ['view', 'id' => $course->id]];
 //$this->params['breadcrumbs'][] = 'Update';
@@ -28,112 +27,99 @@ $this->title = 'Update course: ' . $course->name;
             <div class="tab-content edit-course-wrap">
                 <div class="tab-pane active step-1" id="main_info">
                     <div class="panel panel-default form-horizontal">
-                        <div class="upload-image edit-course-photos">
-                            <div class="form-group">
-                                <label class="col-sm-12 control-label" for="price">Главное фото курса</label>
-                                <br><br>
-                                <?php if (!empty($course->photos)):?>
-                                    <?php foreach ($course->photos as $photo): ?>
-                                        <div class="col-sm-5 col-xs-12 edit-main-photo-wrap">
-                                            <div class="btn-group edit-delete-btn">
-                                                <?= Html::a('<span class="glyphicon glyphicon-remove"></span>', ['delete-photo', 'id' => $course->id, 'photo_id' => $photo->id], [
-                                                    'class' => 'btn btn-default',
-                                                    'data-method' => 'post',
-                                                    'data-confirm' => 'Вы действилътельно хотите удалить этот елемент?',
-                                                ]); ?>
-                                            </div>
-                                            <?= Html::img($photo->getThumbFileUrl('file', 'thumb')); ?>
-                                        </div>
-                                    <?php endforeach; ?>
-                                <?php else: ?>
-                                    <div class="col-md-8">
-                                        <?php $formPhotos = ActiveForm::begin([
-                                            'options' => ['enctype'=>'multipart/form-data'],
-                                        ]); ?>
-
-                                        <?= $formPhotos->field($photosForm, 'files[]')->widget(FileInput::class, [
-                                            'options' => [
-                                                'accept' => 'image/*',
-                                            ],
-                                            'pluginOptions' => [
-                                                'browseOnZoneClick' => true,
-                                                'showBrowse' => true,
-                                                'showUpload' => true,
-                                                'overwriteInitial' => true,
-                                                'browseClass' => 'btn btn-purple',
-                                                'removeClass' => 'btn btn-default',
-                                                'uploadClass' => 'btn btn-success',
-                                            ],
-                                        ])->label(false); ?>
-
-
-                                        <?php ActiveForm::end(); ?>
-                                    </div>
-                                <?php endif; ?>
-
-                                <div class="clearfix"></div>
-                            </div>
-                            <div class="form-group edit-gallery-wrap">
-                                <div class="upload-image">
-                                    <div class="row">
-                                        <div class="col-xs-12">
-                                            <label class="control-label edit-label">Фотогалерея курса</label>
-                                        </div>
-
-                                        <?php if (!empty($course->gallery)):?>
-                                            <?php foreach ($course->gallery as $galleryItem): ?>
-                                                <div class="col-md-4 col-sm-4 col-xs-6 edit-main-photo-wrap edit-gallery">
-                                                    <div class="btn-group edit-delete-btn">
-                                                        <?= Html::a('<span class="glyphicon glyphicon-remove"></span>', ['delete-gallery-item', 'id' => $course->id, 'photo_id' => $galleryItem->id], [
-                                                            'class' => 'btn btn-default',
-                                                            'data-method' => 'post',
-                                                            'data-confirm' => 'Вы действилътельно хотите удалить этот елемент?',
-                                                        ]); ?>
-                                                    </div>
-                                                    <?= Html::img($galleryItem->getThumbFileUrl('file', 'thumb')); ?>
+                        <?php $form = ActiveForm::begin([
+                            'options' => ['enctype'=>'multipart/form-data']
+                        ]); ?>
+                            <div class="upload-image edit-course-photos">
+                                <div class="form-group">
+                                    <label class="col-sm-12 control-label" for="price">Главное фото курса</label>
+                                    <br><br>
+                                    <?php if (!empty($course->photos)):?>
+                                        <?php foreach ($course->photos as $photo): ?>
+                                            <div class="col-sm-5 col-xs-12 edit-main-photo-wrap">
+                                                <div class="btn-group edit-delete-btn">
+                                                    <?= Html::a('<span class="glyphicon glyphicon-remove"></span>', ['delete-photo', 'id' => $course->id, 'photo_id' => $photo->id], [
+                                                        'class' => 'btn btn-default',
+                                                        'data-method' => 'post',
+                                                        'data-confirm' => 'Вы действилътельно хотите удалить этот елемент?',
+                                                    ]); ?>
                                                 </div>
-                                            <?php endforeach; ?>
-                                        <?php endif; ?>
-                                    </div>
-                                    <div class="row">
-                                        <button type="button" class="btn btn-default btn-hide-gallery" data-toggle="collapse" data-target="#hide_gallery_input">Добавить файлы в галерею</button>
-                                    </div>
-                                    <div id="hide_gallery_input" class="collapse">
-                                        <div class="row file-input-row">
-                                            <?php $formGallery = ActiveForm::begin([
-                                                'options' => ['enctype'=>'multipart/form-data'],
-                                            ]); ?>
+                                                <?= Html::img($photo->getThumbFileUrl('file', 'thumb')); ?>
+                                            </div>
+                                        <?php endforeach; ?>
+                                    <?php endif; ?>
+                                        <div class="col-md-8 hide-form-edit-photo" data-hide="<?= (!empty($course->photos)) ? '1' : '0'; ?>">
 
-                                            <?= $formGallery->field($galleryForm, 'gallery[]')->widget(FileInput::class, [
+                                            <?= $form->field($model->photos, 'files[]')->widget(FileInput::class, [
                                                 'options' => [
                                                     'accept' => 'image/*',
-                                                    'multiple' => true,
+                                                    'id' => 'edit_photo'
                                                 ],
                                                 'pluginOptions' => [
                                                     'browseOnZoneClick' => true,
                                                     'showBrowse' => true,
-                                                    'showUpload' => true,
-                                                    'overwriteInitial' => true,
+                                                    'showUpload' => false,
+//                                                    'overwriteInitial' => true,
                                                     'browseClass' => 'btn btn-purple',
                                                     'removeClass' => 'btn btn-default',
-                                                    'uploadClass' => 'btn btn-success',
                                                 ],
                                             ])->label(false); ?>
 
-                                            <?php ActiveForm::end(); ?>
+                                        </div>
+
+                                    <div class="clearfix"></div>
+                                </div>
+                                <div class="form-group edit-gallery-wrap">
+                                    <div class="upload-image">
+                                        <div class="row">
+                                            <div class="col-xs-12">
+                                                <label class="control-label edit-label">Фотогалерея курса</label>
+                                            </div>
+
+                                            <?php if (!empty($course->gallery)):?>
+                                                <?php foreach ($course->gallery as $galleryItem): ?>
+                                                    <div class="col-md-4 col-sm-4 col-xs-6 edit-main-photo-wrap edit-gallery">
+                                                        <div class="btn-group edit-delete-btn">
+                                                            <?= Html::a('<span class="glyphicon glyphicon-remove"></span>', ['delete-gallery-item', 'id' => $course->id, 'photo_id' => $galleryItem->id], [
+                                                                'class' => 'btn btn-default',
+                                                                'data-method' => 'post',
+                                                                'data-confirm' => 'Вы действилътельно хотите удалить этот елемент?',
+                                                            ]); ?>
+                                                        </div>
+                                                        <?= Html::img($galleryItem->getThumbFileUrl('file', 'thumb')); ?>
+                                                    </div>
+                                                <?php endforeach; ?>
+                                            <?php endif; ?>
+
+                                        </div>
+                                        <div class="row">
+                                            <button type="button" class="btn btn-default btn-hide-gallery" data-toggle="collapse" data-target="#hide_gallery_input">Добавить файлы в галерею</button>
+                                        </div>
+                                        <div id="hide_gallery_input" class="collapse">
+                                            <div class="row file-input-row">
+
+                                                <?= $form->field($model->gallery, 'gallery[]')->widget(FileInput::class, [
+                                                    'options' => [
+                                                        'accept' => 'image/*',
+                                                        'multiple' => true,
+                                                        'id' => 'edit_gallery'
+                                                    ],
+                                                    'pluginOptions' => [
+                                                        'browseOnZoneClick' => true,
+                                                        'showBrowse' => true,
+                                                        'showUpload' => false,
+//                                                        'overwriteInitial' => true,
+                                                        'browseClass' => 'btn btn-purple',
+                                                        'removeClass' => 'btn btn-default',
+                                                    ],
+                                                ])->label(false); ?>
+
+                                            </div>
                                         </div>
                                     </div>
-
                                 </div>
                             </div>
-                        </div>
-                        <div class="panel-body">
-
-                            <?php $form = ActiveForm::begin([
-                                'id' => 'add_course_form',
-                                'options' => ['enctype'=>'multipart/form-data']
-                                ]); ?>
-
+                            <div class="panel-body">
                                 <div class="form-group">
                                     <label class="col-sm-2 control-label" for="name">Названия курса</label>
                                     <div class="col-sm-8">
@@ -151,7 +137,6 @@ $this->title = 'Update course: ' . $course->name;
                                         </div>
                                         <span id="error_city" class="text-danger"></span>
                                     </div>
-
                                 </div>
                                 <div class="form-group">
                                     <label class="col-sm-2 control-label" for="category">Рубрика</label>
@@ -188,8 +173,8 @@ $this->title = 'Update course: ' . $course->name;
                                         </div>
                                     </div>
                                 </div>
-                            <?php ActiveForm::end(); ?>
-                        </div>
+                            </div>
+                        <?php ActiveForm::end(); ?>
                     </div>
                 </div>
             </div>

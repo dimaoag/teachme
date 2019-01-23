@@ -122,7 +122,20 @@ class CourseManageService
 
         $course->changeMainCategory($category->id);
 
-        $this->transaction->wrap(function () use ($course, $form) {
+        if ($form->photos){
+            foreach ($form->photos->files as $file) {
+                $course->addPhoto($file);
+            }
+        }
+
+        if ($form->gallery){
+            foreach ($form->gallery->gallery as $galleryImage) {
+                $course->addGalleryImage($galleryImage);
+            }
+        }
+
+
+        $this->transaction->wrap(function () use ($course) {
             $this->courses->save($course);
             if ($course->status == Course::STATUS_ACTIVE){
                 $this->indexer->remove($course);

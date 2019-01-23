@@ -9,6 +9,8 @@ use yii\helpers\ArrayHelper;
 
 /**
  * @property CategoriesForm $categories
+ * @property PhotosForm $photos
+ * @property GalleryForm $gallery
  */
 class CourseEditForm extends CompositeForm
 {
@@ -21,6 +23,8 @@ class CourseEditForm extends CompositeForm
 
     public function __construct(Course $course, $config = [])
     {
+        $this->photos = new PhotosForm();
+        $this->gallery = new GalleryForm();
         $this->cityId = $course->city_id;
         $this->name = $course->name;
         $this->description = preg_replace("/<([a-z]*)\b[^>]*>/","\r\n", $course->description);
@@ -51,6 +55,6 @@ class CourseEditForm extends CompositeForm
 
     protected function internalForms(): array
     {
-        return ['categories'];
+        return ['categories', 'photos', 'gallery'];
     }
 }

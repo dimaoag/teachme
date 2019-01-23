@@ -809,3 +809,11 @@ $('.send_order').on('click', function() {
 
     // return false;
 });
+
+if ($('div').is('.hide-form-edit-photo')) {
+    var form_wrap = $('.hide-form-edit-photo');
+
+    if(form_wrap.data('hide') == '1'){
+        form_wrap.hide();
+    }
+}

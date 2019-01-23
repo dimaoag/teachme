@@ -2740,6 +2740,10 @@ label.tab.active{
 
 .edit-main-photo-wrap{
     position: relative;
+    padding: 15px;
+}
+.edit-main-photo-wrap .edit-delete-btn{
+    top: 15px;
 }
 .edit-delete-btn{
     position: absolute;
