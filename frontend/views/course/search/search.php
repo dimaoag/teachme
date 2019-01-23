@@ -74,7 +74,7 @@ if ($searchForm->category){
                                                     </svg>
                                                 </div>
                                                 <span><?= Html::encode($courseTypeValue); ?></span>
-                                                <span class="count-number">(402)</span>
+<!--                                                <span class="count-number">(402)</span>-->
                                             </label>
                                         </div>
                                     </div>
@@ -120,7 +120,7 @@ if ($searchForm->category){
                                                                 </svg>
                                                             </div>
                                                             <span><?= Html::encode($variant); ?></span>
-                                                            <span class="count-number">(402)</span>
+<!--                                                            <span class="count-number">(402)</span>-->
                                                         </label>
                                                     </div>
                                                 </div>
@@ -207,7 +207,7 @@ if ($searchForm->category){
                                             </svg>
                                         </div>
                                         <span><?= Html::encode($courseTypeValue); ?></span>
-                                        <span class="count-number">(402)</span>
+<!--                                        <span class="count-number">(402)</span>-->
                                     </label>
                                 </div>
                             </div>
@@ -245,7 +245,7 @@ if ($searchForm->category){
                                                         </svg>
                                                     </div>
                                                     <span><?= Html::encode($variant); ?></span>
-                                                    <span class="count-number">(402)</span>
+<!--                                                    <span class="count-number">(402)</span>-->
                                                 </label>
                                             </div>
                                         </div>
