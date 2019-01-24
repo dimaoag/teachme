@@ -187,7 +187,7 @@ $this->params['breadcrumbs'][] = $course->name;
                         <div class="gallery-course-container">
                             <?php foreach ($course->gallery as $galleryItem): ?>
                                 <div class="clip">
-                                    <a href="<?= $galleryItem->getThumbFileUrl('file', 'thumb'); ?>">
+                                    <a href="<?= $galleryItem->getImageFileUrl('file'); ?>">
                                         <?= Html::img($galleryItem->getThumbFileUrl('file', 'thumb'), ['alt' => 'image_gallery']); ?>
                                     </a>
                                 </div>

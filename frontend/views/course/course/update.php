@@ -4,6 +4,7 @@ use mihaildev\ckeditor\CKEditor;
 use yii\helpers\Html;
 use yii\bootstrap\ActiveForm;
 use kartik\widgets\FileInput;
+use yii\helpers\Url;
 
 /* @var $this yii\web\View */
 /* @var $course shop\entities\shop\course\Course */
@@ -14,6 +15,8 @@ $this->title = 'Редактирование курса: ' . $course->name;
 //$this->params['breadcrumbs'][] = ['label' => 'Products', 'url' => ['index']];
 //$this->params['breadcrumbs'][] = ['label' => $course->name, 'url' => ['view', 'id' => $course->id]];
 //$this->params['breadcrumbs'][] = 'Update';
+
+
 ?>
 
 <main>
@@ -28,7 +31,10 @@ $this->title = 'Редактирование курса: ' . $course->name;
                 <div class="tab-pane active step-1" id="main_info">
                     <div class="panel panel-default form-horizontal">
                         <?php $form = ActiveForm::begin([
-                            'options' => ['enctype'=>'multipart/form-data']
+                            'id' => 'firm_photo',
+                            'options' => [
+                                    'enctype'=>'multipart/form-data',
+                                ],
                         ]); ?>
                             <div class="upload-image edit-course-photos">
                                 <div class="form-group">
@@ -49,21 +55,40 @@ $this->title = 'Редактирование курса: ' . $course->name;
                                         <?php endforeach; ?>
                                     <?php endif; ?>
                                         <div class="col-md-8 hide-form-edit-photo" data-hide="<?= (!empty($course->photos)) ? '1' : '0'; ?>">
-
-                                            <?= $form->field($model->photos, 'files[]')->widget(FileInput::class, [
-                                                'options' => [
-                                                    'accept' => 'image/*',
-                                                    'id' => 'edit_photo'
-                                                ],
-                                                'pluginOptions' => [
-                                                    'browseOnZoneClick' => true,
-                                                    'showBrowse' => true,
-                                                    'showUpload' => false,
-//                                                    'overwriteInitial' => true,
-                                                    'browseClass' => 'btn btn-purple',
-                                                    'removeClass' => 'btn btn-default',
-                                                ],
-                                            ])->label(false); ?>
+                                            <?= $form->field($model->photos, 'files[]')->fileInput(['id' => 'edit_photo_course', 'data-url' => Url::to(['', 'id' => $course->id])])->label(false); ?>
+<!--                                            --><?php //= $form->field($model->photos, 'files[]')->widget(FileInput::class, [
+//                                                'options' => [
+//                                                    'accept' => 'image/*',
+//                                                    'id' => 'edit_photo'
+//                                                ],
+//                                                'pluginOptions' => [
+//                                                    'browseOnZoneClick' => true,
+//                                                    'showBrowse' => true,
+//                                                    'showUpload' => false,
+//                                                    'showRemove' => false,
+//                                                    'overwriteInitial' => false,
+//                                                    'browseClass' => 'btn btn-purple',
+//                                                    'removeClass' => 'btn btn-default',
+//                                                    'uploadUrl' => Url::to(['','id' => $course->id,]),
+//                                                    'autoFitCaption' => true,
+//                                                    'pluginLoading' => true,
+//                                                    'initialPreviewAsData' => true,
+//                                                    'initialPreview' => [$photosFirm],
+//                                                    'initialPreviewConfig' => [$photosPreviewConfig],
+//                                                    'fileActionSettings' => [
+//                                                        'showDrag' => false,
+//                                                        'showZoom' => true,
+//                                                        'showUpload' => true,
+//                                                        'showDelete' => false,
+//                                                    ],
+//                                                    'pluginEvents' =>
+//                                                        [
+//                                                            'change' => 'function(event) {
+//                                                                alert("File changed");
+//                                                            }'
+//                                                        ],
+//                                                ],
+//                                            ])->label(false); ?>
 
                                         </div>
 
@@ -95,25 +120,37 @@ $this->title = 'Редактирование курса: ' . $course->name;
                                         <div class="row">
                                             <button type="button" class="btn btn-default btn-hide-gallery" data-toggle="collapse" data-target="#hide_gallery_input">Добавить файлы в галерею</button>
                                         </div>
+                                        <?= $form->field($model->gallery, 'gallery[]')->fileInput(['id' => 'edit_gallery', 'multiple' => true, 'data-url' => Url::to(['', 'id' => $course->id])])->label(false); ?>
                                         <div id="hide_gallery_input" class="collapse">
                                             <div class="row file-input-row">
 
-                                                <?= $form->field($model->gallery, 'gallery[]')->widget(FileInput::class, [
-                                                    'options' => [
-                                                        'accept' => 'image/*',
-                                                        'multiple' => true,
-                                                        'id' => 'edit_gallery'
-                                                    ],
-                                                    'pluginOptions' => [
-                                                        'browseOnZoneClick' => true,
-                                                        'showBrowse' => true,
-                                                        'showUpload' => false,
-//                                                        'overwriteInitial' => true,
-                                                        'browseClass' => 'btn btn-purple',
-                                                        'removeClass' => 'btn btn-default',
-                                                    ],
-                                                ])->label(false); ?>
 
+<!--                                                --><?php //= $form->field($model->gallery, 'gallery[]')->widget(FileInput::class, [
+//                                                    'options' => [
+//                                                        'accept' => 'image/*',
+//                                                        'multiple' => true,
+//                                                        'id' => 'edit_gallery'
+//                                                    ],
+//                                                    'pluginOptions' => [
+//                                                        'browseOnZoneClick' => true,
+//                                                        'showBrowse' => true,
+//                                                        'showUpload' => true,
+//                                                        'maxFileSize' => 2048,
+//                                                        'overwriteInitial' => false,
+//                                                        'autoFitCaption' => true,
+//                                                        'browseClass' => 'btn btn-purple',
+//                                                        'removeClass' => 'btn btn-default',
+//                                                        'uploadUrl' => Url::to(['','id' => $course->id,]),
+//                                                        'pluginLoading' => true,
+//                                                        'initialPreviewAsData' => true,
+//                                                        'fileActionSettings' => [
+//                                                            'showDrag' => false,
+//                                                            'showZoom' => true,
+//                                                            'showUpload' => true,
+//                                                            'showDelete' => false,
+//                                                        ],
+//                                                    ],
+//                                                ])->label(false); ?>
                                             </div>
                                         </div>
                                     </div>

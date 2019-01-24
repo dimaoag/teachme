@@ -27,6 +27,8 @@ class AppAsset extends AssetBundle
         'css/amazonmenu.css',
         'css/responsive_multi_level_menu/component.css',
         'css/nice-select.css',
+        'css/fileinput.css',
+        'css/explorer-fas/theme.css',
         'css/style.css',
     ];
     public $js = [
@@ -43,6 +45,11 @@ class AppAsset extends AssetBundle
         'js/jquery.dlmenu.js',
         'js/jquery.nice-select.js',
         'js/jquery.sticky.js',
+        'js/sortable.min.js',
+        'js/fileinput.js',
+        'js/themes/fas/theme.js',
+        'js/themes/explorer-fas/theme.js',
+        'js/locales/ru.js',
         'js/script.js',
     ];
     public $depends = [

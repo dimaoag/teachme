@@ -198,6 +198,27 @@ class CourseController extends AppController{
         if (!CourseHelper::isUserCourse($id, Yii::$app->user->id)){
             return $this->redirect(['/']);
         }
+        $galleryForm = new GalleryForm();
+        $photosForm = new PhotosForm();
+
+        if(Yii::$app->request->isAjax){
+            $galleryName = $galleryForm->formName();
+            $photoName = $photosForm->formName();
+
+            if (isset($_FILES[$photoName])){
+                if ($photosForm->validate()){
+                    $this->service->addPhotos($course->id, $photosForm);
+                    return $this->asJson(['success' => 1]);
+                }
+            }
+            if (isset($_FILES[$galleryName])){
+                if ($galleryForm->validate()){
+                    $this->service->addGallery($course->id, $galleryForm);
+                    return $this->asJson(['success' => 1]);
+                }
+            }
+            return $this->asJson(['error' => 0]);
+        }
 
 
         $form = new CourseEditForm($course);
@@ -221,7 +242,7 @@ class CourseController extends AppController{
 //                Yii::$app->session->setFlash('error', $e->getMessage());
 //            }
 //        }
-
+//
 //        $galleryForm = new GalleryForm();
 //
 //        if ($galleryForm->load(Yii::$app->request->post()) && $galleryForm->validate()) {

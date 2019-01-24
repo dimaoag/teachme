@@ -2,6 +2,7 @@
 
 namespace shop\entities\shop\course;
 
+use Imagick;
 use PHPThumb\GD;
 use yii\db\ActiveRecord;
 use yii\web\UploadedFile;
@@ -52,9 +53,14 @@ class Gallery extends ActiveRecord
                 'thumbs' => [
                     'admin' => ['width' => 100, 'height' => 70],
                     'thumb' => ['width' => 640, 'height' => 480],
-//                    'catalog_product_main' => ['processor' => function (GD $thumb){
-//                        $thumb->adaptiveResize(750,1000);  // my resize
-//                    }],
+                    'preview' => ['processor' => function (GD $thumb){
+                        $thumb->setOptions([
+                            'jpegQuality' => 75,
+                        ]);
+
+                        $thumb->adaptiveResize(1000,750);  // my resize
+
+                    }],
 
                 ],
             ],

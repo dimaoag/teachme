@@ -3760,3 +3760,6 @@ label.tab.active{
 .form-checkout-wrap form{
     display: none;
 }
+.file-drop-zone{
+    border: 2px dashed #aaa;
+}

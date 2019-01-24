@@ -817,3 +817,51 @@ if ($('div').is('.hide-form-edit-photo')) {
         form_wrap.hide();
     }
 }
+
+
+$(function () {
+    var $el1 = $("#edit_photo_course");
+    var url = $el1.data('url');
+    $el1.fileinput({
+        maxFileSize: 5120,
+        uploadUrl: url,
+        theme: 'fas',
+        language: 'ru',
+        browseOnZoneClick: true,
+        uploadAsync: false,
+        showUpload: false, // hide upload button
+        showRemove: false, // hide remove button
+        maxFileCount: 1,
+        uploadAsync: false,
+        overwriteInitial: false,
+        initialPreviewAsData: true,
+    }).on("filebatchselected", function(event, files) {
+        $el1.fileinput("upload");
+    });
+});
+
+
+$(function () {
+    var $el1 = $("#edit_gallery");
+    var url = $el1.data('url');
+    $el1.fileinput({
+        maxFileSize: 5120,
+        uploadUrl: url,
+        theme: 'fas',
+        language: 'ru',
+        browseOnZoneClick: true,
+        uploadAsync: false,
+        showUpload: false, // hide upload button
+        showRemove: false, // hide remove button
+        maxFileCount: 20,
+        uploadAsync: false,
+        overwriteInitial: false,
+        initialPreviewAsData: true,
+    }).on("filebatchselected", function(event, files) {
+        $el1.fileinput("upload");
+    });
+});
+
+
+
+
