@@ -117,9 +117,9 @@ $this->title = 'Редактирование курса: ' . $course->name;
                                             <?php endif; ?>
 
                                         </div>
-                                        <div class="row">
-                                            <button type="button" class="btn btn-default btn-hide-gallery" data-toggle="collapse" data-target="#hide_gallery_input">Добавить файлы в галерею</button>
-                                        </div>
+<!--                                        <div class="row">-->
+<!--                                            <button type="button" class="btn btn-default btn-hide-gallery" data-toggle="collapse" data-target="#hide_gallery_input">Добавить файлы в галерею</button>-->
+<!--                                        </div>-->
                                         <?= $form->field($model->gallery, 'gallery[]')->fileInput(['id' => 'edit_gallery', 'multiple' => true, 'data-url' => Url::to(['', 'id' => $course->id])])->label(false); ?>
                                         <div id="hide_gallery_input" class="collapse">
                                             <div class="row file-input-row">

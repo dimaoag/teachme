@@ -266,10 +266,11 @@ use shop\helpers\UserHelper;
                 <div class="row">
                     <div class="col-sm-3">
                         <div class="footer-top-label">
-                            Связаться с нами
+                            График работы
                         </div>
                         <div class="footer-top-content">
-                            <a href="mailto:teachme.com.ua@gmail.com" class="footer-top-content-item">teachme.com.ua@gmail.com</a>
+                            <p class="footer-top-content-item">Пн - Пт</p>
+                            <p class="footer-top-content-item">с 9:00 по 18:00</p>
                         </div>
 <!--                        <div class="footer-top-label">-->
 <!--                            Связаться с нами-->
@@ -281,11 +282,10 @@ use shop\helpers\UserHelper;
                     </div>
                     <div class="col-sm-3">
                         <div class="footer-top-label">
-                            График работы
+                            Связаться с нами
                         </div>
                         <div class="footer-top-content">
-                            <p class="footer-top-content-item">Пн - Пт</p>
-                            <p class="footer-top-content-item">с 9:00 по 18:00</p>
+                            <a href="mailto:teachme.com.ua@gmail.com" class="footer-top-content-item">teachme.com.ua@gmail.com</a>
                         </div>
                     </div>
                     <div class="col-sm-3">
