@@ -5,6 +5,7 @@
 /* @var $teacherMainInfo \shop\entities\shop\TeacherMainInfo*/
 
 
+use kartik\widgets\Select2;
 use yii\helpers\Html;
 use kartik\widgets\FileInput;
 use yii\bootstrap\ActiveForm;
@@ -71,7 +72,17 @@ $this->params['active_teacher_main_info'] = 'active';
             <div class="form-group">
                 <div class="row">
                     <div class="col-sm-6 main-form-field-item header-search-city">
-                        <?= $form->field($teacherMainInfoForm, 'city_id')->dropDownList($teacherMainInfoForm->getCitiesList(), ['id' => 'city_id', 'prompt' => 'Выберите город...', 'class' => 'select-with-scroll teacher_main_info_city_select']); ?>
+
+                        <?= $form->field($teacherMainInfoForm, 'city_id')->widget(Select2::class, [
+                            'data' => $teacherMainInfoForm->getCitiesList(),
+                            'options' => [
+                                'placeholder' => 'Выберите рубрику...',
+                            ],
+                            'pluginOptions' => [
+                                'allowClear' => true,
+                            ],
+                        ])->label(true); ?>
+
                     </div>
                 </div>
             </div>

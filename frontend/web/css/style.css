@@ -1529,7 +1529,9 @@ span.ui-slider-handle.ui-state-default.ui-corner-all:focus, span.ui-slider-handl
     color: red;
 }
 .search-course-img img{
-    max-width: 225px;
+    width: 225px;
+    height: 150px;
+    object-fit: cover;
 }
 .search-course-header{
     display: flex;
@@ -1834,7 +1836,8 @@ span.ui-slider-handle.ui-state-default.ui-corner-all:focus, span.ui-slider-handl
         display: none;
     }
     .search-course-img img{
-        max-width: 179px;
+        width: 179px;
+        height: 130px;
     }
     .search-course-header {
         flex-wrap: nowrap;
@@ -1849,6 +1852,7 @@ span.ui-slider-handle.ui-state-default.ui-corner-all:focus, span.ui-slider-handl
         display: flex;
         margin-top: 15px;
         align-items: center;
+        justify-content: space-between;
     }
     .price .old-price{
         position: relative;

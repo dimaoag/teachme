@@ -115,7 +115,6 @@ class TeacherMainInfo  extends  ActiveRecord{
 //                    'catalog_product_main' => ['processor' => function (GD $thumb){
 //                        $thumb->adaptiveResize(750,1000);  // my resize
 //                    }],
-
                 ],
             ],
         ];
