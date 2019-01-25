@@ -86,10 +86,10 @@ $this->params['active_teacher_main_info'] = 'active';
                 <div class="row">
                     <div class="col-sm-5 main-form-field-item">
                         <div class="main-info-form-field main-info-field-phone">
-                            <?= $form->field($teacherMainInfoForm, 'phone_1')->textInput(['maxlength' => true, 'data-mask' => 'callback-catalog-phone']); ?>
+                            <?= $form->field($teacherMainInfoForm, 'phone_1')->textInput(); ?>
                         </div>
                         <div class="main-info-form-field main-info-field-phone">
-                            <?= $form->field($teacherMainInfoForm, 'phone_2')->textInput(['maxlength' => true, 'data-mask' => 'callback-catalog-phone']); ?>
+                            <?= $form->field($teacherMainInfoForm, 'phone_2')->textInput(); ?>
                         </div>
                     </div>
                 </div>

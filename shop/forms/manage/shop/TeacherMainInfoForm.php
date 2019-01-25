@@ -50,6 +50,7 @@ class TeacherMainInfoForm extends Model
             [['city_id', 'firm_name', 'phone_1'], 'required'],
             [['firm_name', 'address', 'phone_1', 'phone_2' ,'address'], 'string', 'max' => 255],
             [['instagram_link', 'facebook_link', 'vk_link', 'youtube_link'], 'url'],
+            [['phone_1', 'phone_2'], 'match', 'pattern' => '/^[0-9+]{1,}$/'],
             [['phone_1', 'phone_2'], 'replacePhone'],
             [['city_id'], 'integer'],
             [['firm_photo'], 'image'],
@@ -59,8 +60,8 @@ class TeacherMainInfoForm extends Model
 
     public function replacePhone()
     {
-        $this->phone_1 = str_replace(" ", "", $this->phone_1);
-        $this->phone_2 = str_replace(" ", "", $this->phone_2);
+        $this->phone_1 = trim(str_replace(" ", "", $this->phone_1));
+        $this->phone_2 = trim(str_replace(" ", "", $this->phone_2));
     }
 
     public function attributeLabels()

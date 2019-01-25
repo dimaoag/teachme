@@ -1,6 +1,6 @@
 <?php
 
-use mihaildev\ckeditor\CKEditor;
+use kartik\widgets\Select2;
 use yii\helpers\Html;
 use yii\bootstrap\ActiveForm;
 use kartik\widgets\FileInput;
@@ -168,8 +168,18 @@ $this->title = 'Редактирование курса: ' . $course->name;
                                     <label class="col-sm-2 control-label" for="city">Город</label>
                                     <div class="col-sm-4 header-search-city">
                                         <div class="add-course-select">
-                                            <div class="custom-select main-select-city">
-                                                <?= $form->field($model, 'cityId')->dropDownList($model->citiesList(), ['id' => 'city', 'prompt' => 'Выберите город...'])->label(false); ?>
+                                            <div class="custom-select">
+<!--                                                --><?php //= $form->field($model, 'cityId')->dropDownList($model->citiesList(), ['id' => 'city', 'prompt' => 'Выберите город...'])->label(false); ?>
+                                                <?= $form->field($model, 'cityId')->widget(Select2::class, [
+                                                    'data' => $model->citiesList(),
+                                                    'language' => 'ru',
+                                                    'options' => [
+                                                        'placeholder' => 'Выберите город...',
+                                                    ],
+                                                    'pluginOptions' => [
+                                                        'allowClear' => true,
+                                                    ],
+                                                ])->label(false); ?>
                                             </div>
                                         </div>
                                         <span id="error_city" class="text-danger"></span>
