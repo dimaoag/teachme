@@ -293,25 +293,29 @@ class CourseManageService
             $form->price
         );
         $this->courses->save($course);
-        $data = [
-            'username' => $form->username,
-            'phone' => $form->phone,
-            'course_name' => $course->name,
-            'course_id' => $course->id,
-        ];
 
 
-        $sent = $this
-            ->mailer
-            ->compose(
-                ['html' => 'order/emailOrderCreate-html', 'text' => 'order/emailOrderCreate-text'],
-                ['data' => $data]
-            )
-            ->setTo($user->email)
-            ->setSubject('Заявка с сайта ' . ' Teach Me')
-            ->send();
-        if (!$sent){
-            throw new \RuntimeException('Email sending error.');
+        if (!empty($user->email)){
+            $data = [
+                'username' => $form->username,
+                'phone' => $form->phone,
+                'course_name' => $course->name,
+                'course_id' => $course->id,
+            ];
+
+
+            $sent = $this
+                ->mailer
+                ->compose(
+                    ['html' => 'order/emailOrderCreate-html', 'text' => 'order/emailOrderCreate-text'],
+                    ['data' => $data]
+                )
+                ->setTo($user->email)
+                ->setSubject('Заявка с сайта ' . ' Teach Me')
+                ->send();
+            if (!$sent){
+                throw new \RuntimeException('Email sending error.');
+            }
         }
 
 
