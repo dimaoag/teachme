@@ -1,12 +1,16 @@
 <?php
 
+use kartik\widgets\Select2;
 use shop\helpers\CityHelper;
 use yii\helpers\Html;
 use yii\helpers\Url;
+use shop\entities\shop\City;
+use yii\bootstrap\ActiveForm;
 
 
 /* @var $this yii\web\View */
 /* @var $categoryViews \shop\readModels\course\views\CategoryView[] */
+/* @var $model \shop\forms\course\search\SearchForm */
 
 $this->title = 'Главная';
 ?>
@@ -20,7 +24,7 @@ $this->title = 'Главная';
                     <h1 class="main-header-title">платформа для поиска курсов</h1>
                     <h3 class="main-header-description">Которые можете отфильтровать по цене, типу или по месту расположения</h3>
                     <div class="row main-header-form-wrap">
-                        <?= Html::beginForm(['/course/search/search'], 'get'); ?>
+                        <?php $form = ActiveForm::begin(['action' => ['/course/search/search'], 'method' => 'get',]); ?>
                             <div class="col-sm-5 col-sm-offset-1">
                                 <div class="buttonInside">
                                     <input type="text" name="text" placeholder="Введите курс, который Вы ищите" class="main-header-form-field">
@@ -28,14 +32,22 @@ $this->title = 'Главная';
                                 </div>
                             </div>
                             <div class="col-sm-3 header-search-city">
-                                <div class="header-search-field custom-select main-select-city">
-                                    <?= CityHelper::cityList(); ?>
+                                <div class="header-search-field custom-select main-select2-wrap">
+                                    <?= $form->field($model, 'city')->widget(Select2::class, [
+                                        'data' => $model->citiesList(),
+                                        'options' => [
+                                            'placeholder' => 'Выберите город...',
+                                        ],
+                                        'pluginOptions' => [
+                                            'allowClear' => true,
+                                        ],
+                                    ])->label(false); ?>
                                 </div>
                             </div>
                             <div class="col-sm-2">
                                 <button type="submit" class="main-header-form-field main-form-submit">Найти</button>
                             </div>
-                        <?= Html::endForm() ?>
+                        <?php ActiveForm::end() ?>
                     </div>
                 </div>
             </div>

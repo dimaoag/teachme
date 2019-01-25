@@ -59,4 +59,16 @@ class CourseEditForm extends CompositeForm
     {
         return ['categories', 'photos', 'gallery'];
     }
+
+
+    public function attributeLabels()
+    {
+        return [
+            'name' => 'Название',
+            'cityId' => 'Город',
+            'price' => 'Цена',
+            'old_price' => 'Старая цена',
+            'description' => 'Описание',
+        ];
+    }
 }

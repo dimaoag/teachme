@@ -7,6 +7,7 @@
 /* @var $searchForm \shop\forms\course\search\SearchForm */
 /* @var $loginForm \shop\forms\auth\LoginForm */
 
+use kartik\widgets\Select2;
 use yii\bootstrap\ActiveForm;
 use yii\helpers\Html;
 use yii\helpers\Url;
@@ -42,7 +43,29 @@ if ($searchForm->category){
 
                 <div class="filter-wrap">
                     <div class="city-select-wrap">
-                        <?= $form->field($searchForm, 'city')->dropDownList($searchForm->citiesList(), ['prompt' => 'Выберите город', 'class' => 'city-select'])->label(false) ?>
+<!--                        --><?php //= $form->field($searchForm, 'city')->dropDownList($searchForm->citiesList(), ['prompt' => 'Выберите город', 'class' => 'city-select'])->label(false) ?>
+                        <?= $form->field($searchForm, 'city')->widget(Select2::class, [
+                            'data' => $searchForm->citiesList(),
+                            'options' => [
+                                'placeholder' => 'Выберите город...',
+                            ],
+                            'pluginOptions' => [
+                                'allowClear' => true,
+                                'containerCssClass' => 'my_sec'
+                            ],
+                            'pluginEvents' => [
+//                                "change" => "function() { log('change'); }",
+                                "select2:opening" => "function() { console.log('opening'); $('.select2-dropdown .select2-dropdown--below').addClass(' my');  console.log($('.select2-dropdown .select2-dropdown--below'));}",
+//                                "select2:open" => "function() { log('open'); }",
+                                "select2:closing" => "function() { console.log('close'); }",
+//                                "select2:close" => "function() { log('close'); }",
+//                                "select2:selecting" => "function() { log('selecting'); }",
+//                                "select2:select" => "function() { log('select'); }",
+//                                "select2:unselecting" => "function() { log('unselecting'); }",
+//                                "select2:unselect" => "function() { log('unselect'); }"
+                            ],
+                        ])->label(false); ?>
+
                         <div class="clearfix"></div>
                     </div>
                     <div class="filter">

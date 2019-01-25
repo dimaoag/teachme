@@ -1,6 +1,7 @@
 <?php
 
 
+use kartik\widgets\Select2;
 use shop\helpers\UserHelper;
 use yii\helpers\Url;
 
@@ -82,8 +83,16 @@ $this->title = 'Создать курс';
                                     <label class="col-sm-2 control-label" for="cityId">Город</label>
                                     <div class="col-sm-4 header-search-city">
                                         <div class="add-course-select">
-                                            <div class="custom-select main-select-city">
-                                                <?= $form->field($model, 'cityId')->dropDownList($model->citiesList(), ['id' => 'cityId', 'prompt' => 'Выберите город...'])->label(false); ?>
+                                            <div class="custom-select">
+                                                <?= $form->field($model, 'cityId')->widget(Select2::class, [
+                                                    'data' => $model->citiesList(),
+                                                    'options' => [
+                                                        'placeholder' => 'Выберите город...',
+                                                    ],
+                                                    'pluginOptions' => [
+                                                        'allowClear' => true,
+                                                    ],
+                                                ])->label(false); ?>
                                             </div>
                                         </div>
                                         <span id="error_city" class="text-danger"></span>
@@ -113,8 +122,17 @@ $this->title = 'Создать курс';
                                     <label class="col-sm-2 control-label" for="category">Рубрика</label>
                                     <div class="col-sm-4 header-search-city">
                                         <div class="add-course-select">
-                                            <div class="custom-select main-select-city">
-                                                <?= $form->field($model->categories, 'main')->dropDownList($model->categories->categoriesList(), ['prompt' => 'Выберите категорию...'])->label(false); ?>
+                                            <div class="custom-select">
+                                                <?= $form->field($model->categories, 'main')->widget(Select2::class, [
+                                                    'data' => $model->categories->categoriesList(),
+//                                                    'language' => 'ru',
+                                                    'options' => [
+                                                        'placeholder' => 'Выберите рубрику...',
+                                                    ],
+                                                    'pluginOptions' => [
+                                                        'allowClear' => true,
+                                                    ],
+                                                ])->label(false); ?>
                                             </div>
                                         </div>
                                         <span id="error_category" class="text-danger"></span>

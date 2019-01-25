@@ -4,6 +4,7 @@ namespace frontend\controllers;
 
 
 use shop\entities\shop\Category;
+use shop\forms\course\search\SearchForm;
 use shop\readModels\course\CategoryReadRepository;
 use shop\repositories\shop\CategoryRepository;
 use yii\helpers\VarDumper;
@@ -35,10 +36,12 @@ class SiteController extends AppController {
 
     public function actionIndex(){
         $this->layout = 'home';
+        $form = new SearchForm();
         $categoryViews = $this->categories->getTreeWithSubsOf();
 
         return $this->render('index',[
-            'categoryViews' => $categoryViews
+            'categoryViews' => $categoryViews,
+            'model' => $form
         ]);
     }
 

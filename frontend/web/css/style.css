@@ -3340,6 +3340,7 @@ label.tab.active{
     color: #555555;
 }
 
+/*------main-first-section----------*/
 
 .main-header{
     background: url("../img/header_main_bg.png") no-repeat center center;
@@ -3455,6 +3456,47 @@ label.tab.active{
     line-height: 52.01px;
     padding: 2% 0 8% 0;
 }
+
+.main-select2-wrap{
+    margin: 5px 0;
+
+}
+
+.main-select2-wrap .select2{
+    margin-top: 10px;
+}
+.has-success .select2-container--krajee.select2-container--focus .select2-selection{
+    box-shadow: none;
+}
+.main-select2-wrap .has-success .select2-container--krajee .select2-selection{
+    border: none;
+}
+.main-select2-wrap .select2-container--krajee .select2-selection--single{
+    border-radius: 20px;
+    height: 41px;
+    padding-left: 20px;
+    padding-top: 8px;
+}
+.select2-container--krajee .select2-selection--single .select2-selection__rendered{
+    font-size: 1rem;
+}
+.main-select2-wrap .select2-container--krajee .select2-selection--single .select2-selection__arrow{
+    height: 100%;
+    top: 0;
+}
+.main-select2-wrap .select2-container--krajee .select2-selection--single .select2-selection__clear{
+    margin-top: 0!important;
+}
+.main-select2-wrap .select2-dropdown .select2-dropdown--below{
+    border: none;
+}
+.select2-container--krajee .select2-results__option--highlighted[aria-selected]{
+    padding-left: 7px;
+}
+/*------end-main-first-section----------*/
+
+
+
 
 .categories-title{
     font-family: Intro, sans-serif;
@@ -3762,4 +3804,34 @@ label.tab.active{
 }
 .file-drop-zone{
     border: 2px dashed #aaa;
+}
+
+.select2-selection__clear{
+    margin-top: -4px!important;
+}
+.select2-container--krajee .select2-results__option--highlighted[aria-selected] {
+    background-color: #9e3ffc;
+    color: #fff;
+}
+.select2-container--krajee .select2-results__option[aria-selected=true] {
+    background-color: #9e3ffc;
+    color: #fff;
+}
+.has-success, .select2 .select2-container .select2-container--krajee .select2-container--below .select2-container--focus{
+    box-shadow: none;
+}
+.select2-container--krajee{
+    box-shadow: none;
+}
+.select2-container--krajee .select2-dropdown{
+    box-shadow: none;
+    border-color: #9e3ffc;
+}
+.select2-container--krajee.select2-container--open .select2-selection,
+.select2-container--krajee .select2-selection:focus,
+.has-success .select2-container--open .select2-selection,
+.has-success .select2-container--krajee.select2-container--focus .select2-selection,
+.has-success .select2-container--krajee .select2-selection{
+    box-shadow: none;
+    border-color: #9e3ffc;
 }

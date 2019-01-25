@@ -169,7 +169,6 @@ $this->title = 'Редактирование курса: ' . $course->name;
                                     <div class="col-sm-4 header-search-city">
                                         <div class="add-course-select">
                                             <div class="custom-select">
-<!--                                                --><?php //= $form->field($model, 'cityId')->dropDownList($model->citiesList(), ['id' => 'city', 'prompt' => 'Выберите город...'])->label(false); ?>
                                                 <?= $form->field($model, 'cityId')->widget(Select2::class, [
                                                     'data' => $model->citiesList(),
                                                     'language' => 'ru',
@@ -189,8 +188,17 @@ $this->title = 'Редактирование курса: ' . $course->name;
                                     <label class="col-sm-2 control-label" for="category">Рубрика</label>
                                     <div class="col-sm-4 header-search-city">
                                         <div class="add-course-select">
-                                            <div class="custom-select main-select-city">
-                                                <?= $form->field($model->categories, 'main')->dropDownList($model->categories->categoriesList(), ['prompt' => 'Выберите категорию...'])->label(false); ?>
+                                            <div class="custom-select">
+                                                <?= $form->field($model->categories, 'main')->widget(Select2::class, [
+                                                    'data' => $model->categories->categoriesList(),
+                                                    'options' => [
+                                                        'placeholder' => 'Выберите рубрику...',
+                                                    ],
+                                                    'pluginOptions' => [
+                                                        'allowClear' => true,
+                                                    ],
+                                                ])->label(false); ?>
+
                                             </div>
                                         </div>
                                         <span id="error_category" class="text-danger"></span>
