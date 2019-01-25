@@ -3,10 +3,7 @@
 namespace shop\services\manage;
 
 use shop\entities\shop\course\Course;
-use shop\entities\shop\course\Review;
 use shop\forms\course\order\OrderEditForm;
-use shop\forms\manage\shop\course\CategoriesForm;
-use shop\entities\shop\course\Error;
 use shop\forms\manage\shop\course\ErrorForm;
 use shop\forms\manage\shop\course\PhotosForm;
 use shop\forms\manage\shop\course\GalleryForm;
@@ -25,8 +22,8 @@ use shop\repositories\UserRepository;
 use shop\services\TransactionManager;
 use shop\services\search\CourseIndexer;
 use Yii;
-use yii\helpers\VarDumper;
 use shop\forms\course\ReviewForm;
+use yii\mail\MailerInterface;
 
 class CourseManageService
 {
@@ -40,6 +37,7 @@ class CourseManageService
     private $teachersMainInfo;
     private $reviews;
     private $orders;
+    private $mailer;
     private $transaction;
 
     public function __construct(
@@ -53,6 +51,7 @@ class CourseManageService
         TeacherMainInfoRepository $teachersMainInfo,
         ReviewRepository $reviews,
         OrderRepository $orders,
+        MailerInterface $mailer,
         TransactionManager $transaction
     )
     {
@@ -66,6 +65,7 @@ class CourseManageService
         $this->teachersMainInfo = $teachersMainInfo;
         $this->reviews = $reviews;
         $this->orders = $orders;
+        $this->mailer = $mailer;
         $this->transaction = $transaction;
     }
 
@@ -285,6 +285,7 @@ class CourseManageService
     public function createOrder(OrderCreateForm $form): void
     {
         $course = $this->courses->get($form->course_id);
+        $user = $this->users->getUserById($form->teacher_id);
         $course->createOrder(
             $form->teacher_id,
             $form->username,
@@ -292,6 +293,28 @@ class CourseManageService
             $form->price
         );
         $this->courses->save($course);
+        $data = [
+            'username' => $form->username,
+            'phone' => $form->phone,
+            'course_name' => $course->name,
+            'course_id' => $course->id,
+        ];
+
+
+        $sent = $this
+            ->mailer
+            ->compose(
+                ['html' => 'order/emailOrderCreate-html', 'text' => 'order/emailOrderCreate-text'],
+                ['data' => $data]
+            )
+            ->setTo($user->email)
+            ->setSubject('Заявка с сайта ' . ' Teach Me')
+            ->send();
+        if (!$sent){
+            throw new \RuntimeException('Email sending error.');
+        }
+
+
     }
 
 
