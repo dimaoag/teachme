@@ -53,7 +53,8 @@ class TeacherMainInfoForm extends Model
             [['phone_1', 'phone_2'], 'match', 'pattern' => '/^[0-9+]{1,}$/'],
             [['phone_1', 'phone_2'], 'replacePhone'],
             [['city_id'], 'integer'],
-            [['firm_photo'], 'image'],
+//            [['firm_photo'], 'image'],
+            ['firm_photo', 'file', 'extensions' => 'jpg, png', 'mimeTypes' => 'image/jpeg, image/png'],
         ];
     }
 

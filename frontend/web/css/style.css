@@ -529,6 +529,7 @@ header .navbar-dark{
     background-color: #FFFFFF;
     border-color: #FFFFFF;
     color: #0a0a0a;
+    z-index: 10000;
 }
 
 .navbar-dark .navbar-nav .open .dropdown-menu > li,

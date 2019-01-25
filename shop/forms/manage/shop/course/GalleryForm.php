@@ -15,7 +15,7 @@ class GalleryForm extends Model
     public function rules(): array
     {
         return [
-            ['gallery', 'each', 'rule' => ['image']],
+            ['gallery', 'each', 'rule' => ['file', 'extensions' => 'jpg, png', 'mimeTypes' => 'image/jpeg, image/png']],
         ];
     }
 
