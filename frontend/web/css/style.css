@@ -2417,6 +2417,10 @@ label.tab.active{
     font-weight: 400;
     padding-top: 20px;
 }
+.course-info-fixed .courser-info-img img{
+    height: 210px;
+    object-fit: cover;
+}
 .course-info-socs{
     display: flex;
 }
@@ -2547,12 +2551,15 @@ label.tab.active{
     text-align: center;
 }
 
-@media screen and (max-width: 1200px){
+@media screen and (max-width: 1199px){
     .course-info-fixed{
         display: none;
     }
     .course-info-small{
         display: block;
+    }
+    .course-info-small .courser-info-img{
+        width: 75%;
     }
     .bottom-fixed-block{
         display: flex;
@@ -2561,6 +2568,11 @@ label.tab.active{
         left: 0;
         width: 100%;
         z-index: 5;
+    }
+}
+@media screen and (max-width: 991px){
+    .course-info-small .courser-info-img{
+        width: 100%;
     }
 }
 @media screen and (max-width: 767px){
