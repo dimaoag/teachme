@@ -14,7 +14,6 @@ use yii\helpers\ArrayHelper;
 /**
  * @property CategoriesForm $categories
  * @property PhotosForm $photos
- * @property GalleryForm $gallery
  * @property ValueForm[] $values
  */
 class CourseCreateForm extends CompositeForm
@@ -32,7 +31,6 @@ class CourseCreateForm extends CompositeForm
 
         $this->categories = new CategoriesForm();
         $this->photos = new PhotosForm();
-        $this->gallery = new GalleryForm();
         $this->values = array_map(function (Characteristic $characteristic) {
             return new ValueForm($characteristic);
         }, Characteristic::find()->orderBy('sort')->all());
@@ -70,7 +68,7 @@ class CourseCreateForm extends CompositeForm
 
     protected function internalForms(): array
     {
-        return ['photos', 'categories', 'values', 'gallery'];
+        return ['photos', 'categories', 'values'];
     }
 
     public function attributeLabels()

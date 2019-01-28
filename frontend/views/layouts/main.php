@@ -431,7 +431,9 @@ use shop\helpers\UserHelper;
                                     </g>
                                 </g>
                             </svg>
-
+                            <div class="footer-top-content">
+                                <a href="#" class="footer-top-content-item">Офферта</a>
+                            </div>
                         </div>
                     </div>
                 </div>

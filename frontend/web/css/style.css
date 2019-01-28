@@ -1089,6 +1089,7 @@ a.footer-top-content-item:hover{
 }
 .footer-top-icons{
     display: flex;
+    padding: 5px 0;
 }
 .footer-top-icons *:not(:last-child){
     margin-right: 10px;
@@ -3217,7 +3218,7 @@ label.tab.active{
     background-color: white;
     -webkit-box-shadow: none;
     box-shadow: none;
-    border-bottom: 1px solid #9e3ffc;;
+    border-bottom: 1px solid #9e3ffc;
     font-size: 1rem;
     color: black;
 }
@@ -3239,9 +3240,20 @@ label.tab.active{
     -ms-flex-direction: column;
     flex-direction: column;
 }
+.create-course-description{
+    border: none;
+}
+.create-course-description textarea{
+    width: 100%;
+    border: 1px solid #9e3ffc;
+    margin: 10px 0;
+    padding: 10px;
+}
 .step-1 .bottom-block{
     margin-top: 10%;
+
 }
+
 
 .step-2 h2{
     padding: 10px 0;
@@ -3842,4 +3854,7 @@ label.tab.active{
 }
 .alert{
     margin-top: 20px;
+}
+.offerta-link{
+
 }

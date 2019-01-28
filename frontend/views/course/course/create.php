@@ -6,7 +6,6 @@ use shop\helpers\UserHelper;
 use yii\helpers\Url;
 
 use kartik\widgets\FileInput;
-use mihaildev\ckeditor\CKEditor;
 use yii\helpers\Html;
 use yii\bootstrap\ActiveForm;
 
@@ -30,9 +29,6 @@ $this->title = 'Создать курс';
                 <ul class="nav nav-tabs">
                     <li class="nav-item active_tab1" id="list_main_info">
                         Краткая информация
-                    </li>
-                    <li class="nav-item inactive_tab1" id="list_description_info">
-                        Описания и галерея
                     </li>
                 </ul>
                 <div class="tab-content create-course">
@@ -125,7 +121,6 @@ $this->title = 'Создать курс';
                                             <div class="custom-select">
                                                 <?= $form->field($model->categories, 'main')->widget(Select2::class, [
                                                     'data' => $model->categories->categoriesList(),
-//                                                    'language' => 'ru',
                                                     'options' => [
                                                         'placeholder' => 'Выберите рубрику...',
                                                     ],
@@ -179,55 +174,17 @@ $this->title = 'Создать курс';
                                         </div>
                                     <?php endforeach; ?>
                                 </div>
-                                <div class="col-sm-4 col-sm-offset-7">
-                                    <div align="center">
-                                        <button type="button" name="btn_main_info" id="btn_main_info" class="btn btn-block btn-lg button-pure">Далее</button>
-                                    </div>
-                                </div>
+                                <div class="form-group create-course-description">
+                                    <div class="col-xs-12">
+                                        <label class="control-label" for="create_description">Описание</label>
 
-                                <br />
-                            </div>
-                        </div>
-                    </div>
-                    <div class="tab-pane fade step-2" id="description_info">
-                        <div class="panel panel-default form-horizontal">
-                            <div class="panel-body">
-                                <div class="form-group">
-                                    <div class="col-sm-12">
-                                        <h2 class="step-2-title-description">Описание курса</h2>
-                                        <?= $form->field($model, 'description')->textarea(['rows' => 15])->label(false); ?>
+                                        <?= $form->field($model, 'description')->textarea(['rows' => 15, 'class' => 'create-course-textarea', 'id' => 'create_description'])->label(false); ?>
                                         <span id="error_description" class="text-danger"></span>
                                     </div>
                                 </div>
-                                <div class="upload-image">
-                                    <h2>Фотогалерея курса</h2>
-
-                                    <?= $form->field($model->gallery, 'gallery[]')->widget(FileInput::class, [
-                                        'options' => [
-                                            'accept' => 'image/*',
-                                            'multiple' => true,
-                                        ],
-                                        'pluginOptions' => [
-                                            'browseOnZoneClick' => true,
-                                            'showBrowse' => true,
-                                            'showUpload' => false,
-                                            'initialPreviewAsData' => true,
-                                            'overwriteInitial' => true,
-                                            'browseClass' => 'btn btn-purple',
-
-                                        ],
-                                    ])->label(false); ?>
-                                </div>
-                                <div class="step-2-buttons">
-                                    <div class="col-xs-6">
-                                        <div align="center">
-                                            <button type="button" name="previous_btn_description" id="previous_btn_description" class="btn btn-block btn-default btn-lg">Назад</button>
-                                        </div>
-                                    </div>
-                                    <div class="col-xs-6">
-                                        <div align="center">
-                                            <?= Html::submitButton('Сохранить', ['class' => 'btn btn-block button-pure btn-lg']) ?>
-                                        </div>
+                                <div class="col-sm-4 col-sm-offset-7">
+                                    <div align="center">
+                                        <button type="submit" name="btn_main_info" id="btn_main_info" class="btn btn-block btn-lg button-pure">Далее</button>
                                     </div>
                                 </div>
 

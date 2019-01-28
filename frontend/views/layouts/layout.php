@@ -52,6 +52,11 @@ $loginForm = isset($this->params['loginForm']) ? $this->params['loginForm'] : nu
             </div>
             <?= Html::submitButton('Войти', ['class' => 'btn btn-block login100-form-btn btn-login']); ?>
             <?php ActiveForm::end(); ?>
+            <div class="m-t-40">
+                <a href="<?= Url::to(['/request'])?>" class="txt2 hov1">
+                    Забыли пароль
+                </a>
+            </div>
         </div>
     </div>
     <?php $this->endBody() ?>

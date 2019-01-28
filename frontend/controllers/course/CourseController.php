@@ -177,7 +177,7 @@ class CourseController extends AppController{
         if ($form->load(Yii::$app->request->post()) && $form->validate()) {
             try {
                 $course = $this->service->create($form);
-                return $this->redirect(['/cabinet/teacher']);
+                return $this->redirect(['/course/course/add-gallery', 'id' => $course->id]);
             } catch (\DomainException $e) {
                 Yii::$app->errorHandler->logException($e);
                 Yii::$app->session->setFlash('error', $e->getMessage());
@@ -189,6 +189,26 @@ class CourseController extends AppController{
     }
 
 
+
+    public function actionAddGallery($id)
+    {
+        $course = $this->findModel($id);
+        $galleryForm = new GalleryForm();
+
+        if ($galleryForm->load(Yii::$app->request->post()) && $galleryForm->validate()) {
+            try {
+                $this->service->addGallery($course->id, $galleryForm);
+                return $this->redirect(['/cabinet/teacher/default/index']);
+            } catch (\DomainException $e) {
+                Yii::$app->errorHandler->logException($e);
+                Yii::$app->session->setFlash('error', $e->getMessage());
+            }
+        }
+        return $this->render('add-gallery', [
+            'course' => $course,
+            'galleryForm' => $galleryForm,
+        ]);
+    }
 
 
     public function actionUpdate($id)

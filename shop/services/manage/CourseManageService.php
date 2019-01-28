@@ -97,9 +97,9 @@ class CourseManageService
             $course->addPhoto($file);
         }
 
-        foreach ($form->gallery->gallery as $galleryImage) {
-            $course->addGalleryImage($galleryImage);
-        }
+//        foreach ($form->gallery->gallery as $galleryImage) {
+//            $course->addGalleryImage($galleryImage);
+//        }
 
 
         $this->transaction->wrap(function () use ($course, $form) {
@@ -184,7 +184,9 @@ class CourseManageService
     public function remove($id): void
     {
         $course = $this->courses->get($id);
-        $this->indexer->remove($course);
+        if ($course->status == Course::STATUS_ACTIVE){
+            $this->indexer->remove($course);
+        }
         $this->courses->remove($course);
     }
 
