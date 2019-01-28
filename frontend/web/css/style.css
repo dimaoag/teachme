@@ -850,6 +850,7 @@ ul .tooltip{
     height: 40px;
     border-radius: 50px;
     background-color: white;
+    z-index: 0;
 
 }
 .header-bottom-icon a{
@@ -860,6 +861,11 @@ ul .tooltip{
     justify-content: center;
     align-items: center;
     cursor: pointer;
+}
+.header-bottom-icon .fa-heart,
+.header-bottom-icon .fa-heart:hover,
+.header-bottom-icon .fa-heart:focus{
+    color: red;
 }
 .header-bottom-icon .not-active:hover{
     color: black;

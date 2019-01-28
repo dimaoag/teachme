@@ -211,8 +211,9 @@ use shop\helpers\UserHelper;
                                                 <span><?= UserHelper::getCountsWishlistItems(Yii::$app->user->id); ?></span>
                                             </a>
                                         <?php else: ?>
-                                            <a href="<?= Url::to(['/cabinet/wishlist/index']) ?>" class="not-active" title="Избранные">
+                                            <a href="<?= Url::to(['/cabinet/wishlist/index']) ?>" class="active-icon" title="Избранные">
                                                 <i class="fa fa-heart"></i>
+                                                <span></span>
                                             </a>
                                         <?php endif; ?>
                                     <?php else:?>

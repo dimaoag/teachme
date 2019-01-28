@@ -738,6 +738,7 @@ $('.favorite-toggle').click(function () {
     var id = $(this).data('id');
     var favorite_courses_count = $('.header-bottom-icon .active-icon span');
     var counts = parseInt(favorite_courses_count.html());
+    counts = counts ? counts : 0;
 
     $.ajax({
         url: url,
