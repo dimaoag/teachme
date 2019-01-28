@@ -865,4 +865,34 @@ $(function () {
 
 
 
+$('.delete-gallery-item').click(function () {
+    var course_id = $(this).data('course_id');
+    var gallery_photo_id = $(this).data('gallery_photo_id');
+    var url = $(this).attr('href');
+    var photo = $(this).closest('.edit-gallery');
+
+    if (confirm("Вы действительно хотите удалить данное фото?")) {
+        $.ajax({
+            url: url,
+            type: 'POST',
+            success: function(res) {
+                if (res.res){
+                    photo.remove();
+                } else {
+                    alert('Error!');
+                }
+            },
+            error: function(){
+                alert('Error!');
+            }
+        });
+    }
+
+    return false;
+});
+
+
+
+
+
 

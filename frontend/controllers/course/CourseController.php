@@ -308,10 +308,11 @@ class CourseController extends AppController{
     {
         try {
             $this->service->removeGallery($id, $photo_id);
+            return $this->asJson(['res' => 1]);
         } catch (\DomainException $e) {
             Yii::$app->session->setFlash('error', $e->getMessage());
         }
-        return $this->redirect(['update', 'id' => $id]);
+//        return $this->redirect(['update', 'id' => $id]);
     }
 
 

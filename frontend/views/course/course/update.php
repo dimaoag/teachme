@@ -105,11 +105,7 @@ $this->title = 'Редактирование курса: ' . $course->name;
                                                 <?php foreach ($course->gallery as $galleryItem): ?>
                                                     <div class="col-md-4 col-sm-4 col-xs-6 edit-main-photo-wrap edit-gallery">
                                                         <div class="btn-group edit-delete-btn">
-                                                            <?= Html::a('<span class="glyphicon glyphicon-remove"></span>', ['delete-gallery-item', 'id' => $course->id, 'photo_id' => $galleryItem->id], [
-                                                                'class' => 'btn btn-default',
-                                                                'data-method' => 'post',
-                                                                'data-confirm' => 'Вы действилътельно хотите удалить этот елемент?',
-                                                            ]); ?>
+                                                            <a class="btn btn-default delete-gallery-item" href="<?= Url::to(['delete-gallery-item', 'id' => $course->id, 'photo_id' => $galleryItem->id], true); ?>" data-course_id="<?= $course->id; ?>" data-gallery_photo_id="<?= $galleryItem->id; ?>"><span class="glyphicon glyphicon-remove"></span></a>
                                                         </div>
                                                         <?= Html::img($galleryItem->getThumbFileUrl('file', 'thumb')); ?>
                                                     </div>

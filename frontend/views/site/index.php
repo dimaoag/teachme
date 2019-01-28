@@ -12,7 +12,14 @@ use yii\bootstrap\ActiveForm;
 /* @var $categoryViews \shop\readModels\course\views\CategoryView[] */
 /* @var $model \shop\forms\course\search\SearchForm */
 
-$this->title = 'Главная';
+
+$this->title = 'Платформа для поиска курсов и мастре-классов';
+$this->registerMetaTag([
+    'name' => 'description',
+    'content' => 'Онлайн платформа для поиска онлайн и оффлайн курсов и мастер-классов с отзывами, которые можно отфильтровать по местоположению, цене и типу.',
+])
+
+
 ?>
 
 

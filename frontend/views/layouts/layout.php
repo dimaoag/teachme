@@ -25,6 +25,7 @@ $loginForm = isset($this->params['loginForm']) ? $this->params['loginForm'] : nu
     <meta charset="<?= Yii::$app->charset ?>">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="shortcut icon" href="/favicon.png" type="image/png">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" crossorigin="anonymous">
     <?= Html::csrfMetaTags() ?>
     <title><?= Html::encode($this->title) ?></title>
