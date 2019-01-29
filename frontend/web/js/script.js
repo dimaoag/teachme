@@ -23,7 +23,7 @@ $(document).ready(function () {
     $(function(){
 
         $(document).ready(function() {
-            $("[data-mask='callback-catalog-phone']").mask("+3 80 9 9  9 9 9  9 9  9 9");
+            $("[data-mask='callback-catalog-phone']").mask("+3 89 9 9  9 9 9  9 9  9 9");
         });
     })
 })(jQuery));
@@ -891,8 +891,18 @@ $('.delete-gallery-item').click(function () {
     return false;
 });
 
+$('.not-main-info').click(function () {
+    return false
+});
 
+$('.not-main-info').tooltipster({
+    contentCloning: true,
+    delay: 100,
+    theme: 'tooltipster-shadow',
+    side: 'bottom',
+    interactive: true,
+    maxWidth: 300,
 
-
+});
 
 

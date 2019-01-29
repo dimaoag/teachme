@@ -698,8 +698,8 @@ header .navbar-dark{
 .dropdown{
     width: 100%;
     position: absolute;
-    left: 0px;
-    z-index: 2;
+    left: 0;
+    z-index: 5;
 }
 .header-profile-menu .username{
     font-weight: bold;
@@ -797,7 +797,7 @@ ul .tooltip{
 }
 
 #dl-menu{
-    z-index: 10;
+    z-index: 3;
 }
 .bottom-sm-menu{
     display: none;
@@ -1017,7 +1017,7 @@ ul .tooltip{
         font-size: 14px;
     }
     .header-bottom-icons{
-        z-index: 11;
+        z-index: 4;
     }
 }
 
@@ -2452,6 +2452,14 @@ label.tab.active{
 .course-info-item{
     padding: 10px 0;
 }
+.course-info-item a{
+    color: black;
+}
+.course-info-item a:hover,
+.course-info-item a:focus{
+    color: black;
+    opacity: 0.8;
+}
 .course-info-title{
     margin-top: 10px;
 }
@@ -3186,6 +3194,29 @@ label.tab.active{
 }
 .add-course-bnt{
     margin: 1px 0;
+}
+.add-course-bnt:focus,
+.add-course-bnt:active,
+.add-course-bnt:hover{
+    color: white;
+}
+.not-main-info{
+    opacity: 0.5;
+}
+.toolbar-container{
+    padding: 20px;
+}
+.tooltip-text{
+
+}
+.tooltip-button{
+    color: #9e3ffc;
+    font-size: 1rem;
+}
+.tooltip-button:hover,
+.tooltip-button:focus{
+    color: #9e3ffc;
+    opacity: 0.8;
 }
 .add-course .main-select-city .nice-select{
     margin: 0;

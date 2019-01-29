@@ -35,12 +35,12 @@ $this->params['breadcrumbs'][] = $this->title;
                             <?php endif;?>
                             <?php if (!empty($firm->phone_1)): ?>
                                 <div class="course-info-item course-info-phone">
-                                    <p><i class="fa fa-phone"></i> <?= Html::encode($firm->phone_1); ?></p>
+                                    <a href="tel:<?= Html::encode($firm->phone_1); ?>"><i class="fa fa-phone"></i> <?= Html::encode($firm->phone_1); ?></a>
                                 </div>
                             <?php endif;?>
                             <?php if (!empty($firm->phone_2)): ?>
                                 <div class="course-info-item course-info-phone">
-                                    <p><i class="fa fa-phone"></i> <?= Html::encode($firm->phone_2); ?></p>
+                                    <a href="tel:<?= Html::encode($firm->phone_2); ?>"><i class="fa fa-phone"></i> <?= Html::encode($firm->phone_2); ?></a>
                                 </div>
                             <?php endif;?>
                             <div class="course-info-item course-info-socs">
@@ -112,12 +112,12 @@ $this->params['breadcrumbs'][] = $this->title;
                             <?php endif;?>
                             <?php if (!empty($firm->phone_1)): ?>
                                 <div class="course-info-item course-info-phone">
-                                    <p><i class="fa fa-phone"></i> <?= Html::encode($firm->phone_1); ?></p>
+                                    <a href="tel:<?= Html::encode($firm->phone_1); ?>"><i class="fa fa-phone"></i> <?= Html::encode($firm->phone_1); ?></a>
                                 </div>
                             <?php endif;?>
                             <?php if (!empty($firm->phone_2)): ?>
                                 <div class="course-info-item course-info-phone">
-                                    <p><i class="fa fa-phone"></i> <?= Html::encode($firm->phone_2); ?></p>
+                                    <a href="tel:<?= Html::encode($firm->phone_2); ?>"><i class="fa fa-phone"></i> <?= Html::encode($firm->phone_2); ?></a>
                                 </div>
                             <?php endif;?>
                             <div class="course-info-item course-info-socs">

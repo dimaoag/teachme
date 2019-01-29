@@ -130,6 +130,7 @@ class DefaultController extends AppController {
 //            'pagination'=>$dataProvider->pagination,
 //        ]);
 
+
         $query = Course::find()->where(['user_id' => Yii::$app->user->id]);
         $countQuery = clone $query;
         $pages = new Pagination(['totalCount' => $countQuery->count(), 'pageSize'=>20]);
@@ -152,6 +153,7 @@ class DefaultController extends AppController {
             'publications' => $publications,
             'courses' => $courses,
             'pages' => $pages,
+            'user' => $user,
         ]);
     }
 

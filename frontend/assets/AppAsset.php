@@ -29,6 +29,8 @@ class AppAsset extends AssetBundle
         'css/nice-select.css',
         'css/fileinput.css',
         'css/explorer-fas/theme.css',
+        'css/tooltipster.bundle.css',
+        'css/tooltipster/themes/tooltipster-sideTip-shadow.min.css',
         'css/style.css',
     ];
     public $js = [
@@ -50,6 +52,7 @@ class AppAsset extends AssetBundle
         'js/themes/fas/theme.js',
         'js/themes/explorer-fas/theme.js',
         'js/locales/ru.js',
+        'js/tooltipster.bundle.min.js',
         'js/script.js',
     ];
     public $depends = [

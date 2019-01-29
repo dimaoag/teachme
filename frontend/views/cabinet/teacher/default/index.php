@@ -2,6 +2,7 @@
 /* @var $this yii\web\View */
 
 /* @var $publications array */
+/* @var $user \shop\entities\user\User */
 /* @var $course shop\entities\shop\course\Course */
 /* @var $courses[] shop\entities\shop\course\Course */
 
@@ -14,6 +15,8 @@ use yii\widgets\LinkPager;
 
 $this->title = 'Мои курсы';
 $this->params['active_course'] = 'active';
+$issetTeacherMainInfo = (empty($user->teacherMainInfo)) ?: null;
+
 ?>
 
 <div class="tab-cabinet-container tab-courses active">
@@ -35,7 +38,13 @@ $this->params['active_course'] = 'active';
                     <?php endforeach; ?>
                 </div>
             </div>
-            <a href="<?=Url::to(['/course/create'])?>" class="button add-course-bnt">Добавить курс</a>
+            <a href="<?=Url::to(['/course/create'])?>" class="button add-course-bnt <?= $issetTeacherMainInfo ? 'not-main-info' : ''?> " <?= $issetTeacherMainInfo ? 'data-tooltip-content="#tooltip_content"' : ''?> >Добавить курс</a>
+            <div class="tooltip_templates hidden">
+                <span id="tooltip_content" class="tooltip-container">
+                    <p class="tooltip-text">Для того чтобы создать курс, сначала добавте информацию про организацию </p>
+                    <a href="<?=Url::to(['/cabinet/teacher/default/teacher-main-info'])?>" class="btn tooltip-button float-r">Добавить</a>
+                </span>
+            </div>
         </div>
         <div class="my-courses-wrap">
             <?php if (!empty($courses)): ?>
@@ -46,7 +55,7 @@ $this->params['active_course'] = 'active';
                                 <?php if (!empty($course->mainPhoto)): ?>
                                     <img src="<?= Html::encode($course->mainPhoto->getThumbFileUrl('file', 'thumb')); ?>" alt="<?= Html::encode($course->mainPhoto->getThumbFileUrl('file', 'thumb')); ?>">
                                 <?php else: ?>
-                                    <img src="/img/no_image.png" alt="img">
+                                    <img src="<?= Url::base(); ?>/img/no_image.png" alt="img">
                                 <?php endif; ?>
                             </a>
                         </div>

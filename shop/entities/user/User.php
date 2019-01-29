@@ -2,7 +2,7 @@
 namespace shop\entities\user;
 
 use lhs\Yii2SaveRelationsBehavior\SaveRelationsBehavior;
-use phpDocumentor\Reflection\Types\This;
+use shop\entities\shop\TeacherMainInfo;
 use shop\entities\InstantiateTrait;
 use Yii;
 use yii\base\NotSupportedException;
@@ -33,6 +33,7 @@ use yii\web\IdentityInterface;
  * @property WishlistItem[] $wishlistItems
  * @property Publication[] $publications
  * @property Payment[] $payments
+ * @property TeacherMainInfo $teacherMainInfo
  */
 class User extends ActiveRecord implements IdentityInterface
 {
@@ -259,6 +260,10 @@ class User extends ActiveRecord implements IdentityInterface
         return $this->hasMany(Payment::class, ['user_id' => 'id']);
     }
 
+    public function getTeacherMainInfo(): ActiveQuery
+    {
+        return $this->hasOne(TeacherMainInfo::class, ['user_id' => 'id']);
+    }
 
     public function behaviors()
     {

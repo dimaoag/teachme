@@ -433,7 +433,7 @@ use shop\helpers\UserHelper;
                                 </g>
                             </svg>
                             <div class="footer-top-content">
-                                <a href="#" class="footer-top-content-item">Офферта</a>
+                                <a href="https://drive.google.com/open?id=10FreqIZtI_4klIuG-WsKp3C85MP64jzZNOOzImHGo3I" class="footer-top-content-item">Офферта</a>
                             </div>
                         </div>
                     </div>

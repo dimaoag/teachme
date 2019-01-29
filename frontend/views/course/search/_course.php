@@ -18,7 +18,11 @@ AppAsset::register($this);
 <div class="search-course">
     <div class="search-course-img">
         <a href="<?= Html::encode($url) ?>">
-            <img src="<?= Html::encode($course->mainPhoto->getThumbFileUrl('file', 'thumb')) ?>" alt="image">
+            <?php if (!empty($course->mainPhoto)): ?>
+                <img src="<?= Html::encode($course->mainPhoto->getThumbFileUrl('file', 'thumb')); ?>" alt="<?= Html::encode($course->mainPhoto->getThumbFileUrl('file', 'thumb')); ?>">
+            <?php else: ?>
+                <img src="<?= Url::base(); ?>/img/no_image.png" alt="img">
+            <?php endif; ?>
         </a>
         <div class="favorite-img">
             <?php if (!Yii::$app->user->isGuest): ?>
