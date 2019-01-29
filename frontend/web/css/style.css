@@ -535,6 +535,7 @@ header .navbar-dark{
 .navbar-dark .navbar-nav .open .dropdown-menu > li,
 .navbar-dark .navbar-nav .open .dropdown-menu > li > a {
     color: #0a0a0a;
+    z-index: 10000;
 }
 .navbar-dark .navbar-nav .open .dropdown-menu > li > a:hover,
 .navbar-dark .navbar-nav .open .dropdown-menu > li > a:focus,

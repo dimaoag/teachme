@@ -27,25 +27,14 @@ class SignupController extends AppController
         $this->users = $users;
     }
 
-    public function behaviors(){
-        return [
-            'access' => [
-                'class' => AccessControl::className(),
-                'only' => ['index'],
-                'rules' => [
-                    [
-                        'actions' => ['index'],
-                        'allow' => true,
-                        'roles' => ['?'],
-                    ],
-                ],
-            ],
-        ];
-    }
 
 
     public function actionIndex()
     {
+        if (!Yii::$app->user->isGuest){
+            $this->redirect('/course/search/search');
+        }
+
         $learnerForm = new SignupLearnerForm();
         $teacherForm = new SignupTeacherForm();
 
