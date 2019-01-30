@@ -54,7 +54,7 @@ class TeacherMainInfoForm extends Model
             [['phone_1', 'phone_2'], 'replacePhone'],
             [['city_id'], 'integer'],
 //            [['firm_photo'], 'image'],
-            ['firm_photo', 'file', 'extensions' => 'jpg, png', 'mimeTypes' => 'image/jpeg, image/png'],
+            ['firm_photo', 'file', 'extensions' => 'jpeg ,jpg, png', 'mimeTypes' => 'image/jpeg, image/png'],
         ];
     }
 

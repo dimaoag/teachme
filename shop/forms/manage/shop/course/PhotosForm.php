@@ -16,7 +16,7 @@ class PhotosForm extends Model
     {
         return [
 //            ['files', 'each', 'rule' => ['image']],
-            ['files', 'each', 'rule' => ['file', 'extensions' => 'jpg, png', 'mimeTypes' => 'image/jpeg, image/png']],
+            ['files', 'each', 'rule' => ['file', 'extensions' => 'jpeg ,jpg, png', 'mimeTypes' => 'image/jpeg, image/png']],
         ];
     }
 

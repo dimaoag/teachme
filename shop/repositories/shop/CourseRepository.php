@@ -2,11 +2,8 @@
 
 namespace shop\repositories\shop;
 
-use phpDocumentor\Reflection\Types\Integer;
-use shop\dispatchers\EventDispatcher;
+
 use shop\entities\shop\course\Course;
-use shop\repositories\events\EntityPersisted;
-use shop\repositories\events\EntityRemoved;
 use shop\repositories\NotFoundException;
 
 class CourseRepository
@@ -19,6 +16,12 @@ class CourseRepository
         }
         return $course;
     }
+
+    public function existsByPriceModification($id): bool
+    {
+        return Course::find()->andWhere(['price_modification_id' => $id])->exists();
+    }
+
 
     public function getCoursesByUserId($id)
     {

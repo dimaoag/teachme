@@ -7,6 +7,7 @@ use Yii;
 use yii\helpers\Html;
 use yii\helpers\Url;
 use shop\entities\shop\course\Course;
+use shop\entities\shop\course\PriceModification;
 
 
 
@@ -85,6 +86,29 @@ class CourseHelper
 
 
 
+    public static function showPriceModification(PriceModification $priceModification, $price)
+    {
+        switch ($priceModification->id){
+            case PriceModification::FROM:
+                $res = '<p class="current-price">'. Html::encode($priceModification->title) .' '. Html::encode($price) .'  грн</p>';
+                break;
+            case PriceModification::TO:
+                $res = '<p class="current-price">'. Html::encode($priceModification->title) .' '. Html::encode($price) .'  грн</p>';
+                break;
+            case PriceModification::IN_MONTH:
+                $res = '<p class="current-price">'. Html::encode($price) .'  грн'. Html::encode($priceModification->title) .'</p>';
+                break;
+            case PriceModification::FREE:
+                $res = '<p class="current-price">'. Html::encode($priceModification->title) .'</p>';
+                break;
+            case PriceModification::KNOW_PRICE:
+                $res = '<p class="current-price">'. Html::encode($priceModification->title) .'</p>';
+                break;
+            default:
+                $res = '<p class="current-price">'. Html::encode($price) .'  грн</p>';
+        }
+        return $res;
+    }
 
 
 

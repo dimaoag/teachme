@@ -18,13 +18,13 @@ class CityForm extends CompositeForm
 
     private $_city;
 
-    public function __construct(City $city = null, $config = [])
+    public function __construct(City $priceModification = null, $config = [])
     {
-        if ($city) {
-            $this->name = $city->name;
-            $this->slug = $city->slug;
-            $this->meta = new MetaForm($city->meta);
-            $this->_city = $city;
+        if ($priceModification) {
+            $this->name = $priceModification->name;
+            $this->slug = $priceModification->slug;
+            $this->meta = new MetaForm($priceModification->meta);
+            $this->_city = $priceModification;
         } else {
             $this->meta = new MetaForm();
         }

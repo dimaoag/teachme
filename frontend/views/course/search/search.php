@@ -40,6 +40,10 @@ if ($searchForm->category){
                 <?= $form->field($searchForm, 'category')->hiddenInput()->label(false) ?>
             <?php endif; ?>
 
+            <?php if ($searchForm->text): ?>
+                <?= $form->field($searchForm, 'text')->hiddenInput()->label(false) ?>
+            <?php endif; ?>
+
 
                 <div class="filter-wrap">
                     <div class="city-select-wrap">

@@ -1862,13 +1862,14 @@ span.ui-slider-handle.ui-state-default.ui-corner-all:focus, span.ui-slider-handl
         margin-top: 15px;
         align-items: center;
         justify-content: space-between;
+        flex-wrap: wrap;
     }
     .price .old-price{
         position: relative;
         align-self: center;
         margin-left: auto;
         margin-right: 15px;
-
+        top: unset;
     }
     .sm-course-rating{
         display: flex;
@@ -1939,8 +1940,6 @@ span.ui-slider-handle.ui-state-default.ui-corner-all:focus, span.ui-slider-handl
     .filter-header-sm i{
         display: none;
     }
-
-
 }
 
 @media screen and (max-width: 480px){
@@ -3295,13 +3294,16 @@ label.tab.active{
 }
 .create-course-description textarea{
     width: 100%;
-    border: 1px solid #9e3ffc;
+    border: 1px solid #9e3ffc!important;
     margin: 10px 0;
     padding: 10px;
 }
 .step-1 .bottom-block{
     margin-top: 10%;
 
+}
+.course-radio-list label{
+    color: black!important;
 }
 
 
@@ -3335,10 +3337,10 @@ label.tab.active{
     outline: none!important;
 }
 .edit_course_textarea{
-    border: 1px solid #9e3ffc;
+    border: 1px solid #9e3ffc!important;
     width: 100%;
     padding: 15px;
-    border-radius: 3px;
+    border-radius: 3px!important;
 }
 @media all and (max-width: 500px){
     .add-course .nav-item{

@@ -4,6 +4,7 @@ namespace shop\forms\manage\shop\course;
 
 use shop\entities\shop\City;
 use shop\entities\shop\Characteristic;
+use shop\entities\shop\course\PriceModification;
 use shop\entities\shop\CourseType;
 use shop\entities\shop\TeacherMainInfo;
 
@@ -19,6 +20,7 @@ use yii\helpers\ArrayHelper;
 class CourseCreateForm extends CompositeForm
 {
     public $cityId;
+    public $priceModificationId;
     public $courseTypeId;
     public $firmId;
     public $name;
@@ -40,20 +42,35 @@ class CourseCreateForm extends CompositeForm
     public function rules(): array
     {
         return [
-            [['cityId', 'firmId', 'courseTypeId', 'name', 'price'], 'required'],
+            [['cityId', 'firmId', 'courseTypeId', 'priceModificationId','name'], 'required'],
             [['name'], 'string', 'max' => 255],
-            [['cityId', 'firmId', 'courseTypeId', 'price', 'old_price'], 'integer'],
+            [['cityId', 'firmId', 'courseTypeId', 'price', 'old_price', 'priceModificationId'], 'integer'],
+            [['price', 'old_price'], 'match', 'pattern' => '/^[0-9]{1,}$/'],
             ['description', 'string'],
             [['description'], 'filter', 'filter' => function($value){
                 return trim(preg_replace("/\r\n|\r/", "<br>", $value));
             }],
-            ['price', 'integer', 'min' => 0],
+            [['price'], 'filter', 'filter' => function($value){
+                return $value ?: 0 ;
+            }],
         ];
     }
 
     public function citiesList(): array
     {
         return ArrayHelper::map(City::find()->orderBy('name')->asArray()->all(), 'id', 'name');
+    }
+
+    public function priceModificationList(): array
+    {
+        return ArrayHelper::map(PriceModification::find()->asArray()->all(), 'id', 'title');
+    }
+
+    public function priceModificationDefaultValue(): int
+    {
+        $value[0] = ArrayHelper::map(PriceModification::find()->asArray()->all(), 'id', 'title');
+        $res = key( $value[0]);
+        return $res;
     }
 
     public function courseTypesList(): array
@@ -75,6 +92,7 @@ class CourseCreateForm extends CompositeForm
     {
         return [
             'cityId' => 'Город',
+            'priceModificationId' => 'Модификация цены',
             'firmId' => 'Организация',
             'courseTypeId' => 'Тип курса',
             'name' => 'Название курса',

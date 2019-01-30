@@ -7,7 +7,7 @@ use yii\helpers\Url;
 
 use kartik\widgets\FileInput;
 use yii\helpers\Html;
-use yii\bootstrap\ActiveForm;
+use kartik\form\ActiveForm;
 
 /* @var $this yii\web\View */
 /* @var $model shop\forms\manage\shop\course\CourseCreateForm */
@@ -23,6 +23,7 @@ $this->title = 'Создать курс';
         <div class="row">
 
             <?php $form = ActiveForm::begin([
+                'id' => 'login-form-inline',
                 'options' => ['enctype'=>'multipart/form-data', 'id' => 'add_course_form']
             ]); ?>
 
@@ -135,12 +136,15 @@ $this->title = 'Создать курс';
                                 </div>
                                 <div class="form-group">
                                     <label class="col-sm-2 control-label" for="price">Цена</label>
-                                    <div class="col-sm-3">
+                                    <div class="col-sm-12">
                                         <div class="add-course-price-field">
                                             <?= $form->field($model, 'price')->input('number')->label(false); ?>
                                             <p class="form-currency">грн.</p>
                                         </div>
                                         <span id="error_price" class="text-danger"></span>
+                                        <div class="course-radio-list-wrap">
+                                            <?= $form->field($model, 'priceModificationId')->radioList($model->priceModificationList(), ['inline'=>true, 'class' => 'course-radio-list', 'value' => $model->priceModificationDefaultValue()])->label(false); ?>
+                                        </div>
                                     </div>
                                 </div>
                                 <div class="form-group">

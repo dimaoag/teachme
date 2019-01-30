@@ -2,8 +2,7 @@
 
 use kartik\widgets\Select2;
 use yii\helpers\Html;
-use yii\bootstrap\ActiveForm;
-use kartik\widgets\FileInput;
+use kartik\form\ActiveForm;
 use yii\helpers\Url;
 
 /* @var $this yii\web\View */
@@ -202,12 +201,15 @@ $this->title = 'Редактирование курса: ' . $course->name;
                                 </div>
                                 <div class="form-group">
                                     <label class="col-sm-2 control-label" for="price">Цена</label>
-                                    <div class="col-sm-3">
+                                    <div class="col-sm-12">
                                         <div class="add-course-price-field">
                                             <?= $form->field($model, 'price')->input('number')->label(false); ?>
                                             <p class="form-currency">грн.</p>
                                         </div>
                                         <span id="error_price" class="text-danger"></span>
+                                        <div class="course-radio-list-wrap">
+                                            <?= $form->field($model, 'priceModificationId')->radioList($model->priceModificationList(), ['inline'=>true, 'class' => 'course-radio-list'])->label(false); ?>
+                                        </div>
                                     </div>
                                 </div>
                                 <div class="form-group">

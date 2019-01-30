@@ -15,6 +15,7 @@ use shop\repositories\shop\CourseRepository;
 use shop\repositories\shop\CourseTypeRepository;
 use shop\repositories\shop\ErrorRepository;
 use shop\repositories\shop\OrderRepository;
+use shop\repositories\shop\PriceModificationRepository;
 use shop\repositories\shop\ReviewRepository;
 use shop\repositories\shop\TeacherMainInfoRepository;
 use shop\forms\course\order\OrderCreateForm;
@@ -30,6 +31,7 @@ class CourseManageService
     private $users;
     private $courses;
     private $cities;
+    private $priceModifications;
     private $courseTypes;
     private $errors;
     private $categories;
@@ -44,6 +46,7 @@ class CourseManageService
         UserRepository $users,
         CourseRepository $courses,
         CityRepository $cities,
+        PriceModificationRepository $priceModifications,
         CourseTypeRepository $courseTypes,
         ErrorRepository $errors,
         CategoryRepository $categories,
@@ -58,6 +61,7 @@ class CourseManageService
         $this->users = $users;
         $this->courses = $courses;
         $this->cities = $cities;
+        $this->priceModifications = $priceModifications;
         $this->courseTypes = $courseTypes;
         $this->errors = $errors;
         $this->categories = $categories;
@@ -75,6 +79,7 @@ class CourseManageService
         $courseType = $this->courseTypes->get($form->courseTypeId);
         $category = $this->categories->get($form->categories->main);
         $teacherMainInfo = $this->teachersMainInfo->get($form->firmId);
+        $priceModification = $this->priceModifications->get($form->priceModificationId);
 
         $course = Course::create(
             Yii::$app->user->id,
@@ -82,6 +87,7 @@ class CourseManageService
             $courseType->id,
             $teacherMainInfo->id,
             $category->id,
+            $priceModification->id,
             $form->name,
             $form->price,
             $form->old_price,
@@ -113,9 +119,11 @@ class CourseManageService
         $course = $this->courses->get($id);
         $city = $this->cities->get($form->cityId);
         $category = $this->categories->get($form->categories->main);
+        $priceModification = $this->priceModifications->get($form->priceModificationId);
 
         $course->edit(
             $city->id,
+            $priceModification->id,
             $form->name,
             $form->price,
             $form->old_price,

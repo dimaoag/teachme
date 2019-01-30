@@ -54,6 +54,7 @@
                             ['label' => 'Города', 'icon' => 'location-arrow', 'url' => ['/course/city/index'], 'active' => $this->context->id == 'course/city'],
                             ['label' => 'Характеристики', 'icon' => 'cubes', 'url' => ['/course/characteristic/index'], 'active' => $this->context->id == 'course/characteristic'],
                             ['label' => 'Типы курсов', 'icon' => 'ticket', 'url' => ['/course/course-type/index'], 'active' => $this->context->id == 'course/course-type'],
+                            ['label' => 'Модификации цены', 'icon' => 'usd', 'url' => ['/course/price-modification/index'], 'active' => $this->context->id == 'course/price-modification'],
                         ],
                     ],
                     [

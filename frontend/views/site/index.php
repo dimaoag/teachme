@@ -1,10 +1,8 @@
 <?php
 
 use kartik\widgets\Select2;
-use shop\helpers\CityHelper;
 use yii\helpers\Html;
 use yii\helpers\Url;
-use shop\entities\shop\City;
 use yii\bootstrap\ActiveForm;
 
 
@@ -13,7 +11,7 @@ use yii\bootstrap\ActiveForm;
 /* @var $model \shop\forms\course\search\SearchForm */
 
 
-$this->title = 'Платформа для поиска курсов и мастре-классов';
+$this->title = 'Платформа для поиска курсов и мастер-классов';
 $this->registerMetaTag([
     'name' => 'description',
     'content' => 'Онлайн платформа для поиска онлайн и оффлайн курсов и мастер-классов с отзывами, которые можно отфильтровать по местоположению, цене и типу.',

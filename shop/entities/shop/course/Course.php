@@ -3,11 +3,9 @@
 namespace shop\entities\shop\course;
 
 
-use phpDocumentor\Reflection\Types\This;
 use shop\entities\EventTrait;
 use lhs\Yii2SaveRelationsBehavior\SaveRelationsBehavior;
 use shop\entities\AggregateRoot;
-use shop\entities\behaviors\MetaBehavior;
 use shop\entities\shop\City;
 use shop\entities\shop\Category;
 use shop\entities\shop\course\queries\CourseQuery;
@@ -17,9 +15,7 @@ use shop\entities\shop\TeacherMainInfo;
 use Yii;
 use yii\db\ActiveQuery;
 use yii\db\ActiveRecord;
-use yii\db\Exception;
 use yii\helpers\ArrayHelper;
-use yii\helpers\VarDumper;
 use yii\web\UploadedFile;
 use shop\entities\user\WishlistItem;
 
@@ -31,6 +27,7 @@ use shop\entities\user\WishlistItem;
  * @property integer $course_type_id
  * @property integer $firm_id
  * @property integer $main_photo_id
+ * @property integer $price_modification_id
  * @property integer $created_at
  * @property integer $date_start_sale
  * @property integer $date_stop_sale
@@ -45,6 +42,7 @@ use shop\entities\user\WishlistItem;
  * @property City $city
  * @property CourseType $courseType
  * @property User $user
+ * @property PriceModification $priceModification
  * @property Error $error
  * @property Category $category
  * @property Value[] $values
@@ -67,7 +65,7 @@ class Course extends ActiveRecord implements AggregateRoot
 
     public $meta;
 
-    public static function create($userId, $cityId, $courseTypeId, $firmId, $categoryId, $name, $price, $oldPrice, $description): self
+    public static function create($userId, $cityId, $courseTypeId, $firmId, $categoryId, $priceModificationId, $name, $price, $oldPrice, $description): self
     {
         $course = new static();
         $course->user_id = $userId;
@@ -75,6 +73,7 @@ class Course extends ActiveRecord implements AggregateRoot
         $course->course_type_id = $courseTypeId;
         $course->firm_id = $firmId;
         $course->category_id = $categoryId;
+        $course->price_modification_id = $priceModificationId;
         $course->name = $name;
         $course->price = $price;
         $course->old_price = $oldPrice;
@@ -85,9 +84,10 @@ class Course extends ActiveRecord implements AggregateRoot
     }
 
 
-    public function edit($cityId, $name, $price, $oldPrice, $description): void
+    public function edit($cityId, $priceModificationId, $name, $price, $oldPrice, $description): void
     {
         $this->city_id = $cityId;
+        $this->price_modification_id = $priceModificationId;
         $this->name = $name;
         $this->price = $price;
         $this->old_price = $oldPrice;
@@ -435,6 +435,11 @@ class Course extends ActiveRecord implements AggregateRoot
     public function getUser(): ActiveQuery
     {
         return $this->hasOne(User::class, ['id' => 'user_id']);
+    }
+
+    public function getPriceModification(): ActiveQuery
+    {
+        return $this->hasOne(PriceModification::class, ['id' => 'price_modification_id']);
     }
 
     public function getFirm(): ActiveQuery

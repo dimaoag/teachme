@@ -78,6 +78,8 @@ class TeacherMainInfo  extends  ActiveRecord{
     public function removePhoto($id): void
     {
         $this->cleanFiles();
+        unset($this->firm_photo);
+        $this->firm_photo = null;
         Yii::$app->db->createCommand("UPDATE teachers_main_info SET firm_photo = NULL WHERE id = $id")->execute();
     }
 

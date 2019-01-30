@@ -4,6 +4,7 @@
 /* @var $course shop\entities\shop\course\Course */
 
 
+use shop\helpers\CourseHelper;
 use yii\helpers\Html;
 use yii\helpers\Url;
 
@@ -141,7 +142,13 @@ AppAsset::register($this);
                 <?php if ($course->old_price): ?>
                     <p class="old-price"><?= Html::encode($course->old_price) ?> грн</p>
                 <?php endif; ?>
-                <p class="current-price"><?= Html::encode($course->price) ?> грн</p>
+
+                <?php if (isset($course->priceModification)): ?>
+                    <?= CourseHelper::showPriceModification($course->priceModification, $course->price) ?>
+                <?php else: ?>
+                    <p class="current-price"><?= Html::encode($course->price) ?> грн</p>
+                <?php endif; ?>
+
             </div>
         </div>
     </div>
