@@ -4,6 +4,7 @@ namespace backend\controllers\user;
 
 
 use backend\forms\UserSearch;
+use backend\forms\UserTeacherSearch;
 use shop\forms\manage\user\PublicationChangeForm;
 use shop\services\manage\UserManegeService;
 use shop\entities\user\User;
@@ -47,7 +48,7 @@ class PublicationController extends Controller
     public function actionIndex()
     {
 
-        $searchModel = new UserSearch();
+        $searchModel = new UserTeacherSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
         return $this->render('index', [

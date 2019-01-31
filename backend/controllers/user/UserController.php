@@ -69,6 +69,7 @@ class UserController extends Controller
         if ($form->load(Yii::$app->request->post()) && $form->validate()) {
             try{
                 $user = $this->userManegeService->create($form);
+                $this->userManegeService->setPublicationToUser($user->id, 5);
                 return $this->redirect(['view', 'id' => $user->id]);
             } catch (\DomainException $e){
                 Yii::$app->errorHandler->logException($e);

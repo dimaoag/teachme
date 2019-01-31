@@ -5,7 +5,9 @@ use frontend\components\Debug;
 use shop\forms\auth\ConfirmPasswordForm;
 use shop\forms\auth\SignupLearnerForm;
 use shop\forms\auth\SignupTeacherForm;
+use shop\helpers\UserHelper;
 use shop\services\auth\SignupService;
+use shop\services\manage\UserManegeService;
 use Yii;
 use yii\base\Module;
 use yii\filters\AccessControl;
@@ -19,11 +21,13 @@ class SignupController extends AppController
 
     private $signupService;
     private $users;
+    private $userManegeService;
 
-    public function __construct(string $id, Module $module, SignupService $signupService, UserRepository $users,array $config = [])
+    public function __construct(string $id, Module $module, SignupService $signupService, UserRepository $users, UserManegeService $userManegeService, array $config = [])
     {
         parent::__construct($id, $module, $config);
         $this->signupService = $signupService;
+        $this->userManegeService = $userManegeService;
         $this->users = $users;
     }
 
@@ -73,6 +77,9 @@ class SignupController extends AppController
             try {
                 $user = $this->signupService->confirm($form->confirm_code);
                 Yii::$app->user->login($user, Yii::$app->params['rememberMeDuration']);
+                if (UserHelper::isUserTeacher()){
+                    $this->userManegeService->setPublicationToUser($user->id, 5);
+                }
                 return $this->goHome();
             } catch (\DomainException $e) {
                 Yii::$app->errorHandler->logException($e);

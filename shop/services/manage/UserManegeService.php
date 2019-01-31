@@ -1,6 +1,7 @@
 <?php
 namespace shop\services\manage;
 
+use shop\entities\shop\CourseType;
 use shop\entities\user\Payment;
 use shop\entities\user\User;
 use shop\forms\manage\user\PaymentForm;
@@ -98,6 +99,19 @@ class UserManegeService
             $user->setPublication($courseType->id, $payment->quantity);
             $this->repository->save($user);
         }
+    }
+
+
+    public function setPublicationToUser($userId, $quantity)
+    {
+        $user = $this->repository->getUserById($userId);
+        $courseTypes = $this->courseTypeRepository->getAll();
+        foreach ($courseTypes as $courseType){
+            /**@var $courseType CourseType  */
+            $user->setPublication($courseType->id, $quantity);
+
+        }
+        $this->repository->save($user);
     }
 
 

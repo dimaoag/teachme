@@ -49,6 +49,7 @@ class UserHelper
     }
 
     public static function designationValue($designation):string {
+        $designationValue = '';
         switch ($designation){
             case User::LEARNER:
                 $designationValue = 'Пользователь';

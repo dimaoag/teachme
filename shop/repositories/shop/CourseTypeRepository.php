@@ -2,6 +2,7 @@
 
 namespace shop\repositories\shop;
 
+use shop\entities\shop\course\Course;
 use shop\entities\shop\CourseType;
 use shop\repositories\NotFoundException;
 
@@ -13,6 +14,11 @@ class CourseTypeRepository
             throw new NotFoundException('Type course is not found.');
         }
         return $courseType;
+    }
+
+    public function getAll()
+    {
+        return CourseType::find()->all();
     }
 
     public function save(CourseType $courseType): void
